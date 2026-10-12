@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free CSS clamp() generator. Create fluid font sizes and a fluid type scale with rem + vw, preview any width, and check WCAG 200% zoom." />
+  <link rel="canonical" href="https://frontendhelpers.com/clamp-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/clamp-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS clamp() Generator — Fluid Type Scale & WCAG Zoom Check" />
+  <meta property="og:description" content="Free CSS clamp() generator. Create fluid font sizes and a fluid type scale with rem + vw, preview any width, and check WCAG 200% zoom." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-px-to-rem.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS clamp() Generator — Fluid Type Scale & WCAG Zoom Check" />
+  <meta name="twitter:description" content="Free CSS clamp() generator. Create fluid font sizes and a fluid type scale with rem + vw, preview any width, and check WCAG 200% zoom." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-px-to-rem.png" />
+
+  <title>CSS clamp() Generator for Fluid Typography | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "CSS clamp() Generator",
+      "url": "https://frontendhelpers.com/clamp-generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any (browser-based)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      },
+      "description": "Free browser-based generator for fluid CSS clamp() font sizes and type scales, with a WCAG 1.4.4 zoom check.",
+      "isPartOf": {
+        "@id": "https://frontendhelpers.com/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "FrontendHelpers",
+          "item": "https://frontendhelpers.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CSS clamp() Generator",
+          "item": "https://frontendhelpers.com/clamp-generator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does CSS clamp() do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "clamp(MIN, PREFERRED, MAX) returns the preferred value, but never less than MIN or more than MAX. For fluid type, the preferred value grows with the viewport width, so text scales smoothly between a minimum and maximum size without media queries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use px, rem or vw in clamp()?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use rem for the minimum and maximum, and a mix of rem and vw for the preferred value. Pure vw ignores the visitor's font-size setting and can stop browser zoom from reaching 200%; px limits don't follow the user's default text size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does fluid typography pass WCAG?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can. WCAG 1.4.4 requires text to be resizable to 200%. Because zooming shrinks the viewport in CSS pixels, fluid sizes grow less than the zoom level. Keeping the maximum within about 2.5 times the minimum generally keeps 200% reachable; this generator checks your exact values."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can clamp() sizes shrink as the screen gets wider?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Enter a larger size for the small screen than for the large one and the generator produces a negative vw slope, with the clamp() bounds kept in the right order. It is occasionally useful for oversized hero text on narrow cards."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS clamp() Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS clamp() <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Generate fluid font sizes that scale smoothly between two screen widths, check they still pass WCAG's 200% text-resize test, and export a whole fluid type scale as CSS custom properties.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+      <div class="tool-card" id="tool-clamp">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/><path d="m3 15 2-2-2-2"/><path d="m21 15-2-2 2-2"/></svg></span>Fluid Size Calculator</h2>
+          <button class="btn-reset" id="reset-clamp">↺ Reset</button>
+        </div>
+        <p class="panel-desc">Enter the size you want on a small screen and on a large one. The generator works out the <code>clamp()</code> that interpolates between them, with <code>rem</code> in the middle value so it still respects the visitor's own font-size setting.</p>
+
+        <div class="tool-grid">
+          <div class="tool-inputs">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="min-size">Smallest size (px)</label>
+                <input type="number" id="min-size" value="16" min="1" step="1" />
+              </div>
+              <div class="form-group">
+                <label for="max-size">Largest size (px)</label>
+                <input type="number" id="max-size" value="20" min="1" step="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="min-vw">From viewport width (px)</label>
+                <input type="number" id="min-vw" value="360" min="1" step="10" />
+              </div>
+              <div class="form-group">
+                <label for="max-vw">To viewport width (px)</label>
+                <input type="number" id="max-vw" value="1240" min="1" step="10" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="root-size">Root font size (px)</label>
+              <input type="number" id="root-size" value="16" min="1" step="1" />
+            </div>
+            <p class="clamp-error" id="clamp-error" role="alert" hidden></p>
+
+            <div class="clamp-result">
+              <span class="clamp-result-label">Your clamp()</span>
+              <code class="clamp-value" id="clamp-value"></code>
+            </div>
+            <div class="output-code-container">
+              <div class="output-header">
+                <span>CSS declaration</span>
+                <button class="btn-copy" data-target="clamp-code">Copy CSS</button>
+              </div>
+              <textarea id="clamp-code" aria-label="CSS declaration" readonly rows="2" class="mono-output"></textarea>
+            </div>
+
+            <div class="wcag-results">
+              <div class="wcag-row">
+                <span class="wcag-label">WCAG 1.4.4 zoom check <small>(200% reachable by zooming)</small></span>
+                <span class="wcag-badge" id="zoom-result"></span>
+              </div>
+              <p class="clamp-zoom-detail" id="zoom-detail"></p>
+            </div>
+          </div>
+
+          <div class="tool-previews">
+            <h3>Live preview</h3>
+            <div class="form-group">
+              <label for="preview-vw">Viewport width: <strong id="preview-vw-out">800px</strong> → font size <strong id="preview-size-out"></strong></label>
+              <input type="range" id="preview-vw" min="320" max="1920" step="10" value="800" class="styled-range" />
+            </div>
+            <div class="clamp-preview">
+              <p class="clamp-sample" id="clamp-sample">The quick brown fox jumps over the lazy dog.</p>
+            </div>
+            <div class="quick-table-container">
+              <h4>Size at common widths</h4>
+              <table class="quick-table">
+                <thead><tr><th>Viewport</th><th>Pixels</th><th>REM</th></tr></thead>
+                <tbody id="clamp-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="clamp-scale">
+          <h3>Fluid type scale</h3>
+          <p class="panel-desc">Step 0 is the size above. Each step up multiplies by a ratio, and the ratio itself grows between the small and large screen, so headings gain more contrast on wide layouts than on phones.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="min-ratio">Ratio on small screens</label>
+              <input type="number" id="min-ratio" value="1.2" min="1" max="2" step="0.005" />
+            </div>
+            <div class="form-group">
+              <label for="max-ratio">Ratio on large screens</label>
+              <input type="number" id="max-ratio" value="1.25" min="1" max="2" step="0.005" />
+            </div>
+          </div>
+          <div class="tool-grid">
+            <div class="output-code-container">
+              <div class="output-header">
+                <span>Type scale tokens</span>
+                <button class="btn-copy" data-target="scale-code">Copy CSS</button>
+              </div>
+              <textarea id="scale-code" aria-label="Type scale tokens" readonly rows="11" class="mono-output"></textarea>
+            </div>
+            <div class="scale-preview" id="scale-preview" aria-label="Type scale preview at the chosen viewport width"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this generator</h2>
+        <p>Start from the design, not the maths. Decide what size a piece of text should be on a small phone and on a typical laptop, and over which range of widths it should travel between the two. The defaults — 16px at 360px wide growing to 20px at 1240px — suit body copy. Below the starting width the size stays at its minimum, and above the end width it stays at its maximum; <code>clamp()</code> only interpolates in between.</p>
+        <p>Drag the preview slider to see the text at any width, and use the table to sanity-check the in-between sizes. If a value lands somewhere awkward at a breakpoint you care about, nudge the viewport range rather than the sizes.</p>
+
+        <h2>Why the middle value mixes rem and vw</h2>
+        <p>A size written purely in <code>vw</code> is tied to the window and ignores the visitor's browser font-size setting — someone who has set their default text to 20px gets no benefit. Adding a <code>rem</code> term to the preferred value keeps a share of the size anchored to that setting, and expressing the minimum and maximum in <code>rem</code> means the limits move with it too. That's why the output looks like <code>clamp(1rem, 0.8977rem + 0.4545vw, 1.25rem)</code> rather than a bare <code>vw</code> figure.</p>
+
+        <h2>What the zoom check is testing</h2>
+        <p>WCAG 2.2 success criterion 1.4.4, Resize Text, requires that text can be scaled to 200% without losing content. Browser zoom normally makes that easy, but fluid type complicates it: zooming shrinks the viewport in CSS pixels, so the <code>vw</code> part of your size gets smaller as the zoom level goes up. If the gap between your minimum and maximum is wide, zoom can stall well short of double.</p>
+        <p>The check here simulates exactly that. For every window width from 320px to 3840px it tries each zoom level up to the browser maximum of 500% and asks whether any of them gets the text to at least twice its unzoomed size. A heading going from 16px to 64px fails — at a 1280px window, zoom only ever reaches 1.25× — while 32px to 72px passes. As a rule of thumb, keep the largest size within about 2.5 times the smallest, and the check will almost always pass.</p>
+
+        <h2>Using the type scale</h2>
+        <p>Paste the tokens into your stylesheet and apply them by role rather than by element: <code>h1 { font-size: var(--step-5); }</code>, <code>small { font-size: var(--step-n1); }</code>. Because every step is its own <code>clamp()</code>, nothing needs a media query. Pair the scale with a unitless <code>line-height</code> (around 1.5 for body text, 1.1–1.2 for large headings) so line spacing follows the font size, and cap body text measure at roughly 60–75 characters with <code>max-width: 65ch</code>.</p>
+        <p>For a deeper walkthrough of the maths, worked examples and the common mistakes, read our guide to <a href="/fluid-typography-clamp-guide">fluid typography with clamp()</a>. Browser support for <code>clamp()</code> is universal in current browsers — see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">MDN's clamp() reference</a>.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What does CSS clamp() do?</summary>
+            <p class="faq-answer">clamp(MIN, PREFERRED, MAX) returns the preferred value, but never less than MIN or more than MAX. For fluid type, the preferred value grows with the viewport width, so text scales smoothly between a minimum and maximum size without media queries.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use px, rem or vw in clamp()?</summary>
+            <p class="faq-answer">Use rem for the minimum and maximum, and a mix of rem and vw for the preferred value. Pure vw ignores the visitor's font-size setting and can stop browser zoom from reaching 200%; px limits don't follow the user's default text size.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does fluid typography pass WCAG?</summary>
+            <p class="faq-answer">It can. WCAG 1.4.4 requires text to be resizable to 200%. Because zooming shrinks the viewport in CSS pixels, fluid sizes grow less than the zoom level. Keeping the maximum within about 2.5 times the minimum generally keeps 200% reachable; this generator checks your exact values.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can clamp() sizes shrink as the screen gets wider?</summary>
+            <p class="faq-answer">Yes. Enter a larger size for the small screen than for the large one and the generator produces a negative vw slope, with the clamp() bounds kept in the right order. It is occasionally useful for oversized hero text on narrow cards.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/fluid-typography-clamp-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Fluid typography with clamp()</h3>
+            <p>The maths, worked examples, zoom accessibility and the mistakes to avoid.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+          <a href="/px-to-rem-converter" class="resource-card">
+            <span class="resource-kicker">Typography</span>
+            <h3>PX to REM Converter</h3>
+            <p>Convert any pixel value to rem for your root font size.</p>
+            <span class="resource-cta">Open the converter →</span>
+          </a>
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Accessibility</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Check that your type passes AA and AAA contrast, too.</p>
+            <span class="resource-cta">Check contrast →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 17 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="clamp-generator.js?v=1.0.0"></script>
+</body>
+</html>

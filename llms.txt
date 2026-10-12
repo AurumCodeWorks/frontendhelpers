@@ -22,6 +22,7 @@ All generated output and published snippets are free to use in personal and comm
 - [CSS Gradient Generator — Visual Linear & Radial Gradient Tool](https://frontendhelpers.com/css-gradient-generator): Free CSS gradient generator. Build linear and radial gradients visually, add unlimited color stops, choose from presets, and copy production-ready CSS.
 - [CSS Box Shadow Generator — Visual Shadow Builder](https://frontendhelpers.com/box-shadow-generator): Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals.
 - [WCAG Contrast Checker — Free Colour Contrast Ratio Tool](https://frontendhelpers.com/contrast-checker): Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results.
+- [CSS clamp() Generator for Fluid Typography](https://frontendhelpers.com/clamp-generator): Free CSS clamp() generator. Create fluid font sizes and a fluid type scale with rem + vw, preview any width, and check WCAG 200% zoom.
 
 ## Libraries and reference
 
@@ -46,6 +47,9 @@ All generated output and published snippets are free to use in personal and comm
 
 ## Guides
 
+- [Fluid Typography with CSS clamp(): A Practical Guide](https://frontendhelpers.com/fluid-typography-clamp-guide): Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom.
+- [WCAG 2.2 Colour Contrast: A Developer's Guide](https://frontendhelpers.com/wcag-colour-contrast-guide): WCAG 2.2 contrast for developers: the 4.5:1 and 3:1 rules, large text, non-text and focus contrast, the luminance maths, and 17 real colour pairs tested.
+- [robots.txt vs noindex vs canonical: Which to Use When](https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical): robots.txt controls crawling, noindex controls indexing, canonical picks one URL. A decision table for staging, PDFs, parameters, moved pages and AI bots.
 - [Why Isn’t My Website Showing Up on Google? A Diagnostic Guide](https://frontendhelpers.com/why-is-my-website-not-on-google): Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast.
 - [Core Web Vitals: A Practical Guide to LCP, INP and CLS](https://frontendhelpers.com/core-web-vitals-guide): A practical guide to Core Web Vitals. What LCP, INP and CLS measure, the thresholds Google uses, and the specific fixes that move each metric — with no jargon.
 - [How to Make Your Website Accessible: A Practical Guide](https://frontendhelpers.com/accessible-website-guide): A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, color contrast, and forms to fix real-world issues.

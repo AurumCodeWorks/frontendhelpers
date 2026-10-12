@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="robots.txt controls crawling, noindex controls indexing, canonical picks one URL. A decision table for staging, PDFs, parameters, moved pages and AI bots." />
+  <link rel="canonical" href="https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="robots.txt vs noindex vs canonical: Which to Use When" />
+  <meta property="og:description" content="robots.txt controls crawling, noindex controls indexing, canonical picks one URL. A decision table for staging, PDFs, parameters, moved pages and AI bots." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="robots.txt vs noindex vs canonical: Which to Use When" />
+  <meta name="twitter:description" content="robots.txt controls crawling, noindex controls indexing, canonical picks one URL. A decision table for staging, PDFs, parameters, moved pages and AI bots." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <title>robots.txt vs noindex vs canonical: Which to Use When</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "robots.txt vs noindex vs canonical: Which to Use When",
+        "description": "robots.txt controls crawling, noindex controls indexing, canonical picks one URL. A decision table for staging, PDFs, parameters, moved pages and AI bots.",
+        "url": "https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical",
+        "image": "https://frontendhelpers.com/assets/og-guides.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "robots.txt vs noindex vs canonical: Which to Use When", "item": "https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does robots.txt stop a page from being indexed?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. robots.txt only stops compliant crawlers from fetching the page. Google can still index a disallowed URL if other pages link to it, and show it in results without a description. To keep a page out of the index, allow crawling and add a noindex rule, or put the page behind a password." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use noindex and a canonical tag on the same page?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not when the canonical points to a different URL. The canonical says this page is a duplicate whose signals belong elsewhere, while noindex says drop this page entirely, so the two conflict. For duplicates, Google recommends rel=canonical rather than noindex. A self-referencing canonical on a noindexed page is harmless but does nothing useful." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is Google ignoring my canonical tag?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Because rel=canonical is a hint, not a rule. Google weighs it alongside redirects, sitemap entries, internal links and HTTPS, and picks the URL it judges most useful. If your internal links, sitemap or redirects point at a different URL from your canonical tag, make them agree. URL Inspection shows both the canonical you declared and the one Google selected." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does blocking Google-Extended remove my site from Google Search?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Google-Extended is a control token, not a separate crawler. Disallowing it tells Google not to use your content for training future Gemini models or for grounding, and Google states it has no effect on inclusion or ranking in Google Search. Blocking Googlebot is what removes you from search." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">robots.txt vs noindex vs canonical</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>robots.txt, noindex or canonical: <span class="hero-highlight">which to use when</span></h1>
+        <p class="page-hero-sub">Three tools that answer three different questions. Pick the wrong one and the page you meant to hide stays in Google, or the one you meant to keep disappears.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Three questions, not one</h2>
+        <p>Developers reach for these three interchangeably, but each controls a different stage of how a search engine handles a URL:</p>
+        <ul>
+          <li><strong>robots.txt</strong> controls <em>crawling</em>: may the bot fetch this URL at all?</li>
+          <li><strong>noindex</strong> controls <em>indexing</em>: having fetched it, may the engine store and show it?</li>
+          <li><strong>rel="canonical"</strong> controls <em>consolidation</em>: of several URLs showing the same content, which one should represent the group?</li>
+        </ul>
+        <p>Most mistakes come from using a crawling tool to solve an indexing problem, or an indexing tool to solve a duplication problem.</p>
+
+        <h2>robots.txt blocks crawling, not indexing</h2>
+        <p>A <code>Disallow</code> rule asks compliant crawlers not to fetch a path. It does not remove anything from search. Google's <a href="https://developers.google.com/search/docs/crawling-indexing/robots/intro">robots.txt introduction</a> is explicit that a disallowed URL can still be indexed if other pages link to it; it then appears as a bare result with no description, because Google never read the content.</p>
+        <p>The second trap follows from the first. If you disallow a page <em>and</em> add <code>noindex</code> to it, Google cannot fetch the page, so it never sees the <code>noindex</code>. The block defeats the very rule you added. Use robots.txt for what it is good at: keeping crawlers out of large, low-value URL spaces such as internal search results or endless filter combinations. Our <a href="/robots-txt-generator">robots.txt generator</a> builds a valid file.</p>
+
+        <h2>noindex: meta tag or HTTP header</h2>
+        <p>For HTML pages, put the rule in the <code>&lt;head&gt;</code>:</p>
+        <pre><code class="language-html">&lt;meta name="robots" content="noindex"&gt;</code></pre>
+        <p>PDFs, images and other non-HTML files have no head, so send the same rule as an <code>X-Robots-Tag</code> response header. Google's <a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing">noindex documentation</a> covers both forms. On Cloudflare, a <code>_headers</code> file does it in two lines:</p>
+        <pre><code>/downloads/*
+  X-Robots-Tag: noindex</code></pre>
+        <p>Either way, the URL must stay crawlable. Google does not support <code>noindex</code> inside robots.txt, and a page blocked there will never have its tag read. The <a href="/meta-tag-generator">meta tag generator</a> outputs the robots tag alongside the rest of your head.</p>
+
+        <h2>rel=canonical is a hint, not a command</h2>
+        <p>A canonical link tells Google which URL you prefer when several show the same content:</p>
+        <pre><code class="language-html">&lt;link rel="canonical" href="https://example.com/guides/print-styles"&gt;</code></pre>
+        <p>Google treats this as one signal among several and makes its own choice. Its guide to <a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">consolidating duplicate URLs</a> ranks the inputs: redirects and <code>rel="canonical"</code> are strong signals, inclusion in a sitemap is a weak one, and internal links should point at the canonical version. HTTPS over HTTP also counts. When those signals disagree, for example the tag says one URL, your navigation links to another and your sitemap lists a third, Google may pick a canonical you didn't intend.</p>
+        <p>Do not pair <code>noindex</code> with a canonical that points to a different URL. One says "this page's signals belong to that URL"; the other says "drop this page entirely". Google's guidance is to use <code>rel="canonical"</code>, not <code>noindex</code>, for duplicates within a site.</p>
+
+        <h2>Redirects: 301 versus 302 and 307</h2>
+        <p>When a URL has genuinely moved, a redirect beats a canonical tag because visitors move too. The status code matters. Google's <a href="https://developers.google.com/search/docs/crawling-indexing/301-redirects">redirects documentation</a> says permanent redirects (301 and 308) are used as a signal that the target should be canonical, and the target is shown in results. Temporary redirects (302, 303 and 307) are followed, but are not used as that signal, and the source URL tends to stay in results. Use a temporary redirect only when the move really is temporary.</p>
+
+        <h2>The decision table</h2>
+        <p>Real scenarios, the tool that fits, and the mistake to avoid:</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Scenario</th><th>Use</th><th>Why</th><th>Don't</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Staging site</strong></td><td>HTTP authentication or an access gate</td><td>Blocks every visitor and bot outright; nothing to crawl or index</td><td>Rely on <code>Disallow: /</code>, which leaked links can bypass, or ship staging robots.txt to production</td></tr>
+              <tr><td><strong>Thank-you page</strong></td><td><code>noindex</code> meta tag</td><td>No search value, but it must stay crawlable for the tag to be read</td><td>Also disallow it in robots.txt</td></tr>
+              <tr><td><strong>Printer-friendly duplicate</strong></td><td><code>rel="canonical"</code> to the main page</td><td>Consolidates signals while the print version stays usable</td><td>Add <code>noindex</code> on top of the canonical</td></tr>
+              <tr><td><strong>Old URL moved</strong></td><td>301 (or 308) redirect</td><td>Permanent redirects are a canonical signal and move users too</td><td>Use 302 or 307, or block the old URL so the redirect can't be seen</td></tr>
+              <tr><td><strong>Filter and sort parameters</strong></td><td>robots.txt <code>Disallow</code> on parameter patterns you don't need indexed</td><td>Stops crawlers spending time on near-infinite combinations</td><td>Expect canonical or <code>noindex</code> alone to cut crawling quickly</td></tr>
+              <tr><td><strong>PDF you don't want in results</strong></td><td><code>X-Robots-Tag: noindex</code> header</td><td>Non-HTML files can't carry a meta tag</td><td>Disallow it in robots.txt; the URL can still appear without a snippet</td></tr>
+              <tr><td><strong>Out of AI training, still in search</strong></td><td>robots.txt groups for training tokens such as <code>GPTBot</code>, <code>ClaudeBot</code> and <code>Google-Extended</code></td><td>Training and search crawlers use separate user-agent tokens</td><td>Block <code>Googlebot</code>, <code>OAI-SearchBot</code> or <code>Claude-SearchBot</code>, which removes you from those search products</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Parameters and faceted navigation</h2>
+        <p>Shop filters and sort options multiply URLs fast: five filters with a handful of values each produce thousands of crawlable addresses showing near-identical products. Google's guidance on faceted navigation is to prevent crawling of these URLs with robots.txt if you don't need them in search, and to treat canonicals as a slower, weaker way to reduce that crawling. Google supports <code>*</code> wildcards in paths:</p>
+        <pre><code>User-agent: *
+Disallow: /*?*sort=
+Disallow: /*?*colour=</code></pre>
+        <p>If some filtered pages deserve to rank, such as a category plus a popular brand, give them clean URLs, keep the parameter order consistent, and return a 404 when a combination has no results.</p>
+
+        <h2>Staging sites: use authentication</h2>
+        <p>A staging site protected only by <code>Disallow: /</code> is protected from polite crawlers and nobody else. One link in a ticket, a chat preview or a public repository is enough for the URL to be found and potentially indexed without content. Google's own advice for keeping a page out of results is to password-protect it or use <code>noindex</code>. For staging, password protection wins: it also keeps out people. HTTP basic auth or your host's access controls take minutes to set up.</p>
+
+        <h2>AI crawlers: search bots versus training bots</h2>
+        <p>The major AI companies split their crawlers by purpose, and robots.txt rules apply per user-agent token:</p>
+        <ul>
+          <li><strong>Google-Extended</strong> is not a separate crawler but a control token. Per <a href="https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers">Google's crawler documentation</a>, it governs use of your content for training future Gemini models and for grounding, and does not affect inclusion or ranking in Google Search.</li>
+          <li><strong>GPTBot</strong> collects training data; <strong>OAI-SearchBot</strong> powers ChatGPT search. <a href="https://developers.openai.com/api/docs/bots">OpenAI's bot documentation</a> confirms you can allow the second while disallowing the first.</li>
+          <li><strong>ClaudeBot</strong> collects training data; <strong>Claude-SearchBot</strong> indexes content for search results in Claude. Anthropic documents both, plus <code>Claude-User</code> for fetches a person requests.</li>
+        </ul>
+        <pre><code>User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /</code></pre>
+        <p>The <code>Content-Signal</code> line comes from Cloudflare's Content Signals proposal, documented at contentsignals.org. It states your preference for search indexing, AI input (grounding and retrieval) and AI training. It is a declaration, not an access control: crawlers that ignore it are not blocked, which is why the explicit <code>Disallow</code> groups still matter.</p>
+
+        <h2>A real example: this site's clean-URL migration</h2>
+        <p>FrontendHelpers originally served pages at <code>.html</code> addresses. Our host strips the extension automatically, but with a <strong>307</strong>, a temporary redirect. Google doesn't treat temporary redirects as a canonical signal, so the old <code>.html</code> URLs could have stayed the indexed versions indefinitely. We changed three things together:</p>
+        <ul>
+          <li><strong>Explicit 301s</strong> from every <code>.html</code> path to its clean URL, so the move is declared permanent.</li>
+          <li><strong>Self-referencing canonicals</strong> on every page, pointing at its clean URL, so each page names itself as the preferred version.</li>
+          <li><strong>An updated sitemap</strong> and internal links that list only clean URLs, so the weaker signals agree with the strong ones.</li>
+        </ul>
+        <p>Just as important was what we didn't do: block the <code>.html</code> paths in robots.txt. Google has to crawl an old URL to see its redirect.</p>
+
+        <h2>Checking your work in Search Console</h2>
+        <p><strong>URL Inspection</strong> answers the per-page questions: whether crawling is allowed, whether a <code>noindex</code> was detected, and both the canonical you declared and the one Google selected. Use "Test live URL" after a change.</p>
+        <p>The <strong>Page indexing</strong> report shows the patterns. Statuses worth knowing:</p>
+        <ul>
+          <li><em>Discovered – currently not indexed</em>: Google found the URL but hasn't crawled it yet.</li>
+          <li><em>Crawled – currently not indexed</em>: crawled, but Google chose not to index it.</li>
+          <li><em>Indexed, though blocked by robots.txt</em>: the crawling-versus-indexing trap above, in practice.</li>
+          <li><em>Duplicate, Google chose different canonical than user</em>: your canonical hint lost to other signals.</li>
+          <li><em>Alternate page with proper canonical tag</em>: working as intended, no action needed.</li>
+        </ul>
+        <p>If a page you expected to rank is missing altogether, work through <a href="/why-is-my-website-not-on-google">why your website isn't on Google</a> for the full checklist.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does robots.txt stop a page from being indexed?</summary>
+            <p class="faq-answer">No. robots.txt only stops compliant crawlers from fetching the page. Google can still index a disallowed URL if other pages link to it, and show it in results without a description. To keep a page out of the index, allow crawling and add a noindex rule, or put the page behind a password.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I use noindex and a canonical tag on the same page?</summary>
+            <p class="faq-answer">Not when the canonical points to a different URL. The canonical says this page is a duplicate whose signals belong elsewhere, while noindex says drop this page entirely, so the two conflict. For duplicates, Google recommends rel=canonical rather than noindex. A self-referencing canonical on a noindexed page is harmless but does nothing useful.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why is Google ignoring my canonical tag?</summary>
+            <p class="faq-answer">Because rel=canonical is a hint, not a rule. Google weighs it alongside redirects, sitemap entries, internal links and HTTPS, and picks the URL it judges most useful. If your internal links, sitemap or redirects point at a different URL from your canonical tag, make them agree. URL Inspection shows both the canonical you declared and the one Google selected.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does blocking Google-Extended remove my site from Google Search?</summary>
+            <p class="faq-answer">No. Google-Extended is a control token, not a separate crawler. Disallowing it tells Google not to use your content for training future Gemini models or for grounding, and Google states it has no effect on inclusion or ranking in Google Search. Blocking Googlebot is what removes you from search.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/robots-txt-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>robots.txt Generator</h3>
+            <p>Build a valid robots.txt with crawler groups and your sitemap.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Robots, canonical, Open Graph and Twitter tags in one go.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/why-is-my-website-not-on-google" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Why is my website not on Google?</h3>
+            <p>Seven checks, in the order that finds the cause fastest.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

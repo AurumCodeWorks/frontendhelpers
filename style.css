@@ -1998,3 +1998,55 @@ input.invalid, textarea.invalid {
   .orb { animation: none; }
   .toast, .cookie-banner-popup, .scroll-top-btn { transition: none; }
 }
+
+/* ── CLAMP() GENERATOR ─────────────────────────────────────── */
+.clamp-result {
+  margin: 20px 0 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(15, 22, 42, 0.4);
+}
+.clamp-result-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.clamp-value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--secondary);
+  word-break: break-word;
+}
+.clamp-error { color: var(--danger, #f87171); font-size: 0.9rem; margin-top: 8px; }
+.clamp-zoom-detail { color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; margin: 8px 0 0; }
+.clamp-preview {
+  min-height: 140px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(15, 22, 42, 0.4);
+  overflow: hidden;
+}
+.clamp-sample { margin: 0; line-height: 1.4; color: var(--text); }
+.clamp-scale { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+.scale-preview {
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(15, 22, 42, 0.4);
+  overflow: hidden;
+}
+.scale-row { display: flex; align-items: baseline; gap: 16px; padding: 4px 0; }
+.scale-label { flex: 0 0 56px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); }
+.scale-sample { line-height: 1.15; color: var(--text); white-space: nowrap; }
+
+/* Wide data tables in articles scroll sideways on phones
+   instead of pushing the page wider than the screen */
+@media (max-width: 640px) {
+  .tool-documentation table { display: block; overflow-x: auto; }
+}

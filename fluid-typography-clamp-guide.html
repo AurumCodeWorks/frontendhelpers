@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom." />
+  <link rel="canonical" href="https://frontendhelpers.com/fluid-typography-clamp-guide" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/fluid-typography-clamp-guide" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Fluid Typography with CSS clamp(): A Practical Guide" />
+  <meta property="og:description" content="Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fluid Typography with CSS clamp(): A Practical Guide" />
+  <meta name="twitter:description" content="Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <title>Fluid Typography with CSS clamp(): A Practical Guide</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Fluid Typography with CSS clamp(): A Practical Guide",
+        "description": "Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom.",
+        "url": "https://frontendhelpers.com/fluid-typography-clamp-guide",
+        "image": "https://frontendhelpers.com/assets/og-guides.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/fluid-typography-clamp-guide" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Fluid Typography with CSS clamp(): A Practical Guide", "item": "https://frontendhelpers.com/fluid-typography-clamp-guide" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the formula for fluid typography with clamp()?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Slope = (max size − min size) ÷ (max viewport − min viewport), and intercept = min size − slope × min viewport. The preferred value is the intercept in rem plus slope × 100 in vw. Going from 32px at a 360px viewport to 56px at 1280px gives clamp(2rem, 1.413rem + 2.6087vw, 3.5rem)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is fluid typography bad for accessibility?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not inherently, but it can fail WCAG 1.4.4 Resize Text if browser zoom cannot double the text. Set the bounds in rem, mix rem with vw in the preferred value, keep the maximum at or below 2.5 times the minimum, and test by zooming a wide browser window." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why use rem and vw together inside clamp()?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A pure vw value ignores both browser zoom and the user's default font size, because it only tracks the viewport. The rem part responds to both settings, while the vw part provides the fluid growth between your two breakpoints." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use vw or cqi for fluid font sizes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use vw for page-level type such as hero headings and body copy. Use cqi for components that appear in containers of different widths, such as cards. cqi needs an ancestor with container-type: inline-size; without one it falls back to small viewport units." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Fluid Typography with CSS clamp(): A Practical Guide</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Fluid typography with clamp(), <span class="hero-highlight">done properly</span></h1>
+        <p class="page-hero-sub">The interpolation maths with a worked example, why zoom breaks naive fluid type, and the habits that keep it accessible.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 8 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>What clamp() actually does</h2>
+        <p><code>clamp(MIN, PREFERRED, MAX)</code> is resolved as <code>max(MIN, min(PREFERRED, MAX))</code>, as the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp">MDN reference for clamp()</a> puts it. For type, MIN is the size you want on small screens, MAX is the size you want on large screens, and PREFERRED is a value that grows with the viewport. Between two chosen viewport widths the text scales in a straight line; outside them it holds at the bound.</p>
+        <p>That replaces a ladder of media queries with one declaration, and it removes the jumps between breakpoints. The catch is that the preferred value is a formula you have to work out, and getting it wrong is how most fluid type ends up either inaccurate or inaccessible.</p>
+
+        <h2>The maths: slope and intercept</h2>
+        <p>You pick four numbers: the minimum font size, the maximum font size, the viewport width where the minimum should apply, and the viewport width where the maximum should apply. The preferred value is the straight line through those two points, so it is ordinary <code>y = mx + c</code>:</p>
+        <pre><code>slope     = (maxSize − minSize) ÷ (maxViewport − minViewport)
+intercept = minSize − slope × minViewport
+preferred = intercept + (slope × 100)vw</code></pre>
+        <p>The slope is multiplied by 100 because <code>1vw</code> is 1% of the viewport width. The intercept comes out in pixels; divide it by 16 to express it in rem at the default root size, which is exactly what our <a href="/px-to-rem-converter">px to rem converter</a> does.</p>
+
+        <h2>A worked example</h2>
+        <p>Say a page heading should be 32px (2rem) on a 360px phone and 56px (3.5rem) on a 1280px laptop.</p>
+        <pre><code>slope     = (56 − 32) ÷ (1280 − 360) = 24 ÷ 920 = 0.026087
+vw part   = 0.026087 × 100 = 2.6087vw
+intercept = 32 − (0.026087 × 360) = 32 − 9.3913 = 22.6087px = 1.4130rem
+
+h1 {
+  font-size: clamp(2rem, 1.413rem + 2.6087vw, 3.5rem);
+}</code></pre>
+        <p>Sanity check: at 360px the preferred value is 22.6087 + 9.3913 = 32px, and at 1280px it is 22.6087 + 33.3913 = 56px. Both ends land where they should. Here is what the browser computes across a range of widths, generated with a short Node script that reproduces the same arithmetic at 100% zoom and a 16px root:</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Viewport</th><th>Preferred value</th><th>Used size</th><th>In rem</th></tr></thead>
+            <tbody>
+              <tr><td>320px</td><td>30.96px</td><td>32.00px (min)</td><td>2.000rem</td></tr>
+              <tr><td>360px</td><td>32.00px</td><td>32.00px</td><td>2.000rem</td></tr>
+              <tr><td>480px</td><td>35.13px</td><td>35.13px</td><td>2.196rem</td></tr>
+              <tr><td>768px</td><td>42.64px</td><td>42.64px</td><td>2.665rem</td></tr>
+              <tr><td>1024px</td><td>49.32px</td><td>49.32px</td><td>3.083rem</td></tr>
+              <tr><td>1280px</td><td>56.00px</td><td>56.00px</td><td>3.500rem</td></tr>
+              <tr><td>1440px</td><td>60.17px</td><td>56.00px (max)</td><td>3.500rem</td></tr>
+              <tr><td>1920px</td><td>72.70px</td><td>56.00px (max)</td><td>3.500rem</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The preferred column shows why the bounds earn their place: left alone, the line would keep climbing to 72.7px on a 1920px monitor. Our <a href="/clamp-generator">clamp() generator</a> does this arithmetic and the rounding for you, and also produces a full type scale and a zoom check.</p>
+
+        <h2>Why the preferred value must mix rem and vw</h2>
+        <p>It is tempting to skip the intercept and write <code>font-size: 4vw</code>. There are two problems with that. First, browser zoom does not change how wide the viewport physically is, so a pure <code>vw</code> size does not respond to zoom at all. By our calculation, <code>4vw</code> on a 1440px-wide screen renders at 57.6px at 100%, 200%, 300%, 400% and 500% zoom alike. WCAG lists exactly this as failure F94, incorrect use of viewport units to resize text.</p>
+        <p>Second, <code>vw</code> ignores the default font size people set in their browser. Someone who raises it from 16px to 20px expects text to get 25% bigger. Rem respects that; viewport units do not. Mixing the two means the rem part tracks both zoom and the user's preference, while the vw part supplies the fluid growth.</p>
+        <p>Be honest with yourself about how far that goes. At a 1024px viewport our example heading moves from 49.32px to 54.97px when the default is raised to 20px: an 11% increase rather than 25%, because the vw portion does not move. The min and max bounds, being pure rem, scale fully. Avoid <code>px</code> in the intercept for the same reason: pixels follow zoom but ignore the font-size setting.</p>
+
+        <h2>The zoom problem: WCAG 1.4.4</h2>
+        <p>Success Criterion 1.4.4 Resize Text (level AA) asks that text can be resized &ldquo;up to 200 percent without loss of content or functionality&rdquo; (<a href="https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html">W3C, Understanding SC 1.4.4</a>). Fluid type complicates this because zoom only scales part of the formula. At a zoom factor <em>z</em>, the rem intercept and both bounds are multiplied by <em>z</em>, but the vw term stays the same physical size. On a wide screen, where the text was already sitting at its maximum, 200% browser zoom simply does not double it.</p>
+        <p>Adrian Roselli documented this in <a href="https://adrianroselli.com/2019/12/responsive-type-and-zoom.html">Responsive Type and Zoom</a>, including a published clamp() example that grew only around 6% at 200% zoom. Maxwell Barvian later worked through the maths in <a href="https://www.smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type/">Addressing Accessibility Concerns With Using Fluid Type</a> (Smashing Magazine, 2023) and arrived at a rule of thumb: <strong>keep the maximum font size at or below 2.5 times the minimum</strong>.</p>
+        <p>The reasoning is short. Most browsers let users zoom to 500%. At 500% the smallest the text can render is five times the minimum, because the minimum bound scales with zoom. If the maximum is no more than 2.5 times the minimum, then five times the minimum is at least twice the maximum, so whatever size the text was at 100%, it can always be doubled. The same logic applies to any font size with known bounds, not just clamp().</p>
+        <p>Treat it as what it is: a heuristic, and a sufficient condition rather than a WCAG requirement. It assumes a 500% zoom ceiling, it says nothing about how much zoom a user needs before the text doubles, and Roselli notes in an update to his post that he has not tested Barvian's assertions. Use the rule to rule out bad designs, then zoom and measure.</p>
+
+        <h2>Checking two clamps under zoom</h2>
+        <p>To see the rule in practice, we ran two clamps through the same model on a 1440px-wide screen. Sizes are the rendered size relative to the 100% view. Clamp A is the worked example above (maximum ÷ minimum = 1.75). Clamp B spans the same viewports but goes from 1.5rem to 4.5rem (a ratio of 3): <code>clamp(1.5rem, 0.3261rem + 5.2174vw, 4.5rem)</code>.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Zoom</th><th>A: size</th><th>A: vs 100%</th><th>B: size</th><th>B: vs 100%</th></tr></thead>
+            <tbody>
+              <tr><td>100%</td><td>56.0px</td><td>1.00×</td><td>72.0px</td><td>1.00×</td></tr>
+              <tr><td>200%</td><td>82.8px</td><td>1.48×</td><td>85.6px</td><td>1.19×</td></tr>
+              <tr><td>300%</td><td>105.4px</td><td>1.88×</td><td>90.8px</td><td>1.26×</td></tr>
+              <tr><td>400%</td><td>128.0px</td><td>2.29×</td><td>96.0px</td><td>1.33×</td></tr>
+              <tr><td>500%</td><td>160.0px</td><td>2.86×</td><td>120.0px</td><td>1.67×</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Clamp A passes in the sense the rule promises: it reaches double size at about 330% zoom. Clamp B never gets there. At 500% it is only 1.67×, because its 1.5rem floor times five is 120px, less than twice its 72px ceiling. Notice that neither clamp doubles at 200% browser zoom on a wide screen.</p>
+        <p>On a 390px phone both clamps sit near their minimum, so zoom behaves almost linearly: A doubles at about 205% and B at about 214%. Wide screens are where fluid type struggles, and they are exactly where most of us forget to test zoom. If you want text to double by 300%, the same reasoning tightens the ratio to 1.5.</p>
+
+        <h2>Fluid type scales</h2>
+        <p>One clamp is rarely enough; you want a whole scale. In a modular scale each step is the previous one multiplied by a ratio. The approach popularised by Utopia goes further and lets the ratio itself change: a tighter ratio on small screens, where huge headings waste space, and a wider one on large screens. You define a base size and ratio at each end, compute every step's minimum and maximum, and interpolate each step with the same slope and intercept formula.</p>
+        <p>Here is a scale running from a 16px base at a 1.2 ratio on a 360px viewport to an 18px base at a 1.25 ratio on a 1280px viewport:</p>
+        <pre><code>:root {
+  --step--1: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --step-2: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --step-3: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --step-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+}
+
+body  { font-size: var(--step-0); }
+h1    { font-size: var(--step-4); }
+h2    { font-size: var(--step-3); }
+small { font-size: var(--step--1); }</code></pre>
+        <p>A useful side effect: the maximum-to-minimum ratio stays modest at every step. Even step 4 grows only 1.33×, comfortably inside the 2.5× limit. Ratios that break the rule usually come from designs that want a 24px mobile heading to become 96px on desktop, and a scale keeps that ambition in check.</p>
+
+        <h2>Container query units for components</h2>
+        <p>Viewport units tie type to the window, but a card in a narrow sidebar and the same card in a full-width grid share one viewport. The <code>cqi</code> unit is 1% of the query container's inline size, so swapping <code>vw</code> for <code>cqi</code> sizes text to the component instead:</p>
+        <pre><code>.card-wrapper {
+  container-type: inline-size;
+}
+
+.card h2 {
+  font-size: clamp(1.25rem, 0.9rem + 2.5cqi, 2rem);
+}</code></pre>
+        <p>The maths is identical, with container widths in place of viewport widths. Two cautions from <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries">MDN's container queries guide</a>: the units only resolve against an ancestor with a <code>container-type</code> of <code>size</code> or <code>inline-size</code>, and if no eligible container exists they fall back to small viewport units, so a missing declaration silently gives you viewport behaviour. And for a fluid-width container the cqi term behaves much like vw under zoom, so the 2.5× rule still applies.</p>
+
+        <h2>Common mistakes</h2>
+        <ul>
+          <li><strong>Minimum larger than maximum.</strong> Because clamp() resolves as <code>max(MIN, min(VAL, MAX))</code>, a MIN above MAX wins everywhere and the text never changes. This usually happens when someone wants text to shrink as the screen grows. Keep the smaller value first and let the slope go negative instead.</li>
+          <li><strong>Pixels in the preferred value.</strong> <code>clamp(1rem, 12px + 2vw, 2rem)</code> works, but the 12px ignores the user's font-size setting. Convert the intercept to rem.</li>
+          <li><strong>Line height that doesn't scale.</strong> A fixed <code>line-height: 28px</code> will make lines collide once the text outgrows it. A unitless value scales, but 1.5 looks loose on large headings. <code>line-height: calc(1em + 0.5rem)</code> gives 1.5 at 16px and about 1.14 at 56px, tightening as the text grows.</li>
+          <li><strong>Forgetting line length.</strong> Fluid body text in a full-width container can run well past 100 characters a line on a desktop monitor. Cap the measure with <code>max-inline-size: 65ch</code>; because <code>ch</code> is relative to the font, the measure stays consistent as the size changes.</li>
+          <li><strong>Checking contrast at only one size.</strong> WCAG's lower contrast requirement for large text depends on the rendered size, so a fluid heading can count as large on desktop and normal on a phone. Check it against the smaller size with our <a href="/contrast-checker">contrast checker</a>.</li>
+        </ul>
+
+        <h2>A sensible default</h2>
+        <p>Set your bounds in rem, build the preferred value from a rem intercept plus a vw slope, and keep each maximum within 2.5 times its minimum, tighter for body text, which rarely needs to grow by more than an eighth. Pair the sizes with a scaling line height and a <code>ch</code>-based measure. Then open a wide browser window, zoom to 200%, 300% and 400%, and confirm with your own eyes that the text grows. The maths gets you close; the zoom test is what tells you it works.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is the formula for fluid typography with clamp()?</summary>
+            <p class="faq-answer">Slope = (max size − min size) ÷ (max viewport − min viewport), and intercept = min size − slope × min viewport. The preferred value is the intercept in rem plus slope × 100 in vw. Going from 32px at a 360px viewport to 56px at 1280px gives clamp(2rem, 1.413rem + 2.6087vw, 3.5rem).</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is fluid typography bad for accessibility?</summary>
+            <p class="faq-answer">Not inherently, but it can fail WCAG 1.4.4 Resize Text if browser zoom cannot double the text. Set the bounds in rem, mix rem with vw in the preferred value, keep the maximum at or below 2.5 times the minimum, and test by zooming a wide browser window.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why use rem and vw together inside clamp()?</summary>
+            <p class="faq-answer">A pure vw value ignores both browser zoom and the user's default font size, because it only tracks the viewport. The rem part responds to both settings, while the vw part provides the fluid growth between your two breakpoints.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use vw or cqi for fluid font sizes?</summary>
+            <p class="faq-answer">Use vw for page-level type such as hero headings and body copy. Use cqi for components that appear in containers of different widths, such as cards. cqi needs an ancestor with container-type: inline-size; without one it falls back to small viewport units.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/clamp-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>CSS clamp() Generator</h3>
+            <p>Generate the clamp() value, a fluid type scale and a zoom check.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/px-to-rem-converter" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>PX to REM Converter</h3>
+            <p>Turn pixel sizes and intercepts into rem values.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>The changes that fix most real accessibility problems.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

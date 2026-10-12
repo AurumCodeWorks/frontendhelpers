@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WCAG 2.2 contrast for developers: the 4.5:1 and 3:1 rules, large text, non-text and focus contrast, the luminance maths, and 17 real colour pairs tested." />
+  <link rel="canonical" href="https://frontendhelpers.com/wcag-colour-contrast-guide" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/wcag-colour-contrast-guide" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="WCAG 2.2 Colour Contrast: A Developer's Guide" />
+  <meta property="og:description" content="WCAG 2.2 contrast for developers: the 4.5:1 and 3:1 rules, large text, non-text and focus contrast, the luminance maths, and 17 real colour pairs tested." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-contrast-checker.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WCAG 2.2 Colour Contrast: A Developer's Guide" />
+  <meta name="twitter:description" content="WCAG 2.2 contrast for developers: the 4.5:1 and 3:1 rules, large text, non-text and focus contrast, the luminance maths, and 17 real colour pairs tested." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-contrast-checker.png" />
+
+  <title>WCAG 2.2 Colour Contrast: A Developer's Guide</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "WCAG 2.2 Colour Contrast: A Developer's Guide",
+        "description": "WCAG 2.2 contrast for developers: the 4.5:1 and 3:1 rules, large text, non-text and focus contrast, the luminance maths, and 17 real colour pairs tested.",
+        "url": "https://frontendhelpers.com/wcag-colour-contrast-guide",
+        "image": "https://frontendhelpers.com/assets/og-contrast-checker.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/wcag-colour-contrast-guide" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "WCAG 2.2 Colour Contrast: A Developer's Guide", "item": "https://frontendhelpers.com/wcag-colour-contrast-guide" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What contrast ratio does WCAG 2.2 AA require?",
+            "acceptedAnswer": { "@type": "Answer", "text": "At least 4.5:1 for normal text and 3:1 for large text (18pt, or 14pt bold, which is about 24px or 18.66px bold). User interface components, focus indicators and meaningful graphics need 3:1 against adjacent colours. These numbers are unchanged from WCAG 2.1." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the lightest grey text that passes WCAG AA on white?",
+            "acceptedAnswer": { "@type": "Answer", "text": "#767676, at 4.542:1. One step lighter, #777777, scores 4.478:1 and fails, because WCAG ratios are never rounded up. For large text, #949494 is the lightest neutral grey that passes 3:1; #959595 fails at 2.995:1." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does placeholder text have to meet contrast requirements?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Placeholder text is text, so SC 1.4.3 applies and it needs 4.5:1 at normal sizes. The common light-grey placeholder #9ca3af scores only 2.539:1 on white; #6b7280 passes at 4.834:1." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use APCA instead of the WCAG contrast ratio?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not for conformance. WCAG 3 is still a Working Draft and has not settled on a contrast algorithm, so APCA is not a requirement anywhere. You can use it as an extra design check, but your colours must still pass the WCAG 2.2 ratios." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">WCAG 2.2 Colour Contrast: A Developer's Guide</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>WCAG 2.2 colour contrast, <span class="hero-highlight">explained for developers</span></h1>
+        <p class="page-hero-sub">The ratios, the exact meaning of large text, non-text and focus contrast, the maths behind the number, and real colour pairs computed rather than guessed.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 9 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>What WCAG 2.2 actually requires</h2>
+        <p>WCAG 2.2 is the current W3C Recommendation, and for colour contrast it changed nothing: success criteria 1.4.3, 1.4.6 and 1.4.11 carry the same wording and the same numbers as in WCAG 2.1. If your palette passed 2.1, it passes 2.2. What 2.2 did add is a new AAA criterion for focus indicators, covered below. The normative text is in the <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 specification</a>, and three criteria do the work:</p>
+        <ul>
+          <li><strong>1.4.3 Contrast (Minimum), level AA:</strong> text and images of text need at least <strong>4.5:1</strong> against their background, or <strong>3:1</strong> for large text.</li>
+          <li><strong>1.4.6 Contrast (Enhanced), level AAA:</strong> <strong>7:1</strong> for normal text, <strong>4.5:1</strong> for large text.</li>
+          <li><strong>1.4.11 Non-text Contrast, level AA:</strong> <strong>3:1</strong> for the parts of interface components and graphics that people need to see.</li>
+        </ul>
+        <p>Most organisations target AA, so 1.4.3 and 1.4.11 are the two you will be audited against. The text criteria exempt text in inactive (disabled) components, pure decoration, text nobody can see, and logotypes. The thresholds are hard limits: the <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">Understanding document for 1.4.3</a> says computed values must not be rounded, so 4.499:1 fails 4.5:1. A checker that displays two decimal places can show you "4.50" for a colour that fails.</p>
+
+        <h2>The exact definition of "large text"</h2>
+        <p>WCAG defines large-scale text as at least <strong>18 point, or 14 point bold</strong>. CSS fixes 1pt at 1.333px, so that is <strong>24px</strong> regular or about <strong>18.66px</strong> bold. (The Understanding document rounds the second figure to 18.5px.)</p>
+        <p>Treat those pixel values as approximate, for two reasons. First, point size is a nominal measure: two fonts at 24px can have very different x-heights and stroke widths, and WCAG notes that fonts with thin strokes or unusual letterforms are harder to read at low contrast. A hairline display face at 24px is not large in any useful sense. Second, the definition measures text as you deliver it, not after a visitor zooms. The safe rule is to apply the 3:1 allowance only to text that is at least 24px, or at least 19px in a genuinely bold weight (700 or heavier), in a font of ordinary proportions. Everything else gets 4.5:1.</p>
+
+        <h2>Non-text contrast: what 1.4.11 covers, and what it doesn't</h2>
+        <p>SC 1.4.11 requires 3:1 against adjacent colours for any visual information needed to identify a control or its state, and for the parts of graphics needed to understand the content. In practice that means:</p>
+        <ul>
+          <li>The border of a text input, when the border is the only thing showing where to type.</li>
+          <li>State indicators: the tick in a checkbox, the knob position on a toggle, the underline on a selected tab.</li>
+          <li>Focus indicators, measured against the colours next to them.</li>
+          <li>Icons that carry meaning without a text label, and chart lines, bars or segments you need to tell apart.</li>
+        </ul>
+        <p>The <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html">Understanding document for 1.4.11</a> is just as clear about what is out of scope. Disabled and other inactive components are exempt. So are logos, decorative graphics, and controls whose appearance comes from the browser and which you haven't restyled. Hover styling is treated as supplementary, because the pointer already shows where you are. A button with a clear text label does not need a contrasting outline, because the text identifies it. And 1.4.11 does not compare a control's focused and unfocused states with each other; that is the job of 2.4.13.</p>
+
+        <h2>Focus: 2.4.7 Focus Visible versus 2.4.13 Focus Appearance</h2>
+        <p><strong>2.4.7 Focus Visible</strong> (AA) only says keyboard focus must be visible. Combined with 1.4.11, your indicator must also reach 3:1 against its adjacent colours. <strong>2.4.13 Focus Appearance</strong> is new in WCAG 2.2 at level AAA, and it is measurable. Per the <a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">Understanding document for 2.4.13</a>, an area of the indicator must be at least as large as a 2 CSS pixel thick perimeter of the unfocused component, and those pixels must change by at least 3:1 between the unfocused and focused states. Untouched browser default focus styles are exempt.</p>
+        <p>A solid outline with an offset meets both parts comfortably, as long as the outline colour contrasts 3:1 with the page background it is drawn over:</p>
+        <pre><code class="language-css">:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}</code></pre>
+
+        <h2>The maths: relative luminance and the contrast ratio</h2>
+        <p>The contrast ratio is <code>(L1 + 0.05) / (L2 + 0.05)</code>, where L1 is the relative luminance of the lighter colour and L2 that of the darker. It runs from 1:1 (identical colours) to 21:1 (black on white). To get relative luminance from an sRGB colour:</p>
+        <ol>
+          <li>Divide each 8-bit channel by 255 to get a value from 0 to 1.</li>
+          <li>Linearise it: if the value is 0.04045 or less, divide by 12.92; otherwise compute ((c + 0.055) / 1.055)<sup>2.4</sup>.</li>
+          <li>Weight the channels: L = 0.2126R + 0.7152G + 0.0722B. Green dominates because the eye is most sensitive to it.</li>
+        </ol>
+        <p>Older articles, and WCAG itself before May 2021, give the threshold as 0.03928. The <a href="https://www.w3.org/TR/WCAG22/#dfn-relative-luminance">current definition</a> uses 0.04045 and notes the change has no practical effect. For hex colours it has none at all: no 8-bit channel value falls between the two thresholds (10/255 is 0.03922 and 11/255 is 0.04314), so both versions produce identical ratios.</p>
+        <p>Here is a complete implementation that accepts <code>#rgb</code> and <code>#rrggbb</code>:</p>
+        <pre><code class="language-javascript">function contrastRatio(hexA, hexB) {
+  const luminance = (hex) =&gt; {
+    let h = hex.replace('#', '');
+    if (h.length === 3) h = [...h].map((c) =&gt; c + c).join('');
+    if (!/^[0-9a-f]{6}$/i.test(h)) throw new Error(`Not a hex colour: ${hex}`);
+    const [r, g, b] = [0, 2, 4].map((i) =&gt; {
+      const c = parseInt(h.slice(i, i + 2), 16) / 255;
+      return c &lt;= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const [lighter, darker] = [luminance(hexA), luminance(hexB)].sort((a, b) =&gt; b - a);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+contrastRatio('#767676', '#fff').toFixed(3);    // "4.542"
+contrastRatio('#959595', '#ffffff').toFixed(3); // "2.995"</code></pre>
+        <p>Run in Node, it reproduces every value in the table below. Our <a href="/contrast-checker">contrast checker</a> runs the same calculation in the browser.</p>
+
+        <h2>Real colour pairs, computed</h2>
+        <p>Every ratio below was calculated with the function above and is shown to three decimal places; pass or fail was decided on the unrounded value. The named colours are hex values from Tailwind CSS v3's default palette, chosen because so many projects start from it.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Foreground on background</th><th>Typical use</th><th>Ratio</th><th>AA text 4.5:1</th><th>AA large &amp; 1.4.11 3:1</th><th>AAA text 7:1</th><th>AAA large 4.5:1</th></tr></thead>
+            <tbody>
+              <tr><td><code>#767676</code> on <code>#ffffff</code></td><td>Secondary text</td><td>4.542</td><td>Pass</td><td>Pass</td><td>Fail</td><td>Pass</td></tr>
+              <tr><td><code>#777777</code> on <code>#ffffff</code></td><td>Secondary text</td><td>4.478</td><td>Fail</td><td>Pass</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#959595</code> on <code>#ffffff</code></td><td>Muted text</td><td>2.995</td><td>Fail</td><td>Fail</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#aaaaaa</code> on <code>#ffffff</code></td><td>Muted text</td><td>2.323</td><td>Fail</td><td>Fail</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#3b82f6</code> blue-500 on <code>#ffffff</code></td><td>Links, buttons</td><td>3.678</td><td>Fail</td><td>Pass</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#2563eb</code> blue-600 on <code>#ffffff</code></td><td>Links, focus ring</td><td>5.169</td><td>Pass</td><td>Pass</td><td>Fail</td><td>Pass</td></tr>
+              <tr><td><code>#ffffff</code> on <code>#f97316</code> orange-500</td><td>Brand button label</td><td>2.803</td><td>Fail</td><td>Fail</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#ffffff</code> on <code>#ea580c</code> orange-600</td><td>Brand button label</td><td>3.560</td><td>Fail</td><td>Pass</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#ffffff</code> on <code>#c2410c</code> orange-700</td><td>Brand button label</td><td>5.178</td><td>Pass</td><td>Pass</td><td>Fail</td><td>Pass</td></tr>
+              <tr><td><code>#9ca3af</code> gray-400 on <code>#ffffff</code></td><td>Placeholder</td><td>2.539</td><td>Fail</td><td>Fail</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#6b7280</code> gray-500 on <code>#ffffff</code></td><td>Placeholder</td><td>4.834</td><td>Pass</td><td>Pass</td><td>Fail</td><td>Pass</td></tr>
+              <tr><td><code>#d1d5db</code> gray-300 on <code>#ffffff</code></td><td>Input border</td><td>1.474</td><td>n/a</td><td>Fail</td><td>n/a</td><td>n/a</td></tr>
+              <tr><td><code>#ef4444</code> red-500 on <code>#ffffff</code></td><td>Error text</td><td>3.763</td><td>Fail</td><td>Pass</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#dc2626</code> red-600 on <code>#ffffff</code></td><td>Error text</td><td>4.829</td><td>Pass</td><td>Pass</td><td>Fail</td><td>Pass</td></tr>
+              <tr><td><code>#2563eb</code> blue-600 on <code>#0f172a</code> slate-900</td><td>Dark-mode link, focus ring</td><td>3.454</td><td>Fail</td><td>Pass</td><td>Fail</td><td>Fail</td></tr>
+              <tr><td><code>#60a5fa</code> blue-400 on <code>#0f172a</code> slate-900</td><td>Dark-mode link, focus ring</td><td>7.022</td><td>Pass</td><td>Pass</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td><code>#e5e7eb</code> gray-200 on <code>#111827</code> gray-900</td><td>Dark-mode body text</td><td>14.328</td><td>Pass</td><td>Pass</td><td>Pass</td><td>Pass</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A few things stand out. <code>#767676</code> is the lightest neutral grey that passes 4.5:1 on white; one step lighter, <code>#777777</code>, fails. <code>#959595</code> scores 2.995:1, which a rounding checker shows as 3.00, yet it fails even the large-text threshold. Tailwind's blue-500 is fine for large headings but not for body links. White text on a typical brand orange fails outright until you darken to orange-700. And a blue-600 focus ring that is comfortable on white (5.169:1) drops to 3.454:1 on a dark slate background: still a 1.4.11 pass, but with very little margin.</p>
+
+        <h2>Text over images, gradients and transparency</h2>
+        <p>Contrast is measured against the background the text is actually rendered on. Over a photograph or gradient, that means the worst point behind the glyphs: the area closest in lightness to the text. Background images that leave text below the threshold are a documented WCAG failure (F83). The dependable fix is a scrim, a semi-opaque overlay between image and text. Check the text against the composited colour of the scrim over the most troublesome part of the image, not against the scrim colour alone.</p>
+        <p>Transparency needs the same treatment. A colour with an alpha channel has no contrast ratio on its own; you have to composite it over whatever sits behind it and measure the result. Take <code>rgba(0, 0, 0, 0.54)</code>, a popular secondary-text colour. Over white it composites to <code>#757575</code> and scores 4.608:1, a pass. Put the same token on a <code>#f3f4f6</code> card and it composites to <code>#707071</code> at 4.495:1, a fail. The same applies to <code>opacity</code> on a parent element, which fades the text along with everything else. And always set foreground and background together: specifying only one leaves you at the mercy of the user's defaults, which WCAG also treats as a failure.</p>
+
+        <h2>Dark mode pitfalls</h2>
+        <p>A dark theme is a second palette, and every pair in it needs re-checking. Colours don't carry over: blue-600 links pass at 5.169:1 on white but score 3.454:1 on slate-900, a fail for body text, while the lighter blue-400 scores 7.022:1 on the same background. Two more traps:</p>
+        <ul>
+          <li><strong>Pure white on pure black</strong> gives the maximum 21:1, but many readers, particularly those with astigmatism, find it glaring, with letters appearing to bleed into the background. Off-white on near-black, such as gray-200 on gray-900, still scores 14.328:1 and is far easier on the eye.</li>
+          <li><strong>Shadows stop working.</strong> A dark shadow on a dark surface is invisible, so cards and menus need lighter surface colours or borders to separate them. Where a border is the only thing that identifies a control, it needs 3:1.</li>
+        </ul>
+        <p>Our <a href="/dark-mode-implementation-guide">dark mode implementation guide</a> covers structuring the CSS so that each theme's colour pairs live in one place.</p>
+
+        <h2>Hover, focus, error and placeholder states</h2>
+        <p>Each state is a new colour pair. Text shown on hover or focus is still text, so a button whose hover background lightens must keep its label at 4.5:1. Error messages are text too: red-500 on white manages only 3.763:1, while red-600 passes at 4.829:1. Identify errors in words or with an icon as well, because colour alone fails SC 1.4.1. Placeholder text is covered by 1.4.3, and the common gray-400 placeholder fails at 2.539:1, whereas gray-500 passes at 4.834:1. Disabled controls are exempt, but if you rely on that, make sure the control genuinely is inactive and not merely pale.</p>
+
+        <h2>Bake contrast into your design tokens</h2>
+        <p>The most reliable way to keep contrast right is to stop choosing colours one at a time. Define semantic tokens in pairs, such as <code>--text-on-surface</code> with <code>--surface</code> and <code>--text-on-accent</code> with <code>--accent</code>, and only ever use a text token on its named background. Then test the pairs automatically:</p>
+        <pre><code class="language-javascript">const pairs = [
+  ['--text-on-surface', '#111827', '#ffffff', 4.5],
+  ['--text-muted', '#6b7280', '#ffffff', 4.5],
+  ['--focus-ring', '#2563eb', '#ffffff', 3],
+];
+for (const [name, fg, bg, min] of pairs) {
+  const ratio = contrastRatio(fg, bg);
+  if (ratio &lt; min) throw new Error(`${name}: ${ratio.toFixed(3)} &lt; ${min}`);
+}</code></pre>
+        <p>Run that in CI and anyone who changes a hex value in the token file gets an immediate failure rather than an audit finding six months later. When you need a full scale to pick from, our <a href="/color-palette-generator">colour palette generator</a> builds tints and shades from a base colour that you can test in the same way.</p>
+
+        <h2>APCA and WCAG 3: not a requirement</h2>
+        <p>You will see APCA, the Accessible Perceptual Contrast Algorithm, recommended as a better model. It accounts for things the WCAG 2 ratio ignores, such as font size and weight and whether text is light on dark or dark on light, and it is a reasonable extra check while designing. It is not a conformance requirement. WCAG 3 is still a Working Draft: the <a href="https://www.w3.org/TR/wcag-3.0/">latest version</a>, dated 10 September 2026, says it is inappropriate to cite as anything other than work in progress, and its text contrast requirement states that the contrast measure is yet to be determined. APCA was explored in early WCAG 3 drafts, but no algorithm has been adopted. Laws, contracts and procurement rules reference WCAG 2.x, so the 4.5:1 and 3:1 ratios remain the bar you must clear. For the rest of the accessibility picture, see our <a href="/accessible-website-guide">accessible website guide</a>.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What contrast ratio does WCAG 2.2 AA require?</summary>
+            <p class="faq-answer">At least 4.5:1 for normal text and 3:1 for large text (18pt, or 14pt bold, which is about 24px or 18.66px bold). User interface components, focus indicators and meaningful graphics need 3:1 against adjacent colours. These numbers are unchanged from WCAG 2.1.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the lightest grey text that passes WCAG AA on white?</summary>
+            <p class="faq-answer">#767676, at 4.542:1. One step lighter, #777777, scores 4.478:1 and fails, because WCAG ratios are never rounded up. For large text, #949494 is the lightest neutral grey that passes 3:1; #959595 fails at 2.995:1.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does placeholder text have to meet contrast requirements?</summary>
+            <p class="faq-answer">Yes. Placeholder text is text, so SC 1.4.3 applies and it needs 4.5:1 at normal sizes. The common light-grey placeholder #9ca3af scores only 2.539:1 on white; #6b7280 passes at 4.834:1.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use APCA instead of the WCAG contrast ratio?</summary>
+            <p class="faq-answer">Not for conformance. WCAG 3 is still a Working Draft and has not settled on a contrast algorithm, so APCA is not a requirement anywhere. You can use it as an extra design check, but your colours must still pass the WCAG 2.2 ratios.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Contrast Checker</h3>
+            <p>Test any colour pair against the AA and AAA thresholds.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Build tints and shades, then check each text pair.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>The practical accessibility fixes beyond colour.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>
