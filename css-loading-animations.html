@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Eight free CSS loading animations with live previews: spinners, bouncing dots, progress bars, skeleton shimmers, and ripples. Pure CSS, no libraries." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-loading-animations.png" />
 
-  <title>CSS Loading Animations — 8 Free Spinners, Dots &amp; Skeletons | FrontendHelpers</title>
+  <title>CSS Loading Animations: Spinners, Dots &amp; Skeletons</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,211 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 8 loaders, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-spinner-ring">
+        <h3>Ring Spinner</h3>
+        <p>The classic. One element, four lines of keyframes. Add role="status" and an aria-label so screen readers announce it.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-spinner" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(139, 92, 246, 0.2);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: fh-spin 0.8s linear infinite;
+}
+@keyframes fh-spin {
+  to { transform: rotate(360deg); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-dual-ring">
+        <h3>Dual Ring</h3>
+        <p>Two opposing arcs spinning together. Colour the top and bottom borders with your two brand colours.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-dual-ring" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-dual-ring {
+  width: 44px;
+  height: 44px;
+  border: 4px solid transparent;
+  border-top-color: #8b5cf6;
+  border-bottom-color: #06b6d4;
+  border-radius: 50%;
+  animation: fh-spinDual 1s linear infinite;
+}
+@keyframes fh-spinDual {
+  to { transform: rotate(360deg); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-dots-bounce">
+        <h3>Bouncing Dots</h3>
+        <p>The “someone is typing” pattern. The staggered animation-delay on each dot creates the wave.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-dots-bounce" role="status" aria-label="Loading"&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-dots-bounce {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+.fh-dots-bounce span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #06b6d4;
+  animation: fh-dotBounce 0.6s ease-in-out infinite alternate;
+}
+.fh-dots-bounce span:nth-child(2) { animation-delay: 0.15s; }
+.fh-dots-bounce span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes fh-dotBounce {
+  from { transform: translateY(0);     opacity: 0.6; }
+  to   { transform: translateY(-14px); opacity: 1; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-dots-pulse">
+        <h3>Pulsing Dots</h3>
+        <p>Calmer than bouncing dots — good inside buttons while a form submits.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-dots-pulse" role="status" aria-label="Loading"&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-dots-pulse {
+  display: flex;
+  gap: 8px;
+}
+.fh-dots-pulse span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  animation: fh-dotPulse 1s ease-in-out infinite;
+}
+.fh-dots-pulse span:nth-child(2) { animation-delay: 0.2s; }
+.fh-dots-pulse span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes fh-dotPulse {
+  0%, 100% { transform: scale(0.6); opacity: 0.4; }
+  50%      { transform: scale(1);   opacity: 1; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-bar-loader">
+        <h3>Indeterminate Bar</h3>
+        <p>For when you can’t know the progress percentage. A gradient segment sweeps the track endlessly.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-bar-loader" role="progressbar" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-bar-loader {
+  width: 160px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(139, 92, 246, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+.fh-bar-loader::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 40%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+  animation: fh-barSlide 1.2s ease-in-out infinite;
+}
+@keyframes fh-barSlide {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-skeleton">
+        <h3>Skeleton Shimmer</h3>
+        <p>Skeleton screens make loads feel faster than spinners because they preview the page structure. Size each bar like the content it replaces.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-skeleton" style="width: 180px;"&gt;&lt;/div&gt;
+&lt;div class="fh-skeleton" style="width: 120px;"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-skeleton {
+  width: 180px;
+  height: 16px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(148, 163, 184, 0.12) 25%,
+    rgba(148, 163, 184, 0.28) 50%,
+    rgba(148, 163, 184, 0.12) 75%);
+  background-size: 200% 100%;
+  animation: fh-shimmer 1.4s linear infinite;
+}
+@keyframes fh-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-ripple-loader">
+        <h3>Ripple</h3>
+        <p>Two expanding rings offset by half the duration. Feels organic, like drops hitting water.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-ripple" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-ripple {
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+.fh-ripple::before,
+.fh-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid #06b6d4;
+  border-radius: 50%;
+  animation: fh-rippleWave 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.fh-ripple::after {
+  animation-delay: 0.8s;
+}
+@keyframes fh-rippleWave {
+  from { transform: scale(0.1); opacity: 1; }
+  to   { transform: scale(1);   opacity: 0; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-orbit-loader">
+        <h3>Orbit</h3>
+        <p>A satellite circling a dashed orbit. The dot is a pseudo-element, so it is still just one div.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-orbit" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-orbit {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px dashed rgba(139, 92, 246, 0.35);
+  animation: fh-spinOrbit 2.4s linear infinite;
+}
+.fh-orbit::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: #06b6d4;
+}
+@keyframes fh-spinOrbit {
+  to { transform: rotate(360deg); }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Choosing the right loader for the wait</h2>

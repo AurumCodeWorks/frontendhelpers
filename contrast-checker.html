@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-contrast-checker.png" />
 
-  <title>WCAG Contrast Checker — Free Colour Contrast Ratio Tool | FrontendHelpers</title>
+  <title>WCAG Colour Contrast Checker (AA &amp; AAA) | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -94,7 +81,7 @@
           {
             "@type": "Question",
             "name": "What contrast ratio do I need to pass WCAG?",
-            "acceptedAnswer": { "@type": "Answer", "text": "For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.1 also requires 3:1 for meaningful UI components such as input borders and focus indicators." }
+            "acceptedAnswer": { "@type": "Answer", "text": "For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.2 also requires 3:1 for meaningful UI components such as input borders and focus indicators." }
           },
           {
             "@type": "Question",
@@ -104,7 +91,7 @@
           {
             "@type": "Question",
             "name": "Does placeholder text need to pass contrast?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Default browser placeholder grey fails, which is one of the most common accessibility issues on the web — and placeholders should never replace a visible label." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Pale placeholder grey is one of the most common contrast failures on the web — and placeholders should never replace a visible label." }
           },
           {
             "@type": "Question",
@@ -161,7 +148,7 @@
 
       <section class="page-hero tool-page-hero">
         <h1>WCAG contrast <span class="hero-highlight">checker</span></h1>
-        <p class="page-hero-sub">Test any text and background pairing against WCAG 2.1 AA and AAA, for both normal and large text, with a live preview of the result.</p>
+        <p class="page-hero-sub">Test any text and background pairing against WCAG 2.2 AA and AAA, for both normal and large text, with a live preview of the result.</p>
       </section>
 
       <!-- ═══ THE TOOL ═══ -->
@@ -170,7 +157,7 @@
       <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></span>WCAG Colour Contrast Checker</h2>
       <button class="btn-reset" id="reset-contrast">↺ Reset</button>
     </div>
-    <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.1 accessibility standards for AA and AAA compliance.</p>
+    <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.2 accessibility standards for AA and AAA compliance.</p>
 
     <div class="tool-grid">
       <div class="tool-inputs">
@@ -178,14 +165,14 @@
           <div class="form-group">
             <label for="fg-color">Text (Foreground) Colour</label>
             <div class="color-input-group">
-              <input type="color" id="fg-color-picker" value="#ffffff" />
+              <input type="color" id="fg-color-picker" aria-label="Pick text colour" value="#ffffff" />
               <input type="text" id="fg-color" value="#ffffff" placeholder="#ffffff" class="color-hex-input" />
             </div>
           </div>
           <div class="form-group">
             <label for="bg-color">Background Colour</label>
             <div class="color-input-group">
-              <input type="color" id="bg-color-picker" value="#1a1a2e" />
+              <input type="color" id="bg-color-picker" aria-label="Pick background colour" value="#1a1a2e" />
               <input type="text" id="bg-color" value="#1a1a2e" placeholder="#1a1a2e" class="color-hex-input" />
             </div>
           </div>
@@ -236,11 +223,11 @@
         <p>That weighting is why intuition misleads people. A mid-yellow and a mid-blue can look equally "medium" while having wildly different luminance, and two colours that feel high-contrast to you may fail outright. Measuring is not optional.</p>
 
         <h2>The four thresholds, and which one applies</h2>
-        <p><strong>AA</strong> is the level virtually all legislation references — the UK Equality Act, the European Accessibility Act, and Section 508 in the US. It requires <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text. <strong>AAA</strong> is the enhanced level, requiring <strong>7:1</strong> and <strong>4.5:1</strong> respectively.</p>
-        <p>"Large text" has a specific definition: at least <strong>24px</strong>, or <strong>18.66px if bold</strong>. It gets a lower threshold because thicker letterforms remain legible at lower contrast. Note that the requirement covers text and images of text — plus, under WCAG 2.1, a 3:1 minimum for meaningful UI components and graphics such as input borders, icons and focus indicators.</p>
+        <p><strong>AA</strong> is the level that legislation and procurement rules point to — the UK's public sector accessibility regulations, the European Accessibility Act (through the harmonised standard EN 301 549) and Section 508 in the US. It requires <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text. <strong>AAA</strong> is the enhanced level, requiring <strong>7:1</strong> and <strong>4.5:1</strong> respectively.</p>
+        <p>"Large text" has a specific definition: at least <strong>24px</strong>, or <strong>18.66px if bold</strong>. It gets a lower threshold because thicker letterforms remain legible at lower contrast. Note that the requirement covers text and images of text — plus, since WCAG 2.1 and still in the current WCAG 2.2, a 3:1 minimum (success criterion 1.4.11) for meaningful UI components and graphics such as input borders, icons and focus indicators.</p>
 
         <h2>The mistakes that fail real audits</h2>
-        <p>Three patterns account for most failures. <strong>Placeholder text</strong> is the worst offender — the default grey in most browsers fails badly, and placeholders are frequently misused as labels, so the information disappears for low-vision users. <strong>Light grey body text</strong> on white is the second: it looks refined in a design mockup on a bright calibrated monitor, and becomes unreadable on a phone in daylight. <strong>Text over images or gradients</strong> is the third, because the ratio changes across the background — check the lightest and darkest points it crosses, not the average, and add a scrim if either end fails.</p>
+        <p>Three patterns account for most failures. <strong>Placeholder text</strong> is the worst offender — placeholder greys are pale by design, some browser defaults fall short, and many design systems lighten them further. Placeholders are frequently misused as labels, so the information disappears for low-vision users. <strong>Light grey body text</strong> on white is the second: it looks refined in a design mockup on a bright calibrated monitor, and becomes unreadable on a phone in daylight. <strong>Text over images or gradients</strong> is the third, because the ratio changes across the background — check the lightest and darkest points it crosses, not the average, and add a scrim if either end fails.</p>
         <p>Also remember that disabled controls are exempt from the contrast requirement, but "looks disabled" is not the same as being disabled. If a control is interactive, it must meet the threshold.</p>
 
         <h2>Designing for contrast from the start</h2>
@@ -250,41 +237,37 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Calculating Contrast in JS</h2>
-        <p>If you are building dynamic themes where users can select their own brand colors, you must programmatically ensure that text placed over those colors remains readable. The World Wide Web Consortium (WCAG) provides a specific mathematical formula for calculating this relative luminance.</p>
-        
-        <h3>The WCAG Contrast Algorithm</h3>
-        <p>Here is the implementation in JavaScript to calculate the contrast ratio between two hex colors, allowing you to automatically switch text between black and white depending on the background.</p>
-        <pre><code class="language-javascript">
-// Helper: Convert Hex to RGB, apply sRGB gamma correction, and calculate luminance
-function getLuminance(hex) {
-  const rgb = hex.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16) / 255);
-  const a = rgb.map(v => {
-    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-  });
-  // Standard WCAG luminance formula
-  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+        <h2>Picking black or white text automatically</h2>
+        <p>If users can choose their own brand or theme colours, your code has to choose the text colour. The WCAG 2.2 formula is short, but copies of it around the web often break in two ways: the hex parser only understands six-digit colours, so <code>#777</code> produces <code>NaN</code>, and the regex accepts characters that are not hex at all, which <code>parseInt</code> silently misreads. This version validates its input, expands <code>#rgb</code> shorthand, and uses the 0.04045 threshold from the current specification. Older copies use 0.03928; for 8-bit colours the result is identical, because no 8-bit channel value falls between the two.</p>
+        <pre><code class="language-javascript">function parseHex(hex) {
+  const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) throw new Error(`Not a hex colour: ${hex}`);
+  const h = m[1].length === 3 ? m[1].replace(/./g, '$&amp;$&amp;') : m[1];
+  return [0, 2, 4].map(i =&gt; parseInt(h.slice(i, i + 2), 16) / 255);
 }
 
-// Main function: Calculate ratio between two colors
-function getContrastRatio(hex1, hex2) {
-  const lum1 = getLuminance(hex1);
-  const lum2 = getLuminance(hex2);
-  
-  const brightest = Math.max(lum1, lum2);
-  const darkest = Math.min(lum1, lum2);
-  
-  return (brightest + 0.05) / (darkest + 0.05);
+// WCAG 2.2 relative luminance (note the 0.04045 threshold)
+function luminance(hex) {
+  const [r, g, b] = parseHex(hex).map(c =&gt;
+    c &lt;= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-// Usage: Should we use white or black text on a blue background?
-const bgLuminance = getLuminance("#007bff");
-const whiteRatio = getContrastRatio("#007bff", "#ffffff");
-const blackRatio = getContrastRatio("#007bff", "#000000");
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) =&gt; y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
 
-const textColor = whiteRatio > blackRatio ? "#ffffff" : "#000000";
-        </code></pre>
-        <p>Integrating this logic into your application ensures you never fail accessibility audits due to user-generated color themes. A ratio of 4.5:1 is the minimum target for standard body text (WCAG AA).</p>
+// Whichever of black or white contrasts more with the background
+const textOn = bg =&gt;
+  contrast(bg, '#fff') &gt;= contrast(bg, '#000') ? '#fff' : '#000';
+
+console.log(contrast('#007bff', '#fff').toFixed(2)); // 3.98 – fails AA body text
+console.log(contrast('#007bff', '#000').toFixed(2)); // 5.28 – passes
+console.log(textOn('#007bff'), textOn('#333'));      // #000 #fff
+console.log(contrast('#777', '#fff').toFixed(2));    // 4.48 – #rgb works</code></pre>
+        <p>Two results surprise people. First, <code>#007bff</code>, a very common button blue, is more readable with black text than white: 5.28:1 against 3.98:1, and white fails AA for body text. Second, if you pick whichever of black or white scores higher, the result is never below 4.58:1 for any background colour, so the rule always passes AA for normal text. It does not guarantee AAA's 7:1. For that you have to adjust the background itself.</p>
+        <p>The maths is in the <a href="https://www.w3.org/TR/WCAG22/#dfn-relative-luminance">WCAG 2.2 definition of relative luminance</a>, and the reasoning behind the thresholds is in the W3C's <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">Understanding SC 1.4.3: Contrast (Minimum)</a>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -293,7 +276,7 @@ const textColor = whiteRatio > blackRatio ? "#ffffff" : "#000000";
         <div class="faq-list">
           <details class="faq-item">
             <summary>What contrast ratio do I need to pass WCAG?</summary>
-            <p class="faq-answer">For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.1 also requires 3:1 for meaningful UI components such as input borders and focus indicators.</p>
+            <p class="faq-answer">For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.2 also requires 3:1 for meaningful UI components such as input borders and focus indicators.</p>
           </details>
           <details class="faq-item">
             <summary>What counts as "large text" in WCAG?</summary>
@@ -301,7 +284,7 @@ const textColor = whiteRatio > blackRatio ? "#ffffff" : "#000000";
           </details>
           <details class="faq-item">
             <summary>Does placeholder text need to pass contrast?</summary>
-            <p class="faq-answer">Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Default browser placeholder grey fails, which is one of the most common accessibility issues on the web — and placeholders should never replace a visible label.</p>
+            <p class="faq-answer">Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Pale placeholder grey is one of the most common contrast failures on the web — and placeholders should never replace a visible label.</p>
           </details>
           <details class="faq-item">
             <summary>How do I check contrast for text over an image?</summary>

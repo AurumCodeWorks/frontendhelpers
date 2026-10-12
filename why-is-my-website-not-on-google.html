@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-why-is-my-website-not-on-google.png" />
 
-  <title>Why Isn’t My Website Showing Up on Google? A Diagnostic Guide | FrontendHelpers</title>
+  <title>Why Isn’t My Website on Google? A Diagnostic Guide</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -31,19 +31,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -76,7 +63,7 @@
         "url": "https://frontendhelpers.com/why-is-my-website-not-on-google",
         "image": "https://frontendhelpers.com/assets/og-why-is-my-website-not-on-google.png",
         "datePublished": "2026-07-19",
-        "dateModified": "2026-07-19",
+        "dateModified": "2026-10-12",
         "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
         "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
         "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
@@ -106,7 +93,7 @@
           {
             "@type": "Question",
             "name": "What does \"Discovered – currently not indexed\" mean?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Google knows the URL exists but has chosen not to index it, usually because the content is thin, duplicated, or judged low value. It is a content quality signal rather than a technical fault." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Google has found the URL but hasn't crawled it yet — usually because it is rescheduling to avoid overloading your server, or because it doesn't yet see the page as a priority. Give it time, strengthen internal links to the page and make sure it is in your sitemap. The quality signal is the different status \"Crawled – currently not indexed\", where Google fetched the page and decided not to index it." }
           }
         ]
       }
@@ -158,7 +145,7 @@
       <section class="page-hero tool-page-hero">
         <h1>Why isn’t my website <span class="hero-highlight">showing up on Google?</span></h1>
         <p class="page-hero-sub">Work through these checks in order. The first three find the cause about 80% of the time.</p>
-        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 8 min read · Updated 19 July 2026</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 5 min read · Updated 12 October 2026</p>
       </section>
 
       <article class="tool-documentation">
@@ -187,7 +174,7 @@
         <p>Test with Search Console's URL Inspection tool: use "Test live URL", then view the rendered HTML. If your headings and body copy aren't there, that's your answer. Server-side rendering or static generation removes the problem entirely.</p>
 
         <h2>6. Is the content substantial enough to index?</h2>
-        <p>Google doesn't index everything it crawls. Pages that are very thin, near-duplicates of other pages, or auto-generated with little unique value often sit in Search Console's <em>"Discovered – currently not indexed"</em> or <em>"Crawled – currently not indexed"</em> state.</p>
+        <p>Google doesn't index everything it crawls. Pages that are very thin, near-duplicates of other pages, or auto-generated with little unique value often sit in Search Console's <em>"Crawled – currently not indexed"</em> state. (Its sibling, <em>"Discovered – currently not indexed"</em>, is different: Google has found the URL but not crawled it yet, which is usually a crawl-scheduling issue rather than a quality verdict.)</p>
         <p>That status is Google telling you the page didn't clear its quality bar. The fix isn't technical — it's giving the page a genuine reason to exist: content that answers something specific, better than the pages already ranking.</p>
 
         <h2>7. Technical basics worth confirming</h2>
@@ -211,7 +198,7 @@
           </details>
           <details class="faq-item">
             <summary>What does "Discovered – currently not indexed" mean?</summary>
-            <p class="faq-answer">Google knows the URL exists but has chosen not to index it, usually because the content is thin, duplicated, or judged low value. It is a content quality signal rather than a technical fault.</p>
+            <p class="faq-answer">Google has found the URL but hasn't crawled it yet — usually because it is rescheduling to avoid overloading your server, or because it doesn't yet see the page as a priority. Give it time, strengthen internal links to the page and make sure it is in your sitemap. The quality signal is the different status "Crawled – currently not indexed", where Google fetched the page and decided not to index it.</p>
           </details>
         </div>
       </section>

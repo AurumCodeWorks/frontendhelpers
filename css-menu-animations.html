@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Four free CSS menu animations with previews: fade, grow, staggered cascade, and a hamburger morph. Pure CSS with keyboard accessibility support." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-menu-animations.png" />
 
-  <title>CSS Dropdown Menu Animations — 4 Free Navigation Effects | FrontendHelpers</title>
+  <title>CSS Dropdown Menu Animations | FrontendHelpers</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,211 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 4 menus &amp; dropdowns, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-dropdown-fade">
+        <h3>Dropdown Fade</h3>
+        <p>A gentle pure-opacity fade — no movement at all, the calmest option. visibility joins the transition so the hidden menu can't be tabbed into by accident, and :focus-within keeps it keyboard-accessible.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-menu"&gt;
+  &lt;button class="fh-menu-btn"&gt;Menu ▾&lt;/button&gt;
+  &lt;div class="fh-menu-list"&gt;
+    &lt;a href="#"&gt;Profile&lt;/a&gt;
+    &lt;a href="#"&gt;Settings&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-menu {
+  position: relative;
+  display: inline-block;
+}
+.fh-menu-btn {
+  padding: 10px 18px;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fh-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 150px;
+  background: #101828;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+.fh-menu:hover .fh-menu-list,
+.fh-menu:focus-within .fh-menu-list {
+  opacity: 1;
+  visibility: visible;
+}
+.fh-menu-list a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.fh-menu-list a:hover { background: rgba(6, 182, 212, 0.12); }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-dropdown-scale">
+        <h3>Dropdown Grow</h3>
+        <p>The opposite personality to the fade: the menu springs out of the button corner with a visible overshoot. transform-origin: top left is the spatial cue about where it came from.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-menu-scale"&gt;
+  &lt;button&gt;Options ▾&lt;/button&gt;
+  &lt;div class="fh-menu-pop"&gt;…links…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-menu-scale {
+  position: relative;
+  display: inline-block;
+}
+.fh-menu-btn2 {
+  padding: 10px 18px;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fh-menu-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 150px;
+  background: #101828;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 6px;
+  opacity: 0;
+  transform: scale(0.55);
+  transform-origin: top left;
+  visibility: hidden;
+  transition: opacity 0.2s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              visibility 0.3s;
+}
+.fh-menu-scale:hover .fh-menu-pop,
+.fh-menu-scale:focus-within .fh-menu-pop {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+.fh-menu-pop a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.fh-menu-pop a:hover { background: rgba(139, 92, 246, 0.15); }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-menu-stagger">
+        <h3>Staggered Items</h3>
+        <p>Each item waits 50ms longer than the one above, so the menu cascades open. Delays reset to zero on close so it snaps shut instantly.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-menu-stag"&gt;
+  &lt;button&gt;Products ▾&lt;/button&gt;
+  &lt;div class="fh-stag-list"&gt;…links…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-menu-stag {
+  position: relative;
+  display: inline-block;
+}
+.fh-menu-btn3 {
+  padding: 10px 18px;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fh-stag-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 160px;
+  background: #101828;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 6px;
+  visibility: hidden;
+  transition: visibility 0.3s;
+}
+.fh-stag-list a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9em;
+  opacity: 0;
+  translate: 0 -6px;
+  transition: opacity 0.25s ease, translate 0.25s ease;
+}
+.fh-stag-list a:hover { background: rgba(6, 182, 212, 0.12); }
+.fh-menu-stag:hover .fh-stag-list,
+.fh-menu-stag:focus-within .fh-stag-list { visibility: visible; }
+.fh-menu-stag:hover .fh-stag-list a,
+.fh-menu-stag:focus-within .fh-stag-list a {
+  opacity: 1;
+  translate: 0 0;
+}
+.fh-menu-stag:hover .fh-stag-list a:nth-child(2) { transition-delay: 0.05s; }
+.fh-menu-stag:hover .fh-stag-list a:nth-child(3) { transition-delay: 0.1s; }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-burger-morph">
+        <h3>Hamburger Morph</h3>
+        <p>The three bars morph into an X using :has() on a hidden checkbox — pure CSS state. In production, sync the checkbox with your menu's open state.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;label class="fh-burger" aria-label="Toggle menu"&gt;
+  &lt;input type="checkbox" /&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-burger {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.fh-burger input { display: none; }
+.fh-burger span {
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+.fh-burger:has(input:checked) span:nth-of-type(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.fh-burger:has(input:checked) span:nth-of-type(2) { opacity: 0; }
+.fh-burger:has(input:checked) span:nth-of-type(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>The visibility trick that makes dropdowns safe</h2>

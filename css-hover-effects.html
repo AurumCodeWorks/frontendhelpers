@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-hover-effects.png" />
 
-  <title>CSS Hover Effects — 8 Free Button &amp; Card Hover Animations | FrontendHelpers</title>
+  <title>CSS Hover Effects: Button &amp; Card Hover Animations</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,156 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 8 hover effects, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-hover-lift">
+        <h3>Lift</h3>
+        <p>The standard card hover in modern SaaS design: rise slightly, cast a deeper shadow. Transition both properties together.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="card fh-hover-lift"&gt;Card content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.fh-hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.45);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-grow">
+        <h3>Grow</h3>
+        <p>The springy cubic-bezier overshoots slightly, which reads as eager rather than mechanical.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-hover-grow"&gt;Click me&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-grow {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fh-hover-grow:hover {
+  transform: scale(1.08);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-glow">
+        <h3>Glow</h3>
+        <p>A soft neon halo for dark UIs. Match the glow colour to your brand accent.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-hover-glow"&gt;Get started&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.fh-hover-glow:hover {
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.65);
+  border-color: rgba(139, 92, 246, 0.8);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-shine">
+        <h3>Shine Sweep</h3>
+        <p>A light streak sweeps across the element, like light catching glass. The parent needs overflow: hidden.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-hover-shine"&gt;Buy now&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+.fh-hover-shine::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(105deg,
+    transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.55s ease;
+}
+.fh-hover-shine:hover::after {
+  left: 130%;
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-border">
+        <h3>Border Draw</h3>
+        <p>An accent border snaps into place from slightly outside the element. border-radius: inherit keeps it matching any shape.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-hover-border"&gt;Learn more&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-border {
+  position: relative;
+}
+.fh-hover-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid #06b6d4;
+  border-radius: inherit;
+  opacity: 0;
+  transform: scale(1.15);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+.fh-hover-border:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-underline">
+        <h3>Underline Slide</h3>
+        <p>The underline grows from the left instead of just appearing — the detail that separates polished nav links from defaults.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;a href="#" class="fh-hover-underline"&gt;About us&lt;/a&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-underline {
+  position: relative;
+  text-decoration: none;
+}
+.fh-hover-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 100%; height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fh-hover-underline:hover::after {
+  transform: scaleX(1);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-tilt">
+        <h3>3D Tilt</h3>
+        <p>A fixed-angle 3D tilt with zero JavaScript. For cursor-tracking tilt you need JS — but this covers 80% of the effect.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="card fh-hover-tilt"&gt;Card content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-tilt {
+  transition: transform 0.3s ease;
+}
+.fh-hover-tilt:hover {
+  transform: perspective(600px) rotateX(8deg) rotateY(-10deg) scale(1.03);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-hover-gradient">
+        <h3>Gradient Shift</h3>
+        <p>The gradient slides rather than swaps — animating background-position is smooth, while animating background colours directly is not.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-hover-gradient"&gt;Get started&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-hover-gradient {
+  background: linear-gradient(120deg, #8b5cf6, #06b6d4, #10b981);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  transition: background-position 0.5s ease;
+  color: #fff;
+}
+.fh-hover-gradient:hover {
+  background-position: 100% 50%;
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Hover effects are feedback, not decoration</h2>

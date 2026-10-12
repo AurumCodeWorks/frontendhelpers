@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Essential non-code web development knowledge: security, performance, accessibility, Git, testing, and privacy. Includes interactive progress checklists." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-essentials.png" />
 
-  <title>Web Developer Essentials — Security, Performance, Git &amp; More | FrontendHelpers</title>
+  <title>Web Developer Essentials: Security, Performance &amp; Git</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="essentials.css" />
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -196,7 +183,7 @@
         <div class="journey" id="journey">
           <div class="journey-steps" id="journey-steps" role="tablist" aria-label="Request journey stages"></div>
           <div class="journey-detail">
-            <h4 id="journey-title">DNS lookup</h4>
+            <h3 id="journey-title">DNS lookup</h3>
             <p id="journey-desc"></p>
             <div class="journey-nav">
               <button class="journey-btn" id="journey-prev">← Back</button>
@@ -239,7 +226,7 @@
             <span>Security headers starter pack</span>
             <button class="btn-copy" data-target="sec-headers-snippet">Copy Headers</button>
           </div>
-          <textarea id="sec-headers-snippet" class="mono-output" readonly rows="7">Content-Security-Policy: default-src 'self'
+          <textarea id="sec-headers-snippet" aria-label="Security headers starter pack" class="mono-output" readonly rows="7">Content-Security-Policy: default-src 'self'
 X-Frame-Options: DENY
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
@@ -279,7 +266,7 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()</textarea>
             <span>Cache-Control recipes</span>
             <button class="btn-copy" data-target="cache-recipes-snippet">Copy Recipes</button>
           </div>
-          <textarea id="cache-recipes-snippet" class="mono-output" readonly rows="8"># Fingerprinted static assets (app.3f2a1c.js) — cache forever
+          <textarea id="cache-recipes-snippet" aria-label="Cache-Control recipes" class="mono-output" readonly rows="8"># Fingerprinted static assets (app.3f2a1c.js) — cache forever
 Cache-Control: public, max-age=31536000, immutable
 
 # HTML pages — always revalidate so deploys reach users
@@ -338,28 +325,28 @@ Cache-Control: private, no-store</textarea>
         <div class="git-groups">
           <div class="git-group">
             <div class="output-header"><span>Daily rhythm</span><button class="btn-copy" data-target="git-daily">Copy</button></div>
-            <textarea id="git-daily" class="mono-output" readonly rows="4">git status              # what changed?
+            <textarea id="git-daily" aria-label="Daily rhythm" class="mono-output" readonly rows="4">git status              # what changed?
 git add -p              # stage changes piece by piece
 git commit -m "why, not just what"
 git push</textarea>
           </div>
           <div class="git-group">
             <div class="output-header"><span>Branch &amp; merge</span><button class="btn-copy" data-target="git-branch">Copy</button></div>
-            <textarea id="git-branch" class="mono-output" readonly rows="4">git switch -c feature/name   # create + switch
+            <textarea id="git-branch" aria-label="Branch &amp;amp; merge" class="mono-output" readonly rows="4">git switch -c feature/name   # create + switch
 git switch main
 git merge feature/name
 git branch -d feature/name   # tidy up</textarea>
           </div>
           <div class="git-group">
             <div class="output-header"><span>Undo safely</span><button class="btn-copy" data-target="git-undo">Copy</button></div>
-            <textarea id="git-undo" class="mono-output" readonly rows="4">git restore file.css         # discard unstaged edits
+            <textarea id="git-undo" aria-label="Undo safely" class="mono-output" readonly rows="4">git restore file.css         # discard unstaged edits
 git restore --staged file    # unstage, keep edits
 git revert abc123            # undo a commit, keep history
 git reflog                   # find "lost" commits</textarea>
           </div>
           <div class="git-group">
             <div class="output-header"><span>Sync &amp; inspect</span><button class="btn-copy" data-target="git-sync">Copy</button></div>
-            <textarea id="git-sync" class="mono-output" readonly rows="4">git pull --rebase            # update without merge noise
+            <textarea id="git-sync" aria-label="Sync &amp;amp; inspect" class="mono-output" readonly rows="4">git pull --rebase            # update without merge noise
 git log --oneline --graph    # readable history
 git diff main...feature      # what would this PR change?
 git stash / git stash pop    # shelve work in progress</textarea>

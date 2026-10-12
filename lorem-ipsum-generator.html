@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free lorem ipsum generator. Create placeholder text by paragraphs, sentences, or words, copy it in one click, and learn how to use dummy text effectively." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-lorem-ipsum-generator.png" />
 
-  <title>Lorem Ipsum Generator — Free Placeholder Text Tool | FrontendHelpers</title>
+  <title>Lorem Ipsum Generator | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -99,7 +86,7 @@
           {
             "@type": "Question",
             "name": "How many words are in a lorem ipsum paragraph?",
-            "acceptedAnswer": { "@type": "Answer", "text": "This generator produces paragraphs of roughly 40 to 70 words, made of 4 to 6 sentences — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically." }
+            "acceptedAnswer": { "@type": "Answer", "text": "This generator builds each paragraph from 4 to 6 sentences of 8 to 14 words, so a paragraph runs from about 30 to 85 words and averages around 55 — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically." }
           },
           {
             "@type": "Question",
@@ -204,7 +191,7 @@
             <span>Ready to paste</span>
             <button class="btn-copy" data-target="output-lorem">Copy Text</button>
           </div>
-          <textarea id="output-lorem" readonly rows="11"></textarea>
+          <textarea id="output-lorem" aria-label="Ready to paste" readonly rows="11"></textarea>
         </div>
       </div>
     </div>
@@ -213,7 +200,7 @@
       <!-- ═══ DEEP CONTENT ═══ -->
       <article class="tool-documentation">
         <h2>How to use this tool</h2>
-        <p>Lorem ipsum is scrambled Latin derived from a first-century BC text by Cicero, <em>de Finibus Bonorum et Malorum</em>. Typesetters have used it since the 1500s for a simple reason: it looks like natural language — with realistic word lengths, sentence rhythm and letter distribution — without being readable.</p>
+        <p>Lorem ipsum is scrambled Latin derived from a first-century BC text by Cicero, <em>de Finibus Bonorum et Malorum</em>. Typesetters and designers have used it for decades — Letraset's transfer sheets popularised it in the 1960s — for a simple reason: it looks like natural language — with realistic word lengths, sentence rhythm and letter distribution — without being readable.</p>
         <p>That unreadability is the entire point. Put real, legible English into a mockup and stakeholders start editing the copy. Put obvious filler like "xxxxx" in and you lose the visual texture that makes a layout look real. Lorem ipsum sits precisely between the two, keeping a design review focused on spacing, hierarchy and typography.</p>
 
         <h2>How much placeholder text do you actually need?</h2>
@@ -231,45 +218,37 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Dynamic Placeholder Injection</h2>
-        <p>While copy-pasting Lorem Ipsum is fine for static mockups, modern frontend development often requires generating placeholder text dynamically to test how UI components respond to varying content lengths.</p>
-        
-        <h3>Mocking Data in React</h3>
-        <p>You can create a simple utility function in React to generate mock data arrays on the fly. This is extremely useful for prototyping lists, grids, and tables before your backend API is ready.</p>
-        <pre><code class="language-javascript">
-// utils/mockData.js
-export function generateMockPosts(count) {
-  const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-  
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    title: Placeholder Post Title ,
-    excerpt: lorem.substring(0, Math.floor(Math.random() * 50) + 50) + "...",
-    content: lorem,
-    date: new Date().toISOString()
-  }));
+        <h2>Deterministic placeholder text for tests, stories and server rendering</h2>
+        <p>Generating random lorem ipsum inside a component is convenient, and it causes two real bugs. With server-side rendering, <code>Math.random()</code> runs once on the server and again in the browser during hydration, so the text differs and React reports a hydration mismatch. In visual regression tests and Storybook snapshots, every run produces new words, every screenshot differs, and the diffs become noise people learn to ignore.</p>
+        <p><code>Math.random()</code> can't be seeded, so the fix is a small seeded generator: the same seed gives the same words on every machine and every run.</p>
+        <pre><code class="language-javascript">// mulberry32: a tiny seeded PRNG. Same seed, same sequence, every run.
+function mulberry32(seed) {
+  return () =&gt; {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed &gt;&gt;&gt; 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t &gt;&gt;&gt; 7), 61 | t)) ^ t;
+    return ((t ^ (t &gt;&gt;&gt; 14)) &gt;&gt;&gt; 0) / 4294967296;
+  };
 }
 
-// components/PostGrid.jsx
-import { generateMockPosts } from '../utils/mockData';
+const WORDS = 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'.split(' ');
 
-export default function PostGrid() {
-  // Generate 6 mock posts for the UI
-  const posts = generateMockPosts(6);
-  
-  return (
-    &lt;div className="grid"&gt;
-      {posts.map(post => (
-        &lt;article key={post.id}&gt;
-          &lt;h3&gt;{post.title}&lt;/h3&gt;
-          &lt;p&gt;{post.excerpt}&lt;/p&gt;
-        &lt;/article&gt;
-      ))}
-    &lt;/div&gt;
-  );
+export function lorem(seed, minWords, maxWords) {
+  const rand = mulberry32(seed);
+  const n = minWords + Math.floor(rand() * (maxWords - minWords + 1));
+  const words = Array.from({ length: n }, () =&gt; WORDS[Math.floor(rand() * WORDS.length)]);
+  return words.join(' ').replace(/^./, c =&gt; c.toUpperCase()) + '.';
 }
-        </code></pre>
-        <p>This approach allows you to stress-test your CSS grid layouts and flexbox containers by randomizing the length of the excerpt, ensuring your UI won't break when real, unpredictable user data is introduced.</p>
+
+// Fixtures that cover both extremes, identical on server, client and CI
+export const cards = [
+  { id: 1, title: lorem(1, 2, 3), body: lorem(11, 8, 12) },
+  { id: 2, title: lorem(2, 12, 16), body: lorem(12, 60, 80) },
+];
+
+console.log(lorem(42, 4, 8));
+// "Sed dolore incididunt sit eiusmod consectetur tempor." on every run</code></pre>
+        <p>Build placeholder content from a seed in your fixtures rather than calling <code>Math.random()</code> during render, and make the fixtures deliberately uneven, as above: a two-word title beside a sixteen-word one, a short body beside an eighty-word one. Add one string with a very long unbroken word or URL, because that is the case most likely to burst out of a card; <code>overflow-wrap: anywhere</code> is usually the fix. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random">MDN confirms</a> that <code>Math.random()</code>'s seed can't be chosen or reset, and React's <a href="https://react.dev/reference/react-dom/client/hydrateRoot">hydrateRoot reference</a> lists the usual causes of hydration errors.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -282,7 +261,7 @@ export default function PostGrid() {
           </details>
           <details class="faq-item">
             <summary>How many words are in a lorem ipsum paragraph?</summary>
-            <p class="faq-answer">This generator produces paragraphs of roughly 40 to 70 words, made of 4 to 6 sentences — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically.</p>
+            <p class="faq-answer">This generator builds each paragraph from 4 to 6 sentences of 8 to 14 words, so a paragraph runs from about 30 to 85 words and averages around 55 — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically.</p>
           </details>
           <details class="faq-item">
             <summary>Should I use lorem ipsum or real content in designs?</summary>

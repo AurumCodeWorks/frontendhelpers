@@ -1348,7 +1348,7 @@ textarea#output-meta-code {
 .cookie-popup-content a { color: var(--secondary); text-decoration: none; }
 .cookie-popup-content a:hover { text-decoration: underline; }
 
-.cookie-popup-actions { display: flex; justify-content: flex-end; }
+.cookie-popup-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
 /* ── GUIDES ────────────────────────────────────────────────── */
 .guide-meta {
@@ -1988,4 +1988,13 @@ input.invalid, textarea.invalid {
   .calc-arrows { transform: rotate(90deg); }
   .panel-header { flex-direction: column; align-items: flex-start; gap: 8px; }
   .resource-cards { grid-template-columns: 1fr; }
+}
+
+/* ── REDUCED MOTION ────────────────────────────────────────── */
+/* Site chrome only. Animation demos handle reduced motion in
+   css-animations.css so visitors can still preview them. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .orb { animation: none; }
+  .toast, .cookie-banner-popup, .scroll-top-btn { transition: none; }
 }

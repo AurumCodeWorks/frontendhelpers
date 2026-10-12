@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free color palette generator. Turn one brand color into a full 50–900 tint/shade scale with accents, and export ready-made CSS custom properties." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-color-palette-generator.png" />
 
-  <title>Colour Palette Generator — Tints, Shades &amp; CSS Design Tokens | FrontendHelpers</title>
+  <title>Colour Palette Generator: Tints, Shades &amp; CSS Tokens</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -176,7 +163,7 @@
         <div class="form-group">
           <label for="palette-hex">Base Colour</label>
           <div class="color-input-group">
-            <input type="color" id="palette-picker" value="#8b5cf6" />
+            <input type="color" id="palette-picker" aria-label="Pick base colour" value="#8b5cf6" />
             <input type="text" id="palette-hex" value="#8b5cf6" placeholder="#8b5cf6" class="color-hex-input" />
           </div>
         </div>
@@ -193,7 +180,7 @@
             <span>CSS design tokens</span>
             <button class="btn-copy" data-target="output-palette-tokens">Copy Tokens</button>
           </div>
-          <textarea id="output-palette-tokens" readonly rows="9" class="mono-output"></textarea>
+          <textarea id="output-palette-tokens" aria-label="CSS design tokens" readonly rows="9" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -223,32 +210,31 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Algorithmic Color Generation</h2>
-        <p>While picking colors by eye is great for branding, building a scalable UI system requires a mathematical approach to generating hover states, active states, and borders. HSL (Hue, Saturation, Lightness) makes this programmatic scaling trivial.</p>
-        
-        <h3>Generating Tints and Shades in JavaScript</h3>
-        <p>Here is a lightweight JavaScript function that takes a base HSL color and generates an array of 10 shades (similar to Tailwind's 50-950 scale) by purely manipulating the Lightness value.</p>
-        <pre><code class="language-javascript">
-function generateHslScale(hue, saturation) {
-  // Define the lightness stops from 95% (lightest) to 10% (darkest)
-  const lightnessStops = [95, 90, 80, 70, 60, 50, 40, 30, 20, 10];
-  const scale = {};
-
-  lightnessStops.forEach((lightness, index) => {
-    // We map index 0 to '50', 1 to '100', 2 to '200', etc.
-    const stepName = index === 0 ? '50' : (index * 100).toString();
-    scale[stepName] = hsl(, %, %);
-  });
-
-  return scale;
+        <h2>How this tool builds its 50–900 scale, and where HSL falls short</h2>
+        <p>The generator converts your colour to HSL, keeps the hue and saturation fixed and gives each step a new lightness. The light end is absolute: 50, 100, 200 and 300 are always 96%, 90%, 80% and 68%. From 400 down, everything is relative to your colour: 400 is eight points lighter, 500 is your exact input, and 600 to 900 are 10, 20, 30 and 38 points darker, with small floors so nothing hits pure black. For a typical mid-tone brand colour at around 48% lightness, that puts 900 at 10%.</p>
+        <pre><code class="language-javascript">// HSL lightness (0–100) this tool uses for each step, given the
+// lightness of your base colour. Hue and saturation never change.
+function scaleLightness(l) {
+  return {
+    50: 96, 100: 90, 200: 80, 300: 68,   // tints: fixed values
+    400: Math.min(l + 8, 95),
+    500: l,                              // your colour, untouched
+    600: Math.max(l - 10, 8),            // shades: offsets from the base
+    700: Math.max(l - 20, 6),
+    800: Math.max(l - 30, 5),
+    900: Math.max(l - 38, 4),
+  };
 }
 
-// Example: Generate a blue scale
-const blueScale = generateHslScale(210, 100);
-console.log(blueScale['500']); // "hsl(210, 100%, 50%)" - The base brand color
-console.log(blueScale['900']); // "hsl(210, 100%, 20%)" - Deep dark blue for text
-        </code></pre>
-        <p>This approach guarantees mathematical harmony across your entire application. You can inject these directly into the DOM as CSS Custom Properties (Variables) on the <code>:root</code> element, allowing users to dynamically switch themes or primary brand colors on the fly.</p>
+const show = s =&gt; Object.entries(s).map(([k, v]) =&gt; `${k}:${v}`).join(' ');
+
+console.log(show(scaleLightness(48)));
+// 50:96 100:90 200:80 300:68 400:56 500:48 600:38 700:28 800:18 900:10
+
+console.log(show(scaleLightness(80)));  // a pale base breaks the order
+// 50:96 100:90 200:80 300:68 400:88 500:80 600:70 700:60 800:50 900:42</code></pre>
+        <p>The second line of output is the edge case. Because the tints are fixed and the shades are relative, a pale base such as a lemon yellow or a pastel produces a 300 that is darker than 400 and 500, and a 900 that is still a mid-tone. If your brand colour sits much above 60% lightness, generate the scale from a deeper version of it and keep the brand colour itself as an accent rather than as 500.</p>
+        <p>The deeper limitation is HSL itself, because its lightness is not perceptual. Pure yellow <code>#ffff00</code> and pure blue <code>#0000ff</code> are both 50% lightness, yet against white one has a contrast ratio of 1.07:1 and the other 8.59:1. That is why the same step number can pass a contrast check in one hue and fail in another. If you need steps that look equally light across hues, build the scale in <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch"><code>oklch()</code></a>, which every major browser has supported since 2023. You can even derive steps in CSS with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Relative_colors">relative colour syntax</a>, for example <code>oklch(from var(--brand-500) calc(l - 0.1) c h)</code>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

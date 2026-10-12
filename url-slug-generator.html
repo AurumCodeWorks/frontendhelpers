@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free URL slug generator. Turn headlines into clean, lowercase, hyphenated slugs with optional stop-word removal and accent handling for your CMS." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-url-slug-generator.png" />
 
-  <title>URL Slug Generator — Free SEO-Friendly URL Maker | FrontendHelpers</title>
+  <title>URL Slug Generator for SEO-Friendly URLs | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -198,14 +185,14 @@
             <span>URL-ready slug</span>
             <button class="btn-copy" data-target="output-slug">Copy Slug</button>
           </div>
-          <textarea id="output-slug" readonly rows="2" class="mono-output"></textarea>
+          <textarea id="output-slug" aria-label="URL-ready slug" readonly rows="2" class="mono-output"></textarea>
         </div>
         <div class="output-code-container">
           <div class="output-header">
             <span>Full URL preview</span>
             <button class="btn-copy" data-target="output-slug-url">Copy URL</button>
           </div>
-          <textarea id="output-slug-url" readonly rows="2" class="mono-output"></textarea>
+          <textarea id="output-slug-url" aria-label="Full URL preview" readonly rows="2" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -233,31 +220,30 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Building a Slugify Function</h2>
-        <p>If you are generating slugs programmatically on your backend (e.g., when a user saves a new blog post), you need a robust function that handles diacritics, special characters, and multiple spaces.</p>
-        
-        <h3>JavaScript Implementation (Node.js & Browser)</h3>
-        <p>Here is a production-ready slugify function that safely normalizes strings, removes diacritics using the Internationalization API, and strips unwanted characters.</p>
-        <pre><code class="language-javascript">
-function createSlug(text, separator = '-') {
+        <h2>Slugifying non-English titles: what Unicode normalisation can't fix</h2>
+        <p>Most slugify functions rely on <code>String.prototype.normalize('NFKD')</code>, which is Unicode normalisation: it splits "é" into a plain "e" followed by a combining accent, which you then strip. That handles most Western European accents, and the compatibility (K) form also unpacks ligatures such as "ﬁ". What it can't do is transliterate letters that don't decompose. "ß", "æ", "ø", "ł" and "þ" are letters in their own right, so they survive normalisation and are then deleted by the <code>[^a-z0-9]</code> filter: "Straße" becomes <code>stra-e</code> and "Łódź" loses its first letter.</p>
+        <p>This generator uses the same normalise-and-strip approach, so check its output for German, Scandinavian, Polish and Icelandic titles. In your own code, map the non-decomposing letters first:</p>
+        <pre><code class="language-javascript">// Letters with no decomposed form: normalize() leaves them untouched,
+// so a plain [^a-z0-9] filter would delete them
+const TRANSLIT = {
+  ß: 'ss', æ: 'ae', œ: 'oe', ø: 'o', ł: 'l', đ: 'd', ð: 'd', þ: 'th', ı: 'i',
+};
+
+function slugify(text) {
   return text
-    .toString()
-    // Normalize to NFD (decomposes combined graphemes)
-    .normalize('NFD')
-    // Remove diacritics (accents)
-    .replace(/[\u0300-\u036f]/g, '')
-    // Convert to lowercase
     .toLowerCase()
-    // Replace spaces and special chars with the separator
-    .replace(/[^a-z0-9]+/g, separator)
-    // Remove leading/trailing separators
-    .replace(new RegExp(^+|+$, 'g'), '');
+    .replace(/[ßæœøłđðþı]/g, ch =&gt; TRANSLIT[ch])
+    .normalize('NFKD')            // é → e + U+0301, ﬁ → f + i
+    .replace(/\p{M}/gu, '')       // drop the combining marks
+    .replace(/['’]/g, '')         // "don't" → "dont", not "don-t"
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
-console.log(createSlug("Café au Lait: 100% Delicious!")); 
-// Output: cafe-au-lait-100-delicious
-        </code></pre>
-        <p>This implementation matches the output of our generator and ensures your database routes remain clean and predictable regardless of user input.</p>
+console.log(slugify('Straße &amp; Smørrebrød: Łódź’s café ﬁnds'));
+// strasse-smorrebrod-lodzs-cafe-finds
+// (without the map: stra-e-sm-rrebr-d-odzs-cafe-finds)</code></pre>
+        <p>Apostrophes are removed before splitting so "don't" becomes <code>dont</code> rather than <code>don-t</code>, and <code>\p{M}</code> with the <code>u</code> flag removes every combining mark rather than only the U+0300–U+036F block most snippets target. For scripts with no Latin form, such as Cyrillic, Greek, Arabic or Chinese, you need a proper transliteration library or a deliberate decision to keep the original characters; Google's <a href="https://developers.google.com/search/docs/crawling-indexing/url-structure">URL structure guidelines</a> accept non-ASCII URLs as long as they are percent-encoded in links. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">MDN's normalize() reference</a> explains the four normalisation forms.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

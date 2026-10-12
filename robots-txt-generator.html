@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free robots.txt generator. Create valid crawler rules with allow/disallow paths and sitemap URLs, and avoid common mistakes that deindex websites." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-robots-txt-generator.png" />
 
-  <title>Robots.txt Generator — Free Crawler Rules &amp; Sitemap Tool | FrontendHelpers</title>
+  <title>Robots.txt Generator: Crawler Rules &amp; Sitemap</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -203,7 +190,7 @@
             <span>robots.txt — place at your site root</span>
             <button class="btn-copy" data-target="output-robots">Copy File</button>
           </div>
-          <textarea id="output-robots" readonly rows="9" class="mono-output"></textarea>
+          <textarea id="output-robots" aria-label="robots.txt — place at your site root" readonly rows="9" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -230,31 +217,34 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Serving robots.txt Dynamically</h2>
-        <p>While static sites can just drop a <code>robots.txt</code> file in their public folder, dynamic applications often need to change their robots policy based on the environment (e.g., blocking crawlers entirely on staging environments).</p>
-        
-        <h3>Implementation in Node.js / Express</h3>
-        <p>Here is how to serve a dynamic robots.txt file that automatically blocks crawlers unless the application is running in the production environment.</p>
-        <pre><code class="language-javascript">
-const express = require('express');
-const app = express();
+        <h2>Keeping staging out of Google: robots.txt alone won't do it</h2>
+        <p>The common recipe is to serve <code>Disallow: /</code> on staging and a normal file on production. That stops well-behaved crawlers fetching staging pages, but it doesn't keep them out of the index. If a staging URL is linked from anywhere public — a ticket, a preview link in a pull request, a stray absolute URL on the live site — Google can index the bare URL without ever crawling it. And because the page is never fetched, a <code>noindex</code> tag on it is never seen.</p>
+        <p>The reliable fix is HTTP authentication on every non-production host. Where that isn't practical, leave staging crawlable and send <code>X-Robots-Tag: noindex</code> with every response, which works for HTML, PDFs and images alike. Production gets a normal robots.txt with your sitemap. Google doesn't penalise duplicate content as such; the real risk is test data and unfinished pages turning up in results under your name.</p>
+        <pre><code class="language-javascript">import { createServer } from 'node:http';
 
-app.get('/robots.txt', (req, res) => {
-  res.type('text/plain');
-  
-  if (process.env.NODE_ENV === 'production') {
-    // Production: Allow everything, declare sitemap
-    res.send(User-agent: *
-Allow: /
-Sitemap: https://yourdomain.com/sitemap.xml);
-  } else {
-    // Staging/Dev: Block everything
-    res.send(User-agent: *
-Disallow: /);
+const isProduction = process.env.APP_ENV === 'production';
+
+const ROBOTS = isProduction
+  ? 'User-agent: *\nDisallow: /cart\nDisallow: /search\n\nSitemap: https://example.com/sitemap.xml\n'
+  : 'User-agent: *\nAllow: /\n'; // stays crawlable, so bots can see the header
+
+createServer((req, res) =&gt; {
+  // Every response from a non-production host is marked noindex
+  if (!isProduction) res.setHeader('X-Robots-Tag', 'noindex');
+
+  if (req.url === '/robots.txt') {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end(ROBOTS);
   }
-});
-        </code></pre>
-        <p>This simple middleware guarantees that your staging server will never accidentally be indexed by Google, which is a common cause of duplicate content penalties.</p>
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end('&lt;!doctype html&gt;&lt;title&gt;Home&lt;/title&gt;&lt;h1&gt;Home&lt;/h1&gt;');
+}).listen(3000, () =&gt; console.log('production:', isProduction));
+
+// $ curl -i http://localhost:3000/robots.txt   (staging)
+// X-Robots-Tag: noindex
+// User-agent: *
+// Allow: /</code></pre>
+        <p>Note the failure mode this creates: if <code>APP_ENV</code> is missing on production, the live site goes out with <code>noindex</code>. Add a post-deploy check — <code>curl -sI https://example.com/ | grep -i x-robots-tag</code> should print nothing — alongside confirming that production's robots.txt hasn't picked up a blanket <code>Disallow: /</code>. Google documents both mechanisms in its <a href="https://developers.google.com/search/docs/crawling-indexing/robots/intro">introduction to robots.txt</a> and its guide to <a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing">blocking indexing with noindex</a>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

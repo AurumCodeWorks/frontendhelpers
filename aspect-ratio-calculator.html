@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free aspect ratio calculator. Find image or video ratios, resize without distortion, and generate CSS/HTML to prevent Cumulative Layout Shift (CLS)." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-aspect-ratio-calculator.png" />
 
-  <title>Aspect Ratio Calculator — Image &amp; Video Size Calculator | FrontendHelpers</title>
+  <title>Aspect Ratio Calculator for Images &amp; Video | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -201,14 +188,14 @@
             <span>CSS — reserve the space</span>
             <button class="btn-copy" data-target="output-ratio-css">Copy CSS</button>
           </div>
-          <textarea id="output-ratio-css" readonly rows="4" class="mono-output"></textarea>
+          <textarea id="output-ratio-css" aria-label="CSS — reserve the space" readonly rows="4" class="mono-output"></textarea>
         </div>
         <div class="output-code-container">
           <div class="output-header">
             <span>HTML — sized image tag</span>
             <button class="btn-copy" data-target="output-ratio-html">Copy HTML</button>
           </div>
-          <textarea id="output-ratio-html" readonly rows="2" class="mono-output"></textarea>
+          <textarea id="output-ratio-html" aria-label="HTML — sized image tag" readonly rows="2" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -235,27 +222,35 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: CSS aspect-ratio Property</h2>
-        <p>Before 2021, developers had to use the awkward "padding-top hack" to maintain responsive aspect ratios for videos and iframes. Today, native CSS provides a clean, single-line solution.</p>
-        
-        <h3>Using the native CSS aspect-ratio</h3>
-        <p>The <code>aspect-ratio</code> property tells the browser how to calculate the height of an element based on its width (or vice-versa). This is incredibly powerful for preventing Cumulative Layout Shift (CLS) when images or embedded videos load.</p>
-        <pre><code class="language-css">
-/* The modern approach */
-.video-container {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-color: #f0f0f0; /* Placeholder color while loading */
+        <h2>When aspect-ratio quietly stops working</h2>
+        <p>The <code>aspect-ratio</code> property only takes effect when at least one dimension is automatic. Set both <code>width</code> and <code>height</code> and the ratio is ignored, which is the usual explanation when a box refuses to keep its shape. The second surprise is content. On an ordinary block, text taller than the ratio allows makes the box grow rather than overflow. That is deliberate, to stop text spilling out, but for a media frame or card thumbnail you usually want the ratio to win: set <code>min-height: 0</code>, or give the box <code>overflow: hidden</code> or <code>auto</code>.</p>
+        <pre><code class="language-css">/* Images: the width and height attributes supply the ratio */
+img {
+  max-width: 100%;
+  height: auto; /* without this, the height attribute stays fixed */
 }
 
-/* Applying it to images to prevent layout shift */
-.card-image {
+/* Embeds have no natural ratio, so give them one */
+.video-embed {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover; /* Ensures the image fills the space without squishing */
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
-        </code></pre>
-        <p>This property is now supported in all major browsers. It accepts either a fraction (like <code>16 / 9</code>) or a decimal (like <code>1.777</code>). If you only provide one number, the browser assumes it's divided by 1. For example, <code>aspect-ratio: 1;</code> perfectly creates a responsive square.</p>
+
+/* A thumbnail frame that its content cannot push open */
+.card-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+/* Ignored: both dimensions are already fixed */
+.broken {
+  width: 320px;
+  height: 200px;
+  aspect-ratio: 16 / 9;
+}</code></pre>
+        <p>The image rule matters more than it looks. Browsers map an <code>&lt;img&gt;</code>'s <code>width</code> and <code>height</code> attributes to <code>aspect-ratio: auto width / height</code>, which is how they reserve space before the file arrives. The <code>height</code> attribute also sets a height, though, so if your CSS makes the image fluid and forgets <code>height: auto</code>, it keeps that fixed height and stretches. Iframes and other embeds have no natural ratio, so they need an explicit one.</p>
+        <p>web.dev's <a href="https://web.dev/articles/optimize-cls">guide to optimising Cumulative Layout Shift</a> covers the image case in depth, and MDN documents every value of <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/aspect-ratio">aspect-ratio</a>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

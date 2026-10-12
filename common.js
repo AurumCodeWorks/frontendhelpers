@@ -61,6 +61,19 @@ function initStickyToolbar(toolbar, headerOffset = 62) {
   }
 }
 
+// Microsoft Clarity (session analytics) is only loaded once the visitor
+// has accepted cookies — never before, unlike Consent Mode-aware gtag.
+const FH_CLARITY_ID = 'xpli7xsyy2';
+function loadClarity() {
+  if (window.clarity) return;
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+    t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, 'clarity', 'script', FH_CLARITY_ID);
+  window.clarity('consentv2', { analytics_storage: 'granted', ad_storage: 'granted' });
+}
+
 // Copy to clipboard with toast feedback
 function copyToClipboard(text, label) {
   navigator.clipboard.writeText(text).then(() => {
@@ -101,15 +114,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const banner = document.createElement('div');
       banner.className = 'cookie-banner-popup';
-      banner.setAttribute('role', 'dialog');
-      banner.setAttribute('aria-label', 'Cookie Consent');
+      banner.setAttribute('role', 'region');
+      banner.setAttribute('aria-label', 'Cookie consent');
       banner.innerHTML = `
         <div class="cookie-popup-content">
-          <p>This site uses cookies to analyse traffic and support developer sponsorships. Read our <a href="/cookie-policy">Cookie Policy</a>.</p>
+          <p>We'd like to use cookies for analytics (Google Analytics, Microsoft Clarity) and advertising (Google AdSense). They stay off unless you accept. Read our <a href="/cookie-policy">Cookie Policy</a>.</p>
         </div>
         <div class="cookie-popup-actions">
-          <button id="accept-cookies" class="btn-copy">Accept All</button>
-          <button id="decline-cookies" class="btn-copy" style="background:transparent;border:1px solid var(--border);color:var(--text-dim);margin-left:8px;">Reject Non-Essential</button>
+          <button id="accept-cookies" class="btn-copy">Accept all</button>
+          <button id="decline-cookies" class="btn-copy">Reject all</button>
         </div>
       `;
       document.body.appendChild(banner);
@@ -131,11 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'ad_personalization': status
           });
         }
-        if (typeof window.clarity === 'function') {
-          window.clarity('consentv2', {
-            'analytics_storage': status,
-            'ad_storage': status
-          });
+        if (val === 'accepted') {
+          loadClarity();
+        } else if (typeof window.clarity === 'function') {
+          // Withdrawn after previously accepting on this page
+          window.clarity('consentv2', { analytics_storage: 'denied', ad_storage: 'denied' });
         }
       }
     }
@@ -149,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navigator.globalPrivacyControl === true && !localStorage.getItem('cookie-consent')) {
       localStorage.setItem('cookie-consent', 'declined');
     }
+
+    if (localStorage.getItem('cookie-consent') === 'accepted') loadClarity();
 
     // Show on first visit (after a short delay)
     if (!localStorage.getItem('cookie-consent')) {

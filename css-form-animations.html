@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Six free CSS form animations with live previews: focus glow, floating labels, toggle switches, checkboxes, button clicks, and validation shakes. Pure CSS." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-form-animations.png" />
 
-  <title>CSS Form Animations — 6 Free Input, Toggle &amp; Validation Effects | FrontendHelpers</title>
+  <title>CSS Form Animations: Inputs, Toggles &amp; Validation</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,175 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 6 forms &amp; inputs, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-input-glow">
+        <h3>Focus Glow</h3>
+        <p>The soft ring makes focus unmistakable without an harsh outline. Never remove focus styling — replace it with something better, like this.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;input type="text" class="fh-input-glow" placeholder="Your email" /&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-input-glow {
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: transparent;
+  color: inherit;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.fh-input-glow:focus {
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-float-label">
+        <h3>Floating Label</h3>
+        <p>The placeholder=" " (one space) is the trick — :placeholder-shown can then detect whether the field is empty, no JavaScript needed.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-float-field"&gt;
+  &lt;input type="text" placeholder=" " /&gt;
+  &lt;label&gt;Email address&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-float-field {
+  position: relative;
+}
+.fh-float-field input {
+  width: 100%;
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 18px 14px 6px;
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+.fh-float-field input:focus { border-color: #06b6d4; }
+.fh-float-field label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  translate: 0 -50%;
+  color: #94a3b8;
+  pointer-events: none;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+.fh-float-field input:focus + label,
+.fh-float-field input:not(:placeholder-shown) + label {
+  top: 10px;
+  translate: 0 0;
+  font-size: 0.68em;
+  color: #06b6d4;
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-toggle-switch">
+        <h3>Toggle Switch</h3>
+        <p>A real checkbox restyled — so keyboard, forms and screen readers all keep working. The springy easing sells the flip.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;input type="checkbox" class="fh-toggle" /&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-toggle {
+  appearance: none;
+  width: 52px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 14px;
+  background: #3a4358;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.fh-toggle::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fh-toggle:checked { background: #06b6d4; }
+.fh-toggle:checked::before { left: 27px; }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-checkbox-pop">
+        <h3>Checkbox Pop</h3>
+        <p>The tick scales in with an overshoot — the same pattern used by the checklists on this site's Dev Essentials page.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;input type="checkbox" class="fh-check" /&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-check {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 2px solid #3a4358;
+  border-radius: 8px;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.fh-check::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  background: #04110b;
+  transform: scale(0);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fh-check:checked { background: #10b981; border-color: #10b981; }
+.fh-check:checked::before { transform: scale(1); }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-btn-press">
+        <h3>Button Press</h3>
+        <p>The :active state compresses the button and flattens its shadow — a 120ms cue that the click registered. Tactile feedback, zero JavaScript.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-btn-press"&gt;Save changes&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-btn-press {
+  padding: 12px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.5);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.fh-btn-press:hover { transform: translateY(-1px); }
+.fh-btn-press:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 2px 6px -2px rgba(139, 92, 246, 0.4);
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-field-error">
+        <h3>Validation Shake</h3>
+        <p>Add the class from JavaScript when validation fails, and remove it on the animationend event so it can shake again next time.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;input class="fh-field-error" /&gt; &lt;!-- add the class on failed validation --&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-field-error {
+  border: 1px solid #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+  animation: fh-fieldShake 0.4s ease-in-out;
+}
+@keyframes fh-fieldShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Style real controls, never replace them</h2>

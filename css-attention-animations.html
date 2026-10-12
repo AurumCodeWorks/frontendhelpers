@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Eight free CSS attention-seeking animations with live previews: pulse, shake, wobble, bounce, and more. Pure CSS, copy-paste ready, no libraries." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-attention-animations.png" />
 
-  <title>CSS Attention Animations — 8 Free Pulse, Shake &amp; Bounce Effects | FrontendHelpers</title>
+  <title>CSS Attention Animations: Pulse, Shake &amp; Bounce</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,148 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 8 attention, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-pulse">
+        <h3>Pulse</h3>
+        <p>A gentle, continuous pulse that draws the eye without shouting. Common on live indicators and primary CTAs.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;button class="fh-pulse"&gt;Notifications&lt;/button&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-pulse {
+  animation: fh-pulse 1.6s ease-in-out infinite;
+}
+@keyframes fh-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.07); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-heartbeat">
+        <h3>Heartbeat</h3>
+        <p>A double-thump rhythm like a real heartbeat. The go-to for like buttons and favourite icons.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-heartbeat"&gt;♥&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-heartbeat {
+  animation: fh-heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes fh-heartbeat {
+  0%, 28%, 70%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  42% { transform: scale(1.15); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-shake">
+        <h3>Shake</h3>
+        <p>The universal “no” gesture. Add this class via JavaScript when a form fails validation, then remove it on animationend.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;input class="fh-shake" /&gt; &lt;!-- add class on invalid submit --&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-shake {
+  animation: fh-shake 0.6s ease-in-out both;
+}
+@keyframes fh-shake {
+  0%, 100%  { transform: translateX(0); }
+  20%, 60%  { transform: translateX(-8px); }
+  40%, 80%  { transform: translateX(8px); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-wobble">
+        <h3>Wobble</h3>
+        <p>Looser and sillier than shake — suits onboarding hints and playful mascots.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-wobble"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-wobble {
+  animation: fh-wobble 0.9s ease-in-out both;
+}
+@keyframes fh-wobble {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  15% { transform: translateX(-14px) rotate(-6deg); }
+  30% { transform: translateX(10px) rotate(4deg); }
+  45% { transform: translateX(-8px) rotate(-3deg); }
+  60% { transform: translateX(5px) rotate(2deg); }
+  75% { transform: translateX(-2px) rotate(-1deg); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-tada">
+        <h3>Tada</h3>
+        <p>A celebratory flourish for achievements, confirmations and gamified moments.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-tada"&gt;Achievement unlocked!&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-tada {
+  animation: fh-tada 0.9s ease-in-out both;
+}
+@keyframes fh-tada {
+  0%   { transform: scale(1) rotate(0); }
+  10%, 20% { transform: scale(0.92) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.08) rotate(3deg); }
+  40%, 60%, 80% { transform: scale(1.08) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-jello">
+        <h3>Jello</h3>
+        <p>A skew-based jiggle that feels like gelatine. Fun on hover for playful, character-driven brands.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-jello"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-jello {
+  animation: fh-jello 0.9s both;
+  transform-origin: center;
+}
+@keyframes fh-jello {
+  0%, 100% { transform: skew(0, 0); }
+  22% { transform: skew(-12deg, -12deg); }
+  33% { transform: skew(9deg, 9deg); }
+  44% { transform: skew(-6deg, -6deg); }
+  55% { transform: skew(4deg, 4deg); }
+  66% { transform: skew(-2deg, -2deg); }
+  77% { transform: skew(1deg, 1deg); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-swing">
+        <h3>Swing</h3>
+        <p>Pivots from the top edge like a hanging sign. transform-origin does all the work here.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-swing"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-swing {
+  animation: fh-swing 1s ease-in-out both;
+  transform-origin: top center;
+}
+@keyframes fh-swing {
+  20%  { transform: rotate(14deg); }
+  40%  { transform: rotate(-10deg); }
+  60%  { transform: rotate(6deg); }
+  80%  { transform: rotate(-4deg); }
+  100% { transform: rotate(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-bounce">
+        <h3>Bounce</h3>
+        <p>The decaying rebound feels physical because each bounce is smaller than the last. Classic on scroll-down arrows.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-bounce"&gt;↓ Scroll&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-bounce {
+  animation: fh-bounceY 1s cubic-bezier(0.28, 0.84, 0.42, 1) both;
+}
+@keyframes fh-bounceY {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-22px); }
+  50% { transform: translateY(0); }
+  70% { transform: translateY(-10px); }
+  85% { transform: translateY(0); }
+  95% { transform: translateY(-4px); }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Attention animations are a budget you can overspend</h2>

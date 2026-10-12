@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-box-shadow-generator.png" />
 
-  <title>CSS Box Shadow Generator — Visual Shadow Builder | FrontendHelpers</title>
+  <title>CSS Box Shadow Generator | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -175,19 +162,19 @@
     <div class="tool-grid">
       <div class="tool-inputs">
         <div class="slider-group">
-          <label>X Offset: <strong id="shadow-x-val">4</strong>px</label>
+          <label for="shadow-x">X Offset: <strong id="shadow-x-val">4</strong>px</label>
           <input type="range" id="shadow-x" min="-50" max="50" value="4" class="styled-range" />
         </div>
         <div class="slider-group">
-          <label>Y Offset: <strong id="shadow-y-val">8</strong>px</label>
+          <label for="shadow-y">Y Offset: <strong id="shadow-y-val">8</strong>px</label>
           <input type="range" id="shadow-y" min="-50" max="50" value="8" class="styled-range" />
         </div>
         <div class="slider-group">
-          <label>Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
+          <label for="shadow-blur">Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
           <input type="range" id="shadow-blur" min="0" max="100" value="24" class="styled-range" />
         </div>
         <div class="slider-group">
-          <label>Spread: <strong id="shadow-spread-val">0</strong>px</label>
+          <label for="shadow-spread">Spread: <strong id="shadow-spread-val">0</strong>px</label>
           <input type="range" id="shadow-spread" min="-50" max="50" value="0" class="styled-range" />
         </div>
         <div class="form-row">
@@ -199,7 +186,7 @@
             </div>
           </div>
           <div class="slider-group">
-            <label>Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
+            <label for="shadow-opacity">Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
             <input type="range" id="shadow-opacity" min="0" max="100" value="25" class="styled-range" />
           </div>
         </div>
@@ -222,7 +209,7 @@
             <span>CSS Code</span>
             <button class="btn-copy" id="btn-copy-shadow" data-target="output-shadow-code">Copy CSS</button>
           </div>
-          <textarea id="output-shadow-code" readonly rows="3" class="mono-output"></textarea>
+          <textarea id="output-shadow-code" aria-label="CSS Code" readonly rows="3" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -251,35 +238,30 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Programmatic Shadow Layering</h2>
-        <p>Beautiful, natural-looking shadows in UI design are rarely achieved with a single drop shadow. In the real world, light diffuses. To recreate this in CSS, designers layer multiple shadows on top of each other, starting from a small, dark shadow (ambient occlusion) out to a large, faint shadow (diffused light).</p>
-        
-        <h3>The Mathematics of Smooth Shadows</h3>
-        <p>If you are building a design system component library in JavaScript, you can generate these layered shadows algorithmically based on a single "elevation" parameter.</p>
-        <pre><code class="language-javascript">
-function generateElevation(level) {
-  // level is typically between 1 and 5
-  if (level < 1 || level > 5) return 'none';
-  
-  const y1 = level;
-  const blur1 = level * 2;
-  const alpha1 = 0.1 + (level * 0.01); // Slightly darker inner shadow
-  
-  const y2 = level * 3;
-  const blur2 = level * 6;
-  const alpha2 = 0.05 + (level * 0.01); // Fainter outer diffusion
-  
-  return 
-    0px px px rgba(0,0,0,),
-    0px px px rgba(0,0,0,)
-  .trim();
+        <h2>Generating an elevation scale as shadow tokens</h2>
+        <p>Hand-tuning a shadow for every component is how a design drifts. Generate a small numbered scale once, in your build or token pipeline, and have components refer only to <code>var(--shadow-2)</code> and friends. The function below pairs a tight contact shadow with a wider ambient one at each level. Two details do most of the work: the ambient layer has a negative spread equal to the level, which stops a large blur bleeding out past the sides of a card, and the colour is a dark shade of the surface hue (slate here) rather than pure black, which turns muddy on tinted backgrounds.</p>
+        <pre><code class="language-javascript">// Each level = a tight contact shadow + a wide, softer ambient one.
+// rgb is a dark shade of your surface hue, not pure black.
+function elevation(level, rgb = '15 23 42') {
+  if (level &lt;= 0) return 'none';
+  const a1 = (0.06 + level * 0.02).toFixed(2);
+  const a2 = (0.04 + level * 0.03).toFixed(2);
+  const contact = `0 ${level}px ${level * 2}px rgb(${rgb} / ${a1})`;
+  const ambient = `0 ${level * 4}px ${level * 8}px -${level}px rgb(${rgb} / ${a2})`;
+  return `${contact}, ${ambient}`;
 }
 
-// Example usage:
-document.getElementById('card').style.boxShadow = generateElevation(3);
-// Output: 0px 3px 6px rgba(0,0,0,0.13), 0px 9px 18px rgba(0,0,0,0.08)
-        </code></pre>
-        <p>By defining your shadows through an algorithm like this, you guarantee that all elevated components in your application share the same simulated light source, resulting in a cohesive and premium aesthetic.</p>
+const tokens = [1, 2, 3, 4]
+  .map(n =&gt; `  --shadow-${n}: ${elevation(n)};`)
+  .join('\n');
+
+console.log(`:root {\n${tokens}\n}`);
+// :root {
+//   --shadow-1: 0 1px 2px rgb(15 23 42 / 0.08), 0 4px 8px -1px rgb(15 23 42 / 0.07);
+//   ...
+//   --shadow-4: 0 4px 8px rgb(15 23 42 / 0.14), 0 16px 32px -4px rgb(15 23 42 / 0.16);
+// }</code></pre>
+        <p>Two limits are worth knowing. <code>box-shadow</code> follows the element's <code>border-radius</code> but ignores transparency, so a cut-out PNG or an SVG icon gets a rectangular shadow; <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow"><code>filter: drop-shadow()</code></a> follows the alpha channel instead, though it has no spread value and no <code>inset</code>. And transitioning between two shadow values repaints the element on every frame. For a hover lift, put the larger shadow on a <code>::after</code> pseudo-element and transition its <code>opacity</code>, which the browser can hand to the compositor. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow">MDN's box-shadow reference</a> covers the full syntax, including the stacking order: the first shadow in the list is drawn on top.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

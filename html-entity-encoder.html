@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free HTML entity encoder and decoder. Convert special characters to safe HTML entities and back to display code samples safely and prevent XSS vulnerabilities." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-html-entity-encoder.png" />
 
-  <title>HTML Entity Encoder &amp; Decoder — Free Escape Tool | FrontendHelpers</title>
+  <title>HTML Entity Encoder &amp; Decoder | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -104,7 +91,7 @@
           {
             "@type": "Question",
             "name": "What is the difference between named and numeric entities?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Named entities like &amp;copy; are readable but limited to a defined list. Numeric entities like &amp;#169; work for any Unicode character. With UTF-8 you can usually write characters directly and reserve entities for the five reserved characters." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Named entities like &copy; are readable but limited to a defined list. Numeric entities like &#169; work for any Unicode character. With UTF-8 you can usually write characters directly and reserve entities for the five reserved characters." }
           },
           {
             "@type": "Question",
@@ -193,7 +180,7 @@
             <span id="entity-output-label">Encoded HTML</span>
             <button class="btn-copy" data-target="output-entities">Copy Result</button>
           </div>
-          <textarea id="output-entities" readonly rows="6" class="mono-output"></textarea>
+          <textarea id="output-entities" aria-labelledby="entity-output-label" readonly rows="6" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -220,32 +207,30 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Safe Encoding in JavaScript</h2>
-        <p>Cross-Site Scripting (XSS) is one of the most common web vulnerabilities. It occurs when untrusted user input is rendered directly into the DOM without being properly encoded. While modern frameworks like React and Vue automatically encode text bindings, you must manually encode data if you are using Vanilla JS or <code>innerHTML</code>.</p>
-        
-        <h3>Creating a Safe Encode Function</h3>
-        <p>The safest and most robust way to encode HTML entities in Vanilla JavaScript is to leverage the browser's own DOM API, rather than attempting to write complex regex replacements.</p>
-        <pre><code class="language-javascript">
-function encodeHTML(str) {
-  // Create a detached text node
-  const textNode = document.createTextNode(str);
-  
-  // Create a detached div
-  const div = document.createElement('div');
-  
-  // Append the text node to the div
-  div.appendChild(textNode);
-  
-  // The browser automatically encodes the text content
-  return div.innerHTML;
+        <h2>Escaping for attributes, not just text</h2>
+        <p>A popular shortcut escapes a string by putting it in a text node and reading back <code>innerHTML</code>. That escapes <code>&amp;</code>, <code>&lt;</code> and <code>&gt;</code>, but the HTML serialiser leaves quotes alone in text, so the output is unsafe as soon as it lands inside an attribute value: an input such as <code>" autofocus onfocus="…</code> closes the attribute and adds an event handler. If you build HTML as strings, in a server template, an email body or a template literal, use an escape function that covers all five characters:</p>
+        <pre><code class="language-javascript">const ESCAPES = {
+  '&amp;': '&amp;amp;',
+  '&lt;': '&amp;lt;',
+  '&gt;': '&amp;gt;',
+  '"': '&amp;quot;',
+  "'": '&amp;#39;',
+};
+
+// One pass, so '&amp;' can never be double-encoded
+function escapeHTML(value) {
+  return String(value).replace(/[&amp;&lt;&gt;"']/g, ch =&gt; ESCAPES[ch]);
 }
 
-// Example usage:
-const maliciousInput = "&lt;script&gt;alert('XSS!')&lt;/script&gt;";
-console.log(encodeHTML(maliciousInput));
-// Output: &amp;lt;script&amp;gt;alert('XSS!')&amp;lt;/script&amp;gt;
-        </code></pre>
-        <p>This technique is virtually bulletproof because it uses the exact same parsing engine the browser uses to render the page, ensuring no obscure edge cases or malformed tags slip through your regex filters.</p>
+const name = `" autofocus onfocus="alert(document.cookie)`;
+
+console.log(`&lt;input value="${escapeHTML(name)}"&gt;`);
+// &lt;input value="&amp;quot; autofocus onfocus=&amp;quot;alert(document.cookie)"&gt;
+
+console.log(escapeHTML("Tom &amp; Jerry's &lt;b&gt;"));
+// Tom &amp;amp; Jerry&amp;#39;s &amp;lt;b&amp;gt;</code></pre>
+        <p>In the browser, the better answer is usually not to escape at all. Assign to <code>element.textContent</code> or call <code>setAttribute()</code>, and the value is stored as data and never parsed as markup, so there is no escaping step to forget. Keep a string escaper for the cases where the output really has to be an HTML string.</p>
+        <p>Escaping also has limits. It protects text and <em>quoted</em> attribute values only; an unquoted attribute can be broken with a plain space. It does nothing about a <code>javascript:</code> URL in an <code>href</code>, which needs an allow-list of <code>http:</code> and <code>https:</code>, or about values placed inside <code>&lt;script&gt;</code>, inline event handlers or CSS. The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP Cross Site Scripting Prevention Cheat Sheet</a> covers each context, and MDN's page on <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">textContent</a> explains how it differs from <code>innerHTML</code>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

@@ -9,7 +9,8 @@ Plain HTML, CSS and vanilla JavaScript — no framework, no runtime dependencies
 Edit the files in the repo root, then:
 
 ```bash
-npm run check     # quality gate: canonicals, links, anchors, JSON-LD, sitemap, redirects
+npm run generate  # re-render the static animation reference + JS tips from their data files
+npm run check     # quality gate: generated HTML fresh, canonicals, links, anchors, JSON-LD, sitemap, redirects
 npm run preview   # build to dist/ and serve it locally with Cloudflare's dev server
 ```
 
