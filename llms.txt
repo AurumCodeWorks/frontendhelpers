@@ -51,6 +51,10 @@ All generated output and published snippets are free to use in personal and comm
 - [Skeleton Loading Screens in CSS: Shimmer Done Right](https://frontendhelpers.com/css-skeleton-loader): Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers.
 - [Animated Gradient Borders in CSS: 3 Techniques](https://frontendhelpers.com/css-animated-gradient-border): Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property.
 - [CSS Shake Animation for Errors (Accessible Version)](https://frontendhelpers.com/css-shake-animation): A CSS shake animation for form errors: decaying translateX keyframes, a clean restart with element.animate(), plus ARIA and reduced-motion support.
+- [CSS Loading Spinners: Light, Smooth and Accessible](https://frontendhelpers.com/css-loading-spinner): Build CSS loading spinners from one element, a conic gradient or three dots. Size them in em, delay them 300ms and make them accessible in buttons.
+- [Animated Gradient Text in CSS (and Keeping It Readable)](https://frontendhelpers.com/css-animated-gradient-text): Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion.
+- [CSS Marquee: An Infinite Scrolling Ticker Done Right](https://frontendhelpers.com/css-marquee-animation): A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support.
+- [Fade In on Scroll with CSS Scroll-Driven Animations](https://frontendhelpers.com/css-fade-in-on-scroll): Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show.
 
 ## Guides
 

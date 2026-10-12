@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-marquee-animation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-marquee-animation" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Marquee: An Infinite Scrolling Ticker Done Right" />
+  <meta property="og:description" content="A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-marquee-animation.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Marquee: An Infinite Scrolling Ticker Done Right" />
+  <meta name="twitter:description" content="A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-marquee-animation.png" />
+
+  <title>CSS Marquee: An Infinite Scrolling Ticker Done Right</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Full-width demo frames for this page */
+    .mq-demos { grid-template-columns: minmax(0, 1fr); }
+    .mq-stage { grid-template-columns: minmax(0, 1fr); justify-items: stretch; gap: 14px; }
+    .mq-controls { display: flex; justify-content: flex-end; margin-top: 24px; }
+    .mq-controls + .mq-demos { margin-top: 12px; }
+
+    /* The marquee */
+    .mq {
+      --mq-gap: 2rem;
+      --mq-duration: 30s;
+      overflow: hidden;
+    }
+    .mq-track {
+      display: flex;
+      width: max-content;
+      animation: mq-scroll var(--mq-duration) linear infinite;
+    }
+    .mq .mq-group {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: var(--mq-gap);
+      padding-inline-end: var(--mq-gap);
+      list-style: none;
+    }
+    .mq .mq-group > li { white-space: nowrap; color: var(--text); }
+    @keyframes mq-scroll {
+      to { transform: translateX(-50%); }
+    }
+    @keyframes mq-scroll-rtl {
+      to { transform: translateX(50%); }
+    }
+    .mq:dir(rtl) .mq-track { animation-name: mq-scroll-rtl; }
+
+    /* Pause on hover, on keyboard focus, and from a button */
+    .mq:hover .mq-track,
+    .mq:focus-within .mq-track,
+    .mq-paused .mq-track { animation-play-state: paused; }
+
+    /* Edge fades */
+    .mq-fade {
+      mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    /* Demo 1: text ticker */
+    .mq-ticker {
+      --mq-duration: 40s;
+      border-block: 1px solid var(--border);
+      padding-block: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .mq-ticker .mq-group > li::before {
+      content: "◆";
+      margin-inline-end: 0.75rem;
+      color: var(--secondary);
+      font-size: 0.6em;
+      vertical-align: middle;
+    }
+
+    /* Demo 2: badge row */
+    .mq-logos { --mq-gap: 1rem; }
+    .mq-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .mq-badge:hover,
+    .mq-badge:focus-visible { border-color: var(--secondary); }
+
+    /* Demo 3: the Pause button */
+    .mq-toggle {
+      justify-self: start;
+      font: inherit;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+    }
+    .mq-toggle:hover { color: var(--text); border-color: var(--secondary); }
+    .mq-controls .mq-toggle { justify-self: auto; }
+    .mq-toggle::before { content: "❚❚"; margin-inline-end: 0.5em; font-size: 0.75em; }
+    .mq-toggle[aria-pressed="true"] { color: var(--text); border-color: var(--secondary); }
+    .mq-toggle[aria-pressed="true"]::before { content: "▶"; }
+    .mq-news { --mq-gap: 3rem; font-size: 0.95rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mq-track {
+        display: block;
+        width: auto;
+        animation: none;
+      }
+      .mq .mq-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 0.5rem;
+        padding-inline-end: 0;
+      }
+      .mq .mq-group[aria-hidden="true"],
+      .mq-toggle { display: none; }
+      .mq-fade { mask-image: none; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Marquee: An Infinite Scrolling Ticker Done Right",
+        "description": "A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support.",
+        "url": "https://frontendhelpers.com/css-marquee-animation",
+        "image": "https://frontendhelpers.com/assets/og-css-marquee-animation.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-marquee-animation" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Marquee Animation", "item": "https://frontendhelpers.com/css-marquee-animation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I still use the HTML marquee element?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Browsers still render it, but the HTML standard lists marquee as entirely obsolete and says authors must not use it, and MDN marks it deprecated. It offers no pause control, no reduced-motion handling and no control over the loop. A CSS animation does all of that with a few lines." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my CSS marquee jump at the end of every loop?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The two halves of the track are not exactly the same width. With a flex gap between all the items there is one gap fewer than items, so translateX(-50%) stops half a gap short. Put the gap inside each copy and add the same amount as end padding, so each copy is exactly half the track." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does pausing on hover satisfy WCAG 2.2.2?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not on its own. A marquee that starts automatically, runs for more than five seconds and sits beside other content needs a mechanism to pause, stop or hide it. Hover does not exist on touch screens, and the W3C explanation says pausing only while focus is on the content does not count. Add a visible Pause button." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I keep the scrolling speed the same when the content changes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Treat speed as pixels per second, not as a fixed duration. The track moves the width of one copy per cycle, so the duration is that width divided by the speed. Set it as a custom property, either by hand or with a few lines of JavaScript that measure one copy after the fonts load." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Marquee Animation</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS marquee: <span class="hero-highlight">an infinite scrolling ticker done right</span></h1>
+        <p class="page-hero-sub">A loop with no visible seam, a hidden duplicate that screen readers skip, soft faded edges, a speed that survives content changes, and a Pause button that actually meets WCAG.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="mq-controls"><button type="button" class="mq-toggle" aria-pressed="false" aria-controls="mq-demos">Pause all demos</button></div>
+        <div class="recipe-demos mq-demos" id="mq-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage mq-stage">
+              <div class="mq mq-ticker">
+                <div class="mq-track">
+                  <ul class="mq-group">
+                    <li>Build 412 deployed to production</li>
+                    <li>Lighthouse performance score: 98</li>
+                    <li>Core Web Vitals: all three passing</li>
+                    <li>New recipe: CSS marquee animation</li>
+                    <li>Every tool is free, with no sign-up</li>
+                  </ul>
+                  <ul class="mq-group" aria-hidden="true">
+                    <li>Build 412 deployed to production</li>
+                    <li>Lighthouse performance score: 98</li>
+                    <li>Core Web Vitals: all three passing</li>
+                    <li>New recipe: CSS marquee animation</li>
+                    <li>Every tool is free, with no sign-up</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Text ticker</strong> — two identical lists in one track, moved by <code>translateX(-50%)</code>; hover to pause.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage mq-stage">
+              <div class="mq mq-logos mq-fade" data-mq-speed="40">
+                <div class="mq-track">
+                  <ul class="mq-group">
+                    <li><a class="mq-badge" href="/">HTML &amp; SEO</a></li>
+                    <li><a class="mq-badge" href="/css-animations">CSS animations</a></li>
+                    <li><a class="mq-badge" href="/js-tips">JavaScript tips</a></li>
+                    <li><a class="mq-badge" href="/essentials">Dev essentials</a></li>
+                    <li><a class="mq-badge" href="/frameworks">Frameworks</a></li>
+                    <li><a class="mq-badge" href="/guides">Guides</a></li>
+                    <li><a class="mq-badge" href="/css-animation-performance">Performance</a></li>
+                    <li><a class="mq-badge" href="/accessible-website-guide">Accessibility</a></li>
+                    <li><a class="mq-badge" href="/about">About us</a></li>
+                    <li><a class="mq-badge" href="/changelog">Changelog</a></li>
+                  </ul>
+                  <ul class="mq-group" aria-hidden="true">
+                    <li><a class="mq-badge" href="/" tabindex="-1">HTML &amp; SEO</a></li>
+                    <li><a class="mq-badge" href="/css-animations" tabindex="-1">CSS animations</a></li>
+                    <li><a class="mq-badge" href="/js-tips" tabindex="-1">JavaScript tips</a></li>
+                    <li><a class="mq-badge" href="/essentials" tabindex="-1">Dev essentials</a></li>
+                    <li><a class="mq-badge" href="/frameworks" tabindex="-1">Frameworks</a></li>
+                    <li><a class="mq-badge" href="/guides" tabindex="-1">Guides</a></li>
+                    <li><a class="mq-badge" href="/css-animation-performance" tabindex="-1">Performance</a></li>
+                    <li><a class="mq-badge" href="/accessible-website-guide" tabindex="-1">Accessibility</a></li>
+                    <li><a class="mq-badge" href="/about" tabindex="-1">About us</a></li>
+                    <li><a class="mq-badge" href="/changelog" tabindex="-1">Changelog</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Badge row with fades</strong> — <code>mask-image</code> dissolves both edges; the copy’s links are hidden and unfocusable; speed set in px/s.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage mq-stage">
+              <button type="button" class="mq-toggle" aria-pressed="false" aria-controls="mq-news">Pause</button>
+              <div class="mq mq-news mq-fade" id="mq-news" data-mq-speed="50">
+                <div class="mq-track">
+                  <ul class="mq-group">
+                    <li>Free delivery on orders over £40</li>
+                    <li>Workshop places for November now open</li>
+                    <li>Opening hours: 9am to 6pm, Monday to Saturday</li>
+                    <li>Gift cards available in store and online</li>
+                  </ul>
+                  <ul class="mq-group" aria-hidden="true">
+                    <li>Free delivery on orders over £40</li>
+                    <li>Workshop places for November now open</li>
+                    <li>Opening hours: 9am to 6pm, Monday to Saturday</li>
+                    <li>Gift cards available in store and online</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Accessible announcement bar</strong> — a visible Pause button before the content, <code>aria-pressed</code> for its state; wraps statically under reduced motion.</figcaption>
+          </figure>
+        </div>
+
+        <h2>Why not the &lt;marquee&gt; element?</h2>
+        <p>Browsers still render <code>&lt;marquee&gt;</code>, which is exactly why it keeps turning up in old templates. It should not go into anything new. The HTML Living Standard puts it in its list of <a href="https://html.spec.whatwg.org/multipage/obsolete.html" rel="noopener">non-conforming features</a>, elements that are “entirely obsolete, and must not be used by authors”; the only reason the spec still describes it is so browsers keep old pages working. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/marquee" rel="noopener">marquee reference</a> marks it deprecated, strongly discourages it, and points to CSS animation instead.</p>
+        <p>The practical problems matter more than the label: users cannot pause it, it ignores the reduced-motion setting, and it leaves a blank stretch before the text comes round again. A CSS marquee fixes all three.</p>
+
+        <h2>The seamless loop: two copies and −50%</h2>
+        <p>Sliding one strip of content and starting again means a jump or an empty gap every cycle. The fix is to put the content in the track twice, side by side, and move the track left by exactly half of its own width. At that moment the second copy sits precisely where the first one started, so when the animation restarts at zero nothing visibly changes. The loop has no seam because there is nothing to see at the seam.</p>
+        <p>Three details make it work. The track is <code>width: max-content</code>, so it is as wide as both copies rather than squeezed to the container, and percentages in <code>translateX()</code> refer to the element’s own width, so −50% is always one copy. The timing function is <code>linear</code>, because any easing would make the strip slow down and speed up at every repeat. And the container clips the track with <code>overflow: hidden</code>; without it, a strip twice the width of the content pushes the whole page sideways.</p>
+        <pre><code class="language-css">.mq {
+  --mq-gap: 2rem;
+  --mq-duration: 30s;
+  overflow: hidden;
+}
+.mq-track {
+  display: flex;
+  width: max-content;
+  animation: mq-scroll var(--mq-duration) linear infinite;
+}
+.mq .mq-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--mq-gap);
+  padding-inline-end: var(--mq-gap);
+  list-style: none;
+}
+.mq .mq-group &gt; li { white-space: nowrap; color: var(--text); }
+@keyframes mq-scroll {
+  to { transform: translateX(-50%); }
+}</code></pre>
+        <p>The gap is where most marquees go wrong. If you put <code>gap: 2rem</code> on the track and let the items from both copies share it, a row of ten items has nine gaps, and half of the track is half a gap less than one copy. The result is a small jump at the end of every cycle. Here the gap lives inside each copy, and each copy also gets the same amount as <code>padding-inline-end</code>. Each copy is then items plus as many gaps as items, the two copies are identical, and −50% lands exactly on the start of the second.</p>
+        <p>One condition is easy to miss: a single copy must be at least as wide as the container. If it is narrower, the end of the second copy comes into view before the loop resets and you see an empty strip. For short content, repeat the items inside each copy until it is wider than the widest container you support.</p>
+
+        <h2>Hide the duplicate from assistive technology</h2>
+        <p>The second copy exists only for the eye. A screen reader would otherwise read every item twice, and a keyboard user would tab through every link twice. Put <code>aria-hidden="true"</code> on the second list to remove it from the accessibility tree. That alone is not enough when the copy contains links or buttons, because <code>aria-hidden</code> does not stop an element receiving focus. A focusable element that announces nothing is worse than a duplicate, so give each link in the copy <code>tabindex="-1"</code>, as in the badge demo.</p>
+        <pre><code class="language-html">&lt;div class="mq mq-logos mq-fade" data-mq-speed="40"&gt;
+  &lt;div class="mq-track"&gt;
+    &lt;ul class="mq-group"&gt;
+      &lt;li&gt;&lt;a class="mq-badge" href="/"&gt;HTML &amp;amp; SEO&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class="mq-badge" href="/css-animations"&gt;CSS animations&lt;/a&gt;&lt;/li&gt;
+      &lt;!-- … --&gt;
+    &lt;/ul&gt;
+    &lt;ul class="mq-group" aria-hidden="true"&gt;
+      &lt;li&gt;&lt;a class="mq-badge" href="/" tabindex="-1"&gt;HTML &amp;amp; SEO&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class="mq-badge" href="/css-animations" tabindex="-1"&gt;CSS animations&lt;/a&gt;&lt;/li&gt;
+      &lt;!-- … --&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <p>The <code>inert</code> attribute looks like a shortcut, but it also blocks mouse clicks, and the copy is on screen roughly half the time, so some badges would simply do nothing. With <code>tabindex="-1"</code> the copy stays clickable while keyboard and screen-reader users meet each link once.</p>
+
+        <h2>Fade the edges with a mask</h2>
+        <p>Items sliced off by a hard edge look like a rendering bug; a fade reads as intentional. Older recipes used gradient overlays in the background colour, which break the moment the marquee sits on an image. A mask is independent of the background: <code>mask-image</code> hides parts of the element based on the alpha channel of the mask, and MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/mask-image" rel="noopener">mask-image reference</a> lists it as Baseline widely available, across browsers since December 2023. A gradient from transparent to black and back gives you soft edges over any surface.</p>
+        <pre><code class="language-css">.mq-fade {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}</code></pre>
+        <p>Only the alpha of the gradient matters, so <code>#000</code> could be any opaque colour. Put the mask on the clipping container, not on the moving track, so the fade stays fixed while the content passes through it.</p>
+
+        <h2>Set speed in pixels per second, not seconds</h2>
+        <p>A fixed <code>animation-duration</code> is a hidden bug. The track travels one copy’s width per cycle, so when an editor adds three more items the strip suddenly runs faster, and a translation that is longer than the English original races past. Decide on a speed instead and derive the duration from it: duration = width of one copy ÷ speed. In our experience 30 to 60 pixels per second keeps text readable; badges and logos can go a little faster.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Width of one copy</th><th>Desired speed</th><th>Resulting <code>animation-duration</code></th></tr></thead>
+            <tbody>
+              <tr><td>600px</td><td>40 px/s</td><td>600 ÷ 40 = 15s</td></tr>
+              <tr><td>1,200px</td><td>40 px/s</td><td>1200 ÷ 40 = 30s</td></tr>
+              <tr><td>1,200px</td><td>80 px/s</td><td>1200 ÷ 80 = 15s</td></tr>
+              <tr><td>2,000px</td><td>50 px/s</td><td>2000 ÷ 50 = 40s</td></tr>
+              <tr><td>3,000px</td><td>120 px/s</td><td>3000 ÷ 120 = 25s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Because the duration is a custom property, you can set it per instance by hand, as the text ticker does with <code>--mq-duration: 40s</code>, or measure it. The other two demos carry a <code>data-mq-speed</code> attribute, and a few lines of script divide the measured width of one copy by it. Waiting for <code>document.fonts.ready</code> matters: measure before the web fonts arrive and you size the loop for the fallback font.</p>
+        <pre><code class="language-js">document.fonts.ready.then(() =&gt; {
+  document.querySelectorAll('.mq[data-mq-speed]').forEach((mq) =&gt; {
+    const width = mq.querySelector('.mq-group').offsetWidth;
+    mq.style.setProperty('--mq-duration', `${width / mq.dataset.mqSpeed}s`);
+  });
+});</code></pre>
+
+        <h2>Pause on hover is not enough</h2>
+        <p>Pausing on hover lets people stop the strip to read an item or aim at a link. <code>animation-play-state: paused</code> does it without restarting anything, because, as MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-play-state" rel="noopener">animation-play-state reference</a> notes, a resumed animation continues from where it was paused rather than from the beginning. Add <code>:focus-within</code> so the strip also stops while a keyboard user is on one of its links.</p>
+        <pre><code class="language-css">.mq:hover .mq-track,
+.mq:focus-within .mq-track,
+.mq-paused .mq-track { animation-play-state: paused; }</code></pre>
+        <p>It does not make the marquee accessible. WCAG Success Criterion 2.2.2, Pause, Stop, Hide, applies to moving, blinking or scrolling information that starts automatically, lasts more than five seconds and is presented in parallel with other content: for that, there must be a mechanism for the user to pause, stop or hide it, unless the movement is essential. An infinite marquee on a normal page meets all three conditions. The W3C’s <a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html" rel="noopener">Understanding 2.2.2</a> document is explicit that content which pauses only while it has focus does not count as a mechanism, because it starts again as soon as focus moves on. Hover fails for the same reason, and does not exist at all on touch screens.</p>
+        <p>The fix is a real button, as in the third demo. Place it before the marquee in the source so keyboard and screen-reader users reach it first. Give it a constant label and expose its state with <code>aria-pressed</code>, rather than swapping the words between Pause and Play, so its name does not change under the user. The script toggles the attribute and a class on the element named by <code>aria-controls</code>; the CSS rule above does the rest. The same Understanding document also notes that every piece of content on a page must meet this criterion, which is why this page has a Pause all demos button above the examples.</p>
+        <pre><code class="language-html">&lt;button type="button" class="mq-toggle" aria-pressed="false" aria-controls="mq-news"&gt;Pause&lt;/button&gt;
+&lt;div class="mq mq-news mq-fade" id="mq-news" data-mq-speed="50"&gt;
+  &lt;!-- track with two copies, as above --&gt;
+&lt;/div&gt;</code></pre>
+        <pre><code class="language-js">document.querySelectorAll('.mq-toggle').forEach((btn) =&gt; {
+  const target = document.getElementById(btn.getAttribute('aria-controls'));
+  btn.addEventListener('click', () =&gt; {
+    const paused = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(paused));
+    target.classList.toggle('mq-paused', paused);
+  });
+});</code></pre>
+
+        <h2>Reduced motion: stop and wrap</h2>
+        <p>Continuous sideways movement is one of the patterns most likely to trouble people with vestibular disorders, and the <code>prefers-reduced-motion</code> media query reports when someone has asked their operating system for less of it. For a marquee, slowing down is not the answer. Stop the animation, drop the duplicate, remove the fades and let the items wrap onto as many lines as they need, so all the content is visible without anything moving. The Pause buttons go too, since there is nothing left to pause.</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .mq-track {
+    display: block;
+    width: auto;
+    animation: none;
+  }
+  .mq .mq-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5rem;
+    padding-inline-end: 0;
+  }
+  .mq .mq-group[aria-hidden="true"],
+  .mq-toggle { display: none; }
+  .mq-fade { mask-image: none; }
+}</code></pre>
+        <p>Wrapping suits announcement bars and badge rows. For a long logo wall where two or three lines would be too tall, the alternative is to keep a single row and set <code>overflow-x: auto</code> on the container so people scroll it themselves.</p>
+
+        <h2>Right-to-left pages</h2>
+        <p>In a right-to-left document the flex row starts at the right edge, so the second copy sits to the left of the first and the track overflows to the left. Translating by −50% then pulls the content away from the start and opens an empty gap on the right. Reverse the movement with a mirrored keyframe. The <code>:dir()</code> pseudo-class matches the inherited direction even when <code>dir</code> is set on an ancestor, and it works in every current engine.</p>
+        <pre><code class="language-css">@keyframes mq-scroll-rtl {
+  to { transform: translateX(50%); }
+}
+.mq:dir(rtl) .mq-track { animation-name: mq-scroll-rtl; }</code></pre>
+        <p>Because <code>padding-inline-end</code> is a logical property, the trailing gap follows the direction and the loop stays seamless. To run a left-to-right row the other way, <code>animation-direction: reverse</code> is enough.</p>
+
+        <h2>Keep it cheap to run</h2>
+        <p>Animate <code>transform</code> and nothing else. A marquee built on <code>margin-left</code>, <code>left</code> or scroll position forces layout or paint on every frame, while a transform lets the browser paint the track once and have the compositor slide that layer, which keeps the strip smooth even while the main thread is busy. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the pipeline behind that.</p>
+        <p>Use <code>will-change</code> sparingly, which here means not at all. A running transform animation already gets its own layer, so <code>will-change: transform</code> adds nothing during the animation and keeps the extra layer alive after it stops. Layers cost GPU memory in proportion to their size, and a marquee track is unusually wide: two copies of a 3,000px logo wall make a 6,000px layer. Several stacked rows on a phone add up quickly, so keep each copy only as long as the container requires.</p>
+        <p>If you need a slideshow of images rather than a continuous strip, the <a href="/css-image-animations#anim-css-carousel">CSS carousel snippet</a> in our <a href="/css-image-animations">image animations library</a> uses the same transform technique with steps between slides.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Can I still use the HTML marquee element?</summary>
+            <p class="faq-answer">Browsers still render it, but the HTML standard lists marquee as entirely obsolete and says authors must not use it, and MDN marks it deprecated. It offers no pause control, no reduced-motion handling and no control over the loop. A CSS animation does all of that with a few lines.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my CSS marquee jump at the end of every loop?</summary>
+            <p class="faq-answer">The two halves of the track are not exactly the same width. With a flex gap between all the items there is one gap fewer than items, so translateX(-50%) stops half a gap short. Put the gap inside each copy and add the same amount as end padding, so each copy is exactly half the track.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does pausing on hover satisfy WCAG 2.2.2?</summary>
+            <p class="faq-answer">Not on its own. A marquee that starts automatically, runs for more than five seconds and sits beside other content needs a mechanism to pause, stop or hide it. Hover does not exist on touch screens, and the W3C explanation says pausing only while focus is on the content does not count. Add a visible Pause button.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I keep the scrolling speed the same when the content changes?</summary>
+            <p class="faq-answer">Treat speed as pixels per second, not as a fixed duration. The track moves the width of one copy per cycle, so the duration is that width divided by the speed. Set it as a custom property, either by hand or with a few lines of JavaScript that measure one copy after the fonts load.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-image-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS image animations</h3>
+            <p>Carousels, Ken Burns zooms, reveals and hover effects, each with markup and CSS.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Which properties the compositor can animate, and how to check in DevTools.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>Keyboard access, screen readers, motion and contrast in practical steps.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.fonts.ready.then(() => {
+      document.querySelectorAll('.mq[data-mq-speed]').forEach((mq) => {
+        const width = mq.querySelector('.mq-group').offsetWidth;
+        mq.style.setProperty('--mq-duration', `${width / mq.dataset.mqSpeed}s`);
+      });
+    });
+    document.querySelectorAll('.mq-toggle').forEach((btn) => {
+      const target = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.addEventListener('click', () => {
+        const paused = btn.getAttribute('aria-pressed') !== 'true';
+        btn.setAttribute('aria-pressed', String(paused));
+        target.classList.toggle('mq-paused', paused);
+      });
+    });
+  </script>
+  <script src="common.js"></script>
+</body>
+</html>

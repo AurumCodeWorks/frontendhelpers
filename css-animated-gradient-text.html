@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-animated-gradient-text" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-animated-gradient-text" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Animated Gradient Text in CSS (and Keeping It Readable)" />
+  <meta property="og:description" content="Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-animated-gradient-text.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Animated Gradient Text in CSS (and Keeping It Readable)" />
+  <meta name="twitter:description" content="Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-animated-gradient-text.png" />
+
+  <title>Animated Gradient Text in CSS (and Keeping It Readable)</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    .gt-stage { background: #0b1020; }
+    .gt-display {
+      display: inline-block;
+      margin: 0;
+      padding-block: 0.08em;
+      font-family: var(--font-title);
+      font-size: clamp(1.9rem, 4vw, 2.4rem);
+      font-weight: 600;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    /* Demo 1: slide an oversized gradient with background-position */
+    .gt-flow { color: #a78bfa; }
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .gt-flow {
+        background-image: linear-gradient(90deg, #a78bfa, #22d3ee, #34d399, #a78bfa);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gt-flow 6s linear infinite;
+      }
+    }
+    @keyframes gt-flow {
+      to { background-position: 200% 0; }
+    }
+
+    /* Demo 2: rotate a registered angle with @property */
+    @property --gt-angle {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 90deg;
+    }
+    .gt-turn { color: #f472b6; }
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .gt-turn {
+        --gt-angle: 90deg;
+        background-image: linear-gradient(var(--gt-angle), #f472b6, #fbbf24, #38bdf8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gt-turn 8s linear infinite;
+      }
+    }
+    @keyframes gt-turn {
+      to { --gt-angle: 450deg; }
+    }
+
+    /* Demo 3: a shimmer that only runs on hover or keyboard focus */
+    .gt-link {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #67e8f9;
+      text-decoration: underline;
+      text-decoration-color: #67e8f9;
+      text-underline-offset: 0.2em;
+    }
+    .gt-link:focus-visible {
+      outline: 2px solid #67e8f9;
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .gt-link {
+        background-image: linear-gradient(110deg, #67e8f9 40%, #ffffff 50%, #67e8f9 60%);
+        background-size: 250% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        transition: background-position 0.8s ease;
+      }
+      .gt-link:hover,
+      .gt-link:focus-visible {
+        background-position: 0 0;
+      }
+    }
+
+    /* Selected text: solid, high-contrast colours */
+    .gt-flow::selection,
+    .gt-turn::selection,
+    .gt-link::selection {
+      color: #0b1020;
+      background-color: #e2e8f0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gt-flow,
+      .gt-turn { animation: none; }
+      .gt-link { transition: none; }
+    }
+
+    @media (forced-colors: active) {
+      .gt-flow,
+      .gt-turn,
+      .gt-link {
+        background: none;
+        color: CanvasText;
+        -webkit-text-fill-color: currentColor;
+        animation: none;
+        transition: none;
+      }
+      .gt-link {
+        color: LinkText;
+        text-decoration-color: currentColor;
+      }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Animated Gradient Text in CSS (and Keeping It Readable)",
+        "description": "Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion.",
+        "url": "https://frontendhelpers.com/css-animated-gradient-text",
+        "image": "https://frontendhelpers.com/assets/og-css-animated-gradient-text.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-animated-gradient-text" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Animated Gradient Text in CSS", "item": "https://frontendhelpers.com/css-animated-gradient-text" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I still need -webkit-background-clip: text?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not for any current version of Chrome, Edge, Firefox or Safari. Chrome and Edge accept the unprefixed value from version 120, Safari from 14 and Firefox from 49. The prefixed line only helps older Chromium browsers and embedded WebViews, so keep it as a cheap safety net and write it before the standard declaration." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my gradient text disappear in Windows High Contrast mode?",
+            "acceptedAnswer": { "@type": "Answer", "text": "In forced colours mode the browser sets gradient background images to none, so the only thing that was painting the letters is gone. If the text was made transparent with -webkit-text-fill-color, nothing restores it. Add a forced-colors: active media query that removes the background and sets a system colour such as CanvasText or LinkText." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use gradient text for body copy?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Avoid it. Every colour along the gradient has to meet 4.5:1 for normal-sized text, the colour shifts make letter shapes harder to track across long lines, and a moving gradient behind a paragraph distracts readers. Keep it to headings, a short phrase or a single link." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I check the contrast of gradient text?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Test the stop with the lowest contrast against the background, not the average. For dark backgrounds that is usually the darkest stop, for light backgrounds the lightest. Also check the midpoints between very different hues, because the blended colour can have lower contrast than either end." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Animated Gradient Text in CSS</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Animated gradient text in CSS, <span class="hero-highlight">and keeping it readable</span></h1>
+        <p class="page-hero-sub">Two ways to move colour through a headline, the contrast maths that decides which colours you can use, and the fallbacks that stop the text vanishing in high contrast mode, on selection or for people who turn motion off.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage gt-stage">
+              <span class="gt-display gt-flow">Ship it today</span>
+            </div>
+            <figcaption><strong>Background-position flow</strong> — a gradient twice the width of the text slides through the letters and loops seamlessly.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage gt-stage">
+              <span class="gt-display gt-turn">Golden hour</span>
+            </div>
+            <figcaption><strong>@property angle turn</strong> — a registered <code>&lt;angle&gt;</code> rotates the gradient in place; nothing slides.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage gt-stage">
+              <a class="gt-link" href="/css-gradient-generator">Design your gradient stops</a>
+            </div>
+            <figcaption><strong>Hover-only link shimmer</strong> — a highlight crosses the link once on hover or keyboard focus, then rests.</figcaption>
+          </figure>
+        </div>
+
+        <h2>How gradient text works</h2>
+        <p>CSS has no property for filling text with a gradient. Instead you paint a gradient as the element’s background, clip that background to the shapes of the letters, and make the letters themselves transparent so the background shows through. Three declarations do the work: <code>background-image</code> with a gradient, <code>background-clip: text</code>, and <code>color: transparent</code>. Skip the last one and you see solid text sitting on top of its own gradient, because, as MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip" rel="noopener">background-clip reference</a> puts it, the text value has little to no visual effect while the text is opaque.</p>
+        <p>Do you still need <code>-webkit-background-clip: text</code>? For current browsers, no. According to MDN’s compatibility data, Firefox has accepted the unprefixed value since version 49, Safari since 14, and Chrome and Edge since 120, released in December 2023. Every current release of the major engines understands the standard property. The prefixed line only rescues Chromium browsers older than 120, which still turn up in embedded WebViews, kiosks and devices that stopped updating. It costs one line, so we keep it, and write it before the standard declaration so the standard one wins wherever both parse. MDN also marks Firefox’s support as partial: the clip fails with <code>background-attachment: fixed</code> and in some multi-layer backgrounds, so keep gradient text to a single background layer.</p>
+        <p>Two layout details trip people up. First, the background covers the element’s whole box, not just the glyphs, so a block-level heading that stretches across the column spreads the gradient over the full width and the words only show a slice of it. Make the element <code>inline-block</code> or give it <code>width: fit-content</code> so the gradient is sized to the words. Second, descenders and accents that poke outside the box get no background and disappear. A tight <code>line-height</code> is the usual cause; a little vertical padding, as on <code>.gt-display</code> in the demos, fixes it.</p>
+
+        <h2>Animation one: slide an oversized gradient</h2>
+        <p>The classic approach, and the one our <a href="/css-text-animations#anim-text-gradient">Gradient Flow library card</a> uses, makes the background larger than the text and moves it with <code>background-position</code>. Two things make the loop seamless. The gradient ends on the colour it starts with, and the animation moves the background by exactly one tile. With <code>background-size: 200%</code>, a position of <code>200%</code> shifts the image by one full tile width, and because backgrounds repeat by default, the last frame is identical to the first.</p>
+        <pre><code class="language-css">.gt-flow { color: #a78bfa; }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gt-flow {
+    background-image: linear-gradient(90deg, #a78bfa, #22d3ee, #34d399, #a78bfa);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gt-flow 6s linear infinite;
+  }
+}
+@keyframes gt-flow {
+  to { background-position: 200% 0; }
+}</code></pre>
+        <p>It works everywhere, but it is not free. <code>background-position</code> cannot be handed to the compositor, so the browser repaints the text on the main thread every frame. For one headline that is negligible. For a dozen animated headings, or one that sits in a hero while the page is still busy loading scripts, it is wasted work that can stutter. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the paint step in more detail.</p>
+
+        <h2>Animation two: animate a registered property</h2>
+        <p>Custom properties are normally just strings to the browser, so it cannot interpolate them: an animation from one value to another flips at the halfway point. Registering the property with <code>@property</code> gives it a type, and a typed value can be animated smoothly. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@property" rel="noopener">@property reference</a> notes that <code>syntax</code> and <code>inherits</code> are required, and so is <code>initial-value</code> for any syntax other than <code>*</code>; leave one out and the whole rule is ignored. It has been Baseline since July 2024, when Firefox 128 joined Chrome 85 and Safari 16.4.</p>
+        <pre><code class="language-css">@property --gt-angle {
+  syntax: "&lt;angle&gt;";
+  inherits: false;
+  initial-value: 90deg;
+}
+.gt-turn { color: #f472b6; }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gt-turn {
+    --gt-angle: 90deg;
+    background-image: linear-gradient(var(--gt-angle), #f472b6, #fbbf24, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gt-turn 8s linear infinite;
+  }
+}
+@keyframes gt-turn {
+  to { --gt-angle: 450deg; }
+}</code></pre>
+        <p>Instead of sliding, the gradient now turns in place, and the background never needs to be bigger than the text. The same pattern works for colour stops: register <code>--gt-start</code> with <code>syntax: "&lt;color&gt;"</code> and animate between two colours. Note the line <code>--gt-angle: 90deg</code> inside the rule. In a browser that does not understand <code>@property</code>, an unset custom property makes <code>var()</code> invalid, the whole <code>background-image</code> is dropped and the transparent text vanishes. With the value declared, an old browser gets a static gradient, and because 450 degrees points the same way as 90, its flip at the halfway point is invisible.</p>
+        <p>Be honest about the gain. Changing a gradient’s angle or colours still repaints the text every frame, exactly like sliding it. What <code>@property</code> buys you is control over what moves, not a cheaper animation.</p>
+
+        <h2>Contrast: check every point, not the average</h2>
+        <p>WCAG success criterion 1.4.3 does not relax for decorative colour. The W3C’s <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" rel="noopener">Understanding Contrast (Minimum)</a> sets 4.5:1 for normal text and 3:1 for large text, meaning at least 18 point (about 24px) or 14 point bold (about 18.5px). It also lists background images that do not give enough contrast with the text as a failure. With gradient text the variable colour is the text itself, so every point of the gradient has to clear the bar against the background. In practice that means testing the weakest stop: on a dark background, the darkest one.</p>
+        <p>Watch the space between stops too. Gradients blend through sRGB by default, and the halfway mix of two saturated, very different hues can be greyer and darker than either end. We measured a red-to-cyan pair, <code>#ef4444</code> to <code>#06b6d4</code>, against <code>#0b1020</code>: the ends score 5.03:1 and 7.80:1, but the midpoint <code>#7b7d8c</code> drops to 4.65:1. The figures below come from a Node script using the WCAG relative-luminance formula, measured against <code>#0b1020</code>, the solid background of each demo stage. We sampled each gradient at 1% steps and the weakest point fell on a stop every time. The headings are 30px or larger and count as large text; the link is 18px at weight 600, so it needs the full 4.5:1.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Demo</th><th>Stop</th><th>Contrast vs <code>#0b1020</code></th><th>AA large text (3:1)</th><th>AA normal text (4.5:1)</th></tr></thead>
+            <tbody>
+              <tr><td>Flow</td><td><code>#a78bfa</code> violet</td><td>6.95:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Flow</td><td><code>#22d3ee</code> cyan</td><td>10.47:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Flow</td><td><code>#34d399</code> green</td><td>9.84:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Angle turn</td><td><code>#f472b6</code> pink</td><td>7.14:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Angle turn</td><td><code>#fbbf24</code> amber</td><td>11.34:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Angle turn</td><td><code>#38bdf8</code> sky</td><td>8.83:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Link shimmer</td><td><code>#67e8f9</code> resting colour</td><td>13.06:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Link shimmer</td><td><code>#ffffff</code> highlight</td><td>18.93:1</td><td>Pass</td><td>Pass</td></tr>
+              <tr><td>Rejected</td><td><code>#8b5cf6</code> brand violet</td><td>4.47:1</td><td>Pass</td><td>Fail</td></tr>
+              <tr><td>Rejected</td><td><code>#6d28d9</code> deep violet</td><td>2.66:1</td><td>Fail</td><td>Fail</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The two rejected rows show how quickly it goes wrong. Our own brand violet clears 3:1 for a big heading but misses 4.5:1 by a hair, so it could not be a stop in the link. A deeper violet that looks rich in a design file fails outright, and a gradient running through it would have an unreadable stretch in the middle of the word. Check candidate stops in the <a href="/contrast-checker">contrast checker</a> before committing to them, design the gradient itself in the <a href="/css-gradient-generator">gradient generator</a>, and read our <a href="/wcag-colour-contrast-guide">WCAG colour contrast guide</a> for how the ratio is calculated.</p>
+
+        <h2>Windows High Contrast and forced colours</h2>
+        <p>When someone turns on a contrast theme in Windows, the browser reports <code>forced-colors: active</code> and replaces your colours with the user’s palette. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors" rel="noopener">forced-colors reference</a> lists what changes: <code>color</code>, <code>background-color</code> and the border colours are forced to system colours, shadows are removed, and <code>background-image</code> is set to none for any value that is not a URL. A gradient is not a URL, so the one thing painting your letters is gone. Whether the text survives then depends on how you hid it. <code>-webkit-text-fill-color</code> is not on the forced list, so a heading made transparent that way, as many snippets do, can disappear completely.</p>
+        <p>Do not leave it to chance. A short media query removes the background, which also resets the clip, and sets a system colour explicitly: <code>CanvasText</code> for headings and <code>LinkText</code> for links, so the link still looks like a link in the user’s theme.</p>
+        <pre><code class="language-css">@media (forced-colors: active) {
+  .gt-flow,
+  .gt-turn,
+  .gt-link {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+    transition: none;
+  }
+  .gt-link {
+    color: LinkText;
+    text-decoration-color: currentColor;
+  }
+}</code></pre>
+
+        <h2>Links, underlines and selection</h2>
+        <p>Transparent text breaks everything that inherits <code>currentColor</code>. An underline, a focus outline, a border or an inline SVG icon set to <code>fill: currentColor</code> all turn invisible along with the glyphs. The link demo sets <code>text-decoration-color</code> and its focus outline to the resting colour so both stay visible. It also only animates on <code>:hover</code> and <code>:focus-visible</code>: keyboard users get the same feedback, and at rest the text is one solid, readable colour.</p>
+        <pre><code class="language-css">.gt-link {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #67e8f9;
+  text-decoration: underline;
+  text-decoration-color: #67e8f9;
+  text-underline-offset: 0.2em;
+}
+.gt-link:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gt-link {
+    background-image: linear-gradient(110deg, #67e8f9 40%, #ffffff 50%, #67e8f9 60%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: background-position 0.8s ease;
+  }
+  .gt-link:hover,
+  .gt-link:focus-visible {
+    background-position: 0 0;
+  }
+}
+
+.gt-flow::selection,
+.gt-turn::selection,
+.gt-link::selection {
+  color: #0b1020;
+  background-color: #e2e8f0;
+}</code></pre>
+        <p>Selection is the other casualty. The selection highlight is painted over the gradient, and the glyphs on top of it are still transparent, so depending on the browser a selected heading can show as a tinted block with letters that are hard to make out. <code>::selection</code> accepts only a few properties, among them <code>color</code>, <code>background-color</code> and <code>-webkit-text-fill-color</code> (background images are ignored), which is enough to give selected text one solid, readable colour. Our pair of <code>#0b1020</code> on <code>#e2e8f0</code> measures 15.35:1. Restyle the selection only on the gradient elements, not the whole page, so the user’s normal highlight still applies everywhere else.</p>
+
+        <h2>Motion, scope and the fallback stack</h2>
+        <p>A colour change that never stops pulls the eye, and some people find constant movement distracting or uncomfortable. Under <code>prefers-reduced-motion: reduce</code> the demos keep the gradient but stop it. The heading becomes a static gradient and the link a solid colour. That is a better fallback than removing the gradient, because the design stays intact.</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .gt-flow,
+  .gt-turn { animation: none; }
+  .gt-link { transition: none; }
+}</code></pre>
+        <p>Keep the effect small. One heading, a short phrase inside a heading, or a single call-to-action link is where it works. Body copy is the wrong place: every colour along the gradient would have to meet 4.5:1, shifting colour makes letter shapes harder to follow along a line, and a dozen moving paragraphs is more motion than anyone wants. If the text matters, such as a price or a warning, give it a solid colour.</p>
+        <p>Finally, order the declarations so the worst case is still readable. Every demo sets a solid <code>color</code> first, using its weakest stop, and only applies the gradient inside an <code>@supports</code> block. The <code>or</code> in the query matters: Chromium before version 120 fails the unprefixed test but passes the prefixed one. An engine that understands neither, or a stylesheet that loses the gradient for any reason, shows plain coloured text instead of transparent text over nothing. MDN’s background-clip page gives the same advice: use a feature query and provide an accessible alternative where the clip is not supported.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Do I still need -webkit-background-clip: text?</summary>
+            <p class="faq-answer">Not for any current version of Chrome, Edge, Firefox or Safari. Chrome and Edge accept the unprefixed value from version 120, Safari from 14 and Firefox from 49. The prefixed line only helps older Chromium browsers and embedded WebViews, so keep it as a cheap safety net and write it before the standard declaration.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my gradient text disappear in Windows High Contrast mode?</summary>
+            <p class="faq-answer">In forced colours mode the browser sets gradient background images to none, so the only thing that was painting the letters is gone. If the text was made transparent with -webkit-text-fill-color, nothing restores it. Add a forced-colors: active media query that removes the background and sets a system colour such as CanvasText or LinkText.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I use gradient text for body copy?</summary>
+            <p class="faq-answer">Avoid it. Every colour along the gradient has to meet 4.5:1 for normal-sized text, the colour shifts make letter shapes harder to track across long lines, and a moving gradient behind a paragraph distracts readers. Keep it to headings, a short phrase or a single link.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I check the contrast of gradient text?</summary>
+            <p class="faq-answer">Test the stop with the lowest contrast against the background, not the average. For dark backgrounds that is usually the darkest stop, for light backgrounds the lightest. Also check the midpoints between very different hues, because the blended colour can have lower contrast than either end.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-text-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS text animations</h3>
+            <p>Gradient flow, typewriter, wave and glitch effects with markup and CSS.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-gradient-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>CSS gradient generator</h3>
+            <p>Build linear, radial and conic gradients and copy the CSS.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/wcag-colour-contrast-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>WCAG colour contrast</h3>
+            <p>How contrast ratios are calculated and what AA and AAA require.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>
