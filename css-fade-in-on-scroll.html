@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-fade-in-on-scroll" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-fade-in-on-scroll" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Fade In on Scroll with CSS Scroll-Driven Animations" />
+  <meta property="og:description" content="Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-fade-in-on-scroll.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fade In on Scroll with CSS Scroll-Driven Animations" />
+  <meta name="twitter:description" content="Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-fade-in-on-scroll.png" />
+
+  <title>Fade In on Scroll with CSS Scroll-Driven Animations</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Demo frame: a small scroll container */
+    .fs-stage { display: grid; gap: 8px; width: 100%; max-width: 240px; }
+    .fs-scroller {
+      height: 190px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.35);
+    }
+    .fs-scroller:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+    .fs-hint { margin: 0 0 40px; font-size: 0.78rem; color: var(--text-dim); text-align: center; }
+    .fs-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      background: rgba(148, 163, 184, 0.12);
+      font-size: 0.85rem;
+    }
+    .fs-item + .fs-item { margin-top: 10px; }
+    .fs-item::before {
+      content: "";
+      flex: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+    .fs-nosupport { margin: 0; font-size: 0.75rem; color: var(--warning); text-align: center; }
+
+    /* Keyframes */
+    @keyframes fs-rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fs-spotlight {
+      0%       { opacity: 0; transform: translateY(16px) scale(0.96); }
+      30%, 70% { opacity: 1; transform: none; }
+      100%     { opacity: 0; transform: translateY(-16px) scale(0.96); }
+    }
+    @keyframes fs-fade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes fs-fade-spotlight {
+      0%, 100% { opacity: 0; }
+      30%, 70% { opacity: 1; }
+    }
+
+    /* Demos 1 and 2: scroll-driven, only where supported */
+    @supports (animation-timeline: view()) {
+      .fs-rise {
+        animation: fs-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+      }
+      .fs-spotlight {
+        animation: fs-spotlight linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+      .fs-nosupport { display: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .fs-rise { animation-name: fs-fade; }
+        .fs-spotlight { animation-name: fs-fade-spotlight; }
+      }
+    }
+
+    /* Demo 3: IntersectionObserver; only the script ever adds .fs-wait */
+    .fs-io.fs-wait {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .fs-io:not(.fs-wait) {
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fs-io.fs-wait { transform: none; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Fade In on Scroll with CSS Scroll-Driven Animations",
+        "description": "Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show.",
+        "url": "https://frontendhelpers.com/css-fade-in-on-scroll",
+        "image": "https://frontendhelpers.com/assets/og-css-fade-in-on-scroll.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-fade-in-on-scroll" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Fade In on Scroll", "item": "https://frontendhelpers.com/css-fade-in-on-scroll" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does animation-timeline work in Safari and Firefox?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Safari supports it from version 26, released in September 2025, on macOS and iOS. As of October 2026 Firefox enables it by default only in Nightly builds; in release versions it sits behind the layout.css.scroll-driven-animations.enabled preference, which is off. Wrap the rules in @supports (animation-timeline: view()) so Firefox users simply see the content." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my scroll-driven animation not play?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The usual cause is declaring the animation shorthand after animation-timeline, which resets the timeline to auto so the animation jumps straight to its end state. Put animation first and animation-timeline after it. The other common cause is a wrapper with overflow-x: hidden, which turns it into the scroll container that view() tracks. Use overflow-x: clip instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "Will fade-in-on-scroll hurt SEO or Core Web Vitals?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not if content is visible by default and the effect stays below the fold. Animating opacity and transform causes no layout shift. The risks are a hero that starts at opacity 0, which delays Largest Contentful Paint, and CSS that hides content until a script runs, which leaves it invisible whenever that script fails." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use IntersectionObserver or scroll-driven animations?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use scroll-driven animations when the reveal should follow the scroll position and work without JavaScript. Use IntersectionObserver when the reveal should play once at its own speed, or must run in every current browser. A good compromise is the CSS version everywhere it is supported, with the observer loaded only where it is not." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Fade In on Scroll</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Fade in on scroll <span class="hero-highlight">with scroll-driven CSS</span></h1>
+        <p class="page-hero-sub">Reveal content as it enters the viewport using <code>animation-timeline: view()</code>, fall back to a tiny IntersectionObserver, and make sure nothing stays hidden when the effect cannot run.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fs-stage">
+                <div class="fs-scroller" tabindex="0" role="region" aria-label="Scroll-driven fade-up demo">
+                  <p class="fs-hint">Scroll inside this box ↓</p>
+                  <div class="fs-item fs-rise">Pricing</div>
+                  <div class="fs-item fs-rise">Features</div>
+                  <div class="fs-item fs-rise">Testimonials</div>
+                  <div class="fs-item fs-rise">Case studies</div>
+                  <div class="fs-item fs-rise">Integrations</div>
+                  <div class="fs-item fs-rise">Security</div>
+                  <div class="fs-item fs-rise">Changelog</div>
+                  <div class="fs-item fs-rise">Contact</div>
+                </div>
+                <p class="fs-nosupport">No <code>view()</code> support here, so items simply show.</p>
+              </div>
+            </div>
+            <figcaption><strong>Fade up on entry</strong> — <code>view()</code> inside a scroll container, <code>entry 0% cover 30%</code>; scroll back up and it reverses.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fs-stage">
+                <div class="fs-scroller" tabindex="0" role="region" aria-label="Scroll-driven spotlight demo">
+                  <p class="fs-hint">Scroll inside this box ↓</p>
+                  <div class="fs-item fs-spotlight">Plan</div>
+                  <div class="fs-item fs-spotlight">Design</div>
+                  <div class="fs-item fs-spotlight">Build</div>
+                  <div class="fs-item fs-spotlight">Test</div>
+                  <div class="fs-item fs-spotlight">Launch</div>
+                  <div class="fs-item fs-spotlight">Measure</div>
+                  <div class="fs-item fs-spotlight">Iterate</div>
+                  <div class="fs-item fs-spotlight">Repeat</div>
+                </div>
+                <p class="fs-nosupport">No <code>view()</code> support here, so items simply show.</p>
+              </div>
+            </div>
+            <figcaption><strong>Spotlight band</strong> — one keyframe set over the whole <code>cover</code> range: fades in, holds, then fades out at the top.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fs-stage">
+                <div class="fs-scroller" id="fs-io-scroller" tabindex="0" role="region" aria-label="IntersectionObserver fade-up demo">
+                  <p class="fs-hint">Scroll inside this box ↓</p>
+                  <div class="fs-item fs-io">Order placed</div>
+                  <div class="fs-item fs-io">Payment taken</div>
+                  <div class="fs-item fs-io">Packed</div>
+                  <div class="fs-item fs-io">Dispatched</div>
+                  <div class="fs-item fs-io">In transit</div>
+                  <div class="fs-item fs-io">Out for delivery</div>
+                  <div class="fs-item fs-io">Delivered</div>
+                  <div class="fs-item fs-io">Review requested</div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>IntersectionObserver, once</strong> — the script hides only off-screen items, reveals each on first sight, then unobserves it; works in every current browser.</figcaption>
+          </figure>
+        </div>
+
+        <h2>Two ways to reveal on scroll</h2>
+        <p>A fade-in on scroll lets a section arrive as the reader reaches it instead of sitting there from the start. For years that meant a scroll listener measuring every element. There are now two better options. CSS scroll-driven animations tie a normal <code>@keyframes</code> animation to the element’s position in its scroll container, with no script at all. IntersectionObserver is the JavaScript route, and it lets the browser tell you when an element becomes visible rather than making you ask on every scroll event.</p>
+        <p>This recipe uses the CSS version where supported, keeps the observer as a fallback, and makes sure that if neither runs, the reader still sees every word.</p>
+
+        <h2>The CSS-only reveal with <code>animation-timeline: view()</code></h2>
+        <p>Normally an animation’s progress is driven by time. The <code>animation-timeline</code> property swaps that clock for a scroll position. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline" rel="noopener">animation-timeline reference</a> describes <code>view()</code> as an anonymous view progress timeline on the nearest ancestor scroll container. The animation sits at 0% as the element enters the scrollport and reaches 100% as it leaves.</p>
+        <p>That “nearest ancestor scroll container” is why the first two demos work inside small boxes. You do not need page scroll; any element with <code>overflow-y: auto</code> and content taller than itself will do. On a real page the nearest scroller is usually the viewport, and the same CSS works unchanged.</p>
+        <pre><code class="language-css">@keyframes fs-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@supports (animation-timeline: view()) {
+  .fs-rise {
+    animation: fs-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}</code></pre>
+        <p>Three details in that block are easy to get wrong. First, order: the <code>animation</code> shorthand resets <code>animation-timeline</code> to <code>auto</code>, so the timeline must come after it. The Chrome team’s <a href="https://developer.chrome.com/docs/css-ui/scroll-driven-animations" rel="noopener">scroll-driven animations guide</a> calls this out explicitly. Second, there is no duration. A time in seconds means nothing on a scroll timeline, so leave it out and let it default to <code>auto</code>. Third, <code>linear</code> easing and a fill mode of <code>both</code>: linear keeps the effect locked to the scrollbar, and <code>both</code> holds the first keyframe before the range starts and the last one after it ends.</p>
+        <p>One trap catches almost everyone eventually. A wrapper with <code>overflow-x: hidden</code> becomes a scroll container in both directions. <code>view()</code> then tracks that wrapper instead of the viewport, and because the wrapper never scrolls, nothing animates. Use <code>overflow-x: clip</code>, which clips without creating a scroll container.</p>
+
+        <h2>Reading <code>animation-range: entry 0% cover 30%</code></h2>
+        <p>Without a range the animation would play across the whole journey through the scrollport, finishing only as the element disappeared off the top, which is no use for a reveal. <code>animation-range</code> picks a slice of that journey. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-range" rel="noopener">animation-range page</a> lists the named ranges, and four matter here:</p>
+        <ul>
+          <li><code>cover</code>: the full journey, from the element’s first pixel entering to its last pixel leaving.</li>
+          <li><code>entry</code>: from first pixel in to fully inside (or filling the scrollport, if it is taller than it).</li>
+          <li><code>exit</code>: the mirror of <code>entry</code> at the top edge.</li>
+          <li><code>contain</code>: the stretch where the element is fully inside the scrollport, or fully covers it.</li>
+        </ul>
+        <p>So <code>entry 0% cover 30%</code> starts the fade the moment the element’s top edge appears and finishes it 30% of the way through the full journey, which in a typical viewport is roughly a third of the way up the screen. Starting later than 0% leaves an empty gap at the bottom of the screen; finishing at <code>entry 100%</code> makes tall elements snap in and short ones fade almost too fast to notice. Ranges are measured on the element’s untransformed box, so the <code>translateY()</code> in the keyframes does not shift its own trigger points.</p>
+        <p>The second demo uses the full range and puts the timing into the keyframes instead, so each item fades in, holds while it is in the middle band, and fades out near the top:</p>
+        <pre><code class="language-css">@keyframes fs-spotlight {
+  0%       { opacity: 0; transform: translateY(16px) scale(0.96); }
+  30%, 70% { opacity: 1; transform: none; }
+  100%     { opacity: 0; transform: translateY(-16px) scale(0.96); }
+}
+
+@supports (animation-timeline: view()) {
+  .fs-spotlight {
+    animation: fs-spotlight linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}</code></pre>
+        <p>Use the fade-out sparingly: it suits a short sequence like a process diagram, not body text.</p>
+
+        <h2>Browser support in October 2026</h2>
+        <p>Scroll-driven animations shipped in Chrome and Edge 115 in July 2023 and in Safari 26, on macOS and iOS, in September 2025. Firefox is the holdout. MDN’s list of <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Experimental_features" rel="noopener">Firefox experimental features</a> shows them enabled by default only in Nightly, from version 136; in Beta and Release they sit behind the <code>layout.css.scroll-driven-animations.enabled</code> preference, which is off. MDN therefore marks <code>animation-timeline</code> as “Limited availability”, not Baseline.</p>
+        <p>That is why every scroll-driven rule in this recipe sits inside <code>@supports (animation-timeline: view())</code>. The <code>@keyframes</code> can live outside it, because keyframes do nothing until an <code>animation</code> rule uses them. A browser that fails the test never applies the animation, so it never applies the 0% keyframe either: the content is simply there, fully opaque, in its final position. That is the correct result. Never set <code>opacity: 0</code> outside the <code>@supports</code> block and rely on the animation to undo it.</p>
+
+        <h2>Never hide content that only JavaScript can reveal</h2>
+        <p>The single most damaging version of this effect is also the most copied:</p>
+        <pre><code class="language-css">/* Don’t: invisible to everyone until a script runs */
+.reveal { opacity: 0; }
+.reveal.is-visible { opacity: 1; }</code></pre>
+        <p>Here the stylesheet hides the content and only a script can bring it back. If that script fails to download, is blocked by an extension, throws an error earlier in the bundle, or simply has not executed yet when a crawler takes its snapshot, the page is blank below the fold. Readers and search engines alike see empty space.</p>
+        <p>The rule is that the default, script-free state must be the finished state. The common fix is a class on the root element, set by a one-line script in the <code>&lt;head&gt;</code>, with the hiding rules scoped to <code>html.js .reveal</code>. Better, but it still breaks if the observer script later fails. The demo goes one step further: the observer script itself adds the hiding class, <code>fs-wait</code>, and only to items the observer has just reported as out of view. Hiding and revealing cannot be separated, and anything already on screen is never hidden, so nothing flickers.</p>
+
+        <h2>The IntersectionObserver fallback</h2>
+        <p>IntersectionObserver has worked in every major browser since 2019; MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver" rel="noopener">IntersectionObserver reference</a> lists it as Baseline widely available. You hand the browser a list of targets and it calls you back when their visibility crosses a threshold. The callback still runs on the main thread, but only when something changes.</p>
+        <pre><code class="language-css">.fs-io.fs-wait {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.fs-io:not(.fs-wait) {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}</code></pre>
+        <pre><code class="language-js">const scroller = document.getElementById('fs-io-scroller');
+if (scroller &amp;&amp; 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) =&gt; {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('fs-wait');
+        io.unobserve(entry.target);
+      } else {
+        entry.target.classList.add('fs-wait');
+      }
+    }
+  }, { root: scroller, threshold: 0.2 });
+
+  scroller.querySelectorAll('.fs-io').forEach((el) =&gt; io.observe(el));
+}</code></pre>
+        <p>The observer’s first callback reports every target, which is where off-screen items get <code>fs-wait</code>; items already visible are simply left alone. After that, <code>threshold: 0.2</code> fires once a fifth of an element is visible, and removing the class lets the transition play. The <code>root</code> option exists only because the demo lives in a box; on a page, omit it. Calling <code>unobserve()</code> makes it play once and stops the browser tracking the element. To use this purely as a fallback, return early when <code>CSS.supports('animation-timeline', 'view()')</code> is true, and observe your page’s reveal elements with no <code>root</code>.</p>
+        <p>Unlike the CSS version, this reveal is a timed transition. It plays at its own speed once triggered, and it does not reverse when you scroll back up.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Approach</th><th>JS needed</th><th>Runs on main thread?</th><th>Support (Oct 2026)</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td><code>animation-timeline: view()</code></td><td>None</td><td>No, for <code>opacity</code> and <code>transform</code>; the compositor tracks scroll</td><td>Chrome and Edge 115+, Safari 26+; Firefox only in Nightly or behind a flag</td><td>Reveals tied to scroll position that reverse naturally</td></tr>
+              <tr><td>IntersectionObserver + class</td><td>About 14 lines</td><td>Callback yes, but only on visibility changes; the transition itself can be composited</td><td>All current browsers (Baseline since 2019)</td><td>One-shot reveals, and the fallback for Firefox</td></tr>
+              <tr><td>Scroll listener + <code>getBoundingClientRect()</code></td><td>Yes</td><td>Yes, on every scroll event, forcing layout</td><td>All browsers</td><td>Nothing new; replace it with one of the above</td></tr>
+              <tr><td>No animation</td><td>None</td><td>Nothing to run</td><td>All browsers</td><td>Above-the-fold content, body text, reduced motion</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Animate opacity and transform, nothing else</h2>
+        <p>All three demos move only <code>opacity</code> and <code>transform</code>, and that is deliberate. Those two properties can be handled by the compositor, so the browser does not repaint or reflow the element each frame. The Chrome guide notes that scroll-driven animations of such properties run off the main thread, which means a heavy script cannot make them stutter. Animate <code>margin-top</code>, <code>height</code> or <code>filter: blur()</code> instead and you are back to layout or paint work on every frame of scrolling. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the rendering pipeline behind this.</p>
+
+        <h2>Keep it below the fold, and off most paragraphs</h2>
+        <p>Never fade in the content people see first. web.dev’s <a href="https://web.dev/articles/lcp" rel="noopener">Largest Contentful Paint article</a> notes that Chromium does not count elements with an opacity of 0 as LCP candidates, so a hero heading or image that starts invisible pushes your LCP back until it starts to appear.</p>
+        <p>Layout shift is less of a worry as long as you stick to <code>transform</code>: moving an element with <code>translateY()</code> does not count towards Cumulative Layout Shift, whereas revealing content by changing <code>height</code>, <code>margin</code> or <code>display</code> does. Our <a href="/core-web-vitals-guide">Core Web Vitals guide</a> covers how both metrics are measured.</p>
+        <p>Then be selective. Reveal section headings, cards or images, the things that mark a new chunk of content, not every paragraph. When each line of text fades in, scrolling at reading speed means the words you want are always half-transparent, and the novelty wears off by the second screen.</p>
+
+        <h2>Reduced motion: fade, don’t travel</h2>
+        <p>The <code>prefers-reduced-motion</code> media feature reports the user’s system setting to minimise motion. For a reveal, the travel is the part that can cause discomfort; a change in opacity is not motion. So under reduced motion, swap the keyframes for opacity-only versions, or remove the animation entirely if you prefer:</p>
+        <pre><code class="language-css">@keyframes fs-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: reduce) {
+    .fs-rise { animation-name: fs-fade; }
+    .fs-spotlight { animation-name: fs-fade-spotlight; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-io.fs-wait { transform: none; }
+}</code></pre>
+        <p>Turn on reduced motion in your operating system and scroll the demos again: everything still fades, nothing slides. If you want a ready-made, time-based version for content that should animate on load rather than on scroll, the <a href="/css-entrance-animations#anim-fade-in-up">fade-in-up card in our library</a> is the same keyframes with a duration, and the <a href="/css-entrance-animations">CSS entrance animations</a> category has the rest of the family.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does animation-timeline work in Safari and Firefox?</summary>
+            <p class="faq-answer">Safari supports it from version 26, released in September 2025, on macOS and iOS. As of October 2026 Firefox enables it by default only in Nightly builds; in release versions it sits behind the layout.css.scroll-driven-animations.enabled preference, which is off. Wrap the rules in @supports (animation-timeline: view()) so Firefox users simply see the content.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my scroll-driven animation not play?</summary>
+            <p class="faq-answer">The usual cause is declaring the animation shorthand after animation-timeline, which resets the timeline to auto so the animation jumps straight to its end state. Put animation first and animation-timeline after it. The other common cause is a wrapper with overflow-x: hidden, which turns it into the scroll container that view() tracks. Use overflow-x: clip instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Will fade-in-on-scroll hurt SEO or Core Web Vitals?</summary>
+            <p class="faq-answer">Not if content is visible by default and the effect stays below the fold. Animating opacity and transform causes no layout shift. The risks are a hero that starts at opacity 0, which delays Largest Contentful Paint, and CSS that hides content until a script runs, which leaves it invisible whenever that script fails.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use IntersectionObserver or scroll-driven animations?</summary>
+            <p class="faq-answer">Use scroll-driven animations when the reveal should follow the scroll position and work without JavaScript. Use IntersectionObserver when the reveal should play once at its own speed, or must run in every current browser. A good compromise is the CSS version everywhere it is supported, with the observer loaded only where it is not.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-entrance-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS entrance animations</h3>
+            <p>Fades, slides and zooms for content arriving on screen, each with markup and CSS.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Which properties the compositor can animate, and how to check in DevTools.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/core-web-vitals-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Core Web Vitals</h3>
+            <p>How LCP, INP and CLS are measured and what fixes them.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    const scroller = document.getElementById('fs-io-scroller');
+    if (scroller && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('fs-wait');
+            io.unobserve(entry.target);
+          } else {
+            entry.target.classList.add('fs-wait');
+          }
+        }
+      }, { root: scroller, threshold: 0.2 });
+
+      scroller.querySelectorAll('.fs-io').forEach((el) => io.observe(el));
+    }
+  </script>
+</body>
+</html>

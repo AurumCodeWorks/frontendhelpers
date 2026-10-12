@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build CSS loading spinners from one element, a conic gradient or three dots. Size them in em, delay them 300ms and make them accessible in buttons." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-loading-spinner" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-loading-spinner" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Loading Spinners: Light, Smooth and Accessible" />
+  <meta property="og:description" content="Build CSS loading spinners from one element, a conic gradient or three dots. Size them in em, delay them 300ms and make them accessible in buttons." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-loading-spinner.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Loading Spinners: Light, Smooth and Accessible" />
+  <meta name="twitter:description" content="Build CSS loading spinners from one element, a conic gradient or three dots. Size them in em, delay them 300ms and make them accessible in buttons." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-loading-spinner.png" />
+
+  <title>CSS Loading Spinners: Light, Smooth and Accessible</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Technique 1: one-element border ring */
+    .sp-ring {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 1em;
+      height: 1em;
+      border: 0.14em solid color-mix(in srgb, currentColor 22%, transparent);
+      border-top-color: currentColor;
+      border-radius: 50%;
+      vertical-align: -0.125em;
+      animation: sp-spin 0.8s linear infinite;
+    }
+    @keyframes sp-spin {
+      to { transform: rotate(1turn); }
+    }
+
+    /* Technique 2: conic gradient masked into a ring */
+    .sp-conic {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      background: conic-gradient(transparent 10%, currentColor);
+      mask: radial-gradient(farthest-side, transparent calc(100% - 0.15em), #000 calc(100% - 0.15em + 1px));
+      animation: sp-spin 1s linear infinite;
+    }
+
+    /* Technique 3: three dots with staggered delays */
+    .sp-dots {
+      display: inline-flex;
+      gap: 0.25em;
+    }
+    .sp-dots span {
+      width: 0.45em;
+      height: 0.45em;
+      border-radius: 50%;
+      background: currentColor;
+      animation: sp-dot 1.2s ease-in-out infinite both;
+    }
+    .sp-dots span:nth-child(2) { animation-delay: 0.16s; }
+    .sp-dots span:nth-child(3) { animation-delay: 0.32s; }
+    @keyframes sp-dot {
+      0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Show only after 300ms, so fast responses never flash a spinner */
+    .sp-delayed {
+      animation: sp-appear 0.2s 0.3s both;
+    }
+    @keyframes sp-appear {
+      from { opacity: 0; }
+    }
+
+    /* Button with an inline loading state */
+    .sp-btn {
+      display: inline-grid;
+      place-items: center;
+      padding: 0.75em 1.5em;
+      border: 0;
+      border-radius: 8px;
+      background: #06b6d4;
+      color: #04111a;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .sp-btn > * { grid-area: 1 / 1; }
+    .sp-btn .sp-dots { display: none; }
+    .sp-btn[aria-busy="true"] .sp-btn-label { opacity: 0; }
+    .sp-btn[aria-busy="true"] .sp-dots { display: inline-flex; }
+    .sp-btn[aria-disabled="true"] { cursor: progress; }
+    .sp-btn:focus-visible { outline: 2px solid #f8fafc; outline-offset: 3px; }
+
+    /* Reduced motion: slow the rings, turn the dots into a pulse */
+    @keyframes sp-fade {
+      0%, 80%, 100% { opacity: 0.35; }
+      40% { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sp-ring,
+      .sp-conic { animation-duration: 2.4s; }
+      .sp-dots span { animation-name: sp-fade; }
+    }
+
+    /* Demo layout only */
+    .sp-sizes { display: grid; gap: 0.7rem; justify-items: start; line-height: 1.2; }
+    .sp-size-sm { font-size: 0.875rem; color: var(--text-dim); }
+    .sp-size-md { font-size: 1.25rem; color: var(--secondary); }
+    .sp-size-lg { font-size: 2rem; color: var(--primary); }
+    .sp-pair { display: flex; align-items: center; gap: 1.75rem; }
+    .sp-pair-lg { font-size: 3.25rem; color: var(--primary); }
+    .sp-pair-sm { font-size: 1.75rem; color: var(--secondary); }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Loading Spinners: Light, Smooth and Accessible",
+        "description": "Build CSS loading spinners from one element, a conic gradient or three dots. Size them in em, delay them 300ms and make them accessible in buttons.",
+        "url": "https://frontendhelpers.com/css-loading-spinner",
+        "image": "https://frontendhelpers.com/assets/og-css-loading-spinner.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-loading-spinner" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Loading Spinners", "item": "https://frontendhelpers.com/css-loading-spinner" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I make a CSS loading spinner accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Hide the spinning element with aria-hidden=\"true\" and say the same thing in words in a visually hidden role=\"status\" element that is already in the page. Set its text to Loading… when the wait starts and replace it with the result when it ends. Live regions announce changes, so an empty element with only an aria-label is often not announced." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should a loading spinner stop when prefers-reduced-motion is set?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not entirely. A frozen spinner looks like a stalled page, which defeats its purpose. Slow the rotation down, or replace movement with a gentle opacity pulse, so the indicator still shows that work is happening without the motion that can cause discomfort." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I stop a spinner flashing on fast responses?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Delay it. Keep the spinner transparent for about 300ms with animation-delay and animation-fill-mode: both, then fade it in, or add it from a setTimeout that you clear when the response arrives. A response that lands within the delay never shows a spinner at all." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my button change width when it shows a spinner?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The label is being replaced or removed, so the button shrinks to fit the spinner. Stack the label and the spinner in the same grid cell and hide the label with opacity: 0. The label then keeps the button's width and its accessible name while the spinner shows on top." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Loading Spinners</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS loading spinners: <span class="hero-highlight">light, smooth and accessible</span></h1>
+        <p class="page-hero-sub">Three spinner techniques that cost the browser almost nothing, scale with the text around them, take their colour from it, and tell screen readers what is going on.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage" aria-hidden="true">
+              <div class="sp-sizes">
+                <div class="sp-size-sm"><span class="sp-ring"></span> Loading</div>
+                <div class="sp-size-md"><span class="sp-ring"></span> Loading</div>
+                <div class="sp-size-lg"><span class="sp-ring"></span> Loading</div>
+              </div>
+            </div>
+            <figcaption><strong>Border ring</strong> — one class at three font sizes; size and colour come from the surrounding text.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage" aria-hidden="true">
+              <div class="sp-delayed sp-pair">
+                <span class="sp-conic sp-pair-lg"></span>
+                <span class="sp-conic sp-pair-sm"></span>
+              </div>
+            </div>
+            <figcaption><strong>Conic tail</strong> — a masked <code>conic-gradient()</code>, faded in after a 300ms delay.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <button type="button" class="sp-btn" id="sp-save">
+                <span class="sp-btn-label">Save changes</span>
+                <span class="sp-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+              </button>
+              <p id="sp-save-status" class="visually-hidden" role="status"></p>
+            </div>
+            <figcaption><strong>Busy button</strong> — press it: staggered dots, a stable width, and the status announced separately.</figcaption>
+          </figure>
+        </div>
+        <script>
+          {
+            const spBtn = document.getElementById('sp-save');
+            const spStatus = document.getElementById('sp-save-status');
+            spBtn.addEventListener('click', () => {
+              if (spBtn.getAttribute('aria-disabled') === 'true') return;
+              spBtn.setAttribute('aria-disabled', 'true');
+              spBtn.setAttribute('aria-busy', 'true');
+              spStatus.textContent = 'Saving…';
+              setTimeout(() => {
+                spBtn.removeAttribute('aria-busy');
+                spBtn.removeAttribute('aria-disabled');
+                spStatus.textContent = 'Changes saved';
+              }, 2500);
+            });
+          }
+        </script>
+
+        <h2>What a spinner promises, and when a skeleton is better</h2>
+        <p>A spinner makes exactly one claim: something is happening, so please wait. It says nothing about what is coming or how long it will take. That suits actions whose result has no predictable shape, such as saving a form or sending a message, and small waits inside a control such as a button.</p>
+        <p>It is the wrong tool for a section whose layout you already know, such as a card grid or a feed. There a <a href="/css-skeleton-loader">skeleton screen</a> does more: it shows where content will land and reserves the space, so nothing jumps. For jobs that regularly take more than a few seconds, use a determinate <code>&lt;progress&gt;</code> bar and offer a way to cancel.</p>
+        <p>The plain ring below also lives in our <a href="/css-loading-animations#anim-spinner-ring">loading animations library</a> as a fixed-size snippet. This recipe covers the decisions behind it and the parts a snippet cannot show: sizing, timing, buttons and screen readers.</p>
+
+        <h2>The one-element ring</h2>
+        <p>The familiar spinner is one element with a round border, one side of which has a different colour. Rotate the element and that arc chases itself round the circle.</p>
+        <pre><code class="language-css">.sp-ring {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+  border: 0.14em solid color-mix(in srgb, currentColor 22%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  vertical-align: -0.125em;
+  animation: sp-spin 0.8s linear infinite;
+}
+@keyframes sp-spin {
+  to { transform: rotate(1turn); }
+}</code></pre>
+        <p>The faint track is not a second hard-coded colour: <code>color-mix()</code> takes 22% of the current text colour, so track and arc always match. The border width is in <code>em</code>, so a bigger spinner gets a thicker ring rather than a hairline, and <code>vertical-align</code> lines it up with adjacent text.</p>
+        <p>The animation changes only <code>transform</code>, which is why it is cheap. The browser paints the ring once, then the compositor rotates that layer every frame without style, layout or paint work on the main thread. That matters for a spinner more than most animations, because it is on screen exactly when the main thread is busiest: parsing a response, building new DOM. A spinner that animated <code>border-top-color</code>, or a gradient angle through a registered custom property, would repaint every frame and stall at those moments. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the pipeline behind this.</p>
+
+        <h2>A conic-gradient ring with a fading tail</h2>
+        <p>A border cannot fade from solid to nothing, because each side is a single colour. <code>conic-gradient()</code> can: it sweeps colour clockwise from the top, so transparent to <code>currentColor</code> draws a comet whose head sits at twelve o’clock. A radial-gradient mask then cuts out the middle of the disc.</p>
+        <pre><code class="language-css">.sp-conic {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: conic-gradient(transparent 10%, currentColor);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 0.15em), #000 calc(100% - 0.15em + 1px));
+  animation: sp-spin 1s linear infinite;
+}</code></pre>
+        <p>The mask works on alpha: where it is opaque the element shows, where it is transparent the element disappears, and the colour you write is irrelevant. This one is transparent until <code>0.15em</code> from the edge, leaving a ring of that thickness at any size; the extra pixel between the two stops softens the edge. Neither feature needs a prefix in 2026: MDN lists <code>conic-gradient()</code> as available across browsers since November 2020 and the unprefixed <code>mask</code> since December 2023.</p>
+        <p>The motion is still a plain rotation of something painted once, so the running cost matches the border ring. You pay a slightly larger first paint and get a tail, several colour stops or a brand gradient in return.</p>
+
+        <h2>Three dots with staggered delays</h2>
+        <p>Three small elements grow and brighten one after another. Every dot runs the same keyframes; the wave comes entirely from <code>animation-delay</code>, which starts the second and third dots slightly later and keeps that offset on every cycle.</p>
+        <pre><code class="language-css">.sp-dots {
+  display: inline-flex;
+  gap: 0.25em;
+}
+.sp-dots span {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: currentColor;
+  animation: sp-dot 1.2s ease-in-out infinite both;
+}
+.sp-dots span:nth-child(2) { animation-delay: 0.16s; }
+.sp-dots span:nth-child(3) { animation-delay: 0.32s; }
+@keyframes sp-dot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}</code></pre>
+        <p>Dots sit naturally inside a button, where a ring can look heavy. They cost three elements and three animations, but each animates only <code>transform</code> and <code>opacity</code>, so nothing repaints. Keep the stagger short: here the wave spans 0.32 seconds of a 1.2-second loop, so the dots rest together for part of each cycle, which reads as rhythm rather than blur.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Technique</th><th>Elements needed</th><th>What animates</th><th>Cost</th><th>Colour control</th></tr></thead>
+            <tbody>
+              <tr><td>Border ring</td><td>One</td><td><code>transform: rotate()</code> on the element</td><td>Painted once, then rotated by the compositor; cheapest</td><td><code>currentColor</code> arc, <code>color-mix()</code> track; flat colours only</td></tr>
+              <tr><td>Conic gradient + mask</td><td>One</td><td><code>transform: rotate()</code> on the element</td><td>As the border ring, plus a slightly larger first paint</td><td>Any gradient: a fading tail or brand colours</td></tr>
+              <tr><td>Three dots</td><td>A wrapper and three children</td><td><code>transform: scale()</code> and <code>opacity</code> on each dot, staggered</td><td>Three compositor animations; no repaint per frame</td><td><code>currentColor</code> by default; each dot can take its own colour</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Size with em, colour with currentColor</h2>
+        <p>A 44px ring looks right in an empty panel and absurd inside a 14px button. Sizing every dimension in <code>em</code> (width, height, border, dot size, gap) ties the spinner to the font size of its container, so it grows in a heading and shrinks in a small button. To enlarge a standalone spinner, set <code>font-size</code> on it rather than overriding width and height.</p>
+        <p><code>currentColor</code> is the element’s computed text colour, so a spinner in a primary button matches its label, one in an error message turns red, and a theme switch updates every spinner. Set <code>color</code> only when the spinner should differ from its surroundings. The first demo is one class at three font sizes and colours, nothing else changed.</p>
+
+        <h2>Wait about 300ms before showing anything</h2>
+        <p>Many requests finish within a few hundred milliseconds. A spinner shown the instant one starts then exists for a frame or two, which looks like a glitch and makes a fast interface feel slow. Reveal it only once the wait is long enough to notice; 300ms is a reasonable default to tune against your real response times.</p>
+        <p>CSS can do this alone. Because <code>animation-fill-mode</code> is <code>both</code>, the wrapper’s first keyframe applies during the delay, so it stays transparent for 300ms and then fades in. Remove the spinner before then and nobody sees it. The second demo uses this wrapper.</p>
+        <pre><code class="language-css">.sp-delayed {
+  animation: sp-appear 0.2s 0.3s both;
+}
+@keyframes sp-appear {
+  from { opacity: 0; }
+}</code></pre>
+        <p>The delay sits on a wrapper so the fade and the rotation stay independent. In JavaScript, a <code>setTimeout</code> cleared when the response lands does the same job. Once a spinner has appeared, keep it for at least 400ms or so, so a response landing at 320ms does not cause a flicker of its own.</p>
+
+        <h2>A spinner inside a button</h2>
+        <p>The user needs to know their press registered, and you need to block a second press while the request is in flight.</p>
+        <p><strong>Keep the width stable.</strong> Swapping the label for a spinner shrinks the button and shifts its neighbours. In the third demo the label and dots share one grid cell; while busy, the label drops to <code>opacity: 0</code>, so it still sets the width and still names the button. <code>visibility: hidden</code> or <code>display: none</code> would remove that text from the accessibility tree.</p>
+        <p><strong>Block repeat presses without losing focus.</strong> The <code>disabled</code> attribute takes the button out of the focus order, and a focused button that becomes disabled loses focus, which can leave keyboard and screen reader users stranded. As MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled" rel="noopener">aria-disabled reference</a> explains, <code>aria-disabled="true"</code> exposes the state but leaves the element focusable, so your script must ignore activation; the demo’s handler returns early.</p>
+        <p><strong>Announce the outcome elsewhere.</strong> <code>aria-busy</code> marks an element as being updated and is mainly useful on live regions and widgets; on a plain button, screen reader support is patchy. The demo sets it as honest state and a styling hook, but the words come from a visually hidden status element that reads “Saving…” and then “Changes saved”.</p>
+        <pre><code class="language-html">&lt;button type="button" class="sp-btn" id="sp-save"&gt;
+  &lt;span class="sp-btn-label"&gt;Save changes&lt;/span&gt;
+  &lt;span class="sp-dots" aria-hidden="true"&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;/button&gt;
+&lt;p id="sp-save-status" class="visually-hidden" role="status"&gt;&lt;/p&gt;</code></pre>
+        <pre><code class="language-css">.sp-btn {
+  display: inline-grid;
+  place-items: center;
+  padding: 0.75em 1.5em;
+  border: 0;
+  border-radius: 8px;
+  background: #06b6d4;
+  color: #04111a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sp-btn &gt; * { grid-area: 1 / 1; }
+.sp-btn .sp-dots { display: none; }
+.sp-btn[aria-busy="true"] .sp-btn-label { opacity: 0; }
+.sp-btn[aria-busy="true"] .sp-dots { display: inline-flex; }
+.sp-btn[aria-disabled="true"] { cursor: progress; }
+.sp-btn:focus-visible { outline: 2px solid #f8fafc; outline-offset: 3px; }</code></pre>
+        <pre><code class="language-js">const spBtn = document.getElementById('sp-save');
+const spStatus = document.getElementById('sp-save-status');
+spBtn.addEventListener('click', () =&gt; {
+  if (spBtn.getAttribute('aria-disabled') === 'true') return;
+  spBtn.setAttribute('aria-disabled', 'true');
+  spBtn.setAttribute('aria-busy', 'true');
+  spStatus.textContent = 'Saving…';
+  setTimeout(() =&gt; {
+    spBtn.removeAttribute('aria-busy');
+    spBtn.removeAttribute('aria-disabled');
+    spStatus.textContent = 'Changes saved';
+  }, 2500);
+});</code></pre>
+        <p>In real code, replace the timer with your request, and on failure restore the button and put the error in the status text.</p>
+
+        <h2>Make it make sense to screen readers</h2>
+        <p>A turning shape means nothing to a screen reader, so hide it with <code>aria-hidden="true"</code> and say the same thing in words inside a <code>role="status"</code> element. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/status_role" rel="noopener">status role reference</a> describes it as an advisory live region with implicit <code>aria-live="polite"</code> and <code>aria-atomic="true"</code>: when its text changes, the whole message is read without interrupting the user, and it should never take focus.</p>
+        <pre><code class="language-html">&lt;!-- In the page from the start, and empty --&gt;
+&lt;p id="results-status" class="visually-hidden" role="status"&gt;&lt;/p&gt;
+
+&lt;!-- The visible spinner, hidden from assistive technology --&gt;
+&lt;div class="sp-delayed"&gt;
+  &lt;span class="sp-ring" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        <p>Live regions announce changes, not text already present. So keep the status element in the page from the start, empty, and set its text (“Loading results…”) when the wait begins; a freshly inserted region that already contains words is announced by some screen reader and browser pairings and skipped by others. When loading ends, replace the text with the outcome, such as “24 results”.</p>
+        <p>Our library snippet takes the shorter route: <code>role="status"</code> and <code>aria-label="Loading"</code> on the spinner itself. That names the element for someone who reaches it while browsing, but an empty labelled region has no content to change, so it is often not announced when it appears. When the announcement matters, use visually hidden text.</p>
+
+        <h2>Reduced motion: slow it down, don’t switch it off</h2>
+        <p><code>prefers-reduced-motion</code> exposes the operating-system setting (Reduce motion on macOS and iOS, Animation effects on Windows 11, Remove animations on Android). MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion" rel="noopener">prefers-reduced-motion reference</a> frames it as a request to remove, reduce or replace motion, and its own example swaps a scaling animation for a slow opacity fade.</p>
+        <p>For a spinner, <code>animation: none</code> is the wrong answer. A frozen ring looks like a stalled request, and change over time is the only way a spinner shows that work continues. The W3C’s <a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html" rel="noopener">Understanding document for Pause, Stop, Hide</a> agrees that a loading animation can count as essential when users cannot interact meanwhile and showing no progress could make them think the content had frozen.</p>
+        <p>So reduce rather than remove. A small ring turning in place is contained motion, not the large panning and zooming linked to vestibular discomfort; slowing it to 2.4 seconds per turn calms it while it still visibly moves. The dots swap their scaling wave for an opacity-only pulse.</p>
+        <pre><code class="language-css">@keyframes sp-fade {
+  0%, 80%, 100% { opacity: 0.35; }
+  40% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-ring,
+  .sp-conic { animation-duration: 2.4s; }
+  .sp-dots span { animation-name: sp-fade; }
+}</code></pre>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I make a CSS loading spinner accessible?</summary>
+            <p class="faq-answer">Hide the spinning element with aria-hidden="true" and say the same thing in words in a visually hidden role="status" element that is already in the page. Set its text to Loading… when the wait starts and replace it with the result when it ends. Live regions announce changes, so an empty element with only an aria-label is often not announced.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should a loading spinner stop when prefers-reduced-motion is set?</summary>
+            <p class="faq-answer">Not entirely. A frozen spinner looks like a stalled page, which defeats its purpose. Slow the rotation down, or replace movement with a gentle opacity pulse, so the indicator still shows that work is happening without the motion that can cause discomfort.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I stop a spinner flashing on fast responses?</summary>
+            <p class="faq-answer">Delay it. Keep the spinner transparent for about 300ms with animation-delay and animation-fill-mode: both, then fade it in, or add it from a setTimeout that you clear when the response arrives. A response that lands within the delay never shows a spinner at all.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my button change width when it shows a spinner?</summary>
+            <p class="faq-answer">The label is being replaced or removed, so the button shrinks to fit the spinner. Stack the label and the spinner in the same grid cell and hide the label with opacity: 0. The label then keeps the button's width and its accessible name while the spinner shows on top.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-loading-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS loading animations</h3>
+            <p>Rings, dual rings, dots, bars and skeletons, each with markup and CSS to copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-skeleton-loader" class="resource-card">
+            <span class="resource-kicker">Recipe</span>
+            <h3>Skeleton loading screens</h3>
+            <p>The better choice when you already know the shape of the content that is loading.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Why transform and opacity stay smooth while other properties repaint every frame.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

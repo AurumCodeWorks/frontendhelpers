@@ -312,4 +312,28 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://frontendhelpers.com/css-loading-spinner</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://frontendhelpers.com/css-animated-gradient-text</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://frontendhelpers.com/css-marquee-animation</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://frontendhelpers.com/css-fade-in-on-scroll</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

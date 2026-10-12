@@ -111,43 +111,34 @@ body {
   overflow: hidden;
 }
 
+/* Static soft glows. These used to be solid circles with
+   filter: blur(80px) animating forever, which forced a full blur
+   repaint every frame on every page (one CPU core per tab). A radial
+   gradient fading to transparent gives the same soft edge for free.
+   Each box is the old circle plus 160px of "blur" on every side. */
 .orb {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
   opacity: 0.12;
-  animation: orbFloat 20s ease-in-out infinite;
+  background: radial-gradient(closest-side, var(--orb-colour), transparent);
 }
 
 .orb-1 {
-  width: 500px; height: 500px;
-  background: var(--primary);
-  top: -10%; left: -5%;
-  animation-duration: 25s;
+  --orb-colour: var(--primary);
+  width: 820px; height: 820px;
+  top: calc(-10% - 160px); left: calc(-5% - 160px);
 }
 
 .orb-2 {
-  width: 400px; height: 400px;
-  background: var(--secondary);
-  bottom: -10%; right: -5%;
-  animation-delay: -8s;
-  animation-duration: 22s;
+  --orb-colour: var(--secondary);
+  width: 720px; height: 720px;
+  bottom: calc(-10% - 160px); right: calc(-5% - 160px);
 }
 
 .orb-3 {
-  width: 300px; height: 300px;
-  background: var(--accent);
-  top: 40%; left: 50%;
-  animation-delay: -15s;
-  animation-duration: 30s;
+  --orb-colour: var(--accent);
+  width: 620px; height: 620px;
+  top: calc(40% - 160px); left: calc(50% - 160px);
   opacity: 0.06;
-}
-
-@keyframes orbFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -40px) scale(1.05); }
-  50% { transform: translate(-20px, 20px) scale(0.95); }
-  75% { transform: translate(15px, 35px) scale(1.03); }
 }
 
 /* ── TOAST NOTIFICATIONS ───────────────────────────────────── */
@@ -2005,7 +1996,7 @@ input.invalid, textarea.invalid {
    css-animations.css so visitors can still preview them. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .orb { animation: none; }
+
   .toast, .cookie-banner-popup, .scroll-top-btn { transition: none; }
 }
 
