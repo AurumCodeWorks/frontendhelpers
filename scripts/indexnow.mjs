@@ -61,8 +61,12 @@ try {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     body: JSON.stringify({ host: HOST, key, keyLocation: `https://${HOST}/${keyFile}`, urlList: urls }),
   });
-  // 200 OK and 202 Accepted are both success; 403 = key not found yet
+  // 200 OK and 202 Accepted are both success
   console.log(`indexnow: ${res.status} ${res.statusText}`);
+  if (res.status === 403) {
+    console.log(`indexnow: key rejected. Check https://${HOST}/${keyFile} is reachable by Bing ` +
+      '(Cloudflare Security → Events for blocked Microsoft requests) and the key status in Bing Webmaster Tools → IndexNow.');
+  }
 } catch (e) {
   console.log(`indexnow: request failed (${e.message})`);
 }
