@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free keyword density checker. Analyze text for word count, reading time, sentence count, and repeated terms with phrase-aware density checks in browser." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-keyword-density-checker.png" />
 
-  <title>Keyword Density Checker — Free Word Count &amp; Reading Time Tool | FrontendHelpers</title>
+  <title>Keyword Density Checker &amp; Word Counter | FrontendHelpers</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -104,7 +91,7 @@
           {
             "@type": "Question",
             "name": "How is reading time calculated?",
-            "acceptedAnswer": { "@type": "Answer", "text": "At roughly 200 words per minute, the accepted average for adult silent reading of general web content. Technical material with code samples typically reads slower, so treat it as an estimate." }
+            "acceptedAnswer": { "@type": "Answer", "text": "At 200 words per minute, a deliberately conservative figure — research puts the average adult silent reading speed for English non-fiction nearer 240 words per minute. Technical material with code samples typically reads slower, so treat it as an estimate." }
           },
           {
             "@type": "Question",
@@ -216,7 +203,7 @@
         <p>Rather than hitting a number, aim for natural coverage: the phrase in the title, once in a heading, in the opening paragraph, and wherever it genuinely fits in the body. Then use related terms and synonyms freely — search engines understand them, and readers prefer them.</p>
 
         <h2>Reading time and matching search intent</h2>
-        <p>The reading-time figure here uses roughly 200 words per minute, the accepted average for adult silent reading of general web content. It's useful for two reasons: it's what readers see on Medium-style layouts and it sets expectations, and it's a proxy for whether your content depth matches the query.</p>
+        <p>The reading-time figure here uses 200 words per minute, a deliberately conservative rate: a 2019 meta-analysis by Marc Brysbaert put the average adult silent reading speed for English non-fiction at about 238 words per minute. It's useful for two reasons: it's what readers see on Medium-style layouts and it sets expectations, and it's a proxy for whether your content depth matches the query.</p>
         <p>That match matters more than length itself. Someone searching "what is a rem unit" wants a two-minute answer; someone searching "css grid complete guide" expects fifteen. Publishing a 4,000-word essay for a quick-answer query performs badly, and so does a thin page for a research query. Check what currently ranks for your target phrase and aim for comparable depth.</p>
 
         <h2>Reading the most-used words table</h2>
@@ -226,41 +213,33 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Writing a Text Frequency Parser</h2>
-        <p>If you are building an SEO application or a text analysis tool, you need to calculate keyword frequency programmatically. A robust implementation needs to handle punctuation, case sensitivity, and stop words.</p>
-        
-        <h3>JavaScript Text Parsing Algorithm</h3>
-        <p>Here is a concise algorithm to extract word frequencies from a raw string of text in JavaScript, ignoring common English stop words.</p>
-        <pre><code class="language-javascript">
-function getKeywordDensity(text, stopWords = ['the', 'and', 'a', 'to', 'of', 'in', 'is']) {
-  // 1. Normalize and strip punctuation
-  const normalized = text.toLowerCase().replace(/[^\w\s]/g, '');
-  
-  // 2. Split into words
-  const words = normalized.split(/\s+/).filter(w => w.length > 0);
-  const totalWords = words.length;
-  
-  // 3. Count frequencies
-  const counts = {};
-  words.forEach(word => {
-    if (!stopWords.includes(word)) {
-      counts[word] = (counts[word] || 0) + 1;
-    }
-  });
-  
-  // 4. Calculate density percentages and sort
-  const density = Object.entries(counts).map(([word, count]) => {
-    return {
-      word,
-      count,
-      density: ((count / totalWords) * 100).toFixed(2) + '%'
-    };
-  }).sort((a, b) => b.count - a.count);
-  
-  return density;
+        <h2>Counting multi-word phrases, in any language</h2>
+        <p>Most density snippets tokenise with <code>\w</code> or <code>[a-z]</code>. Both are ASCII-only in JavaScript, so <code>café</code> becomes <code>caf</code> and a French or German page is quietly miscounted. Match letters and digits by Unicode property instead, with <code>/[\p{L}\p{N}'’]+/gu</code>, and include the typographic apostrophe so <code>s’il</code> and <code>don’t</code> stay single words.</p>
+        <p>The other gap is phrases. A target keyword is usually two or three words, and counting each word separately tells you nothing about whether the phrase itself appears. Slide a window along the token list, compare word by word, and count each match as many words as the phrase contains, so density remains a share of the total word count:</p>
+        <pre><code class="language-javascript">const tokenise = text =&gt; text.toLowerCase().match(/[\p{L}\p{N}'’]+/gu) ?? [];
+
+function phraseDensity(text, phrase) {
+  const words = tokenise(text);
+  const target = tokenise(phrase);
+  if (!words.length || !target.length) return { hits: 0, density: 0 };
+
+  let hits = 0;
+  for (let i = 0; i &lt;= words.length - target.length; i++) {
+    if (target.every((t, j) =&gt; words[i + j] === t)) hits++;
+  }
+  // Each hit accounts for target.length of the total words
+  return { hits, density: (hits * target.length / words.length) * 100 };
 }
-        </code></pre>
-        <p>In a production application, your <code>stopWords</code> array should be comprehensive and ideally support multiple languages. For large texts, consider moving this calculation to a Web Worker so you don't block the main UI thread.</p>
+
+const text = 'Le café crème est prêt. Un café crème, s’il vous plaît!';
+console.log(tokenise(text).length, phraseDensity(text, 'café crème'));
+// 11 { hits: 2, density: 36.36… }
+
+// Languages written without spaces need a real word segmenter
+const seg = new Intl.Segmenter('ja', { granularity: 'word' });
+console.log([...seg.segment('東京でコーヒーを飲む')]
+  .filter(s =&gt; s.isWordLike).map(s =&gt; s.segment));</code></pre>
+        <p>Comparing tokens rather than searching the raw string also avoids false hits inside longer words: a search for <code>art</code> should not match <code>start</code>. Chinese, Japanese and Thai do not put spaces between words, so no regex will tokenise them; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter">Intl.Segmenter</a> uses the same word-breaking rules as the browser and has been available in every major engine since 2024.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -277,7 +256,7 @@ function getKeywordDensity(text, stopWords = ['the', 'and', 'a', 'to', 'of', 'in
           </details>
           <details class="faq-item">
             <summary>How is reading time calculated?</summary>
-            <p class="faq-answer">At roughly 200 words per minute, the accepted average for adult silent reading of general web content. Technical material with code samples typically reads slower, so treat it as an estimate.</p>
+            <p class="faq-answer">At 200 words per minute, a deliberately conservative figure — research puts the average adult silent reading speed for English non-fiction nearer 240 words per minute. Technical material with code samples typically reads slower, so treat it as an estimate.</p>
           </details>
           <details class="faq-item">
             <summary>Is my text sent to a server for analysis?</summary>

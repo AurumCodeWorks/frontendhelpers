@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free JSON-LD schema markup generator for businesses. Build valid structured data with addresses, contacts, and price ranges, and copy script tags instantly." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-schema-markup-generator.png" />
 
-  <title>Schema Markup Generator — Free JSON-LD Structured Data Tool | FrontendHelpers</title>
+  <title>Schema Markup Generator: JSON-LD Structured Data</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -99,7 +86,7 @@
           {
             "@type": "Question",
             "name": "Does structured data improve my ranking?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Not directly. It makes your page eligible for rich results — star ratings, FAQs, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Not directly. It makes your page eligible for rich results — star ratings, event dates, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost." }
           },
           {
             "@type": "Question",
@@ -240,7 +227,7 @@
             <span>Copy-Paste Schema Script</span>
             <button class="btn-copy" id="btn-copy-schema" data-target="output-schema-code">Copy Script</button>
           </div>
-          <textarea id="output-schema-code" readonly rows="16" class="mono-output"></textarea>
+          <textarea id="output-schema-code" aria-label="Copy-Paste Schema Script" readonly rows="16" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -262,43 +249,36 @@
 
         <h2>Testing and building up</h2>
         <p>Always validate before shipping. Google's <strong>Rich Results Test</strong> shows which rich result types your markup qualifies for, and the <strong>Schema Markup Validator</strong> at validator.schema.org catches syntax errors and unrecognised properties. Search Console then reports errors it finds across your live site.</p>
-        <p>Start small. A correct <code>LocalBusiness</code> or <code>Organization</code> block with name, URL, logo and address delivers most of the value. Once that's validating cleanly, layer on the types that fit your content — <code>FAQPage</code> for question sections (this site uses it on every page), <code>BreadcrumbList</code> for navigation trails, <code>Article</code> for posts. Each type has required and recommended properties; missing a required one disqualifies the whole block, which is exactly what the validators are for.</p>
+        <p>Start small. A correct <code>LocalBusiness</code> or <code>Organization</code> block with name, URL, logo and address delivers most of the value. Once that's validating cleanly, layer on the types that fit your content — <code>BreadcrumbList</code> for navigation trails, <code>Article</code> for posts, <code>Product</code> or <code>Event</code> where they apply. Don't add <code>FAQPage</code> expecting a rich result: Google limited FAQ results to government and health sites in 2023 and stopped showing them altogether in 2026. Each type has required and recommended properties; missing a required one makes the item ineligible for its rich result, which is exactly what the validators are for.</p>
       </article>
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Injecting JSON-LD in Modern Apps</h2>
-        <p>Search engines require schema markup to be present in the initial DOM. If you are building a Single Page Application (SPA) with React or Vue, injecting JSON-LD dynamically requires care to ensure crawlers actually see it.</p>
-        
-        <h3>React Implementation (Next.js / Gatsby)</h3>
-        <p>The safest way to inject JSON-LD in a React component is by dangerously setting the inner HTML of a script tag. This prevents React from escaping the JSON string.</p>
-        <pre><code class="language-javascript">
-// components/LocalBusinessSchema.jsx
-export default function LocalBusinessSchema({ businessData }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": businessData.name,
-    "image": businessData.logo,
-    "telephone": businessData.phone,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": businessData.street,
-      "addressLocality": businessData.city,
-      "postalCode": businessData.zip,
-      "addressCountry": businessData.country
-    }
-  };
+        <h2>Rendering JSON-LD safely in React and Next.js</h2>
+        <p>Google can read JSON-LD that JavaScript adds to the page, because it renders pages before processing structured data. Server-rendering it is still the better default: rendering can lag behind crawling, Google warns that JavaScript-generated Product markup makes Shopping crawls less frequent and less reliable, and other consumers of your markup may not run JavaScript at all. In the Next.js App Router, a server component that outputs the script tag handles this for you.</p>
+        <p>The part most examples get wrong is escaping. <code>JSON.stringify</code> doesn't escape <code>&lt;</code>, so if any value — a review, a product name, anything a user can edit — contains <code>&lt;/script&gt;</code>, the browser ends the script element there and parses the rest as HTML. That is a stored XSS hole. Replacing every <code>&lt;</code> with <code>\u003c</code> closes it: the JSON still parses to exactly the same data, but the closing tag can no longer appear in the markup.</p>
+        <pre><code class="language-jsx">// Server component: the JSON-LD is in the HTML the server sends
+export function JsonLd({ data }) {
+  // Escaping &lt; means a "&lt;/script&gt;" inside any value cannot close the tag
+  const json = JSON.stringify(data).replace(/&lt;/g, '\\u003c');
 
   return (
     &lt;script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     /&gt;
   );
 }
-        </code></pre>
-        <p>Ensure this component is rendered inside the <code>&lt;head&gt;</code> of your document if possible, though Googlebot will parse JSON-LD even if it's placed in the <code>&lt;body&gt;</code>.</p>
+
+// Usage, with data the page also displays:
+// &lt;JsonLd data={{
+//   '@context': 'https://schema.org',
+//   '@type': 'LocalBusiness',
+//   name: business.name,
+//   telephone: business.phone,
+//   address: { '@type': 'PostalAddress', postalCode: business.postcode },
+// }} /&gt;</code></pre>
+        <p>This is the escaping the <a href="https://nextjs.org/docs/app/guides/json-ld">Next.js JSON-LD guide</a> recommends. Build the object from the same data the page renders, so the markup can't drift from the visible content, and see Google's notes on <a href="https://developers.google.com/search/docs/appearance/structured-data/generate-structured-data-with-javascript">generating structured data with JavaScript</a> for testing injected markup with the Rich Results Test's URL mode.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -311,7 +291,7 @@ export default function LocalBusinessSchema({ businessData }) {
           </details>
           <details class="faq-item">
             <summary>Does structured data improve my ranking?</summary>
-            <p class="faq-answer">Not directly. It makes your page eligible for rich results — star ratings, FAQs, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost.</p>
+            <p class="faq-answer">Not directly. It makes your page eligible for rich results — star ratings, event dates, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost.</p>
           </details>
           <details class="faq-item">
             <summary>Can structured data get my site penalised?</summary>

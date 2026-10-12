@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free meta tag generator with live Google, Facebook, and Twitter previews. Generate Open Graph and Twitter Card markup, and copy it in one click." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-meta-tag-generator.png" />
 
-  <title>Meta Tag Generator — Free Open Graph &amp; Twitter Card Preview | FrontendHelpers</title>
+  <title>Meta Tag Generator: Open Graph &amp; Twitter Card Preview</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -109,7 +96,7 @@
           {
             "@type": "Question",
             "name": "Why is my share preview showing the old image?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger, LinkedIn’s Post Inspector or X’s card validator. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger or LinkedIn’s Post Inspector; X has no re-scrape tool, so wait for its cache to expire or share the URL with a harmless query string added. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript." }
           }
         ]
       }
@@ -256,7 +243,7 @@
             <span>Optimised Meta Tags</span>
             <button class="btn-copy" id="btn-copy-meta" data-target="output-meta-code">Copy Tags</button>
           </div>
-          <textarea id="output-meta-code" readonly rows="8"></textarea>
+          <textarea id="output-meta-code" aria-label="Optimised Meta Tags" readonly rows="8"></textarea>
         </div>
       </div>
     </div>
@@ -280,53 +267,43 @@
         <p>Add <code>og:site_name</code> too. It's a small touch that puts your brand name on the card, and it costs one line.</p>
 
         <h2>Why your share preview looks wrong (and how to fix it)</h2>
-        <p>Social platforms cache aggressively. If you share a link, then fix your tags, the old card will keep appearing — sometimes for weeks. The fix is to force a re-scrape: Facebook's Sharing Debugger and LinkedIn's Post Inspector both re-fetch on demand, and X refreshes its cache when you run a URL through its card validator.</p>
+        <p>Social platforms cache aggressively. If you share a link, then fix your tags, the old card will keep appearing — sometimes for weeks. The fix is to force a re-scrape: Facebook's Sharing Debugger and LinkedIn's Post Inspector both re-fetch on demand. X no longer offers a preview or re-scrape tool, so for X either wait for its cache to expire or share the URL with a harmless query string added, which it treats as a new link.</p>
         <p>The other frequent culprit is JavaScript. Meta tags injected client-side are often missed entirely, because most scrapers read the raw HTML without executing scripts. Meta tags belong in the server-rendered <code>&lt;head&gt;</code>, always.</p>
       </article>
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Meta Tags in Next.js & React</h2>
-        <p>While the generator above provides static HTML, modern web applications often need dynamic meta tags based on the current route or database content. Here is how to implement the generated tags in a Next.js (App Router) environment using the built-in Metadata API.</p>
-        
-        <h3>Next.js (App Router) Implementation</h3>
-        <p>In Next.js 13+, you no longer use the <code>&lt;Head&gt;</code> component for standard SEO tags. Instead, export a <code>metadata</code> object or <code>generateMetadata</code> function from your <code>page.tsx</code> or <code>layout.tsx</code>.</p>
-        <pre><code class="language-javascript">
-// app/blog/[slug]/page.tsx
-import { Metadata } from 'next'
+        <h2>Per-page metadata in the Next.js App Router</h2>
+        <p>On the Next.js App Router you don't write these tags by hand: you return them from <code>generateMetadata</code> and Next.js renders the <code>&lt;meta&gt;</code> elements. Three details catch people out. First, since Next.js 15 <code>params</code> is a Promise and must be awaited; reading <code>params.slug</code> directly was only a deprecated stopgap in 15 and no longer works in 16. Second, metadata from layouts and pages is merged shallowly, so a page that sets <code>openGraph</code> replaces the layout's entire <code>openGraph</code> object, default image included, rather than adding to it. Third, Open Graph URLs must be absolute; set <code>metadataBase</code> once in the root layout and relative paths such as <code>/blog/my-post</code> are resolved against it.</p>
+        <pre><code class="language-javascript">// app/blog/[slug]/page.js
+// (app/layout.js sets metadataBase: new URL('https://example.com')
+//  and title: { template: '%s | Example', default: 'Example' })
+import { cache } from 'react';
+import { db } from '@/lib/db';
 
-export async function generateMetadata({ params }): Promise&lt;Metadata&gt; {
-  // Fetch data based on the route
-  const post = await getPostBySlug(params.slug)
-  
+// One memoised loader shared by generateMetadata and the page
+const getPost = cache(async (slug) =&gt; db.post.findUnique({ where: { slug } }));
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;            // a Promise since Next.js 15
+  const post = await getPost(slug);
+
   return {
-    title: post.title,
+    title: post.title,                      // becomes "… | Example"
     description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      url: https://frontendhelpers.com/blog/ + post.slug,
-      siteName: 'FrontendHelpers',
-      images: [
-        {
-          url: post.ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {                            // replaces the layout's openGraph
       type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
+      url: `/blog/${post.slug}`,            // made absolute via metadataBase
       title: post.title,
       description: post.excerpt,
-      images: [post.ogImageUrl],
+      images: [{ url: post.ogImage, width: 1200, height: 630 }],
     },
-  }
+  };
 }
-        </code></pre>
-        <p>By using <code>generateMetadata</code>, Next.js will automatically render the exact HTML tags output by our generator, ensuring crawlers and social scrapers receive fully hydrated meta information on the initial server response.</p>
+
+// e.g. { slug: 'layered-shadows' } → og:url https://example.com/blog/layered-shadows</code></pre>
+        <p>Wrapping the loader in React's <code>cache()</code> lets the page component call <code>getPost(slug)</code> too without a second database query; requests made with <code>fetch</code> are memoised automatically. One behaviour changed in Next.js 15.2: when <code>generateMetadata</code> waits on dynamic data, the tags can be streamed and appended to the <code>&lt;body&gt;</code> for clients that run JavaScript, while HTML-only scrapers such as Facebook's are detected by user agent and still get them in the <code>&lt;head&gt;</code>. So test share cards with the platforms' own debuggers rather than by viewing source in your browser. Every supported field is listed in the <a href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata">generateMetadata reference</a>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -347,7 +324,7 @@ export async function generateMetadata({ params }): Promise&lt;Metadata&gt; {
           </details>
           <details class="faq-item">
             <summary>Why is my share preview showing the old image?</summary>
-            <p class="faq-answer">Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger, LinkedIn’s Post Inspector or X’s card validator. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript.</p>
+            <p class="faq-answer">Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger or LinkedIn’s Post Inspector; X has no re-scrape tool, so wait for its cache to expire or share the URL with a harmless query string added. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript.</p>
           </details>
         </div>
       </section>

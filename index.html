@@ -32,19 +32,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -92,12 +79,12 @@
           {
             "@type": "Question",
             "name": "Are these developer tools really free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is supported by a small number of unobtrusive sponsorships, never by paywalls." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is funded by advertising, never by paywalls." }
           },
           {
             "@type": "Question",
             "name": "Is anything I type uploaded to a server?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. All six tools run entirely in your browser using client-side JavaScript. Meta descriptions, business details, colours — nothing you enter is transmitted, stored or logged anywhere." }
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Every tool runs entirely in your browser using client-side JavaScript, so meta descriptions, business details and colours never leave your device. If you accept analytics cookies, Microsoft Clarity may record how the page is used, but it masks form input by default." }
           },
           {
             "@type": "Question",
@@ -112,7 +99,7 @@
           {
             "@type": "Question",
             "name": "How accurate is the WCAG contrast checker?",
-            "acceptedAnswer": { "@type": "Answer", "text": "It implements the official WCAG 2.1 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text." }
+            "acceptedAnswer": { "@type": "Answer", "text": "It implements the official WCAG 2.2 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text." }
           }
         ]
       }
@@ -298,7 +285,7 @@
                 <span>Optimised Meta Tags</span>
                 <button class="btn-copy" id="btn-copy-meta" data-target="output-meta-code">Copy Tags</button>
               </div>
-              <textarea id="output-meta-code" readonly rows="8"></textarea>
+              <textarea id="output-meta-code" aria-label="Optimised Meta Tags" readonly rows="8"></textarea>
             </div>
           </div>
         </div>
@@ -389,7 +376,7 @@
                 <span>Copy-Paste Schema Script</span>
                 <button class="btn-copy" id="btn-copy-schema" data-target="output-schema-code">Copy Script</button>
               </div>
-              <textarea id="output-schema-code" readonly rows="16" class="mono-output"></textarea>
+              <textarea id="output-schema-code" aria-label="Copy-Paste Schema Script" readonly rows="16" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -438,14 +425,14 @@
                 <span>URL-ready slug</span>
                 <button class="btn-copy" data-target="output-slug">Copy Slug</button>
               </div>
-              <textarea id="output-slug" readonly rows="2" class="mono-output"></textarea>
+              <textarea id="output-slug" aria-label="URL-ready slug" readonly rows="2" class="mono-output"></textarea>
             </div>
             <div class="output-code-container">
               <div class="output-header">
                 <span>Full URL preview</span>
                 <button class="btn-copy" data-target="output-slug-url">Copy URL</button>
               </div>
-              <textarea id="output-slug-url" readonly rows="2" class="mono-output"></textarea>
+              <textarea id="output-slug-url" aria-label="Full URL preview" readonly rows="2" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -541,7 +528,7 @@
                 <span>Tagged URL</span>
                 <button class="btn-copy" data-target="output-utm">Copy Link</button>
               </div>
-              <textarea id="output-utm" readonly rows="5" class="mono-output"></textarea>
+              <textarea id="output-utm" aria-label="Tagged URL" readonly rows="5" class="mono-output"></textarea>
             </div>
             <p class="panel-desc" id="utm-hint" style="margin-top: 10px;"></p>
           </div>
@@ -593,7 +580,7 @@
                 <span>robots.txt — place at your site root</span>
                 <button class="btn-copy" data-target="output-robots">Copy File</button>
               </div>
-              <textarea id="output-robots" readonly rows="9" class="mono-output"></textarea>
+              <textarea id="output-robots" aria-label="robots.txt — place at your site root" readonly rows="9" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -694,7 +681,7 @@
                 <span>Ready to paste</span>
                 <button class="btn-copy" data-target="output-lorem">Copy Text</button>
               </div>
-              <textarea id="output-lorem" readonly rows="11"></textarea>
+              <textarea id="output-lorem" aria-label="Ready to paste" readonly rows="11"></textarea>
             </div>
           </div>
         </div>
@@ -735,7 +722,7 @@
                 <span id="entity-output-label">Encoded HTML</span>
                 <button class="btn-copy" data-target="output-entities">Copy Result</button>
               </div>
-              <textarea id="output-entities" readonly rows="6" class="mono-output"></textarea>
+              <textarea id="output-entities" aria-labelledby="entity-output-label" readonly rows="6" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -787,14 +774,14 @@
                 <span>HTML markup</span>
                 <button class="btn-copy" data-target="output-table-html">Copy HTML</button>
               </div>
-              <textarea id="output-table-html" readonly rows="9" class="mono-output"></textarea>
+              <textarea id="output-table-html" aria-label="HTML markup" readonly rows="9" class="mono-output"></textarea>
             </div>
             <div class="output-code-container">
               <div class="output-header">
                 <span>Starter CSS</span>
                 <button class="btn-copy" data-target="output-table-css">Copy CSS</button>
               </div>
-              <textarea id="output-table-css" readonly rows="6" class="mono-output"></textarea>
+              <textarea id="output-table-css" aria-label="Starter CSS" readonly rows="6" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -893,14 +880,14 @@
                 <span>CSS — reserve the space</span>
                 <button class="btn-copy" data-target="output-ratio-css">Copy CSS</button>
               </div>
-              <textarea id="output-ratio-css" readonly rows="4" class="mono-output"></textarea>
+              <textarea id="output-ratio-css" aria-label="CSS — reserve the space" readonly rows="4" class="mono-output"></textarea>
             </div>
             <div class="output-code-container">
               <div class="output-header">
                 <span>HTML — sized image tag</span>
                 <button class="btn-copy" data-target="output-ratio-html">Copy HTML</button>
               </div>
-              <textarea id="output-ratio-html" readonly rows="2" class="mono-output"></textarea>
+              <textarea id="output-ratio-html" aria-label="HTML — sized image tag" readonly rows="2" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -924,7 +911,7 @@
             <div class="form-group">
               <label for="palette-hex">Base Colour</label>
               <div class="color-input-group">
-                <input type="color" id="palette-picker" value="#8b5cf6" />
+                <input type="color" id="palette-picker" aria-label="Pick base colour" value="#8b5cf6" />
                 <input type="text" id="palette-hex" value="#8b5cf6" placeholder="#8b5cf6" class="color-hex-input" />
               </div>
             </div>
@@ -941,7 +928,7 @@
                 <span>CSS design tokens</span>
                 <button class="btn-copy" data-target="output-palette-tokens">Copy Tokens</button>
               </div>
-              <textarea id="output-palette-tokens" readonly rows="9" class="mono-output"></textarea>
+              <textarea id="output-palette-tokens" aria-label="CSS design tokens" readonly rows="9" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -996,7 +983,7 @@
                 <span>CSS Code</span>
                 <button class="btn-copy" id="btn-copy-gradient" data-target="output-gradient-code">Copy CSS</button>
               </div>
-              <textarea id="output-gradient-code" readonly rows="4" class="mono-output"></textarea>
+              <textarea id="output-gradient-code" aria-label="CSS Code" readonly rows="4" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -1022,19 +1009,19 @@
         <div class="tool-grid">
           <div class="tool-inputs">
             <div class="slider-group">
-              <label>X Offset: <strong id="shadow-x-val">4</strong>px</label>
+              <label for="shadow-x">X Offset: <strong id="shadow-x-val">4</strong>px</label>
               <input type="range" id="shadow-x" min="-50" max="50" value="4" class="styled-range" />
             </div>
             <div class="slider-group">
-              <label>Y Offset: <strong id="shadow-y-val">8</strong>px</label>
+              <label for="shadow-y">Y Offset: <strong id="shadow-y-val">8</strong>px</label>
               <input type="range" id="shadow-y" min="-50" max="50" value="8" class="styled-range" />
             </div>
             <div class="slider-group">
-              <label>Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
+              <label for="shadow-blur">Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
               <input type="range" id="shadow-blur" min="0" max="100" value="24" class="styled-range" />
             </div>
             <div class="slider-group">
-              <label>Spread: <strong id="shadow-spread-val">0</strong>px</label>
+              <label for="shadow-spread">Spread: <strong id="shadow-spread-val">0</strong>px</label>
               <input type="range" id="shadow-spread" min="-50" max="50" value="0" class="styled-range" />
             </div>
             <div class="form-row">
@@ -1046,7 +1033,7 @@
                 </div>
               </div>
               <div class="slider-group">
-                <label>Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
+                <label for="shadow-opacity">Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
                 <input type="range" id="shadow-opacity" min="0" max="100" value="25" class="styled-range" />
               </div>
             </div>
@@ -1069,7 +1056,7 @@
                 <span>CSS Code</span>
                 <button class="btn-copy" id="btn-copy-shadow" data-target="output-shadow-code">Copy CSS</button>
               </div>
-              <textarea id="output-shadow-code" readonly rows="3" class="mono-output"></textarea>
+              <textarea id="output-shadow-code" aria-label="CSS Code" readonly rows="3" class="mono-output"></textarea>
             </div>
           </div>
         </div>
@@ -1092,7 +1079,7 @@
           <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></span>WCAG Colour Contrast Checker</h2>
           <button class="btn-reset" id="reset-contrast">↺ Reset</button>
         </div>
-        <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.1 accessibility standards for AA and AAA compliance.</p>
+        <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.2 accessibility standards for AA and AAA compliance.</p>
 
         <div class="tool-grid">
           <div class="tool-inputs">
@@ -1100,14 +1087,14 @@
               <div class="form-group">
                 <label for="fg-color">Text (Foreground) Colour</label>
                 <div class="color-input-group">
-                  <input type="color" id="fg-color-picker" value="#ffffff" />
+                  <input type="color" id="fg-color-picker" aria-label="Pick text colour" value="#ffffff" />
                   <input type="text" id="fg-color" value="#ffffff" placeholder="#ffffff" class="color-hex-input" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="bg-color">Background Colour</label>
                 <div class="color-input-group">
-                  <input type="color" id="bg-color-picker" value="#1a1a2e" />
+                  <input type="color" id="bg-color-picker" aria-label="Pick background colour" value="#1a1a2e" />
                   <input type="text" id="bg-color" value="#1a1a2e" placeholder="#1a1a2e" class="color-hex-input" />
                 </div>
               </div>
@@ -1238,11 +1225,11 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary>Are these developer tools really free?</summary>
-        <p class="faq-answer">Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is supported by a small number of unobtrusive sponsorships, never by paywalls.</p>
+        <p class="faq-answer">Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is funded by advertising, never by paywalls.</p>
       </details>
       <details class="faq-item">
         <summary>Is anything I type uploaded to a server?</summary>
-        <p class="faq-answer">No. All six tools run entirely in your browser using client-side JavaScript. Meta descriptions, business details, colours — nothing you enter is transmitted, stored or logged anywhere.</p>
+        <p class="faq-answer">No. Every tool runs entirely in your browser using client-side JavaScript, so meta descriptions, business details and colours never leave your device. If you accept analytics cookies, Microsoft Clarity may record how the page is used, but it masks form input by default.</p>
       </details>
       <details class="faq-item">
         <summary>Can I use the generated code in commercial projects?</summary>
@@ -1254,7 +1241,7 @@
       </details>
       <details class="faq-item">
         <summary>How accurate is the WCAG contrast checker?</summary>
-        <p class="faq-answer">It implements the official WCAG 2.1 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text.</p>
+        <p class="faq-answer">It implements the official WCAG 2.2 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text.</p>
       </details>
     </div>
   </section>

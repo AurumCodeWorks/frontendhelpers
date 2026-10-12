@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free HTML table generator with live preview. Create semantic table markup with proper thead, scope attributes, zebra striping, and copyable CSS." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-html-table-generator.png" />
 
-  <title>HTML Table Generator — Free Semantic Table Markup Tool | FrontendHelpers</title>
+  <title>HTML Table Generator: Semantic Markup &amp; CSS</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -204,14 +191,14 @@
             <span>HTML markup</span>
             <button class="btn-copy" data-target="output-table-html">Copy HTML</button>
           </div>
-          <textarea id="output-table-html" readonly rows="9" class="mono-output"></textarea>
+          <textarea id="output-table-html" aria-label="HTML markup" readonly rows="9" class="mono-output"></textarea>
         </div>
         <div class="output-code-container">
           <div class="output-header">
             <span>Starter CSS</span>
             <button class="btn-copy" data-target="output-table-css">Copy CSS</button>
           </div>
-          <textarea id="output-table-css" readonly rows="6" class="mono-output"></textarea>
+          <textarea id="output-table-css" aria-label="Starter CSS" readonly rows="6" class="mono-output"></textarea>
         </div>
       </div>
     </div>
@@ -239,46 +226,38 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Rendering Tables from JSON</h2>
-        <p>In modern web applications, you rarely write static HTML tables by hand. Instead, you receive data in JSON format from an API and need to render a table dynamically.</p>
-        
-        <h3>Dynamic Table Rendering in React</h3>
-        <p>Here is a clean, reusable approach to rendering a data table in React. It accepts an array of objects and automatically generates the table headers based on the object keys.</p>
-        <pre><code class="language-javascript">
-export default function DynamicTable({ data }) {
-  if (!data || data.length === 0) {
-    return &lt;p&gt;No data available.&lt;/p&gt;;
-  }
+        <h2>Rendering API data as a table in React without losing the semantics</h2>
+        <p>The usual shortcut is to take <code>Object.keys(rows[0])</code> as the headers and the array index as the key. It breaks in three predictable ways. If the first row is missing an optional field, a whole column disappears. Raw keys such as <code>created_at</code> become visible headings. And once the user sorts or filters, index keys make React reuse the wrong row's DOM and state, so a ticked checkbox or an expanded row jumps to a different record. Declare the columns once, with labels and formatting, and key each row by a stable ID from the data.</p>
+        <pre><code class="language-jsx">// Columns are declared, not guessed from Object.keys(rows[0])
+const COLUMNS = [
+  { key: 'region', label: 'Region', rowHeader: true },
+  { key: 'q3', label: 'Q3 revenue', numeric: true },
+  { key: 'q4', label: 'Q4 revenue', numeric: true },
+];
+const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
 
-  // Extract headers from the first object's keys
-  const headers = Object.keys(data[0]);
-
+export function RevenueTable({ rows, caption }) {
   return (
-    &lt;table className="data-table"&gt;
+    &lt;table&gt;
+      &lt;caption&gt;{caption}&lt;/caption&gt;
       &lt;thead&gt;
-        &lt;tr&gt;
-          {headers.map(header =&gt; (
-            &lt;th key={header}&gt;
-              // Capitalize first letter
-              {header.charAt(0).toUpperCase() + header.slice(1)}
-            &lt;/th&gt;
-          ))}
-        &lt;/tr&gt;
+        &lt;tr&gt;{COLUMNS.map(c =&gt; &lt;th key={c.key} scope="col"&gt;{c.label}&lt;/th&gt;)}&lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
-        {data.map((row, index) =&gt; (
-          &lt;tr key={index}&gt;
-            {headers.map(header =&gt; (
-              &lt;td key={${index}-}&gt;{row[header]}&lt;/td&gt;
-            ))}
+        {rows.map(row =&gt; (
+          &lt;tr key={row.id}&gt;{/* a stable id, never the array index */}
+            {COLUMNS.map(c =&gt; c.rowHeader
+              ? &lt;th key={c.key} scope="row"&gt;{row[c.key]}&lt;/th&gt;
+              : &lt;td key={c.key} className={c.numeric ? 'num' : undefined}&gt;
+                  {c.numeric ? gbp.format(row[c.key]) : row[c.key]}
+                &lt;/td&gt;)}
           &lt;/tr&gt;
         ))}
       &lt;/tbody&gt;
     &lt;/table&gt;
   );
-}
-        </code></pre>
-        <p>This component is highly scalable. To improve it further for production, you would typically add pagination, column sorting, and define custom renderers for specific column types (like formatting dates or currencies) rather than rendering the raw string value.</p>
+}</code></pre>
+        <p>The first cell of each row is a <code>&lt;th scope="row"&gt;</code>, so screen readers can announce the region alongside each figure as the user moves along the row. Amounts go through <code>Intl.NumberFormat</code> rather than string concatenation, and the <code>num</code> class should set <code>text-align: right</code> and <code>font-variant-numeric: tabular-nums</code> so the digits line up. If you add sorting, put a <code>&lt;button&gt;</code> inside each sortable <code>&lt;th&gt;</code> and set <code>aria-sort</code> on the column currently sorted. React explains why index keys cause trouble in <a href="https://react.dev/learn/rendering-lists">Rendering Lists</a>, and the W3C's <a href="https://www.w3.org/WAI/tutorials/tables/">tables tutorial</a> covers headers for more complex layouts.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->

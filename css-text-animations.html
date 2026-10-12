@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Seven free CSS text animations with live previews: typewriter, gradient text, letter wave, glitch, neon flicker, and focus blur. Pure CSS, copy-paste ready." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-text-animations.png" />
 
-  <title>CSS Text Animations — 7 Free Typewriter, Gradient &amp; Glitch Effects | FrontendHelpers</title>
+  <title>CSS Text Animations: Typewriter, Gradient &amp; Glitch</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,172 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 7 text effects, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-typewriter">
+        <h3>Typewriter</h3>
+        <p>steps(13) matches the 13 characters of “Hello, world.” — change both the ch width and step count to match your own text.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-typewriter"&gt;Hello, world.&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: monospace;
+  border-right: 2px solid currentColor;
+  width: 13ch;
+  animation:
+    fh-typing 2.2s steps(13) both,
+    fh-caret 0.7s step-end infinite;
+}
+@keyframes fh-typing {
+  from { width: 0; }
+  to   { width: 13ch; }
+}
+@keyframes fh-caret {
+  50% { border-color: transparent; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-text-gradient">
+        <h3>Gradient Flow</h3>
+        <p>A gradient endlessly flowing through the letters. background-clip: text does the masking; the 300% size gives it room to travel.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;h1 class="fh-text-gradient"&gt;Your headline&lt;/h1&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-text-gradient {
+  background: linear-gradient(90deg,
+    #8b5cf6, #06b6d4, #10b981, #8b5cf6);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: fh-gradientFlow 4s linear infinite;
+}
+@keyframes fh-gradientFlow {
+  to { background-position: 300% 0; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-text-wave">
+        <h3>Letter Wave</h3>
+        <p>Each letter sits in its own span with a staggered delay. Add more nth-child rules for longer words.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-text-wave"&gt;
+  &lt;span&gt;W&lt;/span&gt;&lt;span&gt;A&lt;/span&gt;&lt;span&gt;V&lt;/span&gt;&lt;span&gt;E&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-text-wave span {
+  display: inline-block;
+  animation: fh-wave 1.4s ease-in-out infinite;
+}
+.fh-text-wave span:nth-child(2) { animation-delay: 0.1s; }
+.fh-text-wave span:nth-child(3) { animation-delay: 0.2s; }
+.fh-text-wave span:nth-child(4) { animation-delay: 0.3s; }
+.fh-text-wave span:nth-child(5) { animation-delay: 0.4s; }
+.fh-text-wave span:nth-child(6) { animation-delay: 0.5s; }
+@keyframes fh-wave {
+  0%, 40%, 100% { transform: translateY(0); }
+  20%           { transform: translateY(-10px); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-text-glitch">
+        <h3>Glitch</h3>
+        <p>The element needs a data-text attribute matching its content — the pseudo-elements clone it into the offset colour layers.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-glitch" data-text="GLITCH"&gt;GLITCH&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-glitch {
+  position: relative;
+  animation: fh-glitchSkew 2.5s infinite;
+}
+.fh-glitch::before,
+.fh-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+}
+.fh-glitch::before {
+  color: #06b6d4;
+  clip-path: inset(0 0 55% 0);
+  animation: fh-glitchTop 2.5s infinite;
+}
+.fh-glitch::after {
+  color: #ef4444;
+  clip-path: inset(45% 0 0 0);
+  animation: fh-glitchBottom 2.5s infinite;
+}
+@keyframes fh-glitchSkew {
+  0%, 90%, 100% { transform: skewX(0); }
+  92% { transform: skewX(4deg); }
+  94% { transform: skewX(-4deg); }
+  96% { transform: skewX(2deg); }
+}
+@keyframes fh-glitchTop {
+  0%, 88%, 100% { transform: translate(0); }
+  90% { transform: translate(-4px, -2px); }
+  94% { transform: translate(4px, 1px); }
+}
+@keyframes fh-glitchBottom {
+  0%, 88%, 100% { transform: translate(0); }
+  90% { transform: translate(4px, 2px); }
+  94% { transform: translate(-4px, -1px); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-neon-flicker">
+        <h3>Neon Flicker</h3>
+        <p>Stacked text-shadows build the glow; the flicker comes from brief opacity dips at irregular intervals, like a failing tube.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;span class="fh-neon"&gt;OPEN&lt;/span&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-neon {
+  color: #f8fafc;
+  text-shadow:
+    0 0 6px #06b6d4,
+    0 0 12px #06b6d4,
+    0 0 24px #06b6d4,
+    0 0 48px #0891b2;
+  animation: fh-neonFlicker 2.4s linear infinite;
+}
+@keyframes fh-neonFlicker {
+  0%, 18%, 22%, 26%, 100% { opacity: 1; }
+  20%, 24% { opacity: 0.45; }
+  60%      { opacity: 0.92; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-tracking-in">
+        <h3>Tracking In</h3>
+        <p>Letters contract from wide spacing into place — a favourite for cinematic hero titles.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;h1 class="fh-tracking-in"&gt;Your title&lt;/h1&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-tracking-in {
+  animation: fh-trackingIn 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+@keyframes fh-trackingIn {
+  from { letter-spacing: 0.6em; opacity: 0; }
+  to   { letter-spacing: normal; opacity: 1; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-text-focus">
+        <h3>Focus In</h3>
+        <p>Text sharpens from a blur, like a camera pulling focus. Heavier than transform-based effects — use it on headings, not paragraphs.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;h2 class="fh-text-focus"&gt;Your heading&lt;/h2&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-text-focus {
+  animation: fh-textFocus 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+@keyframes fh-textFocus {
+  from { filter: blur(10px); opacity: 0; }
+  to   { filter: blur(0);    opacity: 1; }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Where text effects belong</h2>

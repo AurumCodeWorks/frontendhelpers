@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Generated HTML is up to date (animation reference, JS tips)
+        run: node scripts/generate.mjs --check
+
       - name: Quality gate (pages, links, canonicals, sitemap, redirects)
         run: node scripts/check.mjs
 

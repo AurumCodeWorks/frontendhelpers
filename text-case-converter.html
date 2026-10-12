@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Free text case converter. Instantly convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, or UPPERCASE, with one-click copy." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-text-case-converter.png" />
 
-  <title>Text Case Converter — camelCase, snake_case, kebab-case &amp; More | FrontendHelpers</title>
+  <title>Text Case Converter: camelCase, snake_case, kebab-case</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -109,7 +96,7 @@
           {
             "@type": "Question",
             "name": "How does the converter handle acronyms like XMLHttpRequest?",
-            "acceptedAnswer": { "@type": "Answer", "text": "It splits on the boundary between a lowercase and an uppercase character, so runs of consecutive capitals stay grouped. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them." }
+            "acceptedAnswer": { "@type": "Answer", "text": "It splits only where a lowercase letter or digit is followed by a capital, so a run of capitals stays attached to the word after it: XMLHttpRequest becomes xmlhttp and request, giving xmlhttpRequest in camelCase. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them." }
           }
         ]
       }
@@ -202,7 +189,7 @@
         <p><strong>kebab-case</strong> owns CSS and URLs. Both are case-insensitive contexts where hyphens read naturally, and Google explicitly treats hyphens as word separators in URLs while underscores join words together. <strong>snake_case</strong> rules databases and Python, largely because many SQL dialects fold unquoted identifiers to lowercase, making camelCase unreliable across systems.</p>
 
         <h2>The conversion is harder than it looks</h2>
-        <p>Converting between cases means first splitting text into words — and the input rarely announces its own format. This converter handles the common cases: it splits on spaces, hyphens and underscores, and it detects camelCase boundaries by looking for a lowercase character followed by an uppercase one.</p>
+        <p>Converting between cases means first splitting text into words — and the input rarely announces its own format. This converter handles the common cases: it treats spaces, hyphens, underscores and other punctuation as separators, and it detects camelCase boundaries where a lowercase letter or a digit is followed by a capital.</p>
         <p>The edge cases that break naive converters are worth knowing if you write your own. Consecutive capitals (<code>XMLHttpRequest</code>, <code>parseJSON</code>) are genuinely ambiguous — is <code>JSON</code> one word or four letters? Numbers create similar problems: should <code>address2</code> become <code>address-2</code> or <code>address2</code>? There is no universally correct answer, only a convention your codebase applies consistently.</p>
 
         <h2>Where conversion actually comes up</h2>
@@ -216,34 +203,29 @@
 
             <!-- ═══ DEVELOPER GUIDE ═══ -->
       <article class="tool-documentation">
-        <h2>Developer Implementation Guide: Programmatic Case Conversion</h2>
-        <p>Converting case in code is surprisingly difficult due to edge cases like consecutive capital letters (e.g., XMLHTTPRequest). Below is a robust JavaScript implementation for converting strings to camelCase.</p>
-        
-        <h3>Robust camelCase Function</h3>
-        <p>This function handles spaces, underscores, and hyphens, safely converting them into camelCase.</p>
-        <pre><code class="language-javascript">
-function toCamelCase(str) {
-  return str
-    // Replace dashes and underscores with spaces
-    .replace(/[-_]+/g, ' ')
-    // Replace non-alphanumeric characters with spaces
-    .replace(/[^\w\s]/gi, '')
-    // Split into words, capitalize the first letter of each word (except the first)
-    .replace(/\s+(.)/g, function(match, group1) {
-      return group1.toUpperCase();
-    })
-    // Ensure the very first character is lowercase
-    .replace(/^(.)/, function(match, group1) {
-      return group1.toLowerCase();
-    })
-    // Remove remaining spaces
-    .replace(/\s+/g, '');
+        <h2>Splitting acronyms like XMLHttpRequest correctly</h2>
+        <p>Every case converter is a word splitter followed by a join. The usual one-regex splitter breaks wherever a lowercase letter meets a capital. That handles <code>userFirstName</code> but not runs of capitals: <code>XMLHttpRequest</code> comes out as <code>xmlhttp</code> and <code>request</code>, because nothing marks the boundary between <code>XML</code> and <code>Http</code>. A second rule fixes it: in a run of capitals, split before the last one when it starts a lowercase word. Writing the rules with Unicode property escapes (<code>\p{Lu}</code>, <code>\p{Ll}</code>) rather than <code>[A-Z]</code> also keeps accented letters, which ASCII-only splitters quietly drop.</p>
+        <pre><code class="language-javascript">function splitWords(input) {
+  return input
+    .replace(/([\p{Ll}\p{N}])(\p{Lu})/gu, '$1 $2')   // fooBar   → foo Bar
+    .replace(/(\p{Lu})(\p{Lu}\p{Ll})/gu, '$1 $2')    // XMLHttp → XML Http
+    .split(/[^\p{L}\p{N}]+/u)                        // spaces, - _ . etc.
+    .filter(Boolean)
+    .map(w =&gt; w.toLowerCase());
 }
 
-console.log(toCamelCase("user_first_name")); // "userFirstName"
-console.log(toCamelCase("hello-world")); // "helloWorld"
-        </code></pre>
-        <p>For large-scale structural changes (like converting entire database schemas or API responses), consider using dedicated libraries like <code>lodash/camelCase</code> which have been battle-tested against thousands of edge cases.</p>
+const cap = w =&gt; w[0].toUpperCase() + w.slice(1);
+const toCamel = s =&gt; splitWords(s).map((w, i) =&gt; (i ? cap(w) : w)).join('');
+const toSnake = s =&gt; splitWords(s).join('_');
+const toKebab = s =&gt; splitWords(s).join('-');
+
+console.log(splitWords('XMLHttpRequest'));  // [ 'xml', 'http', 'request' ]
+console.log(toSnake('parseJSONResponse'));  // parse_json_response
+console.log(toKebab('getHTTPSUrl'));        // get-https-url
+console.log(toCamel('crème_brûlée-recipe')); // crèmeBrûléeRecipe
+console.log(toCamel('XMLHttpRequest'));     // xmlHttpRequest – not the original!</code></pre>
+        <p>Look at the last line. Splitting throws information away: once <code>XMLHttpRequest</code> is three lowercase words, nothing records that two of them were acronyms, so converting back gives <code>xmlHttpRequest</code>. Whether that is acceptable depends on your style guide. Google's JavaScript style guide treats acronyms as ordinary words (<code>XmlHttpRequest</code>), while the DOM mixes both styles within that one name. If particular identifiers must survive unchanged, keep an explicit exceptions map rather than making the regex cleverer.</p>
+        <p>MDN covers the <code>\p{…}</code> syntax, and the <code>u</code> flag it requires, in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape">Unicode character class escape</a>.</p>
       </article>
 
       <!-- ═══ FAQ ═══ -->
@@ -264,7 +246,7 @@ console.log(toCamelCase("hello-world")); // "helloWorld"
           </details>
           <details class="faq-item">
             <summary>How does the converter handle acronyms like XMLHttpRequest?</summary>
-            <p class="faq-answer">It splits on the boundary between a lowercase and an uppercase character, so runs of consecutive capitals stay grouped. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them.</p>
+            <p class="faq-answer">It splits only where a lowercase letter or digit is followed by a capital, so a run of capitals stays attached to the word after it: XMLHttpRequest becomes xmlhttp and request, giving xmlhttpRequest in camelCase. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them.</p>
           </details>
         </div>
       </section>

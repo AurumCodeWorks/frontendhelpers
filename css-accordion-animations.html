@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Four free pure-CSS accordion animations: smooth grid-based height expansion, chevron rotation, content fade-in, and morphing icons. No JS required." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-accordion-animations.png" />
 
-  <title>CSS Accordion Animations — 4 Free Expand &amp; Collapse Effects | FrontendHelpers</title>
+  <title>CSS Accordion Animations: Expand &amp; Collapse Effects</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,157 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 4 accordions, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-accordion-smooth">
+        <h3>Smooth Accordion</h3>
+        <p>Height auto can't be transitioned — but grid-template-rows 0fr → 1fr can. That's the modern trick for smooth accordions with no fixed max-height guesswork.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-accordion"&gt;
+  &lt;input type="checkbox" id="q1" /&gt;
+  &lt;label class="fh-acc-head" for="q1"&gt;Question?&lt;/label&gt;
+  &lt;div class="fh-acc-body"&gt;&lt;div&gt;
+    &lt;p&gt;Answer content…&lt;/p&gt;
+  &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-accordion {
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.fh-accordion input { display: none; }
+.fh-acc-head {
+  display: block;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.04);
+}
+.fh-acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fh-acc-body &gt; div { overflow: hidden; }
+.fh-acc-body p { padding: 12px 16px; margin: 0; opacity: 0.75; }
+.fh-accordion input:checked ~ .fh-acc-body {
+  grid-template-rows: 1fr;
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-chevron-rotate">
+        <h3>Chevron Rotate</h3>
+        <p>Native <details> gives you the open/close behaviour and accessibility for free — the [open] attribute selector drives the rotation.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;details class="fh-details"&gt;
+  &lt;summary&gt;Question? &lt;span class="fh-acc-chevron"&gt;▾&lt;/span&gt;&lt;/summary&gt;
+  &lt;p&gt;Answer…&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-details {
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 0 16px;
+}
+.fh-details summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+.fh-details summary::-webkit-details-marker { display: none; }
+.fh-details p { padding: 0 0 12px; margin: 0; opacity: 0.75; }
+.fh-acc-chevron {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fh-details[open] .fh-acc-chevron { transform: rotate(180deg); }</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-acc-content-fade">
+        <h3>Content Fade-In</h3>
+        <p>Layer this on any accordion: the panel content animates in each time it opens, making the reveal feel deliberate instead of abrupt.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;details class="fh-details fh-acc-reveal"&gt;
+  &lt;summary&gt;Question?&lt;/summary&gt;
+  &lt;p&gt;Answer…&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-details {
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 0 16px;
+}
+.fh-details summary {
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+.fh-details summary::-webkit-details-marker { display: none; }
+.fh-details p { padding: 0 0 12px; margin: 0; opacity: 0.75; }
+.fh-acc-reveal[open] p {
+  animation: fh-accFade 0.35s ease both;
+}
+@keyframes fh-accFade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 0.75; transform: translateY(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-plus-minus">
+        <h3>Plus / Minus Morph</h3>
+        <p>Two bars drawn with pseudo-elements; on open, the vertical bar rotates into the horizontal one and fades — a tiny morph that reads as premium.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;details class="fh-details"&gt;
+  &lt;summary&gt;Question? &lt;span class="fh-plusminus"&gt;&lt;/span&gt;&lt;/summary&gt;
+  &lt;p&gt;Answer…&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-details {
+  border: 1px solid #3a4358;
+  border-radius: 10px;
+  padding: 0 16px;
+}
+.fh-details summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+.fh-details summary::-webkit-details-marker { display: none; }
+.fh-details p { padding: 0 0 12px; margin: 0; opacity: 0.75; }
+.fh-plusminus {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.fh-plusminus::before,
+.fh-plusminus::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: #06b6d4;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.fh-plusminus::before { width: 14px; height: 2px; }
+.fh-plusminus::after { width: 2px; height: 14px; }
+.fh-details[open] .fh-plusminus::after { transform: rotate(90deg); opacity: 0; }
+.fh-details[open] .fh-plusminus::before { transform: rotate(180deg); }</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Solving the height: auto problem</h2>

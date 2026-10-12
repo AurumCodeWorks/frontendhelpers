@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Five free CSS ambient background animations with live previews: floating drift, gradient pan, morphing aurora, and pulse rings. Pure CSS, copy-paste ready." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-background-animations.png" />
 
-  <title>CSS Background Animations — 5 Free Gradient, Float &amp; Blob Effects | FrontendHelpers</title>
+  <title>CSS Background Animations: Gradients, Blobs &amp; Floats</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,103 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 5 ambient, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-float">
+        <h3>Float</h3>
+        <p>A slow, weightless bob for hero illustrations and decorative elements. Vary duration per element so groups don’t sync up.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;img class="fh-float" src="illustration.svg" alt="" /&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-float {
+  animation: fh-floatY 3.2s ease-in-out infinite;
+}
+@keyframes fh-floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-gradient-pan">
+        <h3>Gradient Pan</h3>
+        <p>A living background for hero sections. Animating background-position over an oversized gradient is far cheaper than animating the colours themselves.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;section class="hero fh-gradient-pan"&gt;…&lt;/section&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-gradient-pan {
+  background: linear-gradient(135deg,
+    #8b5cf6, #06b6d4, #10b981, #8b5cf6);
+  background-size: 300% 300%;
+  animation: fh-gradientPan 6s ease-in-out infinite;
+}
+@keyframes fh-gradientPan {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-aurora">
+        <h3>Aurora Blob</h3>
+        <p>Morphing the two-value border-radius syntax creates organic, lava-lamp shapes. Add filter: blur(40px) for a soft background glow.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-aurora"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-aurora {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  animation: fh-auroraMorph 7s ease-in-out infinite;
+}
+@keyframes fh-auroraMorph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%      { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+  75%      { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-pulse-ring">
+        <h3>Pulse Ring</h3>
+        <p>A radar ping radiating outward — the standard “live” indicator. The z-index: 0 on the parent keeps the ring behind the content but above the page.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="avatar fh-pulse-ring"&gt;&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-pulse-ring {
+  position: relative;
+  z-index: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+}
+.fh-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  z-index: -1;
+  animation: fh-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes fh-ping {
+  from { transform: scale(1);   opacity: 0.7; }
+  to   { transform: scale(1.9); opacity: 0; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-spin-slow">
+        <h3>Slow Spin</h3>
+        <p>A patient rotation for decorative badges, seals and background shapes. Linear easing keeps it hypnotic rather than mechanical.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;img class="fh-spin-slow" src="badge.svg" alt="" /&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-spin-slow {
+  animation: fh-spinSlow 6s linear infinite;
+}
+@keyframes fh-spinSlow {
+  to { transform: rotate(360deg); }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>Ambient motion works by not being noticed</h2>

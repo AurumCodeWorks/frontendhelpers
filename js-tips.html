@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="32 modern JavaScript tricks with the reasoning behind them: optional chaining, structuredClone, event delegation, debounce, AbortController, and more." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-js.png" />
 
-  <title>JavaScript Tricks &amp; Tips — 32 Modern Snippets Explained | FrontendHelpers</title>
+  <title>JavaScript Tips: 32 Modern Snippets Explained</title>
 
   <!-- Preconnect Google Fonts -->
   <!-- Self-hosted font preloads -->
@@ -33,19 +33,6 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="js-tips.css" />
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -166,7 +153,826 @@
     </div>
 
     <!-- Snippet list (rendered by js-tips.js) -->
-    <section class="tips-list" id="tips-list" aria-live="polite"></section>
+    <section class="tips-list" id="tips-list" aria-live="polite"><!-- generated:tip-cards -->
+      <article class="tip-card" id="tip-optional-chaining">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">optional-chaining.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const user = { profile: { name: 'Ada' } };
+
+// Old way — one missing link and it throws
+// const city = user.profile.address.city;   // 💥 TypeError
+
+// Optional chaining short-circuits to undefined instead
+const city = user.profile?.address?.city;    // undefined
+
+// ?? only falls back on null/undefined — 0 and '' survive
+const display = city ?? 'Unknown city';
+
+// Works on methods and array indexes too
+user.sendEmail?.();     // no-op if the method doesn't exist
+const first = user.friends?.[0];</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Optional chaining + nullish coalescing</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> This pair kills the single most common JavaScript crash: <code>Cannot read properties of undefined</code>. The subtlety pros know: <code>??</code> only falls back on <code>null</code>/<code>undefined</code>, while <code>||</code> also discards perfectly valid values like <code>0</code>, <code>false</code> and <code>''</code> — a classic source of silent bugs in forms and settings.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-destructuring">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">destructuring.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const config = { theme: 'dark', lang: 'en' };
+
+// Pull values out, rename them, set defaults — one line
+const { theme: colourScheme, retries = 3 } = config;
+
+// In function signatures: a self-documenting API
+function createUser({ name, role = 'viewer' }) {
+  return `${name} (${role})`;
+}
+createUser({ name: 'Ada' });   // 'Ada (viewer)'
+
+// Array destructuring: swap without a temp variable
+let a = 1, b = 2;
+[a, b] = [b, a];</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Destructuring with defaults and renaming</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Destructured function signatures are self-documenting — callers see exactly which fields matter, arguments become order-independent, and defaults live next to the names they belong to. This is why nearly every modern library API accepts a single options object instead of five positional arguments.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-spread-rest">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">spread-rest.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const base = { theme: 'dark', lang: 'en' };
+
+// Immutable update — a NEW object, original untouched
+const updated = { ...base, lang: 'fr' };
+
+// Merge and clone arrays without mutation
+const merged = [...listA, ...listB];
+
+// Rest: collect "everything else"
+const { theme, ...withoutTheme } = updated;
+
+// Variadic functions without the arguments object
+function sum(...numbers) {
+  return numbers.reduce((total, n) =&gt; total + n, 0);
+}</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Spread and rest: immutable updates</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> React, Redux and most state libraries detect changes by comparing object references — mutating an object in place makes changes invisible to them. Spread creates a <strong>new</strong> object cheaply, which is why <code>{ ...state, key: value }</code> is the backbone of modern state management. Note it is a shallow copy: nested objects are still shared.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-guard-clauses">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">guard-clauses.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>// ❌ Nested: the happy path is buried three levels deep
+function shipOrder(order) {
+  if (order) {
+    if (order.paid) {
+      if (order.items.length &gt; 0) {
+        // ship it
+      }
+    }
+  }
+}
+
+// ✅ Guard clauses: fail fast, then read flat
+function shipOrderClean(order) {
+  if (!order) return;
+  if (!order.paid) return;
+  if (order.items.length === 0) return;
+
+  // ship it — zero indentation, zero mental stack
+}</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Guard clauses over nested ifs</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Every level of nesting is another condition the reader must hold in their head. Guard clauses handle the failure cases immediately and exit, so the happy path reads top-to-bottom at zero indentation. Code reviewers at most companies will flag deep nesting — this is the refactor they are asking for.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-console-tricks">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">console-tricks.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const user = { name: 'Ada', role: 'admin' };
+
+// Wrap in braces: logs the variable NAME with its value
+console.log({ user });      // { user: { name: 'Ada', … } }
+
+// Arrays of objects become a sortable table
+console.table([
+  { route: '/home',  visits: 1024 },
+  { route: '/tools', visits: 862 }
+]);
+
+// Measure anything
+console.time('render');
+// …work…
+console.timeEnd('render');  // render: 12.4ms
+
+// Logs ONLY when the condition fails
+console.assert(user.role === 'admin', 'Expected an admin!');</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Console beyond console.log</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Debugging speed is a compounding skill. <code>{ user }</code> logs the variable's <strong>name</strong> along with its value, <code>console.table</code> turns arrays of objects into sortable tables, and <code>console.time</code> gives you real measurements instead of guesses. Open this page's DevTools and try them.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-at-negative">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">last-item.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const queue = ['first', 'second', 'third'];
+
+// Old way — repeat the array name, do the maths
+const last = queue[queue.length - 1];
+
+// Modern way — reads like English
+queue.at(-1);    // 'third'
+queue.at(-2);    // 'second'
+
+// Works on strings too
+'FrontendHelpers'.at(-1);   // 's'</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Grab the last item with .at(-1)</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> <code>arr[arr.length - 1]</code> forces the reader to parse an expression to understand an intent. <code>.at(-1)</code> states the intent directly, works on strings too, and chains cleanly on temporary values — <code>getList().at(-1)</code> needs no intermediate variable.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-set-dedupe">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">dedupe.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const tags = ['css', 'js', 'css', 'html', 'js'];
+
+// A Set can only hold unique values — spread it back out
+const unique = [...new Set(tags)];   // ['css', 'js', 'html']
+
+// Bonus: O(1) membership checks vs O(n) for .includes()
+const allowedRoles = new Set(['admin', 'editor']);
+allowedRoles.has('admin');   // true — instant at any size</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Deduplicate with Set</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> A <code>Set</code> physically cannot hold duplicates, so spreading one back into an array is the cleanest dedupe there is. The deeper win: <code>set.has()</code> is O(1) while <code>array.includes()</code> scans every element — for repeated membership checks on big lists, the difference is dramatic.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-flatmap">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">flatmap.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const posts = [
+  { title: 'Intro',     tags: ['css', 'basics'] },
+  { title: 'Deep dive', tags: ['js'] }
+];
+
+// map + flat in a single pass
+const allTags = posts.flatMap(post =&gt; post.tags);
+// ['css', 'basics', 'js']
+
+// Trick: return [] to filter and map at the same time
+const longTags = posts.flatMap(post =&gt;
+  post.tags.filter(tag =&gt; tag.length &gt; 2)
+);
+// ['css', 'basics']</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>flatMap: map and flatten in one pass</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> When every item maps to a list, <code>map().flat()</code> walks the data twice and allocates an intermediate array. <code>flatMap</code> does it in one pass. The pro trick: returning <code>[]</code> for unwanted items makes it a combined <em>filter + map</em> — one traversal instead of two chained ones.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-group-by">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">group-by.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const files = [
+  { name: 'logo.svg', type: 'image'  },
+  { name: 'app.js',   type: 'script' },
+  { name: 'hero.png', type: 'image'  }
+];
+
+// One call, grouped buckets (baseline 2024)
+const grouped = Object.groupBy(files, file =&gt; file.type);
+// { image: [logo.svg, hero.png], script: [app.js] }
+
+// Fallback for older browsers — same result
+const manual = files.reduce((acc, file) =&gt; {
+  (acc[file.type] ??= []).push(file);
+  return acc;
+}, {});</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Group a list with Object.groupBy</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Grouping used to be the number-one reason to import Lodash. <code>Object.groupBy</code> (Chrome 117+, Firefox 119+, Safari 17.4+) does it natively in one call. Keep the <code>reduce</code> fallback in your toolkit for older targets — and note the tidy <code>??=</code> operator that creates each bucket on first use.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-structured-clone">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">deep-clone.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const state = {
+  user: { name: 'Ada' },
+  updated: new Date(),
+  ids: new Set([1, 2, 3])
+};
+
+// ❌ The JSON hack corrupts silently:
+//    Dates → strings, Sets → {}, undefined → gone
+const broken = JSON.parse(JSON.stringify(state));
+
+// ✅ True deep clone, native since 2022
+const copy = structuredClone(state);
+
+copy.user.name = 'Grace';
+state.user.name;   // still 'Ada' — fully independent</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Deep clone with structuredClone</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> The old <code>JSON.parse(JSON.stringify(obj))</code> hack silently corrupts data: Dates become strings, <code>Map</code>/<code>Set</code> become empty objects, <code>undefined</code> fields vanish. <code>structuredClone</code> is built into every modern browser, handles all of those plus circular references, and is usually faster too.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-reduce-shaping">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">reduce.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const orders = [
+  { id: 'a1', total: 40 },
+  { id: 'b2', total: 25 },
+  { id: 'c3', total: 60 }
+];
+
+// Index by id → O(1) lookups instead of .find() everywhere
+const byId = orders.reduce((acc, order) =&gt; {
+  acc[order.id] = order;
+  return acc;
+}, {});
+
+byId['b2'];   // { id: 'b2', total: 25 } — instantly
+
+// Aggregate in the same shape
+const revenue = orders.reduce((sum, o) =&gt; sum + o.total, 0);</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>reduce: shape data, don’t just sum it</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> The pattern to internalise is <strong>indexing by id</strong>: turn an array into a lookup object once, then every subsequent access is O(1) instead of an O(n) <code>.find()</code>. On a list you query hundreds of times — rows by id, users by email — this is one of the highest-value micro-optimisations there is, and it makes the code clearer too.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-array-from-range">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">ranges.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Arrays &amp; Objects</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>// A number range, no loop in sight
+const range = Array.from({ length: 5 }, (_, i) =&gt; i + 1);
+// [1, 2, 3, 4, 5]
+
+// Practical: skeleton placeholders while data loads
+const slots = Array.from({ length: 6 }, (_, i) =&gt;
+  `&lt;div class="skeleton" id="slot-${i}"&gt;&lt;/div&gt;`
+);
+
+// Also converts any iterable into a real array
+Array.from(document.querySelectorAll('a'),
+  link =&gt; link.href);</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Generate ranges with Array.from</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> JavaScript has no built-in range() — this idiom is the standard substitute. The <code>{ length: n }</code> object is enough for <code>Array.from</code> to iterate, and the mapping function receives the index. You will use it constantly: pagination buttons, skeleton placeholders, calendar grids, test fixtures.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-all-settled">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">all-settled.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Async Patterns</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const results = await Promise.allSettled([
+  fetch('/api/user'),
+  fetch('/api/posts'),
+  fetch('/api/flaky-service')
+]);
+
+results.forEach(result =&gt; {
+  if (result.status === 'fulfilled') {
+    render(result.value);
+  } else {
+    logError(result.reason);
+    // …the OTHER two requests still succeeded
+  }
+});
+
+// Promise.all would have rejected everything here</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Promise.allSettled: no all-or-nothing</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> <code>Promise.all</code> rejects the moment <strong>one</strong> promise fails — the other results are thrown away. That is right for dependent data, but wrong for dashboards, widget grids and batch jobs where partial success is useful. <code>allSettled</code> always resolves, handing you every outcome to handle individually.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-abort-timeout">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">fetch-timeout.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Async Patterns</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>async function fetchWithTimeout(url, ms = 5000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() =&gt; controller.abort(), ms);
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal
+    });
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Same primitive, different job: cancel the PREVIOUS
+// search when the user types again — no stale results</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Fetch with a timeout via AbortController</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> <code>fetch</code> has <strong>no timeout by default</strong> — a hung server can leave your UI spinning forever. <code>AbortController</code> is the platform's cancellation primitive: the same pattern also cancels stale requests in type-ahead search, so a slow response for “ca” can never overwrite results for “cats”.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-parallel-await">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">parallel-await.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Async Patterns</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>// ❌ Sequential — each await blocks the next (≈600ms)
+const user  = await fetchUser();    // 200ms
+const posts = await fetchPosts();   // 200ms
+const tags  = await fetchTags();    // 200ms
+
+// ✅ Parallel — all three start immediately (≈200ms)
+const [u, p, t] = await Promise.all([
+  fetchUser(),
+  fetchPosts(),
+  fetchTags()
+]);
+
+// Rule: if B doesn't need A's result, don't await A first</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Parallel await beats sequential await</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Three sequential awaits on 200ms requests take 600ms; in parallel they take 200ms. This is the most common real-world async performance bug — the awaits look identical, but the sequential version quietly serialises independent work. Press <em>Run</em> to measure the difference live in your browser.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-safe-await">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">safe-await.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Async Patterns</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>// Wrap any promise into [value, error] — never throws
+const attempt = promise =&gt;
+  promise
+    .then(value =&gt; [value, null])
+    .catch(error =&gt; [null, error]);
+
+const [user, error] = await attempt(fetchUser());
+
+if (error) {
+  showToast('Could not load your profile');
+} else {
+  render(user);
+}
+// Flat, explicit, impossible to forget the error case</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Go-style [value, error] tuples</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> try/catch around every await pushes the happy path into nested blocks and makes it easy to forget error handling entirely. Wrapping once turns every async call into a flat, explicit two-value check — you can see at the call site that the error case was considered. Popularised by Go, now common in production JS codebases.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-event-delegation">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">delegation.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>// ❌ 500 rows = 500 listeners — and rows added
+//    later have no listener at all
+
+// ✅ ONE listener on the parent catches every click
+document.querySelector('#table').addEventListener('click', e =&gt; {
+  const btn = e.target.closest('[data-action="delete"]');
+  if (!btn) return;
+
+  removeRow(btn.closest('tr'));
+});
+
+// Rows added tomorrow work automatically —
+// their clicks bubble up to the same parent</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Event delegation: one listener, infinite rows</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Events bubble up the DOM, so one parent listener hears every child click — including elements added <strong>after</strong> the listener was attached. That solves the two classic bugs at once: memory bloat from hundreds of listeners, and dynamically added rows that mysteriously do nothing. <code>closest()</code> finds which actionable element was actually hit.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-intersection-observer">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">observer.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>// Fires only when elements enter the viewport —
+// no scroll listeners, no layout thrash
+const observer = new IntersectionObserver(entries =&gt; {
+  entries.forEach(entry =&gt; {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);  // reveal once
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.reveal')
+  .forEach(el =&gt; observer.observe(el));
+
+// CSS does the rest:
+// .reveal { opacity: 0; transform: translateY(20px); }
+// .reveal.is-visible { opacity: 1; transform: none; }</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>IntersectionObserver for scroll effects</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Scroll listeners fire hundreds of times per second on the main thread, and reading element positions inside them forces synchronous layout — the recipe for scroll jank. <code>IntersectionObserver</code> does the visibility maths off the main thread and calls you only when it matters. The animation gallery on this site uses exactly this to replay cards as you scroll.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-dataset">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">dataset.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>// &lt;button data-product-id="42" data-in-stock="true"&gt;
+const button = document.querySelector('button');
+
+button.dataset.productId;  // '42' (kebab-case ↔ camelCase)
+button.dataset.inStock;    // 'true' — always a STRING
+
+// Write state back into the DOM
+button.dataset.state = 'loading';
+
+// …and let CSS react with zero extra JS:
+// button[data-state="loading"] { opacity: 0.5; }</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>data-* attributes: state the DOM can see</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Storing state in <code>data-*</code> attributes means CSS can react to it without a single line of style-juggling JavaScript — <code>button[data-state="loading"]</code> is a selector. One write updates both behaviour and appearance. Remember values always come back as <strong>strings</strong>: <code>dataset.count</code> of “3” needs a <code>Number()</code>.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-match-media">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">match-media.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const mobile = window.matchMedia('(max-width: 768px)');
+
+// Read once…
+if (mobile.matches) enableSwipeGestures();
+
+// …or react exactly when the breakpoint flips
+mobile.addEventListener('change', e =&gt; {
+  e.matches ? enableSwipeGestures() : enableHoverMenus();
+});
+
+// Any media feature works, not just width
+const reducedMotion =
+  window.matchMedia('(prefers-reduced-motion: reduce)');
+if (reducedMotion.matches) skipAnimations();</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>matchMedia: media queries in JavaScript</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> A <code>resize</code> listener fires continuously while dragging a window; <code>matchMedia</code>'s <code>change</code> event fires exactly once, at the moment the query flips. It also reads user preferences CSS can see but JS logic often ignores — reduced motion, colour scheme, pointer type. Press <em>Run</em> to query your actual browser state.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-clipboard-api">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">clipboard.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>async function copy(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Copied!');
+  } catch {
+    // Needs HTTPS + a user gesture — offer a fallback
+    showToast('Press Ctrl+C to copy');
+  }
+}
+
+// Reading is gated harder (permission prompt):
+const pasted = await navigator.clipboard.readText();</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Clipboard API done properly</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> The async Clipboard API replaced the old <code>document.execCommand('copy')</code> hack, but it has two conditions juniors miss: it needs a secure context (HTTPS or localhost) and a user gesture. Wrap it in try/catch with a human fallback and it degrades gracefully — every Copy button on this site uses exactly this pattern.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-storage-wrapper">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">storage.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">DOM &amp; Browser</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>const storage = {
+  get(key, fallback = null) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw === null ? fallback : JSON.parse(raw);
+    } catch {
+      return fallback;   // corrupt JSON or blocked storage
+    }
+  },
+  set(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch { /* quota full / private mode — stay calm */ }
+  }
+};
+
+storage.set('prefs', { theme: 'dark', fontSize: 18 });
+storage.get('prefs', {});   // a real object, not a string</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>A safe localStorage wrapper</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Raw <code>localStorage</code> has three traps: it only stores strings (objects become <code>"[object Object]"</code>), <code>getItem</code> returns <code>null</code> that then crashes <code>JSON.parse</code> chains, and in some private-browsing modes <code>setItem</code> <strong>throws</strong>. Ten lines of wrapper remove all three permanently.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-debounce">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">debounce.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Performance</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>function debounce(fn, delay = 300) {
+  let timer;
+  return (...args) =&gt; {
+    clearTimeout(timer);
+    timer = setTimeout(() =&gt; fn(...args), delay);
+  };
+}
+
+// 5 keystrokes → ONE request, 300ms after typing stops
+const search = debounce(query =&gt; {
+  fetch('/api/search?q=' + encodeURIComponent(query));
+}, 300);
+
+input.addEventListener('input', e =&gt; search(e.target.value));</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Debounce: wait until they stop</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Typing “hello” fires five input events; without debouncing that is five API calls, four of them wasted. Debounce collapses the burst into <strong>one</strong> call after the user pauses. The trade-off is latency — results arrive <em>delay</em> ms after the last keystroke — so tune it: ~300ms for search, ~500ms for autosave.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-raf-throttle">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">raf-throttle.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Performance</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>function rafThrottle(fn) {
+  let scheduled = false;
+  return (...args) =&gt; {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() =&gt; {
+      fn(...args);
+      scheduled = false;
+    });
+  };
+}
+
+// Runs at most once per frame — never wasted work
+window.addEventListener('scroll',
+  rafThrottle(() =&gt; updateReadingProgress()),
+  { passive: true });</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Throttle to the frame rate with rAF</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Scroll and pointer events can fire far more often than the screen repaints — any work beyond once per frame is thrown away, yet still burns CPU. <code>requestAnimationFrame</code> throttling runs your handler at most once per paint, perfectly synced to the display. Prefer this over <code>setTimeout</code> throttles for anything visual.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-memoize">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">memoize.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Performance</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>function memoize(fn) {
+  const cache = new Map();
+  return (...args) =&gt; {
+    const key = JSON.stringify(args);
+    if (!cache.has(key)) {
+      cache.set(key, fn(...args));
+    }
+    return cache.get(key);
+  };
+}
+
+// Only PURE functions qualify:
+// same input → same output, no side effects
+const layout = memoize(computeExpensiveLayout);</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Memoization: never compute twice</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> If a function is <strong>pure</strong> — same input, same output — recomputing it is pure waste. A <code>Map</code> cache trades memory for speed. Press <em>Run</em>: naive fib(20) makes ~22,000 calls; memoised, 21. The same idea powers React's <code>useMemo</code> and every build-tool cache you have ever waited for.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-intl-format">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">intl-format.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Utilities &amp; Intl</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>// Currency, correctly, zero dependencies
+new Intl.NumberFormat('en-GB', {
+  style: 'currency', currency: 'GBP'
+}).format(1499.99);          // £1,499.99
+
+// Compact notation for dashboards and counters
+new Intl.NumberFormat('en', {
+  notation: 'compact'
+}).format(1250000);          // 1.3M
+
+// Dates that respect the reader's locale
+new Intl.DateTimeFormat('en-GB', {
+  dateStyle: 'long'
+}).format(new Date());       // 17 July 2026</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Intl: currency and dates without libraries</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Hand-rolled price formatting with <code>toFixed(2)</code> breaks the moment you meet thousands separators, other currencies or other locales. <code>Intl</code> ships with the browser, knows every locale's rules, and replaces entire formatting libraries at zero bundle cost. This is the modern answer to “should I install a date library?” — usually, no.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-relative-time">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">time-ago.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Utilities &amp; Intl</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const rtf = new Intl.RelativeTimeFormat('en', {
+  numeric: 'auto'
+});
+
+rtf.format(-1, 'day');    // 'yesterday'
+rtf.format(-3, 'hour');   // '3 hours ago'
+rtf.format(2, 'week');    // 'in 2 weeks'
+
+// Pick the right unit automatically
+function timeAgo(date) {
+  const s = (date - Date.now()) / 1000;
+  const units = [['year', 31536000], ['month', 2592000],
+    ['day', 86400], ['hour', 3600], ['minute', 60]];
+  for (const [unit, size] of units) {
+    if (Math.abs(s) &gt;= size)
+      return rtf.format(Math.round(s / size), unit);
+  }
+  return 'just now';
+}</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>“3 hours ago” with Intl.RelativeTimeFormat</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Relative timestamps were the last big reason teams kept Moment.js (and its 70KB) around. <code>Intl.RelativeTimeFormat</code> handles the grammar — including special forms like “yesterday” via <code>numeric: 'auto'</code> — in every locale, natively. The <code>timeAgo</code> helper below picks the sensible unit for any date.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-random-uuid">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">uuid.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Utilities &amp; Intl</span><span class="level-badge beginner">Beginner</span></span>
+        </div>
+        <pre class="tip-code"><code>// Cryptographically strong, collision-safe, built in
+const id = crypto.randomUUID();
+// '36b8f84d-df4e-4d49-b662-bcde71a8764f'
+
+// ❌ The old hack — collisions are a real risk:
+const risky = Math.random().toString(36).slice(2);
+
+// Need raw random bytes instead?
+const bytes = crypto.getRandomValues(new Uint8Array(8));</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Real unique IDs with crypto.randomUUID</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> <code>Math.random()</code> is not collision-safe — with enough generated IDs, duplicates <em>will</em> happen, and the resulting bugs (two list rows sharing a key, overwritten records) are miserable to trace. <code>crypto.randomUUID()</code> produces cryptographically strong v4 UUIDs natively. One caveat: it requires a secure context (HTTPS or localhost).</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-event-loop">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">event-loop.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Async Patterns</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>console.log('1: synchronous');
+
+setTimeout(() =&gt; {
+  console.log('4: macrotask (setTimeout 0)');
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log('3: microtask (promise .then)');
+});
+
+console.log('2: synchronous again');
+
+// Order: 1, 2, 3, 4 — ALL microtasks run before
+// the next macrotask, no matter the timeout value</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>The event loop: microtasks vs macrotasks</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> This is the interview question that separates "uses async" from "understands async". After every synchronous chunk finishes, JavaScript drains the <strong>entire microtask queue</strong> (promise callbacks, <code>queueMicrotask</code>) before running even one macrotask (<code>setTimeout</code>, events). That's why <code>setTimeout(fn, 0)</code> is never really 0 — and why a flood of chained promises can starve rendering. Press <em>Run</em>: the real order, from your browser.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-proxy-reactive">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">proxy-state.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>function reactive(target, onChange) {
+  return new Proxy(target, {
+    set(obj, key, value) {
+      const old = obj[key];
+      obj[key] = value;
+      if (old !== value) onChange(key, value);
+      return true;   // signal success (strict mode cares)
+    }
+  });
+}
+
+const state = reactive({ count: 0 }, (key, value) =&gt; {
+  render(`${key} changed to ${value}`);
+});
+
+state.count = 1;   // render() fires automatically
+state.count = 2;   // and again — no framework involved</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Proxy: reactive state in 15 lines</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> A <code>Proxy</code> intercepts property access on an object — which is exactly how Vue's reactivity and many state libraries work under the hood. The set trap fires on every assignment, so "change state, UI updates itself" needs no framework at all. The trade-off: proxies intercept the <em>wrapper</em>, so <code>state.user.name = x</code> on nested objects needs recursive wrapping — which is precisely what reactivity libraries sell you.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-generators">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">generators.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Modern Syntax</span><span class="level-badge pro">Pro</span></span>
+        </div>
+        <pre class="tip-code"><code>function* fibonacci() {
+  let [a, b] = [0, 1];
+  while (true) {          // infinite — and totally safe
+    yield a;
+    [a, b] = [b, a + b];
+  }
+}
+
+// take(n): consume just n values from any generator
+function take(gen, n) {
+  const out = [];
+  for (const value of gen) {
+    out.push(value);
+    if (out.length === n) break;
+  }
+  return out;
+}
+
+take(fibonacci(), 8);   // [0, 1, 1, 2, 3, 5, 8, 13]</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Generators: lazy, even infinite, sequences</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> A generator produces values <strong>on demand</strong> — it pauses at every <code>yield</code> until someone asks for the next value. That makes "infinite" sequences safe: nothing is computed until consumed. Pros reach for them for ID factories, pagination cursors, and processing huge datasets without building huge arrays. <code>function*</code> looks alien for a week, then becomes a superpower.</p>
+        </div>
+      </article>
+      <article class="tip-card" id="tip-pipe-curry">
+        <div class="editor-bar">
+          <span class="editor-dot red"></span><span class="editor-dot yellow"></span><span class="editor-dot green"></span>
+          <span class="editor-file">pipe.js</span>
+          <span class="editor-badges"><span class="tip-cat-tag">Utilities &amp; Intl</span><span class="level-badge intermediate">Intermediate</span></span>
+        </div>
+        <pre class="tip-code"><code>const pipe = (...fns) =&gt;
+  (input) =&gt; fns.reduce((value, fn) =&gt; fn(value), input);
+
+// Small, single-purpose, individually testable steps
+const trim      = s =&gt; s.trim();
+const lower     = s =&gt; s.toLowerCase();
+const hyphenate = s =&gt; s.replace(/\s+/g, '-');
+
+const slugify = pipe(trim, lower, hyphenate);
+
+slugify('  Hello Wonderful World  ');
+// 'hello-wonderful-world'
+
+// Reads top-to-bottom like a recipe — compare:
+// hyphenate(lower(trim(input)))  ← inside-out</code></pre>
+        <div class="tip-body">
+          <div class="tip-title-row"><h3>Pipe: composing small functions</h3></div>
+          <p class="tip-why"><strong>Why pros use it:</strong> Deeply nested calls read inside-out: <code>c(b(a(x)))</code> makes the reader start in the middle. <code>pipe</code> flips that into reading order — data flows left to right through a list of small, testable, reusable steps. This is the functional style underneath RxJS, lodash/fp and most data pipelines, in three lines of vanilla JS.</p>
+        </div>
+      </article>
+    <!-- /generated:tip-cards --></section>
     <p class="no-results" id="no-results" hidden>No snippets match your search. Try a broader term like “array”, “async” or “format”.</p>
 
 

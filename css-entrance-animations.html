@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Ten free CSS entrance animations with live previews: fade, slide, zoom, bounce, flip, blur, and roll. Perfect for scroll reveals. Pure CSS, copy-paste ready." />
   <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-entrance-animations.png" />
 
-  <title>CSS Entrance Animations — 10 Free Fade &amp; Slide-In Effects | FrontendHelpers</title>
+  <title>CSS Entrance Animations: Fade &amp; Slide-In Effects</title>
   <!-- Self-hosted font preloads -->
   <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -32,19 +32,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css-animations.css" />
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xpli7xsyy2");
-    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
-    window.clarity('consentv2', {
-      'analytics_storage': clarityConsent,
-      'ad_storage': clarityConsent
-    });
-  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
@@ -170,6 +157,156 @@
     <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
     <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
     <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+<!-- generated:anim-reference -->
+    <section class="gallery-articles anim-reference" aria-labelledby="anim-ref-title">
+      <h2 id="anim-ref-title">The code for all 10 entrances, explained</h2>
+      <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
+      <article class="tool-documentation anim-ref" id="anim-fade-in">
+        <h3>Fade In</h3>
+        <p>The workhorse of UI motion. Animates opacity only — the cheapest property a browser can animate.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-fade-in"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-fade-in {
+  animation: fh-fadeIn 0.8s ease-out both;
+}
+@keyframes fh-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-fade-in-up">
+        <h3>Fade In Up</h3>
+        <p>The most common scroll-reveal entrance. Pair it with an IntersectionObserver to trigger when the element scrolls into view.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-fade-in-up"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-fade-in-up {
+  animation: fh-fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-fade-in-down">
+        <h3>Fade In Down</h3>
+        <p>Natural for dropdown menus, toasts and notification banners that enter from the top.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-fade-in-down"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-fade-in-down {
+  animation: fh-fadeInDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-fadeInDown {
+  from { opacity: 0; transform: translateY(-28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-fade-in-left">
+        <h3>Fade In Left</h3>
+        <p>Good for sidebars and staggered list items. Stagger with animation-delay: 0.05s per item.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-fade-in-left"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-fade-in-left {
+  animation: fh-fadeInLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-fadeInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-fade-in-right">
+        <h3>Fade In Right</h3>
+        <p>Mirror of Fade In Left — ideal for right-hand drawers and chat panels.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-fade-in-right"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-fade-in-right {
+  animation: fh-fadeInRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-fadeInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-zoom-in">
+        <h3>Zoom In</h3>
+        <p>A classic for modals and image lightboxes. Scale + opacity both run on the GPU compositor.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-zoom-in"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-zoom-in {
+  animation: fh-zoomIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-zoomIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-bounce-in">
+        <h3>Bounce In</h3>
+        <p>The overshoot gives a playful, springy feel. Great for success states, badges and empty-state illustrations.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-bounce-in"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-bounce-in {
+  animation: fh-bounceIn 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+@keyframes fh-bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  70%  { transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-flip-in-x">
+        <h3>Flip In X</h3>
+        <p>A 3D flip around the horizontal axis. The perspective() value controls how dramatic the depth feels.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-flip-in-x"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-flip-in-x {
+  animation: fh-flipInX 0.8s ease-out both;
+}
+@keyframes fh-flipInX {
+  0%   { opacity: 0; transform: perspective(600px) rotateX(90deg); }
+  40%  { transform: perspective(600px) rotateX(-18deg); }
+  70%  { transform: perspective(600px) rotateX(8deg); }
+  100% { opacity: 1; transform: perspective(600px) rotateX(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-blur-in">
+        <h3>Blur In</h3>
+        <p>A cinematic focus-pull. filter: blur() is heavier than transform, so reserve it for hero moments, not lists.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-blur-in"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-blur-in {
+  animation: fh-blurIn 0.9s ease-out both;
+}
+@keyframes fh-blurIn {
+  from { opacity: 0; filter: blur(12px); }
+  to   { opacity: 1; filter: blur(0); }
+}</code></pre>
+      </article>
+      <article class="tool-documentation anim-ref" id="anim-roll-in">
+        <h3>Roll In</h3>
+        <p>High-energy entrance for playful brands. Use sparingly — one rolling element per view is plenty.</p>
+        <p class="anim-ref-label">Markup</p>
+        <pre><code class="language-html">&lt;div class="fh-roll-in"&gt;Your content&lt;/div&gt;</code></pre>
+        <p class="anim-ref-label">CSS</p>
+        <pre><code class="language-css">.fh-roll-in {
+  animation: fh-rollIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fh-rollIn {
+  from { opacity: 0; transform: translateX(-60px) rotate(-120deg); }
+  to   { opacity: 1; transform: translateX(0) rotate(0); }
+}</code></pre>
+      </article>
+    </section>
+    <!-- /generated:anim-reference -->
 
       <article class="tool-documentation">
         <h2>What entrances are actually for</h2>

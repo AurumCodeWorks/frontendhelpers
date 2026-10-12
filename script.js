@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── SHARED HELPERS (used by more than one tool) ──────────── */
 
-  // WCAG 2.1 relative luminance — used by the contrast checker
+  // WCAG 2.2 relative luminance — used by the contrast checker
   // and by the palette generator to pick readable swatch text
   function relativeLuminance(hex) {
     const r = parseInt(hex.slice(1,3), 16) / 255;
@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
      restore their settings, so a configuration can travel as a URL.
      Keyed by tool-card id; see initShareLinks() at the bottom. */
   const SHAREABLE = {};
+
+  // User text that ends up in innerHTML must be escaped first
+  const escapeHtml = str => String(str).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  // Letters that Unicode normalisation can't decompose into ASCII
+  const TRANSLITERATE = { 'ß': 'ss', 'æ': 'ae', 'œ': 'oe', 'ø': 'o', 'ł': 'l', 'đ': 'd', 'ð': 'd', 'þ': 'th', 'ı': 'i' };
 
   // Used by the URL slug generator and the keyword density analyser
   const STOP_WORDS = new Set(['a', 'an', 'the', 'and', 'or', 'but', 'for', 'nor', 'so', 'yet', 'to', 'of', 'in', 'on', 'at', 'by', 'up', 'as', 'is', 'are', 'was', 'were', 'be', 'been', 'with', 'from', 'into', 'your', 'my', 'our', 'their', 'this', 'that', 'it', 'its']);
@@ -149,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       metaUrlInput.className = u && u.startsWith('http') ? 'valid' : u.length > 0 ? 'invalid' : '';
 
       // Google preview — including URL line (BUG FIX)
-      prevGUrl.innerHTML = `${u || 'https://yourwebsite.com'} <span class="arrow">&#9662;</span>`;
+      prevGUrl.innerHTML = `${escapeHtml(u || 'https://yourwebsite.com')} <span class="arrow">&#9662;</span>`;
       prevGTitle.textContent = t || 'Enter Page Title';
       prevGDesc.textContent = d || 'Enter page meta description here...';
 
@@ -682,6 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const sep = slugSeparator.value;
       let words = slugInput.value
         .toLowerCase()
+        .replace(/[ßæœøłđðþı]/g, c => TRANSLITERATE[c])
         .normalize('NFKD')                      // split accented chars
         .replace(/[̀-ͯ]/g, '')        // drop the accents
         .replace(/['’]/g, '')              // don't split "don't"
@@ -815,7 +823,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateDensity() {
       const text = densityText.value;
-      const words = (text.toLowerCase().match(/[a-z0-9''-]+/g) || []);
+      const words = (text.toLowerCase().match(/[\p{L}\p{N}'’-]+/gu) || []);
       const sentences = (text.match(/[.!?]+(\s|$)/g) || []).length;
       const readingMins = words.length ? Math.max(1, Math.round(words.length / 200)) : 0;
 
@@ -835,7 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
         densityTableBody.innerHTML = top.length
-          ? top.map(([w, c]) => `<tr><td><strong>${w}</strong></td><td>${c}</td><td>${((c / words.length) * 100).toFixed(1)}%</td></tr>`).join('')
+          ? top.map(([w, c]) => `<tr><td><strong>${escapeHtml(w)}</strong></td><td>${c}</td><td>${((c / words.length) * 100).toFixed(1)}%</td></tr>`).join('')
           : '<tr><td colspan="3">Only short/stop words found so far.</td></tr>';
       }
 
@@ -843,7 +851,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = densityTarget.value.trim().toLowerCase();
       if (target && words.length) {
         const haystack = ' ' + words.join(' ') + ' ';
-        const needle = ' ' + (target.match(/[a-z0-9''-]+/g) || []).join(' ') + ' ';
+        const needle = ' ' + (target.match(/[\p{L}\p{N}'’-]+/gu) || []).join(' ') + ' ';
         let count = 0;
         if (needle.trim()) {
           let pos = haystack.indexOf(needle);
@@ -851,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const density = ((count * (needle.trim().split(' ').length)) / words.length * 100).toFixed(2);
         targetDensityBox.hidden = false;
-        targetDensityText.innerHTML = `“<strong>${densityTarget.value.trim()}</strong>” appears <strong>${count}×</strong> — ${density}% density. Healthy long-form copy usually lands between 0.5% and 2% without forcing it.`;
+        targetDensityText.innerHTML = `“<strong>${escapeHtml(densityTarget.value.trim())}</strong>” appears <strong>${count}×</strong> — ${density}% density. Healthy long-form copy usually lands between 0.5% and 2% without forcing it.`;
       } else {
         targetDensityBox.hidden = true;
       }
@@ -987,8 +995,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function caseWords(str) {
       return str
-        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')   // split camelCase
-        .split(/[^A-Za-z0-9]+/)
+        .replace(/([\p{Ll}\p{N}])(\p{Lu})/gu, '$1 $2')   // split camelCase
+        .split(/[^\p{L}\p{N}]+/u)
         .filter(Boolean)
         .map(w => w.toLowerCase());
     }
