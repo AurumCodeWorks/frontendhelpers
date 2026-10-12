@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-skeleton-loader" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-skeleton-loader" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Skeleton Loading Screens in CSS: Shimmer Done Right" />
+  <meta property="og:description" content="Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-skeleton-loader.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Skeleton Loading Screens in CSS: Shimmer Done Right" />
+  <meta name="twitter:description" content="Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-skeleton-loader.png" />
+
+  <title>Skeleton Loading Screens in CSS: Shimmer Done Right</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    .sk-theme {
+      --sk-base: rgba(148, 163, 184, 0.16);
+      --sk-shine: rgba(255, 255, 255, 0.1);
+      --sk-radius: 6px;
+      width: 100%;
+      max-width: 260px;
+    }
+    .sk-block {
+      position: relative;
+      overflow: hidden;
+      background: var(--sk-base);
+      border-radius: var(--sk-radius);
+    }
+    .sk-media { aspect-ratio: 16 / 9; }
+    .sk-line {
+      height: 0.7em;
+      margin-block: calc((1lh - 0.7em) / 2);
+    }
+    .sk-short { width: 60%; }
+    .sk-avatar { width: 40px; height: 40px; border-radius: 50%; flex: none; }
+    .sk-avatar-lg { width: 56px; height: 56px; }
+
+    /* Layout of the demo components */
+    .sk-card { display: grid; gap: 10px; }
+    .sk-card-title { font-size: 1.05rem; line-height: 1.35; }
+    .sk-card-text { font-size: 0.875rem; line-height: 1.5; }
+    .sk-row { display: flex; align-items: center; gap: 12px; }
+    .sk-row + .sk-row { margin-top: 14px; }
+    .sk-row-text { flex: 1; font-size: 0.875rem; line-height: 1.4; }
+    .sk-profile { display: grid; gap: 12px; }
+
+    /* Technique 1: transform on a pseudo-element */
+    .sk-shimmer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, var(--sk-shine), transparent);
+      animation: sk-sweep 1.6s ease-in-out infinite;
+    }
+    @keyframes sk-sweep {
+      to { transform: translateX(100%); }
+    }
+
+    /* Technique 2: animated background-position */
+    .sk-sweep {
+      background: linear-gradient(90deg, transparent 25%, var(--sk-shine) 50%, transparent 75%) var(--sk-base);
+      background-size: 200% 100%;
+      animation: sk-bg 1.6s linear infinite;
+    }
+    @keyframes sk-bg {
+      from { background-position: 100% 0; }
+      to   { background-position: -100% 0; }
+    }
+
+    /* Pulse: the reduced-motion alternative */
+    .sk-pulse { animation: sk-pulse 1.8s ease-in-out infinite; }
+    @keyframes sk-pulse {
+      50% { opacity: 0.45; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sk-shimmer::after { display: none; }
+      .sk-shimmer,
+      .sk-sweep {
+        background: var(--sk-base);
+        animation: sk-pulse 1.8s ease-in-out infinite;
+      }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Skeleton Loading Screens in CSS: Shimmer Done Right",
+        "description": "Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers.",
+        "url": "https://frontendhelpers.com/css-skeleton-loader",
+        "image": "https://frontendhelpers.com/assets/og-css-skeleton-loader.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-skeleton-loader" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Skeleton Loading Screens in CSS", "item": "https://frontendhelpers.com/css-skeleton-loader" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is a skeleton screen better than a spinner?",
+            "acceptedAnswer": { "@type": "Answer", "text": "When you know the shape of the content and the wait is longer than about 300ms, yes: a skeleton shows what is coming and where, and it reserves the space so nothing jumps. For actions with no predictable result, such as saving a form, or inside a button, a spinner is still the right choice." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my skeleton shimmer stutter?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It is probably animating background-position, which makes the browser repaint every block on the main thread each frame. While your JavaScript is parsing data and rendering content, those frames get dropped. Move a gradient on a pseudo-element with transform instead, which the compositor can animate without repainting." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a skeleton loader accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Set aria-busy=\"true\" on the region being loaded, hide the grey blocks with aria-hidden=\"true\", and put the words Loading articles into a visually hidden role=\"status\" element that sits outside the busy region. When the content arrives, set aria-busy back to false and update the status text." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do skeleton screens affect Cumulative Layout Shift?",
+            "acceptedAnswer": { "@type": "Answer", "text": "They can improve it or make it worse. A skeleton that matches the final layout reserves space, so content arrives without moving anything. A skeleton that is shorter or taller than the real content causes a shift at the moment of the swap, and that shift counts towards CLS." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Skeleton Loading Screens in CSS</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Skeleton loading screens: <span class="hero-highlight">shimmer done right</span></h1>
+        <p class="page-hero-sub">Placeholders that match the real layout, a shimmer the compositor can run on its own, a calm fallback for reduced motion, and markup that tells screen readers what is happening.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage" aria-hidden="true">
+              <div class="sk-theme sk-card">
+                <div class="sk-block sk-media sk-shimmer"></div>
+                <div class="sk-card-title">
+                  <div class="sk-block sk-line sk-shimmer"></div>
+                </div>
+                <div class="sk-card-text">
+                  <div class="sk-block sk-line sk-shimmer"></div>
+                  <div class="sk-block sk-line sk-short sk-shimmer"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Card, transform shimmer</strong> — a gradient on <code>::after</code> slides with <code>translateX()</code>; no repaint per frame.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage" aria-hidden="true">
+              <div class="sk-theme">
+                <div class="sk-row">
+                  <div class="sk-block sk-avatar sk-sweep"></div>
+                  <div class="sk-row-text">
+                    <div class="sk-block sk-line sk-sweep"></div>
+                    <div class="sk-block sk-line sk-short sk-sweep"></div>
+                  </div>
+                </div>
+                <div class="sk-row">
+                  <div class="sk-block sk-avatar sk-sweep"></div>
+                  <div class="sk-row-text">
+                    <div class="sk-block sk-line sk-sweep"></div>
+                    <div class="sk-block sk-line sk-short sk-sweep"></div>
+                  </div>
+                </div>
+                <div class="sk-row">
+                  <div class="sk-block sk-avatar sk-sweep"></div>
+                  <div class="sk-row-text">
+                    <div class="sk-block sk-line sk-sweep"></div>
+                    <div class="sk-block sk-line sk-short sk-sweep"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Avatar rows, background-position</strong> — the classic gradient sweep; simple, but every block repaints each frame.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage" aria-hidden="true">
+              <div class="sk-theme sk-profile sk-pulse">
+                <div class="sk-row">
+                  <div class="sk-block sk-avatar sk-avatar-lg"></div>
+                  <div class="sk-row-text">
+                    <div class="sk-block sk-line"></div>
+                    <div class="sk-block sk-line sk-short"></div>
+                  </div>
+                </div>
+                <div class="sk-card-text">
+                  <div class="sk-block sk-line"></div>
+                  <div class="sk-block sk-line"></div>
+                  <div class="sk-block sk-line sk-short"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Opacity pulse</strong> — no movement across the screen; what the other two become under reduced motion.</figcaption>
+          </figure>
+        </div>
+
+        <h2>When a skeleton beats a spinner</h2>
+        <p>A skeleton screen is a grey sketch of the layout that is about to appear: a block where the image will go, bars where the headline and text will sit. Unlike a spinner, it shows what is coming and where, so it only earns its place when you genuinely know the shape of the content.</p>
+        <p>Use one when the content has a predictable shape (a card grid, a message list, a profile header, a product page) and the wait is long enough to notice. Jakob Nielsen’s long-standing <a href="https://www.nngroup.com/articles/response-times-3-important-limits/" rel="noopener">response-time limits</a> are a sound starting point: about 0.1 seconds feels instant, up to about 1 second keeps the user’s train of thought even though they notice the lag, and beyond 1 second people need a sign that the system is working. At around 10 seconds attention runs out, and Nielsen recommends a percent-done indicator and a way to cancel.</p>
+        <p>From those limits we use a rule of thumb rather than a hard law. Show nothing for loads that usually finish in under roughly 300ms, because a skeleton that appears for a frame or two reads as flicker, not progress. Show a skeleton for waits from about 300ms up to several seconds. For operations that regularly take ten seconds or more, switch to real progress with a cancel button.</p>
+        <p>Spinners still have a job. Use one for actions with no predictable output shape (saving settings, submitting a form, a search whose result count is unknown) and inside buttons, where a skeleton makes no sense.</p>
+
+        <h2>Match the final layout, block for block</h2>
+        <p>A skeleton is a promise about layout, and breaking it is worse than not making it. If the placeholder card is 280px tall and the real card is 340px, everything below it jumps 60px when the data lands. Users feel that jump, and it counts against your Cumulative Layout Shift score, as explained in our <a href="/core-web-vitals-guide">Core Web Vitals guide</a>. The aim is that swapping skeleton for content changes pixels, not positions.</p>
+        <p>Three habits get you most of the way. First, build the skeleton from the same layout rules as the real component (grid, gap, padding, border radius) and only replace the leaves. Second, give media a fixed shape with <code>aspect-ratio</code>, which the real image should have anyway. Third, size text bars from the typography instead of guessing pixel heights. The <code>lh</code> unit, one computed line height, has worked in every current engine since late 2023 and makes this exact: a bar <code>0.7em</code> tall with the leftover space split above and below occupies precisely one line.</p>
+        <pre><code class="language-css">.sk-theme {
+  --sk-base: rgba(148, 163, 184, 0.16);
+  --sk-shine: rgba(255, 255, 255, 0.1);
+  --sk-radius: 6px;
+}
+.sk-block {
+  position: relative;
+  overflow: hidden;
+  background: var(--sk-base);
+  border-radius: var(--sk-radius);
+}
+.sk-media { aspect-ratio: 16 / 9; }
+.sk-line {
+  height: 0.7em;
+  margin-block: calc((1lh - 0.7em) / 2);
+}
+.sk-short { width: 60%; }</code></pre>
+        <p>Because a bar inherits <code>font-size</code> and <code>line-height</code>, dropping <code>.sk-line</code> inside an element that carries your heading styles gives a heading-sized line automatically. In the demos those wrappers are <code>.sk-card-title</code> and <code>.sk-card-text</code>; in a real project, reuse the component’s own typography classes so the two can never drift apart. Make the last bar shorter, around 60%, so it reads as the end of a paragraph. Do not try to predict the exact line count of unknown text, but if it is clamped to two lines, use exactly two.</p>
+
+        <h2>Two ways to shimmer, and what each costs</h2>
+        <p>The shimmer tells people that loading is active rather than stalled. There are two common ways to build it, and they give the browser very different amounts of work.</p>
+        <p>The first, used in most snippets including our own <a href="/css-loading-animations#anim-skeleton">library skeleton</a>, layers a gradient over the block and animates <code>background-position</code>. It is short and needs no extra elements. The catch is that browsers cannot hand <code>background-position</code> to the compositor, so each frame the main thread recalculates style and repaints the block before compositing. web.dev’s <a href="https://web.dev/articles/animations-guide" rel="noopener">guide to high-performance animations</a> is blunt: avoid any property that triggers layout or paint unless it is absolutely necessary. For three small bars the cost is negligible. For a feed of twenty cards it means continuous repainting of a large area, and because that work sits on the main thread, the shimmer stutters exactly when the page is busiest: while it parses the response and renders the content.</p>
+        <pre><code class="language-css">.sk-sweep {
+  background: linear-gradient(90deg, transparent 25%, var(--sk-shine) 50%, transparent 75%) var(--sk-base);
+  background-size: 200% 100%;
+  animation: sk-bg 1.6s linear infinite;
+}
+@keyframes sk-bg {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}</code></pre>
+        <p>The second puts a translucent gradient on an <code>::after</code> pseudo-element, clips it with the block’s <code>overflow: hidden</code>, and moves it with <code>transform: translateX()</code>. The block is painted once. After that the browser gives the moving pseudo-element its own layer, and the compositor only shifts that already-rasterised layer each frame, so the sweep keeps running smoothly while JavaScript is busy, which is precisely when a loading animation is on screen. Our guide to <a href="/css-animation-performance">CSS animation performance</a> walks through the rendering pipeline behind this.</p>
+        <pre><code class="language-css">.sk-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--sk-shine), transparent);
+  animation: sk-sweep 1.6s ease-in-out infinite;
+}
+@keyframes sk-sweep {
+  to { transform: translateX(100%); }
+}</code></pre>
+        <p>Be precise about what you gain. The transform version is not free: every animating pseudo-element becomes a compositor layer that uses GPU memory, so a page with hundreds of shimmering bars still deserves simplifying. And because <code>translateX(100%)</code> is relative to each block’s own width, the shine crosses a narrow bar more slowly, in pixels per second, than a wide image. Most people never notice; if you do, put a single <code>::after</code> on the card instead of on every bar. You can check either version yourself in Chrome DevTools: open the Rendering panel and turn on Paint flashing. The <code>background-position</code> blocks flash green continuously; the transform blocks do not.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Technique</th><th>Property animated</th><th>What the browser does each frame</th><th>Cost</th><th>Support</th></tr></thead>
+            <tbody>
+              <tr><td>Gradient sweep</td><td><code>background-position</code></td><td>Recalculates style, repaints every animating block on the main thread, then composites</td><td>Grows with the painted area; drops frames whenever the main thread is busy</td><td>All browsers</td></tr>
+              <tr><td>Pseudo-element shimmer</td><td><code>transform</code> on <code>::after</code></td><td>Compositor moves a layer that was painted once; no style or paint work</td><td>One layer per animating block (GPU memory); unaffected by main-thread work</td><td>All browsers</td></tr>
+              <tr><td>Opacity pulse</td><td><code>opacity</code></td><td>Compositor changes the layer’s opacity; no repaint</td><td>Cheapest of the three, especially on one wrapper; no movement</td><td>All browsers</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>The reduced-motion alternative: a gentle pulse</h2>
+        <p>A sweeping band is motion across the screen, and for people with vestibular disorders large or repeated movement can cause real discomfort. The <code>prefers-reduced-motion</code> media feature reports the operating-system setting (Reduce motion on macOS and iOS, Animation effects on Windows 11, Remove animations on Android). MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" rel="noopener">prefers-reduced-motion reference</a> describes it as a request to remove, reduce or replace motion-based animation, and notes that it has been supported across browsers since January 2020.</p>
+        <p>For skeletons, replace rather than remove. Hide the sweep and slowly fade the blocks between full and partial opacity. Nothing travels across the screen, yet the page still visibly shows it is working, which a frozen grey shape does not. Opacity is compositor-friendly too, so the fallback costs no more than the transform shimmer. If a component pulses all the time, as in the third demo, put the animation on the wrapper: one animated element instead of one per bar. And if your users find even a pulse too busy, <code>animation: none</code> is a valid choice, since a static skeleton still reserves the layout.</p>
+        <pre><code class="language-css">.sk-pulse { animation: sk-pulse 1.8s ease-in-out infinite; }
+@keyframes sk-pulse {
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-shimmer::after { display: none; }
+  .sk-shimmer,
+  .sk-sweep {
+    background: var(--sk-base);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+}</code></pre>
+
+        <h2>Dark mode with custom properties</h2>
+        <p>Every colour in the demos comes from two custom properties, <code>--sk-base</code> for the block and <code>--sk-shine</code> for the highlight, so theming is a matter of redefining them. Translucent values help: a 16% slate block reads as a soft grey on most dark surfaces without being tuned to one exact background. On a light page the balance flips. The base needs a faint dark tint and the shine a strong white, because a weak white highlight disappears against a pale block. This site is dark-only, so the demos ship just the dark pair; a site with both themes would set light values by default and override them in a <code>prefers-color-scheme</code> block, or under whatever theme attribute your toggle sets.</p>
+        <pre><code class="language-css">.sk-theme {
+  --sk-base: rgba(15, 23, 42, 0.08);
+  --sk-shine: rgba(255, 255, 255, 0.6);
+}
+@media (prefers-color-scheme: dark) {
+  .sk-theme {
+    --sk-base: rgba(148, 163, 184, 0.16);
+    --sk-shine: rgba(255, 255, 255, 0.1);
+  }
+}</code></pre>
+
+        <h2>Make it accessible</h2>
+        <p>To sighted users a skeleton says “loading”. To a screen reader, a stack of empty <code>div</code> elements says nothing useful. Three pieces fix that.</p>
+        <p>Mark the region being loaded with <code>aria-busy="true"</code>. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-busy" rel="noopener">aria-busy reference</a> explains that assistive technology may wait until the changes are complete before exposing the content, and that you should set the attribute back to <code>false</code> once loading finishes, so content that arrives in several parts does not interrupt the user repeatedly.</p>
+        <p>Hide the decorative blocks with <code>aria-hidden="true"</code>. They carry no information, and announcing them is noise.</p>
+        <p>Announce the state in words with a visually hidden <code>role="status"</code> element, which is a polite live region: its new text is read out without interrupting. Two details matter. Live regions announce changes, not text that is already present when the page loads, so ship the element empty and set its text when loading starts. And keep it outside the busy region, because content inside an element marked busy may be held back until loading ends, which defeats a loading message.</p>
+        <pre><code class="language-html">&lt;p id="articles-status" class="visually-hidden" role="status"&gt;&lt;/p&gt;
+
+&lt;section id="articles" class="card-grid"&gt;&lt;/section&gt;
+
+&lt;template id="articles-skeleton"&gt;
+  &lt;div class="sk-theme sk-card" aria-hidden="true"&gt;
+    &lt;div class="sk-block sk-media sk-shimmer"&gt;&lt;/div&gt;
+    &lt;div class="sk-card-title"&gt;
+      &lt;div class="sk-block sk-line sk-shimmer"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="sk-card-text"&gt;
+      &lt;div class="sk-block sk-line sk-shimmer"&gt;&lt;/div&gt;
+      &lt;div class="sk-block sk-line sk-short sk-shimmer"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+
+        <h2>Swap, don’t stack</h2>
+        <p>When the data arrives, replace the skeleton. Do not render the content on top of it, or beside it while the skeleton fades out. Stacking risks a double-height flash, keeps the shimmer animating behind real content, and leaves orphaned nodes for assistive technology. <code>replaceChildren()</code> swaps everything in one operation, and the same script can apply the 300ms rule, so a fast response never shows a skeleton at all.</p>
+        <pre><code class="language-js">const region = document.getElementById('articles');
+const status = document.getElementById('articles-status');
+const skeleton = document.getElementById('articles-skeleton');
+
+const timer = setTimeout(() =&gt; {
+  region.setAttribute('aria-busy', 'true');
+  region.replaceChildren(skeleton.content.cloneNode(true));
+  status.textContent = 'Loading articles…';
+}, 300);
+
+const articles = await fetchArticles();
+clearTimeout(timer);
+region.replaceChildren(...articles.map(renderCard));
+region.setAttribute('aria-busy', 'false');
+status.textContent = `${articles.length} articles loaded`;</code></pre>
+        <p>One caveat on the fast path: if the region sits above other content and starts empty, the real cards still push things down when they arrive. Give the region a <code>min-height</code> close to its typical height so both paths, skeleton or no skeleton, land without a shift. Also handle failure: if the request throws, swap the skeleton for an error message and a retry button, and put the error in the status text. A shimmer that never ends is the most misleading loading state of all.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is a skeleton screen better than a spinner?</summary>
+            <p class="faq-answer">When you know the shape of the content and the wait is longer than about 300ms, yes: a skeleton shows what is coming and where, and it reserves the space so nothing jumps. For actions with no predictable result, such as saving a form, or inside a button, a spinner is still the right choice.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my skeleton shimmer stutter?</summary>
+            <p class="faq-answer">It is probably animating background-position, which makes the browser repaint every block on the main thread each frame. While your JavaScript is parsing data and rendering content, those frames get dropped. Move a gradient on a pseudo-element with transform instead, which the compositor can animate without repainting.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a skeleton loader accessible?</summary>
+            <p class="faq-answer">Set aria-busy="true" on the region being loaded, hide the grey blocks with aria-hidden="true", and put the words Loading articles into a visually hidden role="status" element that sits outside the busy region. When the content arrives, set aria-busy back to false and update the status text.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do skeleton screens affect Cumulative Layout Shift?</summary>
+            <p class="faq-answer">They can improve it or make it worse. A skeleton that matches the final layout reserves space, so content arrives without moving anything. A skeleton that is shorter or taller than the real content causes a shift at the moment of the swap, and that shift counts towards CLS.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-loading-animations#anim-skeleton" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>Skeleton shimmer snippet</h3>
+            <p>The copy-paste skeleton bar from our loading animations library.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-loading-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS loading animations</h3>
+            <p>Spinners, dots, bars and skeletons, each with markup and CSS.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/core-web-vitals-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Core Web Vitals</h3>
+            <p>How LCP, INP and CLS are measured and what fixes them.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

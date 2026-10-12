@@ -45,6 +45,13 @@ All generated output and published snippets are free to use in personal and comm
 - [CSS UI Feedback Animations — 6 Free Toast, Modal & Tooltip Effects](https://frontendhelpers.com/css-ui-feedback-animations): Six free CSS UI feedback animations with previews: toast slide-in, modal pop-in, tooltip fade, tab underline slide, and progress pings. Pure CSS.
 - [CSS Hover Effects — 8 Free Button & Card Hover Animations](https://frontendhelpers.com/css-hover-effects): Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready.
 
+## CSS effect recipes
+
+- [CSS Typewriter Effect: Pure CSS Typing Animation](https://frontendhelpers.com/css-typewriter-effect): Build a pure CSS typewriter effect with steps() and ch: blinking caret, type-and-delete loop, multiple lines, monospace caveats and reduced motion.
+- [Skeleton Loading Screens in CSS: Shimmer Done Right](https://frontendhelpers.com/css-skeleton-loader): Build CSS skeleton screens that match your layout, shimmer on the compositor, respect reduced motion and announce loading to screen readers.
+- [Animated Gradient Borders in CSS: 3 Techniques](https://frontendhelpers.com/css-animated-gradient-border): Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property.
+- [CSS Shake Animation for Errors (Accessible Version)](https://frontendhelpers.com/css-shake-animation): A CSS shake animation for form errors: decaying translateX keyframes, a clean restart with element.animate(), plus ARIA and reduced-motion support.
+
 ## Guides
 
 - [Fluid Typography with CSS clamp(): A Practical Guide](https://frontendhelpers.com/fluid-typography-clamp-guide): Build fluid type with CSS clamp(): the slope and intercept maths, a worked example, why rem + vw matters, and how to keep text passing 200% zoom.

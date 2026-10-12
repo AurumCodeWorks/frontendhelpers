@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-animated-gradient-border" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-animated-gradient-border" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Animated Gradient Borders in CSS: 3 Techniques" />
+  <meta property="og:description" content="Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-animated-gradient-border.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Animated Gradient Borders in CSS: 3 Techniques" />
+  <meta name="twitter:description" content="Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-animated-gradient-border.png" />
+
+  <title>Animated Gradient Borders in CSS: 3 Techniques</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Demo 1: border-image */
+    .gb-image {
+      padding: 18px 26px;
+      border: 4px solid;
+      border-image: linear-gradient(90deg, #8b5cf6, #06b6d4, #10b981) 1;
+      border-radius: 14px; /* has no effect on the border image */
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    /* Demo 2: two backgrounds, animated with @property */
+    @property --gb-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+    .gb-clip {
+      padding: 16px 26px;
+      border: 3px solid transparent;
+      border-radius: 14px;
+      background:
+        linear-gradient(#0b1222, #0b1222) padding-box,
+        conic-gradient(from var(--gb-angle, 0deg), #8b5cf6, #06b6d4, #10b981, #8b5cf6) border-box;
+      animation: gb-spin 4s linear infinite;
+      color: #f8fafc;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .gb-clip:focus-visible {
+      outline: 2px solid #f8fafc;
+      outline-offset: 4px;
+    }
+    @keyframes gb-spin {
+      to { --gb-angle: 360deg; }
+    }
+
+    /* Demo 3: conic pseudo-element, rotated with transform */
+    .gb-glow {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 18px 26px;
+      border-radius: 14px;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.25);
+      color: #f8fafc;
+      font-weight: 600;
+    }
+    .gb-glow::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      aspect-ratio: 1;
+      z-index: -2;
+      background: conic-gradient(#8b5cf6, #06b6d4, #10b981, #8b5cf6);
+      transform: translate(-50%, -50%) rotate(0turn);
+      animation: gb-rotate 4s linear infinite;
+    }
+    .gb-glow::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      z-index: -1;
+      border-radius: 11px;
+      background: #0b1222;
+    }
+    @keyframes gb-rotate {
+      to { transform: translate(-50%, -50%) rotate(1turn); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gb-clip,
+      .gb-glow::before { animation: none; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Animated Gradient Borders in CSS: 3 Techniques",
+        "description": "Three ways to build a gradient border in CSS, with live demos: border-image, clipped backgrounds and a conic pseudo-element, animated with @property.",
+        "url": "https://frontendhelpers.com/css-animated-gradient-border",
+        "image": "https://frontendhelpers.com/assets/og-css-animated-gradient-border.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-animated-gradient-border" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Animated Gradient Borders in CSS", "item": "https://frontendhelpers.com/css-animated-gradient-border" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why doesn't border-radius work with border-image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "By design. A border image can be pushed outside the border box with border-image-outset, so browsers do not clip it to the rounded corner. For a rounded gradient border, paint the gradient as a background clipped to the border box under a solid fill clipped to the padding box, or use a pseudo-element." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you animate a CSS gradient?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not directly. Gradients are images, and background-image animates discretely, so one gradient snaps to the next. Register a custom property with @property, use it inside the gradient for an angle or stop position, and animate that property instead. Alternatively, move background-position or rotate a pseudo-element with transform." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a gradient border with rounded corners?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Give the element a transparent border and two backgrounds: a solid colour clipped to padding-box on top and the gradient clipped to border-box underneath. The gradient shows only in the border ring, which follows border-radius. The inner colour must be opaque." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is an animated gradient border bad for performance?",
+            "acceptedAnswer": { "@type": "Answer", "text": "One small one is fine. Animating a @property angle repaints the element every frame on the main thread, so the cost grows with size and count. Rotating a pseudo-element with transform is composited and cheaper. Keep animated borders to a few small elements and honour prefers-reduced-motion." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Animated Gradient Borders in CSS</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Animated gradient borders: <span class="hero-highlight">three CSS techniques</span></h1>
+        <p class="page-hero-sub">border-image, clipped backgrounds and a conic pseudo-element — which ones handle rounded corners, how to make them move, and what each costs.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <p>A gradient border looks as though it should be one property, and it isn't. <code>border-color</code> only accepts colours, so there is no <code>border-color: linear-gradient(…)</code>. You have to borrow another feature — the border image, the background, or a pseudo-element — and that choice decides whether rounded corners work, whether the inside can stay transparent, and how much the animation costs each frame. Here are the three techniques running live, then the exact CSS behind each.</p>
+
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage"><div class="gb-image">Square corners</div></div>
+            <figcaption><strong>1. border-image</strong> — static; <code>border-radius: 14px</code> is set but ignored</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage"><button type="button" class="gb-clip">Tab to me</button></div>
+            <figcaption><strong>2. Clipped backgrounds</strong> — rounded, spun with an <code>@property</code> angle, solid focus ring</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage"><div class="gb-glow">Rotating glow</div></div>
+            <figcaption><strong>3. Conic pseudo-element</strong> — rounded, rotated with <code>transform</code>, static glow</figcaption>
+          </figure>
+        </div>
+
+        <p>All three use the same stops — violet <code>#8b5cf6</code>, cyan <code>#06b6d4</code> and emerald <code>#10b981</code> — which you can rework in our <a href="/css-gradient-generator">CSS gradient generator</a> before pasting them in. If what you actually want is a gradient fill that shifts on hover rather than a border, the <a href="/css-hover-effects#anim-hover-gradient">Gradient Shift card</a> in our hover effects library is a simpler starting point.</p>
+
+        <h2>Technique 1: border-image</h2>
+        <p><code>border-image</code> was designed to slice an image into nine pieces and paint them into the border area. As far as CSS is concerned a gradient is an image, so you can pass one in directly:</p>
+        <pre><code class="language-css">.gb-image {
+  padding: 18px 26px;
+  border: 4px solid;
+  border-image: linear-gradient(90deg, #8b5cf6, #06b6d4, #10b981) 1;
+  border-radius: 14px; /* has no effect on the border image */
+  color: #f8fafc;
+  font-weight: 600;
+}</code></pre>
+        <p>The trailing <code>1</code> is <code>border-image-slice</code>. Leave it out and the default slice of 100% hands the whole gradient to the four corner regions, leaving the edges empty. You still need a <code>border-style</code> and width, because the image is drawn into the border area and an element with no border has none.</p>
+        <p>The catch is spelled out in the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image">MDN reference for border-image</a>: <code>border-radius</code> has no effect on the border image. A border image can be pushed outside the border box with <code>border-image-outset</code>, so clipping it to the curve wouldn't make sense. The first demo sets a 14px radius and the corners stay square. Worse, the radius still rounds any background or <code>box-shadow</code> on the same element, so mixing them looks broken.</p>
+        <p>That makes <code>border-image</code> the right tool for square-cornered things: callout bars, table headers, or a single accent edge with <code>border-width: 0 0 0 4px</code>. It's also the only technique here that leaves the element's interior completely untouched, so photos, patterns and backdrop filters behind it show through. MDN lists it as widely available since July 2015.</p>
+
+        <h2>Technique 2: two backgrounds, two clip boxes</h2>
+        <p>For rounded corners, draw the border with the background instead. Make the border transparent so the background shows through it, then stack two layers: a solid fill clipped to the padding box on top, and the gradient clipped to the border box underneath. The gradient is only visible in the ring the fill doesn't cover, and because backgrounds follow <code>border-radius</code>, the ring curves with the corners. MDN offers this same pattern as its workaround on the border-image page.</p>
+        <pre><code class="language-css">@property --gb-angle {
+  syntax: '&lt;angle&gt;';
+  inherits: false;
+  initial-value: 0deg;
+}
+.gb-clip {
+  padding: 16px 26px;
+  border: 3px solid transparent;
+  border-radius: 14px;
+  background:
+    linear-gradient(#0b1222, #0b1222) padding-box,
+    conic-gradient(from var(--gb-angle, 0deg), #8b5cf6, #06b6d4, #10b981, #8b5cf6) border-box;
+  animation: gb-spin 4s linear infinite;
+  color: #f8fafc;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.gb-clip:focus-visible {
+  outline: 2px solid #f8fafc;
+  outline-offset: 4px;
+}
+@keyframes gb-spin {
+  to { --gb-angle: 360deg; }
+}</code></pre>
+        <p>The keyword after each layer does double duty. In the <code>background</code> shorthand, a single box keyword sets both <code>background-origin</code> and <code>background-clip</code>. The origin matters: it defaults to the padding box, so without <code>border-box</code> the gradient would be sized to the inside and tile underneath the border, leaving a visible seam along the edges.</p>
+        <p>The fill is written as <code>linear-gradient(#0b1222, #0b1222)</code> on purpose. A background colour can only belong to the bottom layer, so a solid fill that sits on top of another layer has to be expressed as a one-colour gradient image.</p>
+        <p>The limitation: the top layer must be opaque and match the element's intended interior, so this can't give you a see-through card over a photo. The inner curve is automatic — 11px here, the 14px radius minus the 3px border.</p>
+
+        <h2>Technique 3: a conic-gradient pseudo-element</h2>
+        <p>For a glow or a radar-style sweep, move the gradient onto its own layer. The third demo puts an oversized square <code>::before</code> behind the content, fills it with a <code>conic-gradient</code>, and covers the middle with an <code>::after</code> inset by the border width:</p>
+        <pre><code class="language-css">.gb-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 18px 26px;
+  border-radius: 14px;
+  box-shadow: 0 0 22px rgba(6, 182, 212, 0.25);
+  color: #f8fafc;
+  font-weight: 600;
+}
+.gb-glow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  z-index: -2;
+  background: conic-gradient(#8b5cf6, #06b6d4, #10b981, #8b5cf6);
+  transform: translate(-50%, -50%) rotate(0turn);
+  animation: gb-rotate 4s linear infinite;
+}
+.gb-glow::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  border-radius: 11px;
+  background: #0b1222;
+}
+@keyframes gb-rotate {
+  to { transform: translate(-50%, -50%) rotate(1turn); }
+}</code></pre>
+        <p>The parent's <code>overflow: hidden</code> and <code>border-radius</code> trim the spinning square into a rounded ring. <code>isolation: isolate</code> creates a stacking context, so the negative <code>z-index</code> layers stay inside the element instead of dropping behind the page. The square is 150% of the element's width so that its corners always cover the element's corners mid-turn; for an element taller than it is wide, size it from the height instead, or you'll see empty corners flicker past. The glow is a static <code>box-shadow</code>.</p>
+        <p>If the interior must stay transparent, replace the cover layer with a mask. This variant isn't one of the demos above; it uses a single <code>::before</code> with padding equal to the border width and the same <code>gb-spin</code> keyframes:</p>
+        <pre><code class="language-css">.gb-mask {
+  position: relative;
+  border-radius: 14px;
+}
+.gb-mask::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 3px; /* border thickness */
+  border-radius: inherit;
+  background: conic-gradient(from var(--gb-angle, 0deg), #8b5cf6, #06b6d4, #10b981, #8b5cf6);
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: gb-spin 4s linear infinite;
+  pointer-events: none;
+}</code></pre>
+        <p>The first mask layer covers only the content box and the second covers everything; <code>exclude</code> keeps the areas where exactly one layer is present, which is the padding ring. The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/mask-composite">MDN page for mask-composite</a> shows it available across browsers since December 2023, so the prefixed <code>-webkit-mask-composite: xor</code> in older tutorials is only needed for browsers from before then.</p>
+
+        <h2>Making it move: @property or transform</h2>
+        <p>Gradients can't be interpolated. A <code>conic-gradient()</code> is an image, <code>background-image</code> animates discretely, so keyframes that swap one gradient for another snap rather than tween. An ordinary custom property can't help either: until it's registered, the browser treats its value as a string of tokens with no type to interpolate.</p>
+        <p>Registering it with <code>@property</code> gives it one. Declared as an <code>&lt;angle&gt;</code>, <code>--gb-angle</code> tweens from <code>0deg</code> to <code>360deg</code>, and the gradient that reads it is recomputed each frame. The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@property">MDN reference for @property</a> marks it Baseline 2024, working across the latest browsers since July 2024. Both <code>syntax</code> and <code>inherits</code> are required, as is <code>initial-value</code> for any syntax other than <code>*</code>; leave one out and the whole rule is ignored. <code>inherits: false</code> keeps the angle from cascading into the button's children.</p>
+        <p>Note the fallback in <code>var(--gb-angle, 0deg)</code>. In a browser without <code>@property</code> the property has no value outside the keyframes, and without a fallback the whole <code>background</code> declaration would be invalid at computed-value time: no fill and no border. With it, older browsers get a static gradient. The same approach animates technique 1 too, since <code>border-image</code> accepts a gradient that reads a variable.</p>
+        <p>The other option is never to animate the gradient at all. Technique 3 paints its <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient">conic gradient</a> once and spins the layer with <code>transform: rotate()</code>. For a conic sweep the result looks almost identical, but it only works when the gradient lives on a layer that can turn by itself — you can't rotate a border image or one background layer independently of the element's content.</p>
+
+        <h2>The three techniques compared</h2>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Technique</th><th>Rounded corners</th><th>Animatable how</th><th>Extra element</th><th>Support / caveats</th></tr></thead>
+            <tbody>
+              <tr><td><code>border-image</code></td><td>No — <code>border-radius</code> is ignored</td><td><code>@property</code> angle inside the gradient (repaints)</td><td>None</td><td>Widely available since 2015; interior stays transparent; needs a border style and the <code>1</code> slice</td></tr>
+              <tr><td>Clipped backgrounds</td><td>Yes</td><td><code>@property</code> angle (repaints)</td><td>None</td><td>Inner fill must be an opaque colour that matches the design; <code>@property</code> is Baseline 2024</td></tr>
+              <tr><td>Conic pseudo-element</td><td>Yes, via <code>overflow: hidden</code> or a mask</td><td><code>transform: rotate()</code> (composited) or <code>@property</code></td><td><code>::before</code>, plus <code>::after</code> or a mask</td><td>Needs positioning and <code>isolation</code>; square must outsize the box; <code>mask-composite</code> since December 2023</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Performance: what repaints and what composites</h2>
+        <p>Animating <code>--gb-angle</code> changes a value the background depends on, so on every frame the browser recalculates style and repaints that element's background on the main thread. For one button that's a small area and comfortably within the frame budget — the same cost class as animating <code>background-color</code>, which our <a href="/css-animation-performance">CSS animation performance guide</a> covers in detail.</p>
+        <p>Rotating a pseudo-element is different. The gradient is painted once, the layer goes to the compositor, and each frame is just a rotation of an existing texture. It stays smooth even while JavaScript keeps the main thread busy.</p>
+        <p>Two practical rules follow. Keep animated borders few and small: a spinning border on one call to action is fine, but on every card in a grid of thirty it becomes thirty repaints per frame. And check, rather than guess: turn on Paint flashing in Chrome's Rendering panel. The <code>@property</code> demo flashes continuously; the transform demo shouldn't.</p>
+
+        <h2>Accessibility: reduced motion and focus</h2>
+        <p>A border that loops forever is exactly the kind of motion <code>prefers-reduced-motion</code> exists for. This page's stylesheet switches the animations off for anyone who has asked their system for less motion:</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .gb-clip,
+  .gb-glow::before { animation: none; }
+}</code></pre>
+        <p>The angle falls back to its <code>initial-value</code> and the pseudo-element to its resting transform, so both demos become static gradient borders rather than disappearing. Turn on reduced motion in your operating system and reload to check.</p>
+        <p>Don't let the moving border be the focus indicator. It's already animating before the button receives focus, so its appearance doesn't change when focus arrives and a keyboard user gets no signal. Colour is the other risk: WCAG 1.4.11 asks for 3:1 contrast against adjacent colours, and a gradient is only as strong as its weakest stop. On this dark page all three stops pass, the violet narrowly at about 4.7:1. Put the same gradient on white and the cyan stop measures about 2.4:1. Our <a href="/wcag-colour-contrast-guide">WCAG colour contrast guide</a> explains how to measure it. The demo button therefore keeps its gradient and adds a solid near-white <code>:focus-visible</code> outline, offset so it sits on the page background, where it measures about 19:1.</p>
+
+        <h2>Which one to use</h2>
+        <p>Square corners or a transparent interior on a simple box: <code>border-image</code>. Rounded corners on a solid button or card: clipped backgrounds — the least code, with no extra element. A glow, a sweep or anything that animates continuously: the pseudo-element, rotated with <code>transform</code> so the compositor does the work. Whichever you pick, more ideas for interactive states live in our <a href="/css-hover-effects">CSS hover effects</a> library.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Why doesn't border-radius work with border-image?</summary>
+            <p class="faq-answer">By design. A border image can be pushed outside the border box with border-image-outset, so browsers do not clip it to the rounded corner. For a rounded gradient border, paint the gradient as a background clipped to the border box under a solid fill clipped to the padding box, or use a pseudo-element.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you animate a CSS gradient?</summary>
+            <p class="faq-answer">Not directly. Gradients are images, and background-image animates discretely, so one gradient snaps to the next. Register a custom property with @property, use it inside the gradient for an angle or stop position, and animate that property instead. Alternatively, move background-position or rotate a pseudo-element with transform.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a gradient border with rounded corners?</summary>
+            <p class="faq-answer">Give the element a transparent border and two backgrounds: a solid colour clipped to padding-box on top and the gradient clipped to border-box underneath. The gradient shows only in the border ring, which follows border-radius. The inner colour must be opaque.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is an animated gradient border bad for performance?</summary>
+            <p class="faq-answer">One small one is fine. Animating a @property angle repaints the element every frame on the main thread, so the cost grows with size and count. Rotating a pseudo-element with transform is composited and cheaper. Keep animated borders to a few small elements and honour prefers-reduced-motion.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-gradient-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>CSS gradient generator</h3>
+            <p>Design the colour stops visually, then copy the gradient into any of these techniques.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-hover-effects" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>CSS hover effects</h3>
+            <p>Copy-paste hover states, including a sliding gradient fill.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Which properties repaint, which composite, and how to spot jank.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

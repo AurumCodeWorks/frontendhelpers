@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A CSS shake animation for form errors: decaying translateX keyframes, a clean restart with element.animate(), plus ARIA and reduced-motion support." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-shake-animation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-shake-animation" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Shake Animation for Errors (Accessible Version)" />
+  <meta property="og:description" content="A CSS shake animation for form errors: decaying translateX keyframes, a clean restart with element.animate(), plus ARIA and reduced-motion support." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-shake-animation.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Shake Animation for Errors (Accessible Version)" />
+  <meta name="twitter:description" content="A CSS shake animation for form errors: decaying translateX keyframes, a clean restart with element.animate(), plus ARIA and reduced-motion support." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-shake-animation.png" />
+
+  <title>CSS Shake Animation for Errors (Accessible Version)</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this recipe (every class prefixed sh-) -->
+  <style>
+    .sh-card {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; border: 1px solid rgba(248, 113, 113, 0.55); border-radius: 10px;
+      background: rgba(239, 68, 68, 0.08); font-size: 0.9rem;
+      outline: 2px solid rgba(248, 113, 113, 0); outline-offset: 3px;
+    }
+    .sh-badge {
+      display: inline-grid; place-items: center; flex: none;
+      width: 1.4em; height: 1.4em; border-radius: 50%;
+      background: #f87171; color: #1a0606; font-weight: 700; font-size: 0.8rem; line-height: 1;
+    }
+    .sh-shake { animation: sh-shake 400ms ease-in-out both; }
+    @keyframes sh-shake {
+      0%, 100% { transform: translateX(0); }
+      15% { transform: translateX(-8px); }
+      30% { transform: translateX(6px); }
+      45% { transform: translateX(-4px); }
+      60% { transform: translateX(2px); }
+      75% { transform: translateX(-1px); }
+    }
+    @keyframes sh-flash {
+      from { outline-color: rgba(248, 113, 113, 0); }
+      30%  { outline-color: rgba(248, 113, 113, 1); }
+      to   { outline-color: rgba(248, 113, 113, 0); }
+    }
+    .sh-form { width: 100%; display: grid; gap: 8px; }
+    .sh-row { display: flex; gap: 8px; }
+    .sh-form input.sh-input {
+      padding: 10px 12px; min-width: 0;
+      outline: 2px solid rgba(248, 113, 113, 0); outline-offset: 2px;
+    }
+    .sh-form input.sh-input[aria-invalid="true"] {
+      border-color: #f87171;
+      box-shadow: inset 0 0 0 1px #f87171;
+    }
+    .sh-submit {
+      flex: none; font: inherit; font-size: 0.85rem; font-weight: 600;
+      padding: 0 14px; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--secondary); background: rgba(6, 182, 212, 0.12); color: var(--text);
+    }
+    .sh-submit:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+    .sh-form .sh-error {
+      display: flex; align-items: flex-start; gap: 6px;
+      min-height: 1.5em; margin: 0; font-size: 0.82rem; line-height: 1.5; color: #fca5a5;
+    }
+    .sh-form .sh-error:not(:empty)::before {
+      content: "!"; content: "!" / "";
+      display: inline-grid; place-items: center; flex: none;
+      width: 1.35em; height: 1.35em; border-radius: 50%;
+      background: #f87171; color: #1a0606; font-weight: 700; font-size: 0.75rem;
+    }
+    .sh-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+    .sh-side { display: grid; gap: 6px; }
+    .sh-tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); }
+    .sh-mock {
+      padding: 9px 10px; border-radius: 8px; font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.3); border: 1px solid #f87171; box-shadow: inset 0 0 0 1px #f87171;
+      outline: 2px solid rgba(248, 113, 113, 0); outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sh-shake { animation-name: sh-flash; animation-duration: 900ms; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Shake Animation for Errors (Accessible Version)",
+        "description": "Build a CSS shake animation for form errors with decaying translateX keyframes, restart it cleanly with element.animate(), announce the error with ARIA and replace the motion with a colour change for reduced-motion users.",
+        "url": "https://frontendhelpers.com/css-shake-animation",
+        "image": "https://frontendhelpers.com/assets/og-css-shake-animation.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-shake-animation" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Shake Animation for Errors", "item": "https://frontendhelpers.com/css-shake-animation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I make a shake animation in CSS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Write @keyframes that move the element left and right with transform: translateX(), shrinking each swing (for example -8px, 6px, -4px, 2px, -1px) and ending at 0. Apply it with animation: shake 400ms ease-in-out, and add the class only when an error occurs." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I replay a shake animation every time a form fails?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Adding a class that is already present does nothing. Either remove the class, read offsetWidth to force a reflow and add it again, remove the class on animationend, or use element.animate() from the Web Animations API, which starts a fresh animation on every call." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is a shake animation accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Only as decoration. Screen reader users cannot perceive it, so the error must also appear as text linked to the field with aria-describedby, the field needs aria-invalid=\"true\", and the message should be announced through role=\"alert\" or a live region." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should a shake animation respect prefers-reduced-motion?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Motion can trigger dizziness or nausea in people with vestibular disorders. When prefers-reduced-motion is set to reduce, keep the error styling but swap the movement for a colour change, such as an outline that pulses red without moving." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Shake Animation for Errors</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS shake animation <span class="hero-highlight">for accessible errors</span></h1>
+        <p class="page-hero-sub">A shake that decays like a real head-shake, restarts cleanly on every failed attempt, and never leaves screen reader or reduced-motion users without the message.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Why a shake says &ldquo;no&rdquo;</h2>
+        <p>A short horizontal shake borrows the head-shake most people read as &ldquo;no&rdquo;. On a login form or a single field it lands instantly: that didn&rsquo;t work, try again. Because it happens exactly where the user is already looking, it draws attention without a modal, a banner or a scroll jump.</p>
+        <p>It is also easy to overuse. A shake makes sense when the user has just acted and that action failed: a rejected password, a one-time code that doesn&rsquo;t match, an email address that plainly isn&rsquo;t one. It does not suit errors the user didn&rsquo;t cause (a network timeout deserves a calm message, not a scolding wobble), long forms with many invalid fields at once (ten shaking inputs are noise), or validation on every keystroke, which punishes people for being halfway through typing. Our rule: one shake, on submit, on the thing that needs fixing.</p>
+
+        <h2>Live demos</h2>
+        <p>Three versions of the same idea. Use the buttons to replay them. If your device has reduced motion switched on, the motion demos deliberately pulse an outline instead of moving &mdash; that is the behaviour this recipe recommends.</p>
+
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="sh-card" id="sh-basic"><span class="sh-badge" aria-hidden="true">!</span> Incorrect PIN</div>
+              <button type="button" class="recipe-replay" id="sh-basic-replay">Replay shake</button>
+            </div>
+            <figcaption><strong>Basic shake</strong> &mdash; pure CSS keyframes, restarted by removing and re-adding the class.</figcaption>
+          </figure>
+
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <form class="sh-form" id="sh-form" novalidate>
+                <label for="sh-email">Email address</label>
+                <div class="sh-row">
+                  <input class="sh-input" type="email" id="sh-email" name="email" autocomplete="email" required aria-describedby="sh-email-error" />
+                  <button type="submit" class="sh-submit">Submit</button>
+                </div>
+                <p class="sh-error" id="sh-email-error" role="alert"></p>
+              </form>
+            </div>
+            <figcaption><strong>Accessible invalid field</strong> &mdash; submit it empty: text error, <code>aria-invalid</code>, an alert and a WAAPI shake.</figcaption>
+          </figure>
+
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="sh-pair" aria-hidden="true">
+                <div class="sh-side"><span class="sh-tag">Motion</span><div class="sh-mock" id="sh-motion">jo@mail</div></div>
+                <div class="sh-side"><span class="sh-tag">Reduced</span><div class="sh-mock" id="sh-calm">jo@mail</div></div>
+              </div>
+              <button type="button" class="recipe-replay" id="sh-compare-replay">Replay both</button>
+            </div>
+            <figcaption><strong>Reduced-motion alternative</strong> &mdash; the same error with movement on the left and an outline pulse on the right.</figcaption>
+          </figure>
+        </div>
+
+        <h2>The keyframes: a shake that decays</h2>
+        <p>A shake that swings the same distance every time looks mechanical, like a phone buzzing on a table. Something knocked sideways loses energy with each swing, so this recipe shrinks every swing until the element settles back at zero:</p>
+        <pre><code class="language-css">.sh-shake {
+  animation: sh-shake 400ms ease-in-out both;
+}
+@keyframes sh-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-8px); }
+  30% { transform: translateX(6px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+}</code></pre>
+
+        <table class="quick-table">
+          <thead><tr><th>Keyframe</th><th>Time at 400ms</th><th>translateX</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>0%</td><td>0ms</td><td>0</td><td>At rest</td></tr>
+            <tr><td>15%</td><td>60ms</td><td>&minus;8px</td><td>First and strongest swing</td></tr>
+            <tr><td>30%</td><td>120ms</td><td>6px</td><td>Swings back, three-quarters as far</td></tr>
+            <tr><td>45%</td><td>180ms</td><td>&minus;4px</td><td>Half the opening swing</td></tr>
+            <tr><td>60%</td><td>240ms</td><td>2px</td><td>Quarter of the opening swing</td></tr>
+            <tr><td>75%</td><td>300ms</td><td>&minus;1px</td><td>A barely visible tremor</td></tr>
+            <tr><td>100%</td><td>400ms</td><td>0</td><td>A 100ms glide back to rest</td></tr>
+          </tbody>
+        </table>
+
+        <p>The swings alternate direction and fall 8, 6, 4, 2, 1. The first steps lose a fixed 2px; the last one halves, so the tail fades out rather than stopping on a visible jolt. Each swing gets 60ms, but the final segment gets 100ms, and that slower return is what makes the ending feel settled instead of abrupt.</p>
+        <p>Eight pixels is plenty on a 40&ndash;48px tall input. It is clearly visible without dragging the field out from under a pointer or a screen magnifier&rsquo;s viewport. Past about 12px the field looks as if it is sliding around.</p>
+        <p>For comparison, the <a href="/css-attention-animations#anim-shake">shake in our attention library</a> swings a constant 8px over 600ms &mdash; good for a playful nudge, heavier than an error needs &mdash; and the <a href="/css-form-animations#anim-field-error">validation shake card</a> runs 400ms with one smaller final swing. This recipe refines the second into the version we would put on a login form.</p>
+
+        <h2>Why transform, not left or margin</h2>
+        <p>Every step animates <code>transform: translateX()</code>. A transform moves the element&rsquo;s painted pixels without changing its box in the layout, so the label above, the button beside it and the error message below never shift. There is no layout shift, and nothing is recalculated on each frame. Browsers can usually run transform animations on the compositor, so the shake stays smooth even while the main thread is busy validating or sending a request.</p>
+        <p>Animating <code>left</code>, <code>margin-left</code> or <code>padding</code> instead forces layout on every frame and can nudge neighbouring elements; our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the rendering pipeline in detail.</p>
+
+        <h2>Duration and easing</h2>
+        <p>Aim for 300&ndash;500ms. Below 300ms the swings blur into a flicker; above 500ms the shake starts to feel like a tantrum, and it delays the moment the user can read the message and start fixing the problem. At 400ms each swing lasts about 60ms, quick enough to read as a single gesture.</p>
+        <p>In CSS keyframes, <code>animation-timing-function</code> applies to each segment between keyframes, not to the timeline as a whole. So <code>ease-in-out</code> slows every swing as it approaches its turning point, as a pendulum does, which reads as natural movement. <code>linear</code> produces a harsh zigzag. The JavaScript version below sets the same easing on each keyframe to match.</p>
+
+        <h2>Restarting the shake on repeated errors</h2>
+        <p>The awkward part of a CSS shake is the second failure. If the class is still on the element, adding it again changes nothing, so the browser has no reason to run the animation again. There are three fixes.</p>
+
+        <h3>1. Remove, reflow, re-add</h3>
+        <p>Remove the class, force the browser to process that change by reading a layout property, then add the class back. The first demo uses exactly this:</p>
+        <pre><code class="language-js">const box = document.getElementById('sh-basic');
+document.getElementById('sh-basic-replay').addEventListener('click', () =&gt; {
+  box.classList.remove('sh-shake');
+  void box.offsetWidth; // force a reflow so the browser sees the removal
+  box.classList.add('sh-shake');
+});</code></pre>
+        <p>It works everywhere. The cost is a synchronous layout per click, trivial for one element, and a line that looks like a mistake without its comment.</p>
+
+        <h3>2. Clean up on animationend</h3>
+        <p>Remove the class as soon as the animation finishes, so the element is always ready for the next error:</p>
+        <pre><code class="language-js">box.addEventListener('animationend', () =&gt; {
+  box.classList.remove('sh-shake');
+});
+// on each failed attempt:
+box.classList.add('sh-shake');</code></pre>
+        <p>It reads more cleanly, but <code>animationend</code> only fires when an animation completes. If the animation is aborted &mdash; the element is removed, or the class is taken off early &mdash; the event never arrives, and a second error during the first shake simply gets lost.</p>
+
+        <h3>3. The Web Animations API (the cleanest)</h3>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animate" rel="noopener">MDN&rsquo;s reference for <code>Element.animate()</code></a> describes it as a shortcut that creates an animation, applies it to the element, plays it and returns an <code>Animation</code> object. Every call starts a fresh run, so there is no class to reset and no reflow to force. Keep a reference, cancel the previous run, and start again:</p>
+        <pre><code class="language-js">const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const step = (px, offset) =&gt; ({ transform: `translateX(${px}px)`, offset, easing: 'ease-in-out' });
+const SHAKE = [step(0, 0), step(-8, 0.15), step(6, 0.3), step(-4, 0.45), step(2, 0.6), step(-1, 0.75), step(0, 1)];
+const FLASH = [{ outlineColor: 'rgba(248, 113, 113, 0)' }, { outlineColor: 'rgba(248, 113, 113, 1)', offset: 0.3 }, { outlineColor: 'rgba(248, 113, 113, 0)' }];
+
+function signal(el, motion = !reduce.matches) {
+  el.shAnim?.cancel();
+  el.shAnim = motion ? el.animate(SHAKE, 400) : el.animate(FLASH, 900);
+}</code></pre>
+        <p>Two details. <code>animationend</code> belongs to CSS animations, so a script-created animation will not fire it; await <code>animation.finished</code> if you need to know when it is over. And a CSS <code>@media</code> rule cannot switch off an animation started from script, which is why <code>signal()</code> checks <code>prefers-reduced-motion</code> itself. <code>Element.animate()</code> has been Baseline widely available since 2020.</p>
+
+        <h2>Accessibility: the shake is decoration</h2>
+        <p>A screen reader user hears nothing when a field moves 8px. Someone who glanced away misses it, and someone with reduced motion enabled never sees it. The shake can only ever be a supplement: the error itself must exist as text, tied to the field and announced. Here is the markup from the second demo:</p>
+        <pre><code class="language-html">&lt;form class="sh-form" id="sh-form" novalidate&gt;
+  &lt;label for="sh-email"&gt;Email address&lt;/label&gt;
+  &lt;div class="sh-row"&gt;
+    &lt;input class="sh-input" type="email" id="sh-email" name="email" autocomplete="email" required aria-describedby="sh-email-error" /&gt;
+    &lt;button type="submit" class="sh-submit"&gt;Submit&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;p class="sh-error" id="sh-email-error" role="alert"&gt;&lt;/p&gt;
+&lt;/form&gt;</code></pre>
+        <ul>
+          <li><strong>A real label and visible text.</strong> The message says what is wrong and how to fix it &mdash; &ldquo;Enter an email address in the format name@example.com&rdquo;, not &ldquo;Invalid&rdquo;.</li>
+          <li><strong><code>aria-describedby</code></strong> on the input points at the message, so a screen reader reads it whenever focus returns to the field.</li>
+          <li><strong><code>aria-invalid="true"</code></strong> is set only after a failed submit. <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-invalid" rel="noopener">MDN&rsquo;s aria-invalid guidance</a> warns against marking an empty required field invalid before the user tries to submit, because they may still be filling it in.</li>
+          <li><strong><code>role="alert"</code></strong> sits on a container that is present, and empty, from page load. Putting text into it triggers an assertive announcement. <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role" rel="noopener">MDN&rsquo;s alert role page</a> explains why: alerts announce changes to content, and an element that appears with its message already inside is often not announced at all.</li>
+          <li><strong><code>novalidate</code></strong> turns off the browser&rsquo;s own error bubbles, while <code>checkValidity()</code> still applies the <code>type="email"</code> and <code>required</code> rules.</li>
+        </ul>
+        <pre><code class="language-js">form.addEventListener('submit', (event) =&gt; {
+  event.preventDefault();
+  const ok = email.checkValidity();
+  error.textContent = ok ? '' : 'Enter an email address in the format name@example.com';
+  if (ok) { email.removeAttribute('aria-invalid'); return; }
+  email.setAttribute('aria-invalid', 'true');
+  signal(email);
+});</code></pre>
+        <p>The last requirement is a cue that doesn&rsquo;t depend on colour. A red border alone fails anyone who struggles to tell red from grey or green, so the demo also doubles the border&rsquo;s thickness with an inset shadow and puts a round &ldquo;!&rdquo; badge before the message. The badge is generated with <code>content: "!" / ""</code>, which gives it empty alternative text, so screen readers don&rsquo;t say &ldquo;exclamation mark&rdquo; before every error.</p>
+        <p>One field, one alert, is right. On a longer form, announce a single summary such as &ldquo;3 errors, listed below&rdquo; rather than firing an alert per field, and shake only the submit button, or nothing at all.</p>
+
+        <h2>Reduced motion: swap movement for colour</h2>
+        <p>People with vestibular disorders can experience dizziness, nausea or headaches from motion they didn&rsquo;t expect. Operating systems offer a &ldquo;reduce motion&rdquo; setting, and CSS reads it through the <code>prefers-reduced-motion</code> media query. <a href="https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html" rel="noopener">WCAG 2.2 Success Criterion 2.3.3, Animation from Interactions</a>, requires that motion animation triggered by an interaction can be disabled unless the animation is essential. It is a Level AAA criterion, so it sits above the AA level that most accessibility laws and contracts reference. Still, a shake is never essential, and the same Understanding document lists the reduced-motion media query as a sufficient technique.</p>
+        <p>Don&rsquo;t simply delete the feedback, though &mdash; replace it. WCAG&rsquo;s definition of motion animation does not cover colour changes, so an outline that pulses red conveys the same &ldquo;look here&rdquo; without anything moving:</p>
+        <pre><code class="language-css">@keyframes sh-flash {
+  from { outline-color: rgba(248, 113, 113, 0); }
+  30%  { outline-color: rgba(248, 113, 113, 1); }
+  to   { outline-color: rgba(248, 113, 113, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sh-shake { animation-name: sh-flash; animation-duration: 900ms; }
+}</code></pre>
+        <p>The element needs <code>outline: 2px solid</code> with a transparent colour at rest, so there is an outline for the keyframes to colour in. The pulse runs longer than the shake because a gentle colour change needs more time to register than movement does. In the JavaScript version the same decision happens inside <code>signal()</code>: when the media query matches, it animates <code>outline-color</code> instead of <code>transform</code>. The third demo shows both side by side.</p>
+        <p>Either way, the persistent error state &mdash; thicker border, badge and message &mdash; is identical for every user, because that is the part carrying the information.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I make a shake animation in CSS?</summary>
+            <p class="faq-answer">Write @keyframes that move the element left and right with transform: translateX(), shrinking each swing (for example -8px, 6px, -4px, 2px, -1px) and ending at 0. Apply it with animation: shake 400ms ease-in-out, and add the class only when an error occurs.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I replay a shake animation every time a form fails?</summary>
+            <p class="faq-answer">Adding a class that is already present does nothing. Either remove the class, read offsetWidth to force a reflow and add it again, remove the class on animationend, or use element.animate() from the Web Animations API, which starts a fresh animation on every call.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is a shake animation accessible?</summary>
+            <p class="faq-answer">Only as decoration. Screen reader users cannot perceive it, so the error must also appear as text linked to the field with aria-describedby, the field needs aria-invalid="true", and the message should be announced through role="alert" or a live region.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should a shake animation respect prefers-reduced-motion?</summary>
+            <p class="faq-answer">Yes. Motion can trigger dizziness or nausea in people with vestibular disorders. When prefers-reduced-motion is set to reduce, keep the error styling but swap the movement for a colour change, such as an outline that pulses red without moving.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-attention-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>Attention animations</h3>
+            <p>Shake, wobble, pulse and other effects that point the eye at one element.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-form-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>Form animations</h3>
+            <p>Focus glows, floating labels, toggles and validation feedback for real inputs.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>The practical checklist for keyboard, screen reader and motion accessibility.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+      const step = (px, offset) => ({ transform: `translateX(${px}px)`, offset, easing: 'ease-in-out' });
+      const SHAKE = [step(0, 0), step(-8, 0.15), step(6, 0.3), step(-4, 0.45), step(2, 0.6), step(-1, 0.75), step(0, 1)];
+      const FLASH = [{ outlineColor: 'rgba(248, 113, 113, 0)' }, { outlineColor: 'rgba(248, 113, 113, 1)', offset: 0.3 }, { outlineColor: 'rgba(248, 113, 113, 0)' }];
+      function signal(el, motion = !reduce.matches) {
+        el.shAnim?.cancel();
+        el.shAnim = motion ? el.animate(SHAKE, 400) : el.animate(FLASH, 900);
+      }
+      const box = document.getElementById('sh-basic');
+      document.getElementById('sh-basic-replay').addEventListener('click', () => {
+        box.classList.remove('sh-shake');
+        void box.offsetWidth; // force a reflow so the browser sees the removal
+        box.classList.add('sh-shake');
+      });
+      const [form, email, error] = ['sh-form', 'sh-email', 'sh-email-error'].map((id) => document.getElementById(id));
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const ok = email.checkValidity();
+        error.textContent = ok ? '' : 'Enter an email address in the format name@example.com';
+        if (ok) { email.removeAttribute('aria-invalid'); return; }
+        email.setAttribute('aria-invalid', 'true');
+        signal(email);
+      });
+      document.getElementById('sh-compare-replay').addEventListener('click', () => {
+        signal(document.getElementById('sh-motion'));
+        signal(document.getElementById('sh-calm'), false);
+      });
+    })();
+  </script>
+  <script src="common.js"></script>
+</body>
+</html>
