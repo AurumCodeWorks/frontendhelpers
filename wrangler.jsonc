@@ -1,0 +1,26 @@
+// Cloudflare Workers (static assets) — deployed by .github/workflows/deploy.yml
+// The site is pure static files: no Worker script runs, so every request is
+// served straight from Cloudflare's asset cache (free and unmetered).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "summer-butterfly-6a5f",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    // Built by scripts/build.mjs
+    "directory": "./dist",
+    // /page.html → /page and /dir/index.html → /dir/ (permanent 301s for
+    // legacy URLs come from _redirects)
+    "html_handling": "auto-trailing-slash",
+    // Serve 404.html with a real 404 status instead of an empty body
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "frontendhelpers.com", "custom_domain": true },
+    { "pattern": "www.frontendhelpers.com", "custom_domain": true }
+  ],
+  // No duplicate copy of the site on *.workers.dev
+  "workers_dev": false,
+  // Per-branch preview URLs for pull requests
+  "preview_urls": true,
+  "observability": { "enabled": true }
+}

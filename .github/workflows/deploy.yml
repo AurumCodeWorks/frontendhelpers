@@ -17,6 +17,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    # Deploys are skipped until the repository variable DEPLOY_ENABLED is "true"
+    env:
+      CAN_DEPLOY: ${{ vars.DEPLOY_ENABLED == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -29,18 +32,26 @@ jobs:
       - name: Build
         run: node scripts/build.mjs
 
-      # Skipped until the repository variable CF_PAGES_PROJECT is set.
-      # main → production; any other branch or PR → preview URL.
-      - name: Deploy to Cloudflare Pages
+      # main → production (frontendhelpers.com)
+      - name: Deploy to production
         id: deploy
-        if: ${{ vars.CF_PAGES_PROJECT != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ env.CAN_DEPLOY == 'true' && github.ref == 'refs/heads/main' }}
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=${{ github.head_ref || github.ref_name }} --commit-hash=${{ github.sha }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: deploy --message "${{ github.sha }}"
+
+      # Pull requests → a preview URL; production is untouched
+      - name: Upload preview version
+        id: preview
+        if: ${{ env.CAN_DEPLOY == 'true' && github.event_name == 'pull_request' }}
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --preview-alias pr-${{ github.event.number }} --message "PR #${{ github.event.number }} ${{ github.sha }}"
 
       - name: Report URL
-        if: ${{ steps.deploy.outcome == 'success' }}
-        run: echo "Deployed to ${{ steps.deploy.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"
+        if: ${{ steps.deploy.outcome == 'success' || steps.preview.outcome == 'success' }}
+        run: echo "Deployed — ${{ steps.deploy.outputs.deployment-url || steps.preview.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"

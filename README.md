@@ -17,18 +17,16 @@ Internal links use clean URLs (`/contrast-checker`, not `contrast-checker.html`)
 
 ## Deployment
 
-`.github/workflows/deploy.yml` runs on every push and pull request:
+The site is a static-assets **Cloudflare Worker** (`summer-butterfly-6a5f`, config in `wrangler.jsonc`) serving `frontendhelpers.com` and `www.frontendhelpers.com`. `.github/workflows/deploy.yml` runs on every push and pull request:
 
 1. **Quality gate** — `scripts/check.mjs`; any error blocks the deploy.
 2. **Build** — `scripts/build.mjs` copies the site (minus tooling) into `dist/`.
-3. **Deploy** — `wrangler pages deploy` to Cloudflare Pages. Pushes to `main` go to production; other branches and pull requests get a preview URL.
+3. **Deploy** — pushes to `main` run `wrangler deploy` (production). Pull requests upload a preview version at a `pr-<number>` preview URL without touching production.
 
 Required repository settings (Settings → Secrets and variables → Actions):
 
 | Kind | Name | Value |
 |---|---|---|
-| Secret | `CLOUDFLARE_API_TOKEN` | API token with **Cloudflare Pages: Edit** on the account |
-| Variable | `CLOUDFLARE_ACCOUNT_ID` | The Cloudflare account ID that owns the Pages project |
-| Variable | `CF_PAGES_PROJECT` | The Pages project name |
-
-Until `CF_PAGES_PROJECT` is set, the workflow runs the quality gate only.
+| Secret | `CLOUDFLARE_API_TOKEN` | API token with **Workers Scripts: Edit** (account) and **Workers Routes: Edit** + **Zone: Read** (frontendhelpers.com) |
+| Variable | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID |
+| Variable | `DEPLOY_ENABLED` | `true` to deploy; anything else runs the quality gate only |

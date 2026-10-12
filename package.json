@@ -6,6 +6,6 @@
   "scripts": {
     "check": "node scripts/check.mjs",
     "build": "node scripts/build.mjs",
-    "preview": "node scripts/build.mjs && npx wrangler@4 pages dev dist"
+    "preview": "node scripts/build.mjs && npx wrangler@4 dev"
   }
 }

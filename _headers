@@ -27,7 +27,3 @@
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
-
-/*
-  Link: </fonts/outfit-v1-latin-600.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
-
