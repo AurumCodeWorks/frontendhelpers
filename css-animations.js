@@ -1024,13 +1024,24 @@ document.addEventListener('DOMContentLoaded', () => {
       tags: ['accordion', 'collapse', 'expand', 'faq'],
       html: '<div class="fh-accordion" style="width:88%;"><input type="checkbox" id="fh-acc-demo" checked /><label class="fh-acc-head" for="fh-acc-demo">What is this?</label><div class="fh-acc-body"><div><p>A pure-CSS accordion with a real height animation.</p></div></div></div>',
       usage: '<div class="fh-accordion">\n  <input type="checkbox" id="q1" />\n  <label class="fh-acc-head" for="q1">Question?</label>\n  <div class="fh-acc-body"><div>\n    <p>Answer content…</p>\n  </div></div>\n</div>',
-      note: 'Height auto can\'t be transitioned — but grid-template-rows 0fr → 1fr can. That\'s the modern trick for smooth accordions with no fixed max-height guesswork.',
+      note: 'Height auto can\'t be transitioned — but grid-template-rows 0fr → 1fr can. That\'s the modern trick for smooth accordions with no fixed max-height guesswork. The checkbox stays keyboard-focusable (Space toggles it); for proper button semantics use native details or a button with aria-expanded, as in our <a href="/css-accordion-animation">accordion animation recipe</a>.',
       css: `.fh-accordion {
+  position: relative;
   border: 1px solid #3a4358;
   border-radius: 10px;
   overflow: hidden;
 }
-.fh-accordion input { display: none; }
+/* Hidden visually but still focusable: display: none would
+   make the accordion impossible to open from the keyboard */
+.fh-accordion input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.fh-accordion input:focus-visible + .fh-acc-head {
+  outline: 2px solid #22d3ee;
+  outline-offset: -2px;
+}
 .fh-acc-head {
   display: block;
   padding: 12px 16px;
@@ -1437,7 +1448,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tags: ['hamburger', 'menu', 'mobile', 'morph', 'x'],
       html: '<label class="fh-burger" aria-label="Toggle menu"><input type="checkbox" /><span></span><span></span><span></span></label>',
       usage: '<label class="fh-burger" aria-label="Toggle menu">\n  <input type="checkbox" />\n  <span></span><span></span><span></span>\n</label>',
-      note: 'The three bars morph into an X using :has() on a hidden checkbox — pure CSS state. In production, sync the checkbox with your menu\'s open state.',
+      note: 'The three bars morph into an X using :has() on a visually hidden (but still focusable) checkbox — pure CSS state. For a real navigation menu, use a button with aria-expanded and toggle a class instead, so screen readers announce whether the menu is open.',
       css: `.fh-burger {
   width: 46px;
   height: 46px;
@@ -1447,8 +1458,21 @@ document.addEventListener('DOMContentLoaded', () => {
   border: 1px solid #3a4358;
   border-radius: 10px;
   cursor: pointer;
+  position: relative;
 }
-.fh-burger input { display: none; }
+/* The checkbox covers the button invisibly, so it stays
+   clickable AND reachable with Tab (display: none is neither) */
+.fh-burger input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.fh-burger:has(input:focus-visible) {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
 .fh-burger span {
   width: 20px;
   height: 2px;

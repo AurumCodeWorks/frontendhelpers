@@ -163,7 +163,7 @@
       <p class="anim-ref-intro">Every effect above, with the markup to use and the complete CSS. Each one is self-contained: paste the CSS once, add the class, done.</p>
       <article class="tool-documentation anim-ref" id="anim-accordion-smooth">
         <h3>Smooth Accordion</h3>
-        <p>Height auto can't be transitioned — but grid-template-rows 0fr → 1fr can. That's the modern trick for smooth accordions with no fixed max-height guesswork.</p>
+        <p>Height auto can't be transitioned — but grid-template-rows 0fr → 1fr can. That's the modern trick for smooth accordions with no fixed max-height guesswork. The checkbox stays keyboard-focusable (Space toggles it); for proper button semantics use native details or a button with aria-expanded, as in our <a href="/css-accordion-animation">accordion animation recipe</a>.</p>
         <p class="anim-ref-label">Markup</p>
         <pre><code class="language-html">&lt;div class="fh-accordion"&gt;
   &lt;input type="checkbox" id="q1" /&gt;
@@ -174,11 +174,22 @@
 &lt;/div&gt;</code></pre>
         <p class="anim-ref-label">CSS</p>
         <pre><code class="language-css">.fh-accordion {
+  position: relative;
   border: 1px solid #3a4358;
   border-radius: 10px;
   overflow: hidden;
 }
-.fh-accordion input { display: none; }
+/* Hidden visually but still focusable: display: none would
+   make the accordion impossible to open from the keyboard */
+.fh-accordion input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.fh-accordion input:focus-visible + .fh-acc-head {
+  outline: 2px solid #22d3ee;
+  outline-offset: -2px;
+}
 .fh-acc-head {
   display: block;
   padding: 12px 16px;
@@ -344,6 +355,12 @@
     <section class="resource-section" style="padding-left:0;padding-right:0;">
       <h2>Related categories</h2>
       <div class="resource-cards">
+          <a href="/css-accordion-animation" class="resource-card">
+            <span class="resource-kicker">Deep dive</span>
+            <h3>Animate Accordion Height in CSS: interpolate-size &amp; More</h3>
+            <p>Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups.</p>
+            <span class="resource-cta">Read the recipe →</span>
+          </a>
           <a href="/css-menu-animations" class="resource-card">
             <span class="resource-kicker">Menus</span>
             <h3>Menus &amp; Dropdowns</h3>

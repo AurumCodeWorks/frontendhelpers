@@ -24,6 +24,10 @@ const IMAGES = {
   'og-css-fade-in-on-scroll': ['Fade in on scroll', 'with pure CSS', [['view()', 'timelines'], ['JS', 'fallback'], ['Recipe', '7 min']]],
   'og-css-animated-gradient-text': ['Animated', 'gradient text', [['background-clip', 'text'], ['Contrast', 'checked'], ['Recipe', '7 min']]],
   'og-css-marquee-animation': ['CSS marquee', 'done right', [['Seamless', 'loop'], ['Pause', 'control'], ['Recipe', '7 min']]],
+  'og-css-hover-underline-animation': ['Hover underline', 'animations', [['Survives', 'line wraps'], ['Focus', 'too'], ['Recipe', '7 min']]],
+  'og-css-flip-card': ['CSS 3D', 'flip card', [['Hover, focus', '& click'], ['inert', 'back face'], ['Recipe', '7 min']]],
+  'og-css-accordion-animation': ['Animate to', 'height: auto', [['interpolate-size', ''], ['details', 'native'], ['Recipe', '7 min']]],
+  'og-css-dialog-animation': ['Animate a', 'native dialog', [['@starting-style', ''], ['allow-discrete', 'exit'], ['Recipe', '7 min']]],
   'og-changelog': ["What's new on", 'FrontendHelpers', [['New', 'tools'], ['New', 'guides'], ['Every', 'fix listed']]],
   'og-css-shake-animation': ['CSS shake', 'animation', [['Accessible', 'errors'], ['Reduced', 'motion'], ['Recipe', '7 min']]],
 };

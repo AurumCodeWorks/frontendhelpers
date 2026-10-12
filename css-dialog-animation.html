@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Animate a native dialog in and out with @starting-style and allow-discrete, fade its backdrop, close it on a backdrop click and respect reduced motion." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-dialog-animation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-dialog-animation" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Animate a Native Dialog in CSS with @starting-style" />
+  <meta property="og:description" content="Animate a native dialog in and out with @starting-style and allow-discrete, fade its backdrop, close it on a backdrop click and respect reduced motion." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-dialog-animation.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Animate a Native Dialog in CSS with @starting-style" />
+  <meta name="twitter:description" content="Animate a native dialog in and out with @starting-style and allow-discrete, fade its backdrop, close it on a backdrop click and respect reduced motion." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-dialog-animation.png" />
+
+  <title>Animate a Native Dialog in CSS with @starting-style</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Trigger buttons */
+    .dl-open {
+      padding: 0.75em 1.5em;
+      border: 0;
+      border-radius: 8px;
+      background: #8b5cf6;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .dl-open:focus-visible { outline: 2px solid #f8fafc; outline-offset: 3px; }
+
+    /* Shared dialog skin, dark theme */
+    .dl-dialog {
+      position: fixed;
+      inset: 0;
+      width: min(26rem, calc(100% - 2rem));
+      margin: auto;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: #101828;
+      color: #f8fafc;
+      box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+    }
+    .dl-body { padding: 22px 24px; }
+    .tool-documentation .dl-dialog .dl-title {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      color: #f8fafc;
+    }
+    .tool-documentation .dl-dialog .dl-text {
+      max-width: none;
+      margin: 0 0 18px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .dl-close {
+      padding: 0.6em 1.2em;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: #1e293b;
+      color: #f8fafc;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .dl-close:focus-visible { outline: 2px solid #06b6d4; outline-offset: 2px; }
+
+    /* Backdrop: fades in and out with its dialog */
+    .dl-dialog::backdrop {
+      background-color: rgb(2 6 23 / 0);
+      transition:
+        background-color 0.25s ease,
+        overlay 0.25s allow-discrete,
+        display 0.25s allow-discrete;
+    }
+    .dl-dialog[open]::backdrop { background-color: rgb(2 6 23 / 0.7); }
+    @starting-style {
+      .dl-dialog[open]::backdrop { background-color: rgb(2 6 23 / 0); }
+    }
+
+    /* Demo 1: scale and fade pop-in */
+    .dl-pop {
+      opacity: 0;
+      transform: scale(0.94);
+      transition:
+        opacity 0.2s ease-in,
+        transform 0.2s ease-in,
+        overlay 0.2s ease-in allow-discrete,
+        display 0.2s ease-in allow-discrete;
+    }
+    .dl-pop[open] {
+      opacity: 1;
+      transform: scale(1);
+      transition-duration: 0.3s;
+      transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @starting-style {
+      .dl-pop[open] { opacity: 0; transform: scale(0.94); }
+    }
+
+    /* Demo 2: bottom sheet */
+    .dl-sheet {
+      width: min(36rem, 100%);
+      max-width: 100%;
+      margin: auto auto 0;
+      border-bottom: 0;
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      transition:
+        transform 0.25s cubic-bezier(0.4, 0, 1, 1),
+        overlay 0.25s allow-discrete,
+        display 0.25s allow-discrete;
+    }
+    .dl-sheet[open] {
+      transform: translateY(0);
+      transition-duration: 0.35s;
+      transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @starting-style {
+      .dl-sheet[open] { transform: translateY(100%); }
+    }
+    .dl-handle {
+      display: block;
+      width: 40px;
+      height: 4px;
+      margin: 0 auto 16px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Demo 3: a fade first, movement only when motion is welcome */
+    .dl-fade {
+      opacity: 0;
+      transition:
+        opacity 0.25s ease,
+        overlay 0.25s allow-discrete,
+        display 0.25s allow-discrete;
+    }
+    .dl-fade[open] { opacity: 1; }
+    @starting-style {
+      .dl-fade[open] { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .dl-fade {
+        translate: 0 0.75rem;
+        transition:
+          opacity 0.25s ease,
+          translate 0.25s ease,
+          overlay 0.25s allow-discrete,
+          display 0.25s allow-discrete;
+      }
+      .dl-fade[open] { translate: 0 0; }
+      @starting-style {
+        .dl-fade[open] { translate: 0 0.75rem; }
+      }
+    }
+
+    /* Reduced motion: demos 1 and 2 keep only the fade */
+    @media (prefers-reduced-motion: reduce) {
+      .dl-pop,
+      .dl-sheet {
+        transform: none;
+        transition:
+          opacity 0.2s ease,
+          overlay 0.2s allow-discrete,
+          display 0.2s allow-discrete;
+      }
+      .dl-sheet { opacity: 0; }
+      .dl-sheet[open] { opacity: 1; }
+      @starting-style {
+        .dl-sheet[open] { opacity: 0; }
+      }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Animate a Native Dialog in CSS with @starting-style",
+        "description": "Animate a native dialog in and out with @starting-style and allow-discrete, fade its backdrop, close it on a backdrop click and respect reduced motion.",
+        "url": "https://frontendhelpers.com/css-dialog-animation",
+        "image": "https://frontendhelpers.com/assets/og-css-dialog-animation.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-dialog-animation" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Dialog Animation", "item": "https://frontendhelpers.com/css-dialog-animation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does my dialog vanish instantly instead of animating out?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Closing sets display: none and removes the dialog from the top layer at once, unless display and overlay are in the transition list with allow-discrete. Add both, with the same duration as the fade. Firefox does not yet transition display, so there the close stays instant even with correct CSS." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does closedby=\"any\" work in every browser?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not yet. MDN's compatibility data lists it in Chrome and Edge 134 and Firefox 141, but in Safari only in Technology Preview as of October 2026. Keep a small click handler that closes the dialog when a press starts and ends on the dialog element itself, and run it only when closedBy is missing." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to move focus back to the button myself?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Usually not. The HTML standard records the focused element when showModal() runs and focuses it again when the modal closes. The exception is Safari on macOS, where clicking a button does not focus it, so there is nothing to return to. A one-line close listener that focuses the trigger covers that case." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use a dialog or a popover?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use a dialog opened with showModal() when the user must deal with it before carrying on, such as a confirmation or a form. Use the popover attribute for non-modal layers such as menus, pickers and toasts, which should not make the rest of the page inert. Both animate with the same @starting-style pattern." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Dialog Animation</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Animate a native dialog: <span class="hero-highlight">open and close in CSS</span></h1>
+        <p class="page-hero-sub">Keep everything the browser gives a modal <code>&lt;dialog&gt;</code> for free, then add an entry animation, an exit animation and a fading backdrop with a few lines of CSS and no animation library.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <button type="button" class="dl-open" command="show-modal" commandfor="dl-pop">Open pop-in</button>
+              <dialog id="dl-pop" class="dl-dialog dl-pop" closedby="any" aria-labelledby="dl-pop-title">
+                <div class="dl-body">
+                  <h2 id="dl-pop-title" class="dl-title">Discard this draft?</h2>
+                  <p class="dl-text">The panel scales up from 94% with a slight overshoot and leaves faster than it arrived. Press Esc, click the backdrop or use the button.</p>
+                  <form method="dialog"><button class="dl-close">Close</button></form>
+                </div>
+              </dialog>
+            </div>
+            <figcaption><strong>Scale and fade</strong> — 0.3s in with a soft overshoot, 0.2s out, backdrop fading alongside.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <button type="button" class="dl-open" command="show-modal" commandfor="dl-sheet">Open bottom sheet</button>
+              <dialog id="dl-sheet" class="dl-dialog dl-sheet" closedby="any" aria-labelledby="dl-sheet-title">
+                <div class="dl-body">
+                  <span class="dl-handle" aria-hidden="true"></span>
+                  <h2 id="dl-sheet-title" class="dl-title">Share this page</h2>
+                  <p class="dl-text">Pinned to the bottom edge, the sheet slides up from below the viewport and drops back down when it closes.</p>
+                  <form method="dialog"><button class="dl-close">Close</button></form>
+                </div>
+              </dialog>
+            </div>
+            <figcaption><strong>Bottom sheet</strong> — a <code>translateY(100%)</code> slide with a decelerating curve in and an accelerating one out.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <button type="button" class="dl-open" command="show-modal" commandfor="dl-fade">Open fade</button>
+              <dialog id="dl-fade" class="dl-dialog dl-fade" closedby="any" aria-labelledby="dl-fade-title">
+                <div class="dl-body">
+                  <h2 id="dl-fade-title" class="dl-title">Settings saved</h2>
+                  <p class="dl-text">This one is a plain fade by default. The small upward drift is added only when the system says motion is welcome.</p>
+                  <form method="dialog"><button class="dl-close">Close</button></form>
+                </div>
+              </dialog>
+            </div>
+            <figcaption><strong>Reduced motion aware</strong> — opacity first; a 0.75rem rise only under <code>no-preference</code>.</figcaption>
+          </figure>
+        </div>
+        <script>
+          {
+            if (!('command' in HTMLButtonElement.prototype)) {
+              document.querySelectorAll('button[command="show-modal"]').forEach((btn) => {
+                btn.addEventListener('click', () => document.getElementById(btn.getAttribute('commandfor')).showModal());
+              });
+            }
+            const needsLightDismiss = !('closedBy' in HTMLDialogElement.prototype);
+            document.querySelectorAll('.dl-dialog').forEach((dialog) => {
+              const trigger = document.querySelector(`[commandfor="${dialog.id}"]`);
+              let pressedOutside = false;
+              dialog.addEventListener('pointerdown', (e) => { pressedOutside = e.target === dialog; });
+              dialog.addEventListener('click', (e) => {
+                if (needsLightDismiss && pressedOutside && e.target === dialog) dialog.close();
+              });
+              dialog.addEventListener('close', () => trigger.focus());
+            });
+          }
+        </script>
+
+        <h2>Why the native dialog is the right starting point</h2>
+        <p>A modal is mostly behaviour, and the behaviour is the hard part. When you open a <code>&lt;dialog&gt;</code> with <code>showModal()</code>, the browser does five things that a hand-built <code>div</code> overlay has to fake. It promotes the dialog to the top layer, above every <code>z-index</code> and outside any <code>overflow: hidden</code> ancestor. It draws a <code>::backdrop</code> pseudo-element behind it that you can style. It moves focus inside. It closes on Esc. And it makes the rest of the page inert, so Tab cannot wander behind the modal and screen readers do not read the page beneath it. As MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog" rel="noopener">dialog element reference</a> notes, a dialog opened this way is also exposed with <code>aria-modal="true"</code> automatically.</p>
+        <p><code>show()</code> or the <code>open</code> attribute give you none of this. Animation never justifies swapping <code>showModal()</code> for a home-made overlay, because, as the rest of this recipe shows, every part of the modal can now be animated with CSS alone. Our <a href="/css-ui-feedback-animations#anim-modal-pop">modal pop-in card</a> shows the keyframe version of the motion; this page wires the same idea to the real element. For the wider checklist around keyboard and screen reader support, see our <a href="/accessible-website-guide">accessible website guide</a>.</p>
+        <pre><code class="language-html">&lt;button type="button" class="dl-open" command="show-modal" commandfor="dl-pop"&gt;Open pop-in&lt;/button&gt;
+&lt;dialog id="dl-pop" class="dl-dialog dl-pop" closedby="any" aria-labelledby="dl-pop-title"&gt;
+  &lt;div class="dl-body"&gt;
+    &lt;h2 id="dl-pop-title" class="dl-title"&gt;Discard this draft?&lt;/h2&gt;
+    &lt;p class="dl-text"&gt;…&lt;/p&gt;
+    &lt;form method="dialog"&gt;&lt;button class="dl-close"&gt;Close&lt;/button&gt;&lt;/form&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+        <p>Three details in that markup do real work. <code>aria-labelledby</code> points at the heading, so a screen reader announces “Discard this draft?, dialog” when focus lands inside. The form with <code>method="dialog"</code> closes the dialog when its button is pressed, with no script. And the dialog’s own padding is zero, with the spacing on an inner <code>div</code>; that matters for the backdrop click later.</p>
+
+        <h2>Animate the opening with @starting-style</h2>
+        <p>An element going from <code>display: none</code> to visible has no previous style to transition from, so by default a dialog simply appears. <code>@starting-style</code> supplies one: it declares the values the element should be treated as having just before its first style update. Put the closed look on the base rule, the open look on <code>[open]</code>, and repeat the closed look inside <code>@starting-style</code>.</p>
+        <pre><code class="language-css">.dl-pop {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 0.2s ease-in,
+    transform 0.2s ease-in,
+    overlay 0.2s ease-in allow-discrete,
+    display 0.2s ease-in allow-discrete;
+}
+.dl-pop[open] {
+  opacity: 1;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@starting-style {
+  .dl-pop[open] { opacity: 0; transform: scale(0.94); }
+}</code></pre>
+        <p>The <code>@starting-style</code> block has the same specificity as the rule it shadows, so it must come after it in the stylesheet; place it first and the open styles win, leaving nothing to animate. Chrome for Developers’ write-up on <a href="https://developer.chrome.com/blog/entry-exit-animations" rel="noopener">entry and exit animations</a> notes that Chrome has enforced this ordering since version 130.</p>
+        <p>A transition takes its timing from the style it is heading towards. Opening, the dialog moves to the <code>[open]</code> rule, so it uses 0.3 seconds and an overshooting curve that settles slightly past full size. Closing, it returns to the base rule and uses 0.2 seconds with <code>ease-in</code>. Quicker exits feel responsive: the user has already decided to leave.</p>
+        <p>We select <code>[open]</code> rather than the newer <code>:open</code> pseudo-class. They match the same dialogs, but MDN’s compatibility data lists <code>:open</code> only from Chrome 133, Firefox 136 and Safari 26.5, while the attribute selector works everywhere <code>&lt;dialog&gt;</code> does.</p>
+
+        <h2>Animate the close: transition display and overlay</h2>
+        <p>Closing is where most attempts fail. <code>close()</code> does two abrupt things: it sets <code>display: none</code> and removes the dialog from the top layer. Either one ends the animation on the first frame. Both are fixed by listing the property in the transition with <code>allow-discrete</code>.</p>
+        <p><code>display</code> is a discrete property: it has no in-between values. Normally discrete properties do not transition at all; with <code>allow-discrete</code> they flip at the halfway point. <code>display</code> is special-cased, as MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition-behavior" rel="noopener">transition-behavior reference</a> explains: going to <code>none</code>, it flips at 100% of the duration, so the dialog stays rendered while the opacity and scale finish. <code>overlay</code> is the browser-controlled property that says whether an element is in the top layer. Authors cannot set it, but listing it in the transition delays the removal by the same duration. Without it the dialog would drop back into the page, under the header and clipped by its parents, while it fades.</p>
+        <p>Give both the same duration as the visible properties. If <code>display</code> is shorter, the dialog disappears before the fade ends; if it is longer, an invisible dialog lingers and swallows clicks. Two more traps: if you write the longhand <code>transition-behavior</code>, it must come after the <code>transition</code> shorthand, which otherwise resets it; and never put <code>display: flex</code> or <code>grid</code> on the base dialog rule, because that overrides the browser’s <code>display: none</code> and shows the closed dialog. Lay out an inner wrapper instead, as the demos do with <code>.dl-body</code>.</p>
+
+        <h2>Fade the backdrop the same way</h2>
+        <p><code>::backdrop</code> is also a top-layer box that appears and disappears with the dialog, so it needs the identical treatment: a transparent base, a tinted open state, a matching <code>@starting-style</code>, and <code>overlay</code> and <code>display</code> with <code>allow-discrete</code>. Transition <code>background-color</code> rather than <code>opacity</code>, so the tint and its timing stay in one declaration. One backdrop rule serves all three demos.</p>
+        <pre><code class="language-css">.dl-dialog::backdrop {
+  background-color: rgb(2 6 23 / 0);
+  transition:
+    background-color 0.25s ease,
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.dl-dialog[open]::backdrop { background-color: rgb(2 6 23 / 0.7); }
+@starting-style {
+  .dl-dialog[open]::backdrop { background-color: rgb(2 6 23 / 0); }
+}</code></pre>
+
+        <h2>A bottom sheet is the same pattern</h2>
+        <p>Only the geometry and the curves change. The browser centres a modal dialog with <code>margin: auto</code>, so <code>margin: auto auto 0</code> pins it to the bottom edge, and the browser’s default <code>max-width</code> must be lifted to let it run full width on a phone. <code>translateY(100%)</code> moves the sheet down by its own height, whatever its content. It enters on a decelerating curve and leaves on an accelerating one.</p>
+        <pre><code class="language-css">.dl-sheet {
+  width: min(36rem, 100%);
+  max-width: 100%;
+  margin: auto auto 0;
+  border-bottom: 0;
+  border-radius: 16px 16px 0 0;
+  transform: translateY(100%);
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 1, 1),
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.dl-sheet[open] {
+  transform: translateY(0);
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+@starting-style {
+  .dl-sheet[open] { transform: translateY(100%); }
+}</code></pre>
+        <p>The shared <code>.dl-dialog</code> rule also sets <code>position: fixed</code> and <code>inset: 0</code>. A modal dialog gets those from the browser anyway, but only while it is modal. In a browser that transitions <code>display</code> but not <code>overlay</code>, the closing dialog leaves the top layer straight away, and without that fixed position it would jump to its spot in the document mid-fade.</p>
+
+        <h2>Close on a backdrop click</h2>
+        <p>Users expect a click outside a modal to dismiss it, which the platform calls light dismiss. The new <code>closedby</code> attribute switches it on: <code>closedby="any"</code> allows Esc, a mobile back gesture and a click outside; <code>closerequest</code>, the default for modals, allows Esc and back but not clicks; <code>none</code> leaves closing entirely to your code. Do not use <code>any</code> for a dialog that holds unsaved input, because a stray click would lose it.</p>
+        <p>Support is not complete, so the demos carry a fallback that runs only when <code>closedBy</code> is missing. A click on <code>::backdrop</code> is reported as a click on the dialog itself, and because the dialog has no padding, every click on its content lands on a descendant instead. The <code>pointerdown</code> check stops a text selection that starts inside and ends outside from closing the dialog, which mirrors the rule in the standard.</p>
+        <pre><code class="language-js">const needsLightDismiss = !('closedBy' in HTMLDialogElement.prototype);
+document.querySelectorAll('.dl-dialog').forEach((dialog) =&gt; {
+  const trigger = document.querySelector(`[commandfor="${dialog.id}"]`);
+  let pressedOutside = false;
+  dialog.addEventListener('pointerdown', (e) =&gt; { pressedOutside = e.target === dialog; });
+  dialog.addEventListener('click', (e) =&gt; {
+    if (needsLightDismiss &amp;&amp; pressedOutside &amp;&amp; e.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () =&gt; trigger.focus());
+});</code></pre>
+        <p>The open buttons use the <code>command="show-modal"</code> and <code>commandfor</code> invoker attributes, which open the dialog without JavaScript in current Chrome, Edge, Firefox and Safari. For older versions, the demo script first checks for <code>command</code> on <code>HTMLButtonElement.prototype</code> and, if it is missing, adds a click listener that calls <code>showModal()</code>.</p>
+
+        <h2>Focus goes back to the trigger</h2>
+        <p>You rarely need to manage focus by hand. The <a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#close-the-dialog" rel="noopener">HTML standard’s close steps</a> record the focused element when <code>showModal()</code> runs and focus it again when a modal dialog closes, however it closed. On open, focus goes to the first focusable element inside, here the Close button, unless an <code>autofocus</code> attribute names something else.</p>
+        <p>The exception is Safari on macOS, where clicking a button does not focus it, so a mouse-opened dialog has no previous focus to restore. A long-standing WebKit bug records exactly this. The last line of the demo script covers it by focusing the trigger on <code>close</code>; in other browsers it simply repeats what has already happened.</p>
+
+        <h2>Reduced motion: fade, don’t move</h2>
+        <p>Scaling and sliding are the movements most likely to bother someone with a vestibular disorder, while a short opacity change is not. There are two ways to write that. Demos one and two use an override: under <code>prefers-reduced-motion: reduce</code>, the transform is removed from the transition list and set to <code>none</code>, and the sheet gains a fade so it still has a visible exit.</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .dl-pop,
+  .dl-sheet {
+    transform: none;
+    transition:
+      opacity 0.2s ease,
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete;
+  }
+  .dl-sheet { opacity: 0; }
+  .dl-sheet[open] { opacity: 1; }
+  @starting-style {
+    .dl-sheet[open] { opacity: 0; }
+  }
+}</code></pre>
+        <p>Demo three inverts it. The base rule is a plain fade, and the 0.75rem rise lives inside <code>prefers-reduced-motion: no-preference</code>, so a browser that does not report the setting falls back to the calm version. We prefer this for new components: motion is opted into, not remembered and removed. Never remove the transitions entirely: without them the dialog still works, but a short fade helps everyone see where the new layer came from.</p>
+        <pre><code class="language-css">.dl-fade {
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.dl-fade[open] { opacity: 1; }
+@starting-style {
+  .dl-fade[open] { opacity: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dl-fade {
+    translate: 0 0.75rem;
+    transition:
+      opacity 0.25s ease,
+      translate 0.25s ease,
+      overlay 0.25s allow-discrete,
+      display 0.25s allow-discrete;
+  }
+  .dl-fade[open] { translate: 0 0; }
+  @starting-style {
+    .dl-fade[open] { translate: 0 0.75rem; }
+  }
+}</code></pre>
+
+        <h2>Browser support in October 2026</h2>
+        <p>Everything here is progressive enhancement: each missing feature removes some polish and never the dialog itself. These are first-supported versions from MDN’s browser compatibility data, checked on 12 October 2026.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Feature</th><th>Chrome / Edge</th><th>Safari</th><th>Firefox</th><th>What happens without it</th></tr></thead>
+            <tbody>
+              <tr><td><code>&lt;dialog&gt;</code>, <code>showModal()</code>, <code>::backdrop</code></td><td>37 / 79</td><td>15.4</td><td>98</td><td>No native modal; you would need a polyfill or library</td></tr>
+              <tr><td><code>@starting-style</code></td><td>117</td><td>17.5</td><td>129</td><td>The dialog appears instantly; closing is unaffected</td></tr>
+              <tr><td><code>transition-behavior: allow-discrete</code></td><td>117</td><td>17.4</td><td>129</td><td>The whole <code>transition</code> declaration is dropped, so no transitions at all</td></tr>
+              <tr><td>Transitioning <code>display</code></td><td>117</td><td>18</td><td>Not yet</td><td>The dialog vanishes at once on close; opening still animates</td></tr>
+              <tr><td><code>overlay</code> in transitions</td><td>117</td><td>Not yet</td><td>Not yet</td><td>The dialog leaves the top layer at once; the backdrop disappears immediately</td></tr>
+              <tr><td><code>closedby</code> attribute</td><td>134</td><td>Technology Preview only</td><td>141</td><td>Backdrop clicks do nothing; the script fallback closes it</td></tr>
+              <tr><td><code>command</code> / <code>commandfor</code></td><td>135</td><td>26.2</td><td>144</td><td>The button does nothing; the script fallback calls <code>showModal()</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>In practice Chrome and Edge get every animation, Safari animates the opening and keeps the closing fade but takes the dialog out of the top layer at once, so the backdrop vanishes and the fading panel can be covered by positioned content, and Firefox animates the opening while closing stays instant. If you still support browsers older than 2024, MDN suggests declaring the transition once without <code>allow-discrete</code> and then again with it, so older engines keep the opacity and transform parts.</p>
+
+        <h2>Popover: the non-modal sibling</h2>
+        <p>Not every layer should block the page. The <code>popover</code> attribute, supported since Chrome 114, Safari 17 and Firefox 125, also puts an element in the top layer and can be opened from a button with <code>popovertarget</code> and no script. An <code>auto</code> popover closes on Esc and on a click outside by default, but it does not make the page inert or trap focus, and it has no implicit dialog role, which is right for menus, pickers and toasts. It animates with exactly this recipe: swap <code>[open]</code> for <code>:popover-open</code> and keep the <code>@starting-style</code>, <code>overlay</code> and <code>display</code> lines. If the user must answer before doing anything else, use <code>showModal()</code>; otherwise, reach for a popover. More motion patterns for both live in our <a href="/css-ui-feedback-animations">UI feedback animations</a> collection.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Why does my dialog vanish instantly instead of animating out?</summary>
+            <p class="faq-answer">Closing sets display: none and removes the dialog from the top layer at once, unless display and overlay are in the transition list with allow-discrete. Add both, with the same duration as the fade. Firefox does not yet transition display, so there the close stays instant even with correct CSS.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does closedby="any" work in every browser?</summary>
+            <p class="faq-answer">Not yet. MDN's compatibility data lists it in Chrome and Edge 134 and Firefox 141, but in Safari only in Technology Preview as of October 2026. Keep a small click handler that closes the dialog when a press starts and ends on the dialog element itself, and run it only when closedBy is missing.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do I need to move focus back to the button myself?</summary>
+            <p class="faq-answer">Usually not. The HTML standard records the focused element when showModal() runs and focuses it again when the modal closes. The exception is Safari on macOS, where clicking a button does not focus it, so there is nothing to return to. A one-line close listener that focuses the trigger covers that case.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use a dialog or a popover?</summary>
+            <p class="faq-answer">Use a dialog opened with showModal() when the user must deal with it before carrying on, such as a confirmation or a form. Use the popover attribute for non-modal layers such as menus, pickers and toasts, which should not make the rest of the page inert. Both animate with the same @starting-style pattern.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-ui-feedback-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS UI feedback animations</h3>
+            <p>Modal pop-ins, toasts, ripples and alerts, each with markup and CSS to copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>Keyboard access, focus handling and screen reader basics for every interactive component.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Why opacity and transform stay smooth while other properties repaint every frame.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

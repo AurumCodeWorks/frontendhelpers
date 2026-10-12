@@ -55,6 +55,10 @@ All generated output and published snippets are free to use in personal and comm
 - [Animated Gradient Text in CSS (and Keeping It Readable)](https://frontendhelpers.com/css-animated-gradient-text): Animate gradient text with background-clip and @property, then keep it readable: contrast at every stop, forced colours, selection and reduced motion.
 - [CSS Marquee: An Infinite Scrolling Ticker Done Right](https://frontendhelpers.com/css-marquee-animation): A seamless CSS marquee: two copies and translateX(-50%), masked edge fades, speed in px/s, a real Pause button for WCAG 2.2.2, and reduced-motion support.
 - [Fade In on Scroll with CSS Scroll-Driven Animations](https://frontendhelpers.com/css-fade-in-on-scroll): Reveal content on scroll with animation-timeline: view(), add an IntersectionObserver fallback, and never hide content that only JavaScript can show.
+- [CSS Hover Underline Animations That Work With Wrapping](https://frontendhelpers.com/css-hover-underline-animation): Animate link underlines with ::after and scaleX, a background-size gradient that survives line wraps, or text-decoration transitions, accessibly.
+- [CSS Flip Card: 3D Card Flip on Hover, Focus and Click](https://frontendhelpers.com/css-flip-card): Build a CSS flip card with perspective, preserve-3d and backface-visibility. Stack faces with grid, flip on focus or a button, respect reduced motion.
+- [Animate Accordion Height in CSS: interpolate-size & More](https://frontendhelpers.com/css-accordion-animation): Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups.
+- [Animate a Native Dialog in CSS with @starting-style](https://frontendhelpers.com/css-dialog-animation): Animate a native dialog in and out with @starting-style and allow-discrete, fade its backdrop, close it on a backdrop click and respect reduced motion.
 
 ## Guides
 
