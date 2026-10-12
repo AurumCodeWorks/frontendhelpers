@@ -12,7 +12,7 @@ const OUT = join(ROOT, 'dist');
 const EXCLUDE = new Set([
   '.git', '.github', '.gitignore', '.wrangler', 'node_modules',
   'dist', 'scripts', 'package.json', 'package-lock.json', 'README.md',
-  'wrangler.jsonc', '.gitattributes',
+  'wrangler.jsonc', '.gitattributes', 'changelog.json',
 ]);
 
 // Empty dist/ rather than deleting it, so a running `wrangler dev`
