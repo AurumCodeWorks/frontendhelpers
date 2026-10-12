@@ -103,14 +103,70 @@ function tipCards() {
       </article>`).join('') + '\n    ';
 }
 
+/* ── Changelog page + Atom feed (from changelog.json) ──────── */
+const { entries: CHANGES } = JSON.parse(read('changelog.json'));
+const SITE = 'https://frontendhelpers.com';
+const LABEL = { new: 'New', improved: 'Improved', fixed: 'Fixed' };
+const longDate = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const entryId = (e, i) => `${e.date}-${CHANGES.length - i}`;
+
+function changelogHtml() {
+  return CHANGES.map((e, i) => `
+        <section class="changelog-entry" id="${entryId(e, i)}">
+          <h2><time datetime="${e.date}">${longDate(e.date)}</time> — ${esc(e.title)}</h2>
+          <ul>${e.items.map(it => `
+            <li><span class="change-tag change-${it.type}">${LABEL[it.type]}</span> ${it.link ? `<a href="${it.link}">${esc(it.text)}</a>` : esc(it.text)}</li>`).join('')}
+          </ul>
+        </section>`).join('') + '\n';
+}
+
+function changelogAtom() {
+  const updated = CHANGES[0].date + 'T00:00:00Z';
+  const items = CHANGES.map((e, i) => {
+    const list = e.items.map(it => `<li><strong>${LABEL[it.type]}:</strong> ${it.link ? `<a href="${SITE}${it.link}">${esc(it.text)}</a>` : esc(it.text)}</li>`).join('');
+    return `  <entry>
+    <title>${esc(e.title)}</title>
+    <id>${SITE}/changelog#${entryId(e, i)}</id>
+    <link href="${SITE}/changelog#${entryId(e, i)}"/>
+    <updated>${e.date}T00:00:00Z</updated>
+    <content type="html">${esc(`<ul>${list}</ul>`)}</content>
+  </entry>`;
+  }).join('\n');
+  return `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>FrontendHelpers — what's new</title>
+  <subtitle>New tools, guides and fixes on FrontendHelpers.</subtitle>
+  <id>${SITE}/changelog</id>
+  <link href="${SITE}/changelog"/>
+  <link rel="self" href="${SITE}/changelog.xml"/>
+  <author><name>AurumCodeWorks</name></author>
+  <updated>${updated}</updated>
+${items}
+</feed>
+`;
+}
+
 /* ── Apply ─────────────────────────────────────────────────── */
 const jobs = [
   ...Object.entries(CAT_PAGES).map(([cat, page]) => [`${page}.html`, 'anim-reference', () => animReference(cat)]),
   ['css-animations.html', 'anim-index', animIndex],
   ['js-tips.html', 'tip-cards', tipCards],
+  ['changelog.html', 'changelog', changelogHtml],
 ];
 
 let stale = 0;
+
+// Whole generated files (no markers)
+for (const [file, render] of [['changelog.xml', changelogAtom]]) {
+  const out = render();
+  let src = '';
+  try { src = read(file); } catch { /* first run */ }
+  if (out === src) continue;
+  stale++;
+  if (CHECK) console.log(`stale  ${file}`);
+  else { writeFileSync(join(ROOT, file), out); console.log(`wrote  ${file}`); }
+}
+
 for (const [file, name, render] of jobs) {
   const src = read(file);
   const open = `<!-- generated:${name} -->`, close = `<!-- /generated:${name} -->`;

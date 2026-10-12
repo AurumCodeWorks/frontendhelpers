@@ -39,6 +39,9 @@
   Content-Type: text/plain; charset=utf-8
   X-Robots-Tag: noindex
 
+/changelog.xml
+  Content-Type: application/atom+xml; charset=utf-8
+
 # Machine-readable entry points, advertised from the homepage (RFC 8288)
 /
-  Link: </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="describedby"; type="text/plain", </sitemap.xml>; rel="sitemap"; type="application/xml", </index.md>; rel="alternate"; type="text/markdown"
+  Link: </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="describedby"; type="text/plain", </sitemap.xml>; rel="sitemap"; type="application/xml", </index.md>; rel="alternate"; type="text/markdown", </changelog.xml>; rel="alternate"; type="application/atom+xml"

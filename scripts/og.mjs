@@ -20,6 +20,7 @@ const IMAGES = {
   'og-css-typewriter-effect': ['CSS typewriter', 'effect', [['steps()', '+ ch'], ['3', 'live demos'], ['Recipe', '7 min']]],
   'og-css-skeleton-loader': ['Skeleton loading', 'screens in CSS', [['Shimmer', 'on the compositor'], ['Accessible', 'loading'], ['Recipe', '7 min']]],
   'og-css-animated-gradient-border': ['Animated gradient', 'borders', [['3', 'techniques'], ['@property', 'animation'], ['Recipe', '7 min']]],
+  'og-changelog': ["What's new on", 'FrontendHelpers', [['New', 'tools'], ['New', 'guides'], ['Every', 'fix listed']]],
   'og-css-shake-animation': ['CSS shake', 'animation', [['Accessible', 'errors'], ['Reduced', 'motion'], ['Recipe', '7 min']]],
 };
 

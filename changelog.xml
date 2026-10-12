@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>FrontendHelpers — what's new</title>
+  <subtitle>New tools, guides and fixes on FrontendHelpers.</subtitle>
+  <id>https://frontendhelpers.com/changelog</id>
+  <link href="https://frontendhelpers.com/changelog"/>
+  <link rel="self" href="https://frontendhelpers.com/changelog.xml"/>
+  <author><name>AurumCodeWorks</name></author>
+  <updated>2026-10-12T00:00:00Z</updated>
+  <entry>
+    <title>Four in-depth CSS effect recipes</title>
+    <id>https://frontendhelpers.com/changelog#2026-10-12-4</id>
+    <link href="https://frontendhelpers.com/changelog#2026-10-12-4"/>
+    <updated>2026-10-12T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-typewriter-effect"&gt;CSS typewriter effect: the steps() and ch technique, multi-line typing and when to use JavaScript instead&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-skeleton-loader"&gt;Skeleton loading screens: layout-matched placeholders, a compositor-friendly shimmer and accessible loading states&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-animated-gradient-border"&gt;Animated gradient borders: three techniques compared, animated with @property&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-shake-animation"&gt;Shake animation for form errors, with an accessible, reduced-motion-friendly version&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>A new tool, three guides and an accuracy overhaul</title>
+    <id>https://frontendhelpers.com/changelog#2026-10-12-3</id>
+    <link href="https://frontendhelpers.com/changelog#2026-10-12-3"/>
+    <updated>2026-10-12T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/clamp-generator"&gt;CSS clamp() generator: fluid font sizes and type scales, with a check that 200% browser zoom still works&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/fluid-typography-clamp-guide"&gt;Guide: fluid typography with clamp(), with worked maths and zoom results&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/wcag-colour-contrast-guide"&gt;Guide: WCAG 2.2 colour contrast for developers, with 17 real colour pairs tested&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/robots-txt-vs-noindex-vs-canonical"&gt;Guide: robots.txt vs noindex vs canonical, and which to use when&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/"&gt;The homepage is now a directory of every tool, with a quick filter&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; Rewrote the developer notes on all 16 tool pages; every code sample was run before publishing&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-animations"&gt;Every animation's markup and CSS is now written out on its category page, and the JS tips library reads without JavaScript&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/llms.txt"&gt;Every page is available as Markdown for AI assistants and coding agents (add .md to any URL)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/privacy-policy"&gt;Microsoft Clarity now loads only after you accept cookies, and the privacy and cookie policies describe exactly what loads&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; Accessibility: labels on every form control, reduced-motion support and corrected heading levels&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Fixed:&lt;/strong&gt; Around twenty factual errors across tools and guides, including what Search Console's "Discovered – currently not indexed" status means&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Fixed:&lt;/strong&gt; The slug, text case and keyword tools now handle accented and non-English text (Straße → strasse, café stays café)&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>First guides published</title>
+    <id>https://frontendhelpers.com/changelog#2026-07-19-2</id>
+    <link href="https://frontendhelpers.com/changelog#2026-07-19-2"/>
+    <updated>2026-07-19T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/guides"&gt;Six practical guides: indexing problems, Core Web Vitals, accessibility, dark mode, CSS animation performance and a launch checklist&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>FrontendHelpers launched</title>
+    <id>https://frontendhelpers.com/changelog#2026-07-16-1</id>
+    <link href="https://frontendhelpers.com/changelog#2026-07-16-1"/>
+    <updated>2026-07-16T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; Free browser-based SEO and CSS tools, a copy-paste CSS animation library, JavaScript tips, Dev Essentials and a React vs Angular comparison&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+</feed>

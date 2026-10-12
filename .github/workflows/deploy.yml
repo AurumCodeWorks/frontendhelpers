@@ -22,6 +22,8 @@ jobs:
       CAN_DEPLOY: ${{ vars.DEPLOY_ENABLED == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # IndexNow diffs this push against the previous one
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -48,6 +50,12 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --message "${{ github.sha }}"
+
+      # Tell Bing, Yandex, Seznam & co. which pages changed (never fails the job)
+      - name: Notify search engines (IndexNow)
+        if: ${{ steps.deploy.outcome == 'success' && github.event_name == 'push' }}
+        continue-on-error: true
+        run: node scripts/indexnow.mjs ${{ github.event.before }} ${{ github.sha }}
 
       # Pull requests → a preview URL; production is untouched
       - name: Upload preview version

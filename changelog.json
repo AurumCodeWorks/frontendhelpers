@@ -1,0 +1,47 @@
+{
+  "_comment": "Newest first. Rendered into changelog.html and changelog.xml by scripts/generate.mjs. type: new | improved | fixed. Links are site paths.",
+  "entries": [
+    {
+      "date": "2026-10-12",
+      "title": "Four in-depth CSS effect recipes",
+      "items": [
+        { "type": "new", "text": "CSS typewriter effect: the steps() and ch technique, multi-line typing and when to use JavaScript instead", "link": "/css-typewriter-effect" },
+        { "type": "new", "text": "Skeleton loading screens: layout-matched placeholders, a compositor-friendly shimmer and accessible loading states", "link": "/css-skeleton-loader" },
+        { "type": "new", "text": "Animated gradient borders: three techniques compared, animated with @property", "link": "/css-animated-gradient-border" },
+        { "type": "new", "text": "Shake animation for form errors, with an accessible, reduced-motion-friendly version", "link": "/css-shake-animation" }
+      ]
+    },
+    {
+      "date": "2026-10-12",
+      "title": "A new tool, three guides and an accuracy overhaul",
+      "items": [
+        { "type": "new", "text": "CSS clamp() generator: fluid font sizes and type scales, with a check that 200% browser zoom still works", "link": "/clamp-generator" },
+        { "type": "new", "text": "Guide: fluid typography with clamp(), with worked maths and zoom results", "link": "/fluid-typography-clamp-guide" },
+        { "type": "new", "text": "Guide: WCAG 2.2 colour contrast for developers, with 17 real colour pairs tested", "link": "/wcag-colour-contrast-guide" },
+        { "type": "new", "text": "Guide: robots.txt vs noindex vs canonical, and which to use when", "link": "/robots-txt-vs-noindex-vs-canonical" },
+        { "type": "improved", "text": "The homepage is now a directory of every tool, with a quick filter", "link": "/" },
+        { "type": "improved", "text": "Rewrote the developer notes on all 16 tool pages; every code sample was run before publishing" },
+        { "type": "improved", "text": "Every animation's markup and CSS is now written out on its category page, and the JS tips library reads without JavaScript", "link": "/css-animations" },
+        { "type": "improved", "text": "Every page is available as Markdown for AI assistants and coding agents (add .md to any URL)", "link": "/llms.txt" },
+        { "type": "improved", "text": "Microsoft Clarity now loads only after you accept cookies, and the privacy and cookie policies describe exactly what loads", "link": "/privacy-policy" },
+        { "type": "improved", "text": "Accessibility: labels on every form control, reduced-motion support and corrected heading levels" },
+        { "type": "fixed", "text": "Around twenty factual errors across tools and guides, including what Search Console's \"Discovered – currently not indexed\" status means" },
+        { "type": "fixed", "text": "The slug, text case and keyword tools now handle accented and non-English text (Straße → strasse, café stays café)" }
+      ]
+    },
+    {
+      "date": "2026-07-19",
+      "title": "First guides published",
+      "items": [
+        { "type": "new", "text": "Six practical guides: indexing problems, Core Web Vitals, accessibility, dark mode, CSS animation performance and a launch checklist", "link": "/guides" }
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "title": "FrontendHelpers launched",
+      "items": [
+        { "type": "new", "text": "Free browser-based SEO and CSS tools, a copy-paste CSS animation library, JavaScript tips, Dev Essentials and a React vs Angular comparison" }
+      ]
+    }
+  ]
+}

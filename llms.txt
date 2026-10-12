@@ -66,6 +66,7 @@ All generated output and published snippets are free to use in personal and comm
 
 ## Optional
 
+- [Changelog](https://frontendhelpers.com/changelog): Every new tool, guide and fix, newest first. Atom feed: https://frontendhelpers.com/changelog.xml
 - [Web Development Guides — SEO, Performance & Accessibility](https://frontendhelpers.com/guides): Practical web development guides: Google indexing diagnostics, Core Web Vitals fixes, accessibility, dark mode, animation performance, and launch checklists.
 - [About FrontendHelpers — Free Tools, Built by Hand](https://frontendhelpers.com/about): About FrontendHelpers: a free, hand-built collection of browser-based web development tools, CSS animations, and guides with no tracking or accounts.
 - [Privacy Policy](https://frontendhelpers.com/privacy-policy): Privacy Policy for FrontendHelpers: Learn how we protect your privacy, process client-side tool inputs, and handle cookies and Google AdSense.
