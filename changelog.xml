@@ -8,6 +8,13 @@
   <author><name>AurumCodeWorks</name></author>
   <updated>2026-10-12T00:00:00Z</updated>
   <entry>
+    <title>Two new tools and faster pages</title>
+    <id>https://frontendhelpers.com/changelog#2026-10-12-6</id>
+    <link href="https://frontendhelpers.com/changelog#2026-10-12-6"/>
+    <updated>2026-10-12T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/color-converter"&gt;Colour converter: hex, RGB, HSL, HWB and OKLCH, with WCAG contrast and an sRGB gamut check&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/cubic-bezier-generator"&gt;Cubic-bezier easing generator: drag the curve, preview it, copy cubic-bezier() or a linear() version&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Improved:&lt;/strong&gt; Faster pages: one variable font file per typeface instead of duplicates, deferred scripts, minified and long-cached CSS&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
     <title>Four more effect recipes and keyboard fixes</title>
     <id>https://frontendhelpers.com/changelog#2026-10-12-5</id>
     <link href="https://frontendhelpers.com/changelog#2026-10-12-5"/>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free cubic-bezier() editor: drag the curve, start from ease or easeOutBack, preview it against linear and copy the CSS plus a linear() version." />
+  <link rel="canonical" href="https://frontendhelpers.com/cubic-bezier-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/cubic-bezier-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Cubic-Bezier Easing Generator — Curve Editor & linear()" />
+  <meta property="og:description" content="Free cubic-bezier() editor: drag the curve, start from ease or easeOutBack, preview it against linear and copy the CSS plus a linear() version." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-cubic-bezier-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Cubic-Bezier Easing Generator — Curve Editor & linear()" />
+  <meta name="twitter:description" content="Free cubic-bezier() editor: drag the curve, start from ease or easeOutBack, preview it against linear and copy the CSS plus a linear() version." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-cubic-bezier-generator.png" />
+
+  <title>CSS Cubic-Bezier Easing Generator | FrontendHelpers</title>
+
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Tool styles for this page only -->
+  <style>
+    .cb-editor { display: flex; flex-direction: column; align-items: center; }
+    .cb-svg {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      color: var(--text);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: crosshair;
+      overflow: visible;
+    }
+    .cb-svg.is-dragging { cursor: grabbing; }
+    .cb-zone { fill: rgba(255, 255, 255, 0.025); stroke: rgba(255, 255, 255, 0.14); stroke-width: 1; }
+    .cb-grid { stroke: rgba(255, 255, 255, 0.06); stroke-width: 1; }
+    .cb-bound { stroke: rgba(255, 255, 255, 0.16); stroke-width: 1; stroke-dasharray: 3 4; }
+    .cb-diag { stroke: var(--text-disabled); stroke-width: 1.5; stroke-dasharray: 5 5; }
+    .cb-label { fill: var(--text-dim); font-family: var(--font-sans); font-size: 9px; }
+    .cb-curve { fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; }
+    .cb-arm { stroke-width: 2; }
+    .cb-arm-1, .cb-handle-1 { --cb-c: var(--primary); }
+    .cb-arm-2, .cb-handle-2 { --cb-c: var(--secondary); }
+    .cb-arm { stroke: var(--cb-c); }
+    .cb-handle { cursor: grab; outline: none; }
+    .cb-hit { fill: transparent; }
+    .cb-knob { fill: var(--cb-c); stroke: var(--bg); stroke-width: 2.5; }
+    .cb-ring { fill: none; stroke: var(--text); stroke-width: 2; opacity: 0; }
+    .cb-handle:focus-visible .cb-ring { opacity: 1; }
+    .cb-dot { fill: var(--accent); opacity: 0; }
+    .cb-dot.is-on { opacity: 1; }
+    .cb-svg-hint { color: var(--text-dim); font-size: 0.8rem; text-align: center; margin: 10px 0 18px; }
+    .cb-coords { width: 100%; }
+    .cb-coords .form-row { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .cb-coords .form-group { margin-bottom: 8px; }
+    .cb-coords input { padding: 10px 12px; font-family: var(--font-mono); }
+    .cb-note { color: var(--warning); font-size: 0.82rem; margin: 4px 0 0; }
+    .cb-group-label {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--text-dim); margin: 0 0 10px;
+    }
+    .cb-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .cb-preset { font-family: var(--font-mono); font-weight: 500; font-size: 0.74rem; padding: 6px 12px 6px 8px; }
+    .cb-chip-curve { width: 16px; height: 20px; flex-shrink: 0; overflow: visible; }
+    .cb-chip-curve path { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+    .cb-preview { border: 1px solid var(--border); border-radius: 10px; padding: 18px; background: rgba(0, 0, 0, 0.18); }
+    .cb-preview-controls { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 14px; }
+    .cb-preview-controls .form-group { margin: 0; flex: 1; max-width: 170px; }
+    .cb-play {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: 0; border-radius: 8px; color: #fff; cursor: pointer;
+      font-family: var(--font-title); font-size: 0.9rem; font-weight: 600;
+      padding: 12px 20px; transition: var(--transition);
+    }
+    .cb-play:hover { box-shadow: 0 0 16px rgba(6, 182, 212, 0.35); }
+    .cb-play:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    .cb-motion-note { color: var(--text-dim); font-size: 0.82rem; margin: 0 0 14px; }
+    .cb-lane { margin-top: 12px; }
+    .cb-lane-label { display: block; font-size: 0.74rem; color: var(--text-dim); margin-bottom: 5px; font-family: var(--font-mono); }
+    .cb-track {
+      position: relative; height: 40px; border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+    .cb-track::after {
+      content: ""; position: absolute; top: 4px; bottom: 4px; left: 80%;
+      border-left: 2px solid rgba(255, 255, 255, 0.18);
+    }
+    .cb-box {
+      position: absolute; top: 5px; left: 0; width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      will-change: transform;
+    }
+    .cb-box-linear { background: var(--text-disabled); }
+    .cb-keyword { color: var(--text-dim); font-size: 0.86rem; margin-top: 14px; }
+    .cb-keyword code, .cb-linear-note code { font-family: var(--font-mono); color: var(--secondary); }
+    .cb-outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; margin-top: 12px; }
+    .cb-outputs .cb-wide { grid-column: 1 / -1; }
+    .cb-linear-note { color: var(--text-dim); font-size: 0.8rem; margin-top: 8px; }
+    @media (max-width: 768px) {
+      .cb-outputs { grid-template-columns: 1fr; }
+      .cb-coords .form-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "CSS Cubic-Bezier Easing Generator",
+      "url": "https://frontendhelpers.com/cubic-bezier-generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any (browser-based)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      },
+      "description": "Free browser-based editor for CSS cubic-bezier() easing curves, with keyword and named presets, a live preview against linear, and a linear() approximation of the curve.",
+      "isPartOf": {
+        "@id": "https://frontendhelpers.com/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "FrontendHelpers",
+          "item": "https://frontendhelpers.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cubic-Bezier Easing Generator",
+          "item": "https://frontendhelpers.com/cubic-bezier-generator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What do the four numbers in cubic-bezier() mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are the coordinates of two control points, P1 (x1, y1) and P2 (x2, y2). The curve always runs from (0, 0) to (1, 1): x is the fraction of the duration that has passed and y is how far the animation has progressed. The control points pull the curve and set where it speeds up and slows down."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why must x stay between 0 and 1 in cubic-bezier()?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "x is time. If a control point's x went outside 0 to 1, the curve could double back so that one moment mapped to two different progress values. Browsers reject such a value as invalid, so this editor clamps x. y has no limit, which is how overshoot and anticipation effects are made."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I use linear() instead of cubic-bezier()?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use linear() when the motion must change direction more than a cubic Bézier allows, such as a spring that wobbles before settling or a ball that bounces. linear() takes any number of points joined by straight lines. It works in Chrome and Edge 113, Firefox 112 and Safari 17.2 onwards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which easing should I use for UI animations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use ease-out for elements entering the screen, ease-in for elements leaving it, and ease-in-out for something moving from one place on screen to another. Keep most interface transitions between about 100 and 400 ms, with exits a little quicker than entrances."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Cubic-Bezier Easing Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Cubic-bezier <span class="hero-highlight">easing generator</span></h1>
+        <p class="page-hero-sub">Drag the two control points to shape a CSS easing curve, start from the built-in keywords or well-known named curves, watch it race a linear box, and copy it as <code>cubic-bezier()</code> or as a <code>linear()</code> approximation.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+      <div class="tool-card" id="tool-cubic-bezier">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21C9 21 8 3 21 3"/><circle cx="7" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/></svg></span>Easing Curve Editor</h2>
+          <button class="btn-reset" id="reset-cb">↺ Reset</button>
+        </div>
+        <p class="panel-desc">Time runs left to right and progress bottom to top. Drag a handle, tap anywhere on the graph to pull the nearest one there, or focus a handle and use the arrow keys. The dashed diagonal is <code>linear</code>.</p>
+
+        <div class="tool-grid">
+          <div class="cb-editor">
+            <svg class="cb-svg" id="cb-svg" viewBox="-24 -136 248 472" role="group" aria-labelledby="cb-svg-title">
+              <title id="cb-svg-title">Easing curve editor</title>
+              <rect class="cb-zone" x="0" y="0" width="200" height="200" />
+              <path class="cb-grid" d="M50 0V200M100 0V200M150 0V200M0 50H200M0 100H200M0 150H200" />
+              <path class="cb-bound" d="M-24 0H224M-24 200H224" />
+              <line class="cb-diag" x1="0" y1="200" x2="200" y2="0" />
+              <text class="cb-label" x="204" y="-4">1</text>
+              <text class="cb-label" x="204" y="196">0</text>
+              <text class="cb-label" x="100" y="214" text-anchor="middle">time →</text>
+              <text class="cb-label" x="2" y="-122">overshoot</text>
+              <text class="cb-label" x="2" y="330">anticipation</text>
+              <line class="cb-arm cb-arm-1" id="cb-arm-1" x1="0" y1="200" x2="50" y2="180" />
+              <line class="cb-arm cb-arm-2" id="cb-arm-2" x1="200" y1="0" x2="50" y2="0" />
+              <path class="cb-curve" id="cb-curve" d="M0 200 C50 180 50 0 200 0" />
+              <circle class="cb-dot" id="cb-dot" r="5" cx="0" cy="200" />
+              <g class="cb-handle cb-handle-1" id="cb-handle-1" data-n="1" tabindex="0" role="button" aria-roledescription="draggable point" aria-label="Control point 1" transform="translate(50 180)">
+                <circle class="cb-hit" r="18" />
+                <circle class="cb-ring" r="13" />
+                <circle class="cb-knob" r="8" />
+              </g>
+              <g class="cb-handle cb-handle-2" id="cb-handle-2" data-n="2" tabindex="0" role="button" aria-roledescription="draggable point" aria-label="Control point 2" transform="translate(50 0)">
+                <circle class="cb-hit" r="18" />
+                <circle class="cb-ring" r="13" />
+                <circle class="cb-knob" r="8" />
+              </g>
+            </svg>
+            <p class="cb-svg-hint">Arrow keys move a focused handle by 0.01; hold Shift for 0.1.</p>
+
+            <div class="cb-coords">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cb-x1">x1</label>
+                  <input type="number" id="cb-x1" value="0.25" min="0" max="1" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="cb-y1">y1</label>
+                  <input type="number" id="cb-y1" value="0.1" min="-0.6" max="1.6" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="cb-x2">x2</label>
+                  <input type="number" id="cb-x2" value="0.25" min="0" max="1" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="cb-y2">y2</label>
+                  <input type="number" id="cb-y2" value="1" min="-0.6" max="1.6" step="0.01" />
+                </div>
+              </div>
+              <p class="cb-svg-hint">x is limited to 0–1, as CSS requires. y can run from −0.6 to 1.6 here for back-style overshoot.</p>
+              <p class="cb-note" id="cb-clamp-note" role="status" hidden></p>
+            </div>
+          </div>
+
+          <div class="tool-previews">
+            <p class="cb-group-label" id="cb-keywords-label">CSS keywords</p>
+            <div class="cb-presets" id="cb-keywords" role="group" aria-labelledby="cb-keywords-label"></div>
+            <p class="cb-group-label" id="cb-named-label">Named curves</p>
+            <div class="cb-presets" id="cb-named" role="group" aria-labelledby="cb-named-label"></div>
+
+            <div class="cb-preview">
+              <div class="cb-preview-controls">
+                <div class="form-group">
+                  <label for="cb-duration">Duration (ms)</label>
+                  <input type="number" id="cb-duration" value="1000" min="50" max="20000" step="50" />
+                </div>
+                <button type="button" class="cb-play" id="cb-play">▶ Play</button>
+              </div>
+              <p class="cb-motion-note" id="cb-motion-note" hidden>Your device is set to reduce motion, so the preview won't play by itself. Press Play to run it once.</p>
+              <div class="cb-lane">
+                <span class="cb-lane-label">Your curve</span>
+                <div class="cb-track" id="cb-track-curve"><div class="cb-box" id="cb-box-curve"></div></div>
+              </div>
+              <div class="cb-lane">
+                <span class="cb-lane-label">linear</span>
+                <div class="cb-track"><div class="cb-box cb-box-linear" id="cb-box-linear"></div></div>
+              </div>
+            </div>
+            <p class="cb-keyword" id="cb-keyword"></p>
+
+            <div class="quick-table-container">
+              <h4>Progress at a point in time</h4>
+              <table class="quick-table">
+                <thead><tr><th>Time</th><th>Progress</th><th>vs linear</th></tr></thead>
+                <tbody id="cb-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="cb-outputs">
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>Transition</span>
+              <button class="btn-copy" data-target="cb-transition-code">Copy CSS</button>
+            </div>
+            <textarea id="cb-transition-code" aria-label="transition-timing-function declaration" readonly rows="2" class="mono-output"></textarea>
+          </div>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>Animation</span>
+              <button class="btn-copy" data-target="cb-animation-code">Copy CSS</button>
+            </div>
+            <textarea id="cb-animation-code" aria-label="animation-timing-function declaration" readonly rows="2" class="mono-output"></textarea>
+          </div>
+          <div class="output-code-container cb-wide">
+            <div class="output-header">
+              <span>linear() approximation</span>
+              <button class="btn-copy" data-target="cb-linear-code">Copy CSS</button>
+            </div>
+            <textarea id="cb-linear-code" aria-label="linear() approximation of the curve" readonly rows="5" class="mono-output"></textarea>
+          </div>
+        </div>
+        <p class="cb-linear-note"><span id="cb-linear-note"></span> Use <code>linear()</code> when you want to hand-edit the points or splice in a bounce; otherwise <code>cubic-bezier()</code> is shorter and exact.</p>
+      </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How cubic-bezier() works</h2>
+        <p>Every CSS transition and animation has a timing function that maps elapsed time to progress. <code>cubic-bezier(x1, y1, x2, y2)</code> describes that mapping as a curve that always starts at (0, 0) and ends at (1, 1). The four numbers are the two control points in between: P1 shapes the start of the motion and P2 shapes the end. Pull P1 along the time axis and the animation starts slowly; lift it steeply and it leaps off the mark. That is why <code>ease-out</code>, <code>cubic-bezier(0, 0, 0.58, 1)</code>, rises sharply at first and flattens out, and <code>ease-in</code>, <code>cubic-bezier(0.42, 0, 1, 1)</code>, does the reverse.</p>
+        <p>The keywords are just names for fixed curves: <code>ease</code> is <code>cubic-bezier(0.25, 0.1, 0.25, 1)</code>, <code>ease-in-out</code> is <code>cubic-bezier(0.42, 0, 0.58, 1)</code>, and <code>linear</code> behaves like <code>cubic-bezier(0, 0, 1, 1)</code>. <code>ease</code> is also the default when you write a transition without a timing function, which is why so many interfaces share the same slightly front-loaded feel. Pick a keyword in the editor and the table shows how different they really are: at the halfway point in time, <code>ease</code> has already covered about 80% of the distance.</p>
+
+        <h2>Why x stays in 0–1 but y can overshoot</h2>
+        <p>The x axis is time, and time only moves forward. If a control point's x went below 0 or above 1, the curve could loop back so that one moment had two different progress values, which makes no sense for an animation. The specification therefore requires both x values to be between 0 and 1, and browsers throw the whole declaration away if they aren't. This editor clamps x so the CSS it gives you is always valid.</p>
+        <p>The y axis has no such limit. A y value above 1 makes the motion travel past its end point and settle back, as in <code>easeOutBack</code>, <code>cubic-bezier(0.34, 1.56, 0.64, 1)</code>. A y below 0 makes it pull back before setting off, the anticipation you see in <code>easeInBack</code>. Use these sparingly: a small overshoot on a button press or toast feels lively, but on a menu or a page transition it tends to look like a glitch. Note that overshoot can push an element outside its container, and for <code>opacity</code> the extra range is simply clipped.</p>
+
+        <h2>Choosing an easing for interface motion</h2>
+        <p>Nielsen Norman Group's guidance on <a href="https://www.nngroup.com/articles/animation-duration/">animation duration and motion</a> sums up the common pattern. Things entering the screen should ease out, arriving quickly and slowing as they come to rest, because the user is waiting for them. Things leaving should ease in, starting gently and accelerating away, because the user has already finished with them. For timing, NN/g suggests most UI animations fall between about 100 and 500 ms, with 100–400 ms right for most, and exits slightly shorter than entrances. A third common rule: an element that moves from one place on screen to another reads best with an ease-in-out curve, which accelerates and then brakes like a physical object.</p>
+        <p>In practice that means short durations with a strongly decelerating curve for most entrances. <code>easeOutExpo</code> or <code>easeOutQuart</code> at 200–300 ms makes a panel or dropdown feel responsive without a visible slow start. Reserve longer durations for large surfaces that travel a long way. Whatever you choose, apply it consistently through a custom property, for example <code>--ease-out: cubic-bezier(0.16, 1, 0.3, 1);</code>, so the whole interface moves with one character. Browse our <a href="/css-animations">library of CSS animations</a> for effects to try your curve on, and see the <a href="/css-dialog-animation">native dialog animation recipe</a> for a real entrance and exit pair.</p>
+        <p>Easing also affects how smooth a transition looks. A curve that changes speed sharply concentrates movement into fewer frames, so any jank is more visible. Animate <code>transform</code> and <code>opacity</code> where you can; our guide to <a href="/css-animation-performance">CSS animation performance</a> explains why. And honour <code>prefers-reduced-motion</code>: replace large movement with a fade, or remove it, for visitors who ask for less motion. The preview on this page follows the same rule and won't start by itself when that setting is on.</p>
+
+        <h2>Springs and bounces with linear()</h2>
+        <p>A cubic Bézier has only two control points, so it can bend in limited ways: it can overshoot at the end or dip at the start, but it cannot oscillate. Springs that wobble before settling and bounces that hit the floor several times need more. The <code>linear()</code> function covers that. It takes a list of progress values, each with an optional position in time, and joins them with straight lines: <code>linear(0, 1.2 60%, 0.9 80%, 1)</code> overshoots, dips back below the target and settles. With enough points, any curve can be approximated closely, which is how spring generators export their output.</p>
+        <p>According to MDN's compatibility data, <code>linear()</code> works in Chrome and Edge 113, Firefox 112 and Safari 17.2 onwards. The generator above samples your curve and keeps only the points needed to stay within about 0.001 of it, usually 18 to 35 stops. That is useful as a starting point for hand-tuning, or for adding a bounce after your curve. For a plain curve, <code>cubic-bezier()</code> is exact and shorter, and has worked in every browser for over a decade. To support older Safari with <code>linear()</code>, declare a <code>cubic-bezier()</code> fallback first and the <code>linear()</code> version after it; browsers that don't understand the second declaration keep the first.</p>
+
+        <h2>steps() for frame-by-frame motion</h2>
+        <p>The third kind of timing function doesn't interpolate at all. <code>steps(4, jump-end)</code> divides the duration into four equal parts and jumps between values, which suits sprite-sheet animation, a ticking clock hand or a typewriter effect. The second argument sets where the jumps happen: <code>jump-start</code> jumps at the beginning of each interval, <code>jump-end</code> (the default) at the end, <code>jump-none</code> holds both the first and last values, and <code>jump-both</code> adds a jump at each end. The shorthands <code>step-start</code> and <code>step-end</code> mean <code>steps(1, jump-start)</code> and <code>steps(1, jump-end)</code>.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What do the four numbers in cubic-bezier() mean?</summary>
+            <p class="faq-answer">They are the coordinates of two control points, P1 (x1, y1) and P2 (x2, y2). The curve always runs from (0, 0) to (1, 1): x is the fraction of the duration that has passed and y is how far the animation has progressed. The control points pull the curve and set where it speeds up and slows down.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why must x stay between 0 and 1 in cubic-bezier()?</summary>
+            <p class="faq-answer">x is time. If a control point's x went outside 0 to 1, the curve could double back so that one moment mapped to two different progress values. Browsers reject such a value as invalid, so this editor clamps x. y has no limit, which is how overshoot and anticipation effects are made.</p>
+          </details>
+          <details class="faq-item">
+            <summary>When should I use linear() instead of cubic-bezier()?</summary>
+            <p class="faq-answer">Use linear() when the motion must change direction more than a cubic Bézier allows, such as a spring that wobbles before settling or a ball that bounces. linear() takes any number of points joined by straight lines. It works in Chrome and Edge 113, Firefox 112 and Safari 17.2 onwards.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Which easing should I use for UI animations?</summary>
+            <p class="faq-answer">Use ease-out for elements entering the screen, ease-in for elements leaving it, and ease-in-out for something moving from one place on screen to another. Keep most interface transitions between about 100 and 400 ms, with exits a little quicker than entrances.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/css-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>CSS Animations</h3>
+            <p>Copy-ready keyframe animations to try your easing curve on.</p>
+            <span class="resource-cta">Browse animations →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Which properties animate smoothly, and how to avoid jank.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+          <a href="/css-dialog-animation" class="resource-card">
+            <span class="resource-kicker">Recipe</span>
+            <h3>Animate a native dialog</h3>
+            <p>An entrance and exit pair using @starting-style and allow-discrete.</p>
+            <span class="resource-cta">See the recipe →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 19 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js" defer></script>
+  <script src="cubic-bezier-generator.js?v=1.0.0" defer></script>
+</body>
+</html>

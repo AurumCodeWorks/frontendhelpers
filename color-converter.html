@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free colour converter: paste hex, rgb(), hsl(), hwb(), oklch() or a named colour and get every format, WCAG contrast, a gamut check and CSS fallbacks." />
+  <link rel="canonical" href="https://frontendhelpers.com/color-converter" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/color-converter" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Colour Converter — Hex, RGB, HSL, HWB, OKLCH &amp; OKLab" />
+  <meta property="og:description" content="Free colour converter: paste hex, rgb(), hsl(), hwb(), oklch() or a named colour and get every format, WCAG contrast, a gamut check and CSS fallbacks." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-color-converter.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Colour Converter — Hex, RGB, HSL, HWB, OKLCH &amp; OKLab" />
+  <meta name="twitter:description" content="Free colour converter: paste hex, rgb(), hsl(), hwb(), oklch() or a named colour and get every format, WCAG contrast, a gamut check and CSS fallbacks." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-color-converter.png" />
+
+  <title>Colour Converter: Hex, RGB, HSL &amp; OKLCH | FrontendHelpers</title>
+
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .cc-input-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: end; }
+    .cc-input { font-family: var(--font-mono) !important; font-size: 1rem !important; }
+    .cc-input[aria-invalid="true"] { border-color: var(--danger); }
+    .cc-picker-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .cc-picker {
+      width: 56px; height: 46px; padding: 3px; cursor: pointer;
+      background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .cc-error { color: var(--danger); font-size: 0.88rem; margin: -8px 0 16px; line-height: 1.5; }
+    .cc-error:empty { display: none; }
+    .cc-meta { font-size: 0.82rem; color: var(--text-dim); margin: -8px 0 14px; }
+    .cc-meta strong { color: var(--text); font-weight: 600; }
+    .cc-examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; align-items: center; }
+    .cc-examples > span { font-size: 0.78rem; color: var(--text-dim); margin-right: 2px; }
+    .cc-example {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); cursor: pointer; font-family: var(--font-mono); font-size: 0.72rem; padding: 5px 9px;
+      transition: var(--transition);
+    }
+    .cc-example:hover, .cc-example:focus-visible { border-color: var(--secondary); color: var(--secondary); }
+    .cc-formats { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .cc-row {
+      display: grid; grid-template-columns: 84px 1fr auto; gap: 12px; align-items: center;
+      padding: 10px 14px; border-bottom: 1px solid var(--border); background: rgba(0, 0, 0, 0.2);
+    }
+    .cc-row:last-child { border-bottom: 0; }
+    .cc-row-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
+    .cc-row code { font-family: var(--font-mono); font-size: 0.82rem; color: #8be9fd; overflow-wrap: anywhere; background: none; padding: 0; }
+    .cc-swatch {
+      position: relative; display: flex; height: 220px; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
+      background-color: #fff;
+      background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%);
+      background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    }
+    .cc-swatch-part { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; }
+    .cc-swatch-part[hidden] { display: none; }
+    .cc-swatch-tag {
+      align-self: flex-start; font-family: var(--font-mono); font-size: 0.72rem; color: #fff;
+      background: rgba(0, 0, 0, 0.55); padding: 3px 8px; border-radius: 4px;
+    }
+    .cc-swatch-sample { position: absolute; top: 16px; left: 16px; margin: 0; font-family: var(--font-title); font-size: 1.35rem; font-weight: 700; }
+    .cc-side h3 { font-family: var(--font-title); font-size: 1rem; margin: 22px 0 10px; }
+    .cc-side .wcag-results { gap: 8px; }
+    .cc-ratio { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text); margin-left: auto; margin-right: 12px; }
+    .cc-note { color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; margin: 10px 0 0; }
+    .cc-gamut[hidden] { display: none; }
+    .cc-snippet { margin-top: 28px; }
+    .cc-snippet .form-group { max-width: 260px; }
+    .cc-snippet .output-code-container { margin-top: 0; }
+    .cc-table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 0.88rem; }
+    .cc-table th, .cc-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    .cc-table th { color: var(--text-dim); font-weight: 600; }
+    .cc-chip { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--border); }
+    @media (max-width: 640px) {
+      .cc-row { grid-template-columns: 1fr auto; }
+      .cc-row-label { grid-column: 1 / -1; }
+      .cc-swatch { height: 160px; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Colour Converter",
+      "url": "https://frontendhelpers.com/color-converter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any (browser-based)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      },
+      "description": "Free browser-based colour converter between hex, rgb(), hsl(), hwb(), oklch(), oklab() and CSS named colours, with WCAG contrast ratios, an sRGB gamut check and CSS fallback snippets.",
+      "isPartOf": {
+        "@id": "https://frontendhelpers.com/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "FrontendHelpers",
+          "item": "https://frontendhelpers.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Colour Converter",
+          "item": "https://frontendhelpers.com/color-converter"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I convert hex to RGB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Split the six digits into three pairs and read each pair as a base-16 number from 0 to 255. #3a86ff becomes 3a = 58, 86 = 134 and ff = 255, so rgb(58 134 255). An optional fourth pair is alpha: in #3a86ff80, 80 = 128, and 128 ÷ 255 is about 0.5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is OKLCH?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OKLCH is a CSS colour format written oklch(L C H): perceptual lightness from 0% to 100%, chroma (how colourful it is, 0 for greys, and no more than about 0.32 for sRGB colours) and a hue angle in degrees. It is the polar form of OKLab, the colour space Björn Ottosson published in 2020, and every current browser supports it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is OKLCH better than HSL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For palettes and contrast, yes. HSL lightness is just the average of the largest and smallest RGB channel, so pure yellow and pure blue are both 50% lightness yet score 1.07:1 and 8.59:1 against white. OKLCH lightness follows how bright a colour looks (96.80% for that yellow, 45.20% for the blue), so it predicts contrast far better."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the converter say my OKLCH colour is out of gamut?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OKLCH can describe colours more saturated than a standard sRGB screen can show. The converter keeps the colour's lightness and hue, lowers its chroma until it fits in sRGB and gives you that as the hex fallback. Wide-gamut (Display P3) screens still show the original value."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Colour Converter</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Colour <span class="hero-highlight">converter</span></h1>
+        <p class="page-hero-sub">Paste a colour in any CSS format — hex, <code>rgb()</code>, <code>hsl()</code>, <code>hwb()</code>, <code>oklch()</code>, <code>oklab()</code> or a named colour — and get all the others instantly, with WCAG contrast against white and black, an sRGB gamut check and a ready-to-paste fallback.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+      <div class="tool-card" id="tool-colour">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.75 1.5-1.66 0-.43-.18-.82-.44-1.12-.29-.3-.44-.66-.44-1.12A1.64 1.64 0 0 1 14.28 16H16c3.05 0 5.56-2.5 5.56-5.56C21.96 5.96 17.46 2 12 2z"/></svg></span>Convert a colour</h2>
+          <button class="btn-reset" id="reset-cc">↺ Reset</button>
+        </div>
+        <p class="panel-desc">Type or paste any CSS colour, or use the picker. Every format updates as you type; each has its own copy button.</p>
+
+        <div class="tool-grid">
+          <div class="tool-inputs">
+            <div class="cc-input-row">
+              <div class="form-group">
+                <label for="cc-input">Colour (any CSS format)</label>
+                <input type="text" id="cc-input" class="cc-input" value="#3a86ff" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="cc-status" />
+              </div>
+              <div class="cc-picker-group">
+                <label for="cc-picker">Picker</label>
+                <input type="color" id="cc-picker" class="cc-picker" value="#3a86ff" />
+              </div>
+            </div>
+            <p class="cc-error" id="cc-status" aria-live="polite"></p>
+            <p class="cc-meta">Detected format: <strong id="cc-detected">Hex</strong></p>
+
+            <div class="cc-examples">
+              <span>Try:</span>
+              <button type="button" class="cc-example" data-colour="rebeccapurple">rebeccapurple</button>
+              <button type="button" class="cc-example" data-colour="rgb(255 99 71 / 0.5)">rgb(255 99 71 / 0.5)</button>
+              <button type="button" class="cc-example" data-colour="hsl(150 60% 40%)">hsl(150 60% 40%)</button>
+              <button type="button" class="cc-example" data-colour="oklch(70% 0.35 145)">oklch(70% 0.35 145)</button>
+            </div>
+
+            <div class="cc-formats" role="group" aria-label="Converted values">
+              <div class="cc-row">
+                <span class="cc-row-label">Hex</span>
+                <code id="cc-out-hex" aria-label="Hex value"></code>
+                <button class="btn-copy" data-target="cc-out-hex">Copy<span class="visually-hidden"> hex</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">RGB</span>
+                <code id="cc-out-rgb" aria-label="rgb() value, modern syntax"></code>
+                <button class="btn-copy" data-target="cc-out-rgb">Copy<span class="visually-hidden"> rgb()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">RGB legacy</span>
+                <code id="cc-out-rgba" aria-label="rgb() or rgba() value, legacy comma syntax"></code>
+                <button class="btn-copy" data-target="cc-out-rgba">Copy<span class="visually-hidden"> legacy rgb()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">HSL</span>
+                <code id="cc-out-hsl" aria-label="hsl() value"></code>
+                <button class="btn-copy" data-target="cc-out-hsl">Copy<span class="visually-hidden"> hsl()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">HWB</span>
+                <code id="cc-out-hwb" aria-label="hwb() value"></code>
+                <button class="btn-copy" data-target="cc-out-hwb">Copy<span class="visually-hidden"> hwb()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">OKLCH</span>
+                <code id="cc-out-oklch" aria-label="oklch() value"></code>
+                <button class="btn-copy" data-target="cc-out-oklch">Copy<span class="visually-hidden"> oklch()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">OKLab</span>
+                <code id="cc-out-oklab" aria-label="oklab() value"></code>
+                <button class="btn-copy" data-target="cc-out-oklab">Copy<span class="visually-hidden"> oklab()</span></button>
+              </div>
+              <div class="cc-row">
+                <span class="cc-row-label">Name</span>
+                <code id="cc-out-name" aria-label="CSS named colour"></code>
+                <button class="btn-copy" id="cc-copy-name" data-target="cc-out-name">Copy<span class="visually-hidden"> colour name</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-previews cc-side">
+            <div class="cc-swatch" role="img" aria-label="Colour swatch">
+              <p class="cc-swatch-sample" id="cc-swatch-sample" aria-hidden="true">Aa</p>
+              <div class="cc-swatch-part" id="cc-swatch-main"><span class="cc-swatch-tag" id="cc-swatch-main-label"></span></div>
+              <div class="cc-swatch-part" id="cc-swatch-fallback" hidden><span class="cc-swatch-tag">sRGB fallback</span></div>
+            </div>
+
+            <h3>WCAG 2.2 contrast</h3>
+            <div class="wcag-results">
+              <div class="wcag-row">
+                <span class="wcag-label">Against white <small>(AA body text needs 4.5:1)</small></span>
+                <span class="cc-ratio" id="cc-cr-white" aria-label="Contrast ratio against white"></span>
+                <span class="wcag-badge" id="cc-aa-white"></span>
+              </div>
+              <div class="wcag-row">
+                <span class="wcag-label">Against black <small>(AA body text needs 4.5:1)</small></span>
+                <span class="cc-ratio" id="cc-cr-black" aria-label="Contrast ratio against black"></span>
+                <span class="wcag-badge" id="cc-aa-black"></span>
+              </div>
+            </div>
+            <p class="cc-note" id="cc-contrast-note"></p>
+
+            <div class="cc-gamut" id="cc-gamut" hidden>
+              <h3>sRGB gamut</h3>
+              <div class="wcag-row">
+                <span class="wcag-label">Displayable on every screen?</span>
+                <span class="wcag-badge" id="cc-gamut-badge"></span>
+              </div>
+              <p class="cc-note" id="cc-gamut-detail"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cc-snippet">
+          <div class="form-group">
+            <label for="cc-prop">CSS property for the snippet</label>
+            <select id="cc-prop">
+              <option value="color">color</option>
+              <option value="background-color">background-color</option>
+              <option value="border-color">border-color</option>
+              <option value="fill">fill</option>
+              <option value="outline-color">outline-color</option>
+            </select>
+          </div>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>CSS with hex fallback</span>
+              <button class="btn-copy" data-target="cc-css">Copy CSS</button>
+            </div>
+            <textarea id="cc-css" aria-label="CSS snippet with a hex fallback followed by the oklch() value" readonly rows="11" class="mono-output"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>What OKLCH is</h2>
+        <p><code>oklch()</code> describes a colour by three numbers people can reason about: <strong>L</strong>, perceived lightness from 0% (black) to 100% (white); <strong>C</strong>, chroma, which is how far from grey the colour is (0 is grey, and sRGB colours top out at about 0.32); and <strong>H</strong>, the hue angle in degrees. It is the polar form of OKLab, a colour space Björn Ottosson designed in 2020 so that equal steps in its numbers look like equal steps to the eye. Converting <code>#ff0000</code> gives <code>oklch(62.80% 0.2577 29.23)</code>, which matches the value MDN quotes for red.</p>
+
+        <h2>Why OKLCH beats HSL for palettes and contrast</h2>
+        <p>HSL's lightness is simply the average of the largest and smallest RGB channel. It ignores the fact that our eyes are far more sensitive to green and yellow than to blue, so two colours with the same HSL lightness can be wildly different in brightness:</p>
+        <table class="cc-table">
+          <thead><tr><th>Colour</th><th>HSL lightness</th><th>OKLCH lightness</th><th>Contrast with white</th></tr></thead>
+          <tbody>
+            <tr><td><span class="cc-chip" style="background:#ffff00"></span><code>hsl(60 100% 50%)</code> yellow</td><td>50%</td><td>96.80%</td><td>1.07:1</td></tr>
+            <tr><td><span class="cc-chip" style="background:#0000ff"></span><code>hsl(240 100% 50%)</code> blue</td><td>50%</td><td>45.20%</td><td>8.59:1</td></tr>
+          </tbody>
+        </table>
+        <p>White text on that blue passes WCAG AAA; on the yellow it is unreadable, yet HSL calls them equally light. OKLCH's L tracks what you actually see, so you can build a palette by holding L steady across hues and get rows of swatches that look equally light, or step L down evenly to get shades that darken evenly. Because L follows perceived brightness, it is also a far better predictor of contrast: if your text and background are far apart in OKLCH lightness, the WCAG ratio will usually be high. Always confirm with the actual ratio — WCAG 2.2 uses its own relative-luminance formula, which this tool applies to the 8-bit sRGB value (0.04045 threshold) — and use the <a href="/contrast-checker">contrast checker</a> for real text-and-background pairs. Our <a href="/wcag-colour-contrast-guide">WCAG colour contrast guide</a> explains the thresholds, and the <a href="/color-palette-generator">colour palette generator</a> turns one brand colour into a full tint and shade scale.</p>
+
+        <h2>Browser support for oklch()</h2>
+        <p>According to MDN's compatibility data, <code>oklch()</code> and <code>oklab()</code> work in Chrome and Edge 111, Firefox 113 and Safari 15.4 (iOS included), and have been Baseline across browsers since May 2023. Two later additions are worth knowing about. Mixing value types — writing L as a plain number like <code>0.63</code> or C as a percentage — needs Chrome 116 or Safari 16.2, so this converter always writes L as a percentage and C as a number, the form every oklch()-capable browser accepts. Relative colour syntax (<code>oklch(from var(--brand) calc(l - 0.1) c h)</code>) arrived fully in Chrome 122, Firefox 128 and Safari 18.</p>
+
+        <h2>Gamut: why some OKLCH colours can't be shown</h2>
+        <p>Hex, <code>rgb()</code>, <code>hsl()</code> and <code>hwb()</code> can only describe sRGB, the colour range of a standard monitor. OKLCH has no such limit: raise the chroma far enough and you describe colours that only wide-gamut Display P3 screens can show, or that no screen can. Try <code>oklch(70% 0.35 145)</code> above: it is a vivid green beyond sRGB. On an sRGB display the browser has to bring it into range, and the converter shows the result it uses as the fallback, <code>#00bf34</code>.</p>
+        <p>The mapping here is deliberately simple: keep the OKLCH lightness and hue, binary-search for the largest chroma that fits inside sRGB, then clip the tiny remainder. The CSS Color 4 specification's algorithm is a refinement of the same idea that stops early once the clipped colour is within a just-noticeable difference (0.02 in OKLCH), so browsers may differ from this fallback by a hair. A colour counts as in gamut here if it sits within one 8-bit step of the sRGB edge, because clipping that little is invisible.</p>
+
+        <h2>When to keep hex</h2>
+        <p>Hex is still the right choice for colours that come from a brand guide, for email templates (many mail clients won't parse modern colour functions), for SVG attributes read by older tools, and anywhere you need byte-exact values to match a design file. Every hex colour converts to OKLCH and back exactly: the converter checks that the <code>oklch()</code> text it gives you rounds back to the same hex, and adds a decimal place in the rare cases (about one colour in a thousand, mostly with a channel near zero) where standard precision wouldn't. Reach for OKLCH when you are generating colours — hover states, palettes, themes — rather than storing ones somebody else chose.</p>
+
+        <h2>How to write fallbacks</h2>
+        <p>For an ordinary property, write the hex first and the <code>oklch()</code> second. Browsers that don't understand the second declaration discard it and keep the first. That trick fails with custom properties: <code>--brand: oklch(…)</code> is valid to every browser at parse time, so it overwrites the hex even where it can't be rendered. Wrap the modern value in <code>@supports (color: oklch(0% 0 0))</code> instead — the snippet above includes both patterns. For colours outside sRGB, the hex in the snippet is the gamut-mapped version, so sRGB screens and older browsers get the closest colour they can show while P3 screens get the full value.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I convert hex to RGB?</summary>
+            <p class="faq-answer">Split the six digits into three pairs and read each pair as a base-16 number from 0 to 255. #3a86ff becomes 3a = 58, 86 = 134 and ff = 255, so rgb(58 134 255). An optional fourth pair is alpha: in #3a86ff80, 80 = 128, and 128 ÷ 255 is about 0.5.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is OKLCH?</summary>
+            <p class="faq-answer">OKLCH is a CSS colour format written oklch(L C H): perceptual lightness from 0% to 100%, chroma (how colourful it is, 0 for greys, and no more than about 0.32 for sRGB colours) and a hue angle in degrees. It is the polar form of OKLab, the colour space Björn Ottosson published in 2020, and every current browser supports it.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is OKLCH better than HSL?</summary>
+            <p class="faq-answer">For palettes and contrast, yes. HSL lightness is just the average of the largest and smallest RGB channel, so pure yellow and pure blue are both 50% lightness yet score 1.07:1 and 8.59:1 against white. OKLCH lightness follows how bright a colour looks (96.80% for that yellow, 45.20% for the blue), so it predicts contrast far better.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does the converter say my OKLCH colour is out of gamut?</summary>
+            <p class="faq-answer">OKLCH can describe colours more saturated than a standard sRGB screen can show. The converter keeps the colour's lightness and hue, lowers its chroma until it fits in sRGB and gives you that as the hex fallback. Wide-gamut (Display P3) screens still show the original value.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Colour</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Turn one brand colour into a 50–900 tint and shade scale with CSS tokens.</p>
+            <span class="resource-cta">Build a palette →</span>
+          </a>
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Accessibility</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Test any text and background pair against WCAG 2.2 AA and AAA.</p>
+            <span class="resource-cta">Check contrast →</span>
+          </a>
+          <a href="/wcag-colour-contrast-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>WCAG 2.2 colour contrast</h3>
+            <p>The thresholds, the luminance maths and how to fix failing colours.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 19 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js" defer></script>
+  <script src="color-converter.js?v=1.0.0" defer></script>
+</body>
+</html>
