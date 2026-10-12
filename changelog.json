@@ -3,6 +3,26 @@
   "entries": [
     {
       "date": "2026-10-12",
+      "title": "Two new tools and faster pages",
+      "items": [
+        {
+          "type": "new",
+          "text": "Colour converter: hex, RGB, HSL, HWB and OKLCH, with WCAG contrast and an sRGB gamut check",
+          "link": "/color-converter"
+        },
+        {
+          "type": "new",
+          "text": "Cubic-bezier easing generator: drag the curve, preview it, copy cubic-bezier() or a linear() version",
+          "link": "/cubic-bezier-generator"
+        },
+        {
+          "type": "improved",
+          "text": "Faster pages: one variable font file per typeface instead of duplicates, deferred scripts, minified and long-cached CSS"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-12",
       "title": "Four more effect recipes and keyboard fixes",
       "items": [
         {

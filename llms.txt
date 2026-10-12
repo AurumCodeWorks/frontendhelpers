@@ -24,6 +24,9 @@ All generated output and published snippets are free to use in personal and comm
 - [WCAG Contrast Checker — Free Colour Contrast Ratio Tool](https://frontendhelpers.com/contrast-checker): Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results.
 - [CSS clamp() Generator for Fluid Typography](https://frontendhelpers.com/clamp-generator): Free CSS clamp() generator. Create fluid font sizes and a fluid type scale with rem + vw, preview any width, and check WCAG 200% zoom.
 
+- [Colour Converter: Hex, RGB, HSL & OKLCH](https://frontendhelpers.com/color-converter): Free colour converter: paste hex, rgb(), hsl(), hwb(), oklch() or a named colour and get every format, WCAG contrast, a gamut check and CSS fallbacks.
+- [CSS Cubic-Bezier Easing Generator](https://frontendhelpers.com/cubic-bezier-generator): Free cubic-bezier() editor: drag the curve, start from ease or easeOutBack, preview it against linear and copy the CSS plus a linear() version.
+
 ## Libraries and reference
 
 - [Free CSS Animations Library — 72 Copy-Paste Effects](https://frontendhelpers.com/css-animations): 72 free, copy-paste CSS animations with live previews: entrances, loaders, hover effects, and menus. Plus 7 interactive CSS lessons. No libraries needed.
