@@ -17,6 +17,10 @@ const IMAGES = {
   'og-fluid-typography-clamp-guide': ['Fluid typography', 'with clamp()', [['Worked', 'maths'], ['200%', 'zoom tested'], ['Guide', '8 min']]],
   'og-wcag-colour-contrast-guide': ['WCAG 2.2', 'colour contrast', [['4.5:1', '& 3:1'], ['17 pairs', 'tested'], ['Guide', '9 min']]],
   'og-robots-txt-vs-noindex-vs-canonical': ['robots.txt vs noindex', 'vs canonical', [['Crawl', 'vs index'], ['Decision', 'table'], ['Guide', '7 min']]],
+  'og-css-typewriter-effect': ['CSS typewriter', 'effect', [['steps()', '+ ch'], ['3', 'live demos'], ['Recipe', '7 min']]],
+  'og-css-skeleton-loader': ['Skeleton loading', 'screens in CSS', [['Shimmer', 'on the compositor'], ['Accessible', 'loading'], ['Recipe', '7 min']]],
+  'og-css-animated-gradient-border': ['Animated gradient', 'borders', [['3', 'techniques'], ['@property', 'animation'], ['Recipe', '7 min']]],
+  'og-css-shake-animation': ['CSS shake', 'animation', [['Accessible', 'errors'], ['Reduced', 'motion'], ['Recipe', '7 min']]],
 };
 
 const BROWSERS = [
