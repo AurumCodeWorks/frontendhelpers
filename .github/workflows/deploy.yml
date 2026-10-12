@@ -11,48 +11,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
-    name: Quality gate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Check pages, links, canonicals, sitemap and redirects
-        run: node scripts/check.mjs
-      - name: Build
-        run: node scripts/build.mjs
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: dist
-          include-hidden-files: true
-          retention-days: 7
-
-  deploy:
-    name: Deploy to Cloudflare Pages
-    needs: check
-    # Skipped until the repository variable CF_PAGES_PROJECT is set
-    if: ${{ vars.CF_PAGES_PROJECT != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+  site:
+    name: Check, build & deploy
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          name: site
-          path: dist
-      - name: Deploy
+          node-version: 22
+
+      - name: Quality gate (pages, links, canonicals, sitemap, redirects)
+        run: node scripts/check.mjs
+
+      - name: Build
+        run: node scripts/build.mjs
+
+      # Skipped until the repository variable CF_PAGES_PROJECT is set.
+      # main → production; any other branch or PR → preview URL.
+      - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v3
+        if: ${{ vars.CF_PAGES_PROJECT != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4'
-          # main → production; any other branch/PR → preview URL
           command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=${{ github.head_ref || github.ref_name }} --commit-hash=${{ github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Report URL
+        if: ${{ steps.deploy.outcome == 'success' }}
         run: echo "Deployed to ${{ steps.deploy.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"
