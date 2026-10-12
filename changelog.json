@@ -3,6 +3,37 @@
   "entries": [
     {
       "date": "2026-10-12",
+      "title": "Four more effect recipes and keyboard fixes",
+      "items": [
+        {
+          "type": "new",
+          "text": "Hover underline animations, including one that survives links wrapping onto two lines",
+          "link": "/css-hover-underline-animation"
+        },
+        {
+          "type": "new",
+          "text": "3D flip cards that work with hover, keyboard focus and a button",
+          "link": "/css-flip-card"
+        },
+        {
+          "type": "new",
+          "text": "Animating accordion height to auto: grid rows, interpolate-size and ::details-content",
+          "link": "/css-accordion-animation"
+        },
+        {
+          "type": "new",
+          "text": "Animating the native dialog element in and out with @starting-style",
+          "link": "/css-dialog-animation"
+        },
+        {
+          "type": "fixed",
+          "text": "The Smooth Accordion and Hamburger Morph animations can now be operated from the keyboard",
+          "link": "/css-accordion-animations"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-12",
       "title": "Eight in-depth CSS effect recipes",
       "items": [
         {
