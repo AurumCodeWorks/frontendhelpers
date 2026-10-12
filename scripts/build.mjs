@@ -5,6 +5,7 @@ import { cpSync, mkdirSync, rmSync, readdirSync, readFileSync, writeFileSync } f
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildMarkdown } from './markdown.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const OUT = join(ROOT, 'dist');
@@ -24,6 +25,12 @@ for (const entry of readdirSync(ROOT)) {
   cpSync(join(ROOT, entry), join(OUT, entry), { recursive: true });
   count++;
 }
+// Markdown alternates + llms-full.txt (dates come from the sitemap)
+const sitemap = readFileSync(join(OUT, 'sitemap.xml'), 'utf8');
+const lastmod = Object.fromEntries([...sitemap.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)].map(m => [m[1], m[2]]));
+const mdCount = buildMarkdown(OUT, lastmod);
+console.log(`Wrote ${mdCount} Markdown alternates + llms-full.txt`);
+
 // Cache-bust CSS/JS: browsers cache them for a day, so every reference
 // gets ?v=<content hash>. A changed file gets a new URL; an unchanged
 // one keeps its cache.

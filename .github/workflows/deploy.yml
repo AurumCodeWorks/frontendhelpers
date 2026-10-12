@@ -25,6 +25,10 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+          cache: npm
+
+      - name: Install build tools
+        run: npm ci
 
       - name: Generated HTML is up to date (animation reference, JS tips)
         run: node scripts/generate.mjs --check

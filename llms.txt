@@ -2,7 +2,7 @@
 
 > Free, browser-based tools and reference material for frontend web developers: SEO and HTML generators, CSS utilities, a library of copy-paste CSS animations, modern JavaScript snippets with explanations, and practical guides. Every tool runs client-side; nothing is uploaded.
 
-All generated output and published snippets are free to use in personal and commercial work with no attribution required. Built and maintained by AurumCodeWorks. Content is written in British English. Pages are plain HTML at clean URLs (no .html extension).
+All generated output and published snippets are free to use in personal and commercial work with no attribution required. Built and maintained by AurumCodeWorks. Content is written in British English. Pages are plain HTML at clean URLs (no .html extension). Every page also has a Markdown version at the same URL with .md appended (for example https://frontendhelpers.com/contrast-checker.md), and https://frontendhelpers.com/llms-full.txt contains the whole site in one file.
 
 ## Tools
 
