@@ -54,57 +54,172 @@
 
   <!-- Structured data: site + app + FAQ (mirrors the visible FAQ section) -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://frontendhelpers.com/#website",
-        "url": "https://frontendhelpers.com/",
-        "name": "FrontendHelpers",
-        "description": "Free client-side tools, CSS animations and JavaScript tricks for frontend web developers."
-      },
-      {
-        "@type": "WebApplication",
-        "name": "FrontendHelpers — Free SEO & Web Dev Utilities",
-        "url": "https://frontendhelpers.com/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Any (browser-based)",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-        "featureList": "Meta tag & social share previewer, JSON-LD schema generator, URL slug generator, text case converter, UTM campaign link builder, robots.txt generator, keyword density analyser, lorem ipsum generator, HTML entity encoder/decoder, HTML table generator, PX to REM converter, aspect ratio calculator, colour palette generator, CSS gradient generator, box shadow builder, WCAG contrast checker, CSS clamp() fluid typography generator"
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Are these developer tools really free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is funded by advertising, never by paywalls." }
-          },
-          {
-            "@type": "Question",
-            "name": "Is anything I type uploaded to a server?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. Every tool runs entirely in your browser using client-side JavaScript, so meta descriptions, business details and colours never leave your device. If you accept analytics cookies, Microsoft Clarity may record how the page is used, but it masks form input by default." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use the generated code in commercial projects?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. Everything the tools generate — meta tags, JSON-LD schema, gradient and shadow CSS — plus every snippet in the animation library and JS tricks collection is yours to use in personal and commercial work, with no attribution required." }
-          },
-          {
-            "@type": "Question",
-            "name": "Why do meta tags and Open Graph tags matter for SEO?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Meta tags control how your pages appear in Google results and social feeds. A well-written title under 60 characters and description under 160 characters improves click-through rate, while Open Graph tags turn plain shared links into rich visual cards on Facebook, LinkedIn and X." }
-          },
-          {
-            "@type": "Question",
-            "name": "How accurate is the WCAG contrast checker?",
-            "acceptedAnswer": { "@type": "Answer", "text": "It implements the official WCAG 2.2 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text." }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://frontendhelpers.com/#website",
+      "url": "https://frontendhelpers.com/",
+      "name": "FrontendHelpers",
+      "description": "Free client-side tools, CSS animations and JavaScript tricks for frontend web developers."
+    },
+    {
+      "@type": "ItemList",
+      "name": "Free frontend developer tools",
+      "numberOfItems": 17,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Meta Tag Generator",
+          "url": "https://frontendhelpers.com/meta-tag-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Schema Markup Generator",
+          "url": "https://frontendhelpers.com/schema-markup-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Robots.txt Generator",
+          "url": "https://frontendhelpers.com/robots-txt-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "URL Slug Generator",
+          "url": "https://frontendhelpers.com/url-slug-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "UTM Link Builder",
+          "url": "https://frontendhelpers.com/utm-link-builder"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Keyword Density Checker",
+          "url": "https://frontendhelpers.com/keyword-density-checker"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Text Case Converter",
+          "url": "https://frontendhelpers.com/text-case-converter"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "HTML Entity Encoder",
+          "url": "https://frontendhelpers.com/html-entity-encoder"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "name": "HTML Table Generator",
+          "url": "https://frontendhelpers.com/html-table-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Lorem Ipsum Generator",
+          "url": "https://frontendhelpers.com/lorem-ipsum-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "name": "CSS clamp() Generator",
+          "url": "https://frontendhelpers.com/clamp-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "name": "WCAG Contrast Checker",
+          "url": "https://frontendhelpers.com/contrast-checker"
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "name": "Colour Palette Generator",
+          "url": "https://frontendhelpers.com/color-palette-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "name": "CSS Gradient Generator",
+          "url": "https://frontendhelpers.com/css-gradient-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "name": "Box Shadow Generator",
+          "url": "https://frontendhelpers.com/box-shadow-generator"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "name": "PX to REM Converter",
+          "url": "https://frontendhelpers.com/px-to-rem-converter"
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "name": "Aspect Ratio Calculator",
+          "url": "https://frontendhelpers.com/aspect-ratio-calculator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are these developer tools really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — every tool on FrontendHelpers is completely free, with no sign-up, no account and no usage limits. The site is funded by advertising, never by paywalls."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "@type": "Question",
+          "name": "Is anything I type uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Every tool runs entirely in your browser using client-side JavaScript, so meta descriptions, business details and colours never leave your device. If you accept analytics cookies, Microsoft Clarity may record how the page is used, but it masks form input by default."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the generated code in commercial projects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. Everything the tools generate — meta tags, JSON-LD schema, gradient and shadow CSS — plus every snippet in the animation library and JS tricks collection is yours to use in personal and commercial work, with no attribution required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do meta tags and Open Graph tags matter for SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Meta tags control how your pages appear in Google results and social feeds. A well-written title under 60 characters and description under 160 characters improves click-through rate, while Open Graph tags turn plain shared links into rich visual cards on Facebook, LinkedIn and X."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the WCAG contrast checker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It implements the official WCAG 2.2 relative-luminance formula — the same maths used by browser DevTools and audit tools like Lighthouse — and reports pass/fail against all four thresholds: AA and AAA, for normal and large text."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470"
      crossorigin="anonymous"></script>
@@ -146,7 +261,7 @@
   <!-- Hero -->
   <section class="container page-hero">
     <h1>Free frontend developer tools that run <span class="hero-highlight">entirely in your browser</span></h1>
-    <p class="page-hero-sub">Seventeen free online web development tools — a meta tag generator with live share previews, schema and robots.txt generators, URL slug and UTM builders, keyword density analyser, lorem ipsum and HTML table generators, text case and PX-to-REM converters, colour palette, gradient and box shadow generators, aspect ratio calculator, and a WCAG contrast checker. Nothing you type ever leaves your device.</p>
+    <p class="page-hero-sub">Seventeen focused tools for SEO markup and CSS, each on its own page with an explanation of the output it gives you. No sign-up, and everything runs in your browser, so nothing you type leaves your device. <a href="#tools">Browse the tools ↓</a></p>
     <ul class="hero-points">
       <li><span class="point-icon">✓</span> 100% free, no sign-up</li>
       <li><span class="point-icon">✓</span> Client-side &amp; private</li>
@@ -155,8 +270,167 @@
     </ul>
   </section>
 
+  <!-- Tool directory: every tool has its own page -->
+  <div class="container tool-directory" id="tools">
+    <div class="dir-filter">
+      <label for="dir-search" class="visually-hidden">Filter tools</label>
+      <input type="search" id="dir-search" class="dir-search" placeholder="Filter 17 tools — try “colour” or “json”" autocomplete="off" />
+    </div>
+    <section class="dir-group" aria-labelledby="dir-seo">
+      <h2 id="dir-seo">SEO &amp; HTML tools <span class="dir-count">10</span></h2>
+      <p class="dir-intro">Markup that search engines and social platforms read — generated correctly the first time.</p>
+      <div class="dir-grid">
+        <a href="/meta-tag-generator" class="dir-card" id="tool-meta" data-search="meta tag generator write titles and descriptions with live google, facebook and x previews, then copy the tags.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <span class="dir-body">
+            <h3>Meta Tag Generator</h3>
+            <p>Write titles and descriptions with live Google, Facebook and X previews, then copy the tags.</p>
+          </span>
+        </a>
+        <a href="/schema-markup-generator" class="dir-card" id="tool-schema" data-search="schema markup generator build valid json-ld for a local business, with address, hours and contact details.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-8l1-8z"/></svg></span>
+          <span class="dir-body">
+            <h3>Schema Markup Generator</h3>
+            <p>Build valid JSON-LD for a local business, with address, hours and contact details.</p>
+          </span>
+        </a>
+        <a href="/robots-txt-generator" class="dir-card" id="tool-robots" data-search="robots.txt generator create crawler rules and a sitemap line without accidentally blocking your whole site.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h6"/></svg></span>
+          <span class="dir-body">
+            <h3>Robots.txt Generator</h3>
+            <p>Create crawler rules and a sitemap line without accidentally blocking your whole site.</p>
+          </span>
+        </a>
+        <a href="/url-slug-generator" class="dir-card" id="tool-slug" data-search="url slug generator turn headlines into clean, readable slugs, with accents transliterated and stop words optional.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.7 1.7"/><path d="M13.5 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.7-1.7"/></svg></span>
+          <span class="dir-body">
+            <h3>URL Slug Generator</h3>
+            <p>Turn headlines into clean, readable slugs, with accents transliterated and stop words optional.</p>
+          </span>
+        </a>
+        <a href="/utm-link-builder" class="dir-card" id="tool-utm" data-search="utm link builder tag campaign links for google analytics with consistent, lowercase parameters.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+          <span class="dir-body">
+            <h3>UTM Link Builder</h3>
+            <p>Tag campaign links for Google Analytics with consistent, lowercase parameters.</p>
+          </span>
+        </a>
+        <a href="/keyword-density-checker" class="dir-card" id="tool-density" data-search="keyword density checker word count, reading time and phrase-aware keyword density for any draft.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20v-5M12 20V9M18 20V4"/></svg></span>
+          <span class="dir-body">
+            <h3>Keyword Density Checker</h3>
+            <p>Word count, reading time and phrase-aware keyword density for any draft.</p>
+          </span>
+        </a>
+        <a href="/text-case-converter" class="dir-card" id="tool-case" data-search="text case converter camelcase, snake_case, kebab-case, pascalcase and title case in one paste.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7V5h14v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg></span>
+          <span class="dir-body">
+            <h3>Text Case Converter</h3>
+            <p>camelCase, snake_case, kebab-case, PascalCase and Title Case in one paste.</p>
+          </span>
+        </a>
+        <a href="/html-entity-encoder" class="dir-card" id="tool-entities" data-search="html entity encoder escape or decode special characters so code samples and attributes render safely.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.5 7-5 5 5 5"/><path d="m15.5 7 5 5-5 5"/></svg></span>
+          <span class="dir-body">
+            <h3>HTML Entity Encoder</h3>
+            <p>Escape or decode special characters so code samples and attributes render safely.</p>
+          </span>
+        </a>
+        <a href="/html-table-generator" class="dir-card" id="tool-table" data-search="html table generator semantic table markup with headers, scope and captions, plus starter css.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg></span>
+          <span class="dir-body">
+            <h3>HTML Table Generator</h3>
+            <p>Semantic table markup with headers, scope and captions, plus starter CSS.</p>
+          </span>
+        </a>
+        <a href="/lorem-ipsum-generator" class="dir-card" id="tool-lorem" data-search="lorem ipsum generator placeholder paragraphs, sentences or words for mock-ups and layouts.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+          <span class="dir-body">
+            <h3>Lorem Ipsum Generator</h3>
+            <p>Placeholder paragraphs, sentences or words for mock-ups and layouts.</p>
+          </span>
+        </a>
+      </div>
+    </section>
+    <section class="dir-group" aria-labelledby="dir-css">
+      <h2 id="dir-css">CSS &amp; design tools <span class="dir-count">7</span></h2>
+      <p class="dir-intro">Colour, type, spacing and layout values you can paste straight into a stylesheet.</p>
+      <div class="dir-grid">
+        <a href="/clamp-generator" class="dir-card" id="tool-clamp" data-search="css clamp() generator fluid font sizes and type scales in rem + vw, with a 200% zoom accessibility check.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/><path d="m3 15 2-2-2-2"/><path d="m21 15-2-2 2-2"/></svg></span>
+          <span class="dir-body">
+            <h3>CSS clamp() Generator <span class="dir-badge">New</span></h3>
+            <p>Fluid font sizes and type scales in rem + vw, with a 200% zoom accessibility check.</p>
+          </span>
+        </a>
+        <a href="/contrast-checker" class="dir-card" id="tool-contrast" data-search="wcag contrast checker test any colour pair against wcag 2.2 aa and aaa for normal and large text.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></span>
+          <span class="dir-body">
+            <h3>WCAG Contrast Checker</h3>
+            <p>Test any colour pair against WCAG 2.2 AA and AAA for normal and large text.</p>
+          </span>
+        </a>
+        <a href="/color-palette-generator" class="dir-card" id="tool-palette" data-search="colour palette generator turn one brand colour into a 50–900 tint and shade scale with css tokens.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 8.6 11.7c.3-1-.5-1.7-1.5-1.7H17a2.5 2.5 0 0 1 0-5h2.6c1 0 1.7-.8 1.4-1.8A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="11.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="10" cy="7.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="14.5" cy="6.8" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+          <span class="dir-body">
+            <h3>Colour Palette Generator</h3>
+            <p>Turn one brand colour into a 50–900 tint and shade scale with CSS tokens.</p>
+          </span>
+        </a>
+        <a href="/css-gradient-generator" class="dir-card" id="tool-gradient" data-search="css gradient generator linear and radial gradients with any number of colour stops, built visually.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6.3 6.9 6.3 11a6.3 6.3 0 0 1-12.6 0c0-4.1 6.3-11 6.3-11z"/></svg></span>
+          <span class="dir-body">
+            <h3>CSS Gradient Generator</h3>
+            <p>Linear and radial gradients with any number of colour stops, built visually.</p>
+          </span>
+        </a>
+        <a href="/box-shadow-generator" class="dir-card" id="tool-shadow" data-search="box shadow generator layered, realistic shadows with live preview and copy-ready css.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="2.5"/><path d="M9.5 20H18a2 2 0 0 0 2-2V9.5"/></svg></span>
+          <span class="dir-body">
+            <h3>Box Shadow Generator</h3>
+            <p>Layered, realistic shadows with live preview and copy-ready CSS.</p>
+          </span>
+        </a>
+        <a href="/px-to-rem-converter" class="dir-card" id="tool-pxrem" data-search="px to rem converter convert pixels to rem and back for any root size, with a quick-reference table.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="1.5"/><path d="M7.5 9v3.5M12 9v3.5M16.5 9v3.5"/></svg></span>
+          <span class="dir-body">
+            <h3>PX to REM Converter</h3>
+            <p>Convert pixels to rem and back for any root size, with a quick-reference table.</p>
+          </span>
+        </a>
+        <a href="/aspect-ratio-calculator" class="dir-card" id="tool-ratio" data-search="aspect ratio calculator resize images and video without distortion and reserve space to prevent layout shift.">
+          <span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>
+          <span class="dir-body">
+            <h3>Aspect Ratio Calculator</h3>
+            <p>Resize images and video without distortion and reserve space to prevent layout shift.</p>
+          </span>
+        </a>
+      </div>
+    </section>
+    <p class="dir-empty" id="dir-empty" hidden>No tools match that filter.</p>
+  </div>
+  <script>
+    // Progressive enhancement: the directory works without this
+    (function () {
+      var input = document.getElementById('dir-search');
+      var cards = document.querySelectorAll('.dir-card');
+      var empty = document.getElementById('dir-empty');
+      input.addEventListener('input', function () {
+        var q = input.value.trim().toLowerCase(), shown = 0;
+        cards.forEach(function (c) {
+          var hit = !q || c.getAttribute('data-search').indexOf(q) !== -1;
+          c.hidden = !hit; if (hit) shown++;
+        });
+        document.querySelectorAll('.dir-group').forEach(function (g) {
+          g.hidden = !g.querySelector('.dir-card:not([hidden])');
+        });
+        empty.hidden = shown !== 0;
+      });
+    })();
+  </script>
+
   <!-- Editorial introduction — crawlable prose for the homepage -->
-  <section class="container seo-explanation" style="margin-top: 0;">
+  <section class="container seo-explanation" >
     <h2>What FrontendHelpers gives you</h2>
     <p>FrontendHelpers is a free collection of seventeen browser-based utilities built for frontend web developers, SEO specialists and designers. Every tool runs entirely in your browser using client-side JavaScript — nothing you type is ever sent to a server, which means your meta descriptions, business details, colour choices and campaign URLs stay completely private.</p>
     <p>The collection covers the two things developers waste the most time on: <strong>SEO markup</strong> and <strong>CSS design decisions</strong>. On the SEO side, you can generate meta tags with live Google, Facebook and X preview cards; build JSON-LD schema markup for local businesses, articles and products; create clean URL slugs; assemble UTM campaign links; generate a robots.txt with the correct directives; and run a keyword density check against your copy. On the design side, there's a colour palette generator that outputs tint and shade scales with CSS custom properties; a CSS gradient builder with radial, conic and linear modes; a box shadow designer with layered shadows; a WCAG contrast checker that reports against all four AA and AAA thresholds; a PX-to-REM converter; and an aspect ratio calculator for responsive images and video embeds.</p>
@@ -166,988 +440,6 @@
     <p>FrontendHelpers is more than a toolbox. The <a href="/css-animations">CSS animation library</a> contains 72 production-ready animations across eleven categories — loading spinners, hover effects, entrance transitions, text reveals, form interactions, accordions, image galleries, menus, UI feedback, attention-getters and background effects — each previewed live and explained with the CSS that makes it work. The <a href="/js-tips">JavaScript tricks collection</a> covers 32 modern patterns from <code>structuredClone</code> to event delegation, with runnable in-page demos you can experiment with. And a set of <a href="/guides">in-depth guides</a> walks through the problems developers actually get stuck on: why a site isn't appearing on Google, how to pass Core Web Vitals, building accessible interfaces, implementing dark mode, and the steps for a successful website launch.</p>
     <p>The site is supported by a small number of non-intrusive ads, never by paywalls or gated features. Every tool, animation, snippet and guide is free to use in personal and commercial projects, with no attribution required.</p>
   </section>
-
-  <!-- Tool jump bar (sticky, mirrors the toolbars on pages 2–3) -->
-  <nav class="tools-toolbar" id="tools-toolbar" aria-label="Jump to a tool">
-    <div class="container">
-    <div class="filter-chips tool-chips">
-      <a class="chip" href="#tool-meta"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>Meta Tags</a>
-      <a class="chip" href="#tool-schema"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-8l1-8z"/></svg>Schema</a>
-      <a class="chip" href="#tool-slug"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.7 1.7"/><path d="M13.5 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.7-1.7"/></svg>URL Slugs</a>
-      <a class="chip" href="#tool-case"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7V5h14v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Text Case</a>
-      <a class="chip" href="#tool-utm"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>UTM Links</a>
-      <a class="chip" href="#tool-robots"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h6"/></svg>Robots.txt</a>
-      <a class="chip" href="#tool-density"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20v-5M12 20V9M18 20V4"/></svg>Keyword Density</a>
-      <a class="chip" href="#tool-lorem"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Lorem Ipsum</a>
-      <a class="chip" href="#tool-entities"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.5 7-5 5 5 5"/><path d="m15.5 7 5 5-5 5"/></svg>HTML Entities</a>
-      <a class="chip" href="#tool-table"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg>HTML Tables</a>
-      <a class="chip" href="#tool-pxrem"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="1.5"/><path d="M7.5 9v3.5M12 9v3.5M16.5 9v3.5"/></svg>PX → REM</a>
-      <a class="chip" href="#tool-ratio"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>Aspect Ratio</a>
-      <a class="chip" href="#tool-palette"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 8.6 11.7c.3-1-.5-1.7-1.5-1.7H17a2.5 2.5 0 0 1 0-5h2.6c1 0 1.7-.8 1.4-1.8A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="11.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="10" cy="7.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="14.5" cy="6.8" r="1.3" fill="currentColor" stroke="none"/></svg>Colour Palettes</a>
-      <a class="chip" href="#tool-gradient"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6.3 6.9 6.3 11a6.3 6.3 0 0 1-12.6 0c0-4.1 6.3-11 6.3-11z"/></svg>Gradients</a>
-      <a class="chip" href="#tool-shadow"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="2.5"/><path d="M9.5 20H18a2 2 0 0 0 2-2V9.5"/></svg>Box Shadows</a>
-      <a class="chip" href="#tool-contrast"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>Contrast</a>
-    </div>
-    </div>
-    </nav>
-
-  <div class="container tools-flow">
-
-      <!-- ═══════════════ 1. META PREVIEWER ═══════════════ -->
-      <div class="tool-card" id="tool-meta">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>Meta Tag &amp; Social Share Previewer</h2>
-          <button class="btn-reset" id="reset-meta">↺ Reset</button>
-        </div>
-        <p class="panel-desc">Type in your webpage details to see how they appear when shared on Google, Facebook, and Twitter. Grab the optimised HTML tags.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="meta-title">Page Title</label>
-              <input type="text" id="meta-title" placeholder="e.g. My Portfolio — Web Developer London" value="FrontendHelpers — Free SEO &amp; Web Dev Utilities" />
-              <div class="char-progress-wrapper">
-                <span class="char-counter" id="title-counter">0 / 60 chars</span>
-                <div class="char-progress-bar"><div class="char-progress-fill" id="title-progress"></div></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="meta-desc">Meta Description</label>
-              <textarea id="meta-desc" rows="3" placeholder="Describe the page content in 150-160 characters...">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</textarea>
-              <div class="char-progress-wrapper">
-                <span class="char-counter" id="desc-counter">0 / 160 chars</span>
-                <div class="char-progress-bar"><div class="char-progress-fill" id="desc-progress"></div></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="meta-site">Site Name</label>
-              <input type="text" id="meta-site" placeholder="e.g. FrontendHelpers" value="FrontendHelpers" />
-            </div>
-            <div class="form-group">
-              <label for="meta-url">Target URL</label>
-              <input type="url" id="meta-url" placeholder="https://yourwebsite.com" value="https://frontendhelpers.com" />
-            </div>
-            <div class="form-group">
-              <label for="meta-img">Share Card Image URL</label>
-              <input type="url" id="meta-img" placeholder="https://yourwebsite.com/assets/og-image.png" value="https://frontendhelpers.com/assets/og-image.png" />
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Live Preview Cards</h3>
-            
-            <div class="preview-tabs">
-              <button class="preview-tab-btn active" data-preview="google">Google</button>
-              <button class="preview-tab-btn" data-preview="facebook">Facebook</button>
-              <button class="preview-tab-btn" data-preview="twitter">Twitter / X</button>
-            </div>
-
-            <!-- Google Preview -->
-            <div class="preview-box active" id="prev-google">
-              <div class="google-preview">
-                <div class="google-url" id="prev-g-url">https://frontendhelpers.com <span class="arrow">&#9662;</span></div>
-                <div class="google-title" id="prev-g-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
-                <div class="google-desc" id="prev-g-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</div>
-              </div>
-            </div>
-
-            <!-- Facebook Preview -->
-            <div class="preview-box" id="prev-facebook">
-              <div class="fb-preview">
-                <div class="fb-img-container">
-                  <img id="prev-fb-img" src="https://frontendhelpers.com/assets/og-image.png" alt="Card Preview" loading="lazy" onerror="this.src='https://placehold.co/600x315/1a1f26/ffffff?text=Preview+Image'" />
-                </div>
-                <div class="fb-info">
-                  <div class="fb-domain" id="prev-fb-domain">FRONTENDHELPERS.COM</div>
-                  <div class="fb-title" id="prev-fb-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
-                  <div class="fb-desc" id="prev-fb-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema ...</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Twitter Preview -->
-            <div class="preview-box" id="prev-twitter">
-              <div class="tw-preview">
-                <div class="tw-img-container">
-                  <img id="prev-tw-img" src="https://frontendhelpers.com/assets/og-image.png" alt="Card Preview" loading="lazy" onerror="this.src='https://placehold.co/600x315/1a1f26/ffffff?text=Preview+Image'" />
-                </div>
-                <div class="tw-info">
-                  <div class="tw-domain" id="prev-tw-domain">frontendhelpers.com</div>
-                  <div class="tw-title" id="prev-tw-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
-                  <div class="tw-desc" id="prev-tw-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Output HTML Code -->
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>Optimised Meta Tags</span>
-                <button class="btn-copy" id="btn-copy-meta" data-target="output-meta-code">Copy Tags</button>
-              </div>
-              <textarea id="output-meta-code" aria-label="Optimised Meta Tags" readonly rows="8"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Inline ad slot -->
-
-
-        <article class="tool-documentation">
-          <h3>Why Meta Tags and Open Graph Matter for Web Traffic</h3>
-          <p>Meta tags don't rank you directly — they decide whether your result gets clicked, and whether a shared link becomes a rich card or a bare URL.</p>
-          <p class="full-guide-link"><a href="/meta-tag-generator">Full guide: title length, Open Graph and fixing stale previews →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 2. SCHEMA GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-schema">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-8l1-8z"/></svg></span>Structured JSON-LD Schema Creator</h2>
-        </div>
-        <p class="panel-desc">Generate schema.org markup for local services or businesses. Structured schema helps Google display rich search results (reviews, price metrics, maps).</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="schema-type">Business Type</label>
-                <select id="schema-type">
-                  <option value="ProfessionalService">Professional Service</option>
-                  <option value="LocalBusiness">Local Business</option>
-                  <option value="Organization">Organization</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="schema-name">Business Name</label>
-                <input type="text" id="schema-name" placeholder="e.g. My Business" value="FrontendHelpers" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="schema-url">Business Website URL</label>
-                <input type="url" id="schema-url" placeholder="https://yourwebsite.com" value="https://frontendhelpers.com" />
-              </div>
-              <div class="form-group">
-                <label for="schema-logo">Logo Image URL</label>
-                <input type="url" id="schema-logo" placeholder="https://yourwebsite.com/assets/logo.png" value="https://frontendhelpers.com/favicon.svg" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="schema-email">Business Email</label>
-                <input type="email" id="schema-email" placeholder="hello@yourwebsite.com" value="" />
-              </div>
-              <div class="form-group">
-                <label for="schema-phone">Phone Number</label>
-                <input type="tel" id="schema-phone" placeholder="e.g. +44 7123 456789" value="" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="schema-street">Street Address</label>
-              <input type="text" id="schema-street" placeholder="e.g. 12 High Street" value="" />
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="schema-locality">City / Locality</label>
-                <input type="text" id="schema-locality" placeholder="e.g. London" value="" />
-              </div>
-              <div class="form-group">
-                <label for="schema-zip">Postal Code</label>
-                <input type="text" id="schema-zip" placeholder="e.g. EC1A 1BB" value="" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="schema-country">Country Code</label>
-                <input type="text" id="schema-country" placeholder="e.g. GB" value="GB" />
-              </div>
-              <div class="form-group">
-                <label for="schema-price">Price Range (e.g. ££)</label>
-                <input type="text" id="schema-price" placeholder="e.g. ££" value="££" />
-              </div>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>JSON-LD Code Output</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>Copy-Paste Schema Script</span>
-                <button class="btn-copy" id="btn-copy-schema" data-target="output-schema-code">Copy Script</button>
-              </div>
-              <textarea id="output-schema-code" aria-label="Copy-Paste Schema Script" readonly rows="16" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <article class="tool-documentation">
-          <h3>The SEO Value of Schema Markup and JSON-LD</h3>
-          <p>Structured data states explicitly what your page represents, making it eligible for rich results — star ratings, business details, FAQ dropdowns.</p>
-          <p class="full-guide-link"><a href="/schema-markup-generator">Full guide: JSON-LD, rich results and the rule that gets sites penalised →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 3. URL SLUG GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-slug">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.7 1.7"/><path d="M13.5 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.7-1.7"/></svg></span>SEO-Friendly URL Slug Generator</h2>
-        </div>
-        <p class="panel-desc">Turn any headline into a clean, lowercase, hyphen-separated URL slug — the format search engines and readers both prefer.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="slug-input">Page Title or Headline</label>
-              <input type="text" id="slug-input" placeholder="e.g. 10 Best CSS Tricks for Beginners (2026 Guide)" value="10 Best CSS Tricks for Beginners (2026 Guide)" />
-            </div>
-            <div class="form-group">
-              <label for="slug-separator">Word Separator</label>
-              <select id="slug-separator">
-                <option value="-">Hyphen — recommended by Google</option>
-                <option value="_">Underscore</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="slug-stopwords" checked /> Remove stop words (a, the, for, and…)
-              </label>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Generated Slug</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>URL-ready slug</span>
-                <button class="btn-copy" data-target="output-slug">Copy Slug</button>
-              </div>
-              <textarea id="output-slug" aria-label="URL-ready slug" readonly rows="2" class="mono-output"></textarea>
-            </div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>Full URL preview</span>
-                <button class="btn-copy" data-target="output-slug-url">Copy URL</button>
-              </div>
-              <textarea id="output-slug-url" aria-label="Full URL preview" readonly rows="2" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Why URL Slugs Matter for SEO</h3>
-          <p>Google reads hyphens as word separators and underscores as joiners, so css-animations is two words while css_animations is one meaningless token.</p>
-          <p class="full-guide-link"><a href="/url-slug-generator">Full guide: stop words, accents and why you must never change a live slug →</a></p>
-        </article>
-      </div>
-
-
-
-      <!-- ═══════════════ TEXT CASE CONVERTER ═══════════════ -->
-      <div class="tool-card" id="tool-case">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7V5h14v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg></span>Text Case Converter</h2>
-        </div>
-        <p class="panel-desc">Convert any text between the six cases developers juggle daily — camelCase for JavaScript, kebab-case for CSS and URLs, snake_case for databases, and more.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="case-input">Your Text</label>
-              <textarea id="case-input" rows="3" placeholder="Type or paste anything…">Frontend helpers makes web development easier</textarea>
-            </div>
-            <p class="panel-desc">Mixed input is fine — existing camelCase, hyphens, underscores and spaces are all understood and re-split into words first.</p>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Converted</h3>
-            <div class="case-grid">
-              <div class="case-row"><span class="case-label">camelCase</span><code class="case-value" id="case-camel"></code><button class="btn-copy" data-target="case-camel">Copy</button></div>
-              <div class="case-row"><span class="case-label">PascalCase</span><code class="case-value" id="case-pascal"></code><button class="btn-copy" data-target="case-pascal">Copy</button></div>
-              <div class="case-row"><span class="case-label">snake_case</span><code class="case-value" id="case-snake"></code><button class="btn-copy" data-target="case-snake">Copy</button></div>
-              <div class="case-row"><span class="case-label">kebab-case</span><code class="case-value" id="case-kebab"></code><button class="btn-copy" data-target="case-kebab">Copy</button></div>
-              <div class="case-row"><span class="case-label">Title Case</span><code class="case-value" id="case-title"></code><button class="btn-copy" data-target="case-title">Copy</button></div>
-              <div class="case-row"><span class="case-label">UPPERCASE</span><code class="case-value" id="case-upper"></code><button class="btn-copy" data-target="case-upper">Copy</button></div>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Why Naming Conventions Differ Across the Stack</h3>
-          <p>Each convention exists because of a constraint: JavaScript can't use hyphens, URLs are case-insensitive, SQL folds identifiers to lowercase.</p>
-          <p class="full-guide-link"><a href="/text-case-converter">Full guide: why each layer differs, and handling acronyms →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 4. UTM LINK BUILDER ═══════════════ -->
-      <div class="tool-card" id="tool-utm">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>UTM Campaign Link Builder</h2>
-        </div>
-        <p class="panel-desc">Build tracking links for newsletters, social posts and ads — so Google Analytics can tell you exactly which campaign brought each visitor.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="utm-url">Destination URL</label>
-              <input type="url" id="utm-url" placeholder="https://yourwebsite.com/landing-page" value="https://frontendhelpers.com/" />
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="utm-source">Campaign Source <small>(required — where the link lives)</small></label>
-                <input type="text" id="utm-source" placeholder="e.g. newsletter, twitter, google" value="newsletter" />
-              </div>
-              <div class="form-group">
-                <label for="utm-medium">Campaign Medium <small>(required — the channel type)</small></label>
-                <input type="text" id="utm-medium" placeholder="e.g. email, social, cpc" value="email" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="utm-campaign">Campaign Name</label>
-                <input type="text" id="utm-campaign" placeholder="e.g. spring-launch" value="" />
-              </div>
-              <div class="form-group">
-                <label for="utm-term">Campaign Term <small>(paid keywords)</small></label>
-                <input type="text" id="utm-term" placeholder="e.g. css+tools" value="" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="utm-content">Campaign Content <small>(A/B variants)</small></label>
-              <input type="text" id="utm-content" placeholder="e.g. header-button vs footer-link" value="" />
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Tracking Link</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>Tagged URL</span>
-                <button class="btn-copy" data-target="output-utm">Copy Link</button>
-              </div>
-              <textarea id="output-utm" aria-label="Tagged URL" readonly rows="5" class="mono-output"></textarea>
-            </div>
-            <p class="panel-desc" id="utm-hint" style="margin-top: 10px;"></p>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>How UTM Parameters Reveal What Actually Works</h3>
-          <p>UTM tags let analytics tell you which campaign, channel and individual link brought each visitor — instead of lumping them into 'direct'.</p>
-          <p class="full-guide-link"><a href="/utm-link-builder">Full guide: source vs medium, naming conventions and internal-link traps →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 5. ROBOTS.TXT GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-robots">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h6"/></svg></span>Robots.txt Generator</h2>
-        </div>
-        <p class="panel-desc">Create a valid robots.txt that tells search engine crawlers what to index and what to skip — plus your sitemap location.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="robots-agent">User-Agent</label>
-                <input type="text" id="robots-agent" placeholder="* (all crawlers)" value="*" />
-              </div>
-              <div class="form-group">
-                <label for="robots-mode">Base Policy</label>
-                <select id="robots-mode">
-                  <option value="allow">Allow everything (recommended)</option>
-                  <option value="block">Block everything (staging sites)</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="robots-disallow">Blocked Paths <small>(one per line, e.g. /admin/)</small></label>
-              <textarea id="robots-disallow" rows="4" placeholder="/admin/&#10;/private/&#10;/cart/"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="robots-sitemap">Sitemap URL <small>(strongly recommended)</small></label>
-              <input type="url" id="robots-sitemap" placeholder="https://yourwebsite.com/sitemap.xml" value="" />
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Generated File</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>robots.txt — place at your site root</span>
-                <button class="btn-copy" data-target="output-robots">Copy File</button>
-              </div>
-              <textarea id="output-robots" aria-label="robots.txt — place at your site root" readonly rows="9" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>What Robots.txt Does (and Doesn’t Do)</h3>
-          <p>robots.txt controls crawling, not indexing — a distinction that causes more accidental SEO damage than any other misunderstanding.</p>
-          <p class="full-guide-link"><a href="/robots-txt-generator">Full guide: the line that deindexes sites, and why it can't hide anything →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 6. KEYWORD DENSITY ═══════════════ -->
-      <div class="tool-card" id="tool-density">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20v-5M12 20V9M18 20V4"/></svg></span>Keyword Density &amp; Reading Time Analyser</h2>
-        </div>
-        <p class="panel-desc">Paste your article or page copy to get word counts, estimated reading time, and the keywords you actually repeat most — all analysed locally in your browser.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="density-text">Your Content</label>
-              <textarea id="density-text" rows="10" placeholder="Paste your article, blog post or landing page copy here…"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="density-target">Target Keyword <small>(optional)</small></label>
-              <input type="text" id="density-target" placeholder="e.g. css animations" value="" />
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Analysis</h3>
-            <div class="stat-grid">
-              <div class="stat-box"><span class="stat-value" id="stat-words">0</span><span class="stat-label">Words</span></div>
-              <div class="stat-box"><span class="stat-value" id="stat-chars">0</span><span class="stat-label">Characters</span></div>
-              <div class="stat-box"><span class="stat-value" id="stat-sentences">0</span><span class="stat-label">Sentences</span></div>
-              <div class="stat-box"><span class="stat-value" id="stat-reading">0 min</span><span class="stat-label">Reading Time</span></div>
-            </div>
-            <div class="target-density" id="target-density" hidden>
-              <span id="target-density-text"></span>
-            </div>
-            <div class="quick-table-container">
-              <h4>Most Used Words <small>(stop words excluded)</small></h4>
-              <table class="quick-table">
-                <thead><tr><th>Word</th><th>Count</th><th>Density</th></tr></thead>
-                <tbody id="density-table-body"><tr><td colspan="3">Paste some content to analyse it.</td></tr></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Keyword Density in Modern SEO</h3>
-          <p>There is no magic density percentage — modern search engines model meaning, not term frequency. Density is a diagnostic, not a target.</p>
-          <p class="full-guide-link"><a href="/keyword-density-checker">Full guide: natural density, reading time and matching search intent →</a></p>
-        </article>
-      </div>
-
-
-
-      <!-- ═══════════════ LOREM IPSUM GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-lorem">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>Lorem Ipsum Generator</h2>
-        </div>
-        <p class="panel-desc">Generate placeholder text for mockups and layouts — by paragraph, sentence or word count, ready to copy.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="lorem-count">Amount</label>
-                <input type="number" id="lorem-count" min="1" max="50" value="3" />
-              </div>
-              <div class="form-group">
-                <label for="lorem-unit">Unit</label>
-                <select id="lorem-unit">
-                  <option value="paragraphs">Paragraphs</option>
-                  <option value="sentences">Sentences</option>
-                  <option value="words">Words</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="lorem-start" checked /> Start with “Lorem ipsum dolor sit amet…”
-              </label>
-            </div>
-            <div class="form-group">
-              <button class="btn-copy" id="lorem-regen" style="width:100%;">↻ Regenerate</button>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Placeholder Text</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>Ready to paste</span>
-                <button class="btn-copy" data-target="output-lorem">Copy Text</button>
-              </div>
-              <textarea id="output-lorem" aria-label="Ready to paste" readonly rows="11"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Why Designers Still Use Lorem Ipsum</h3>
-          <p>Placeholder text keeps a design review focused on spacing, hierarchy and typography instead of the words — but it must never reach production.</p>
-          <p class="full-guide-link"><a href="/lorem-ipsum-generator">Full guide: how much filler to use, and when to skip it →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 7. HTML ENTITY ENCODER ═══════════════ -->
-      <div class="tool-card" id="tool-entities">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.5 7-5 5 5 5"/><path d="m15.5 7 5 5-5 5"/></svg></span>HTML Entity Encoder / Decoder</h2>
-        </div>
-        <p class="panel-desc">Convert special characters to safe HTML entities and back — for displaying code snippets, avoiding broken markup, and preventing injected HTML.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label>Direction</label>
-              <div class="toggle-group">
-                <button class="toggle-btn active" id="entity-mode-encode">Encode</button>
-                <button class="toggle-btn" id="entity-mode-decode">Decode</button>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="entity-input">Input</label>
-              <textarea id="entity-input" rows="6" placeholder="e.g. &lt;div class=&quot;card&quot;&gt; → paste anything here">&lt;button class="cta" disabled&gt;Sign up &amp; save 20%&lt;/button&gt;</textarea>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Result</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span id="entity-output-label">Encoded HTML</span>
-                <button class="btn-copy" data-target="output-entities">Copy Result</button>
-              </div>
-              <textarea id="output-entities" aria-labelledby="entity-output-label" readonly rows="6" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Why HTML Entities Exist</h3>
-          <p>Escaping output is the primary defence against XSS: the same input that would execute as a script renders as harmless visible text.</p>
-          <p class="full-guide-link"><a href="/html-entity-encoder">Full guide: the five reserved characters, named vs numeric, and decoding →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ HTML TABLE GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-table">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg></span>HTML Table Generator</h2>
-        </div>
-        <p class="panel-desc">Build clean, semantic table markup — with a proper header row and accessible scope attributes — plus a starter stylesheet to make it look right.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="table-rows">Body Rows</label>
-                <input type="number" id="table-rows" min="1" max="30" value="3" />
-              </div>
-              <div class="form-group">
-                <label for="table-cols">Columns</label>
-                <input type="number" id="table-cols" min="1" max="12" value="3" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="table-header" checked /> Include header row (&lt;thead&gt;)
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="table-zebra" /> Zebra-striped rows in the CSS
-              </label>
-            </div>
-            <h3 class="mini-heading" style="margin-top:18px;">Live Preview <small>(markup + starter CSS, as it renders on a plain page)</small></h3>
-            <div class="table-preview" id="table-preview"></div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Copy-Paste Output</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>HTML markup</span>
-                <button class="btn-copy" data-target="output-table-html">Copy HTML</button>
-              </div>
-              <textarea id="output-table-html" aria-label="HTML markup" readonly rows="9" class="mono-output"></textarea>
-            </div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>Starter CSS</span>
-                <button class="btn-copy" data-target="output-table-css">Copy CSS</button>
-              </div>
-              <textarea id="output-table-css" aria-label="Starter CSS" readonly rows="6" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Semantic Tables Still Matter</h3>
-          <p>Screen readers navigate cell by cell and rely on thead and scope to announce which header each value belongs to.</p>
-          <p class="full-guide-link"><a href="/html-table-generator">Full guide: accessibility, the layout-tables myth and responsive strategies →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 8. PX TO REM ═══════════════ -->
-      <div class="tool-card" id="tool-pxrem">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="1.5"/><path d="M7.5 9v3.5M12 9v3.5M16.5 9v3.5"/></svg></span>PX ↔ REM Typography Converter</h2>
-        </div>
-        <p class="panel-desc">Instantly convert between pixel sizes and proportional REM spacing units, based on a custom document root font size.</p>
-
-        <div class="tool-grid">
-          <div class="pxrem-card">
-            <h3>Calculator Settings</h3>
-            <div class="form-group">
-              <label for="base-size">Base Font Size (Default is 16px)</label>
-              <input type="number" id="base-size" value="16" min="8" max="32" />
-            </div>
-            <div class="calc-row">
-              <div class="calc-group">
-                <label for="calc-px">Pixels (PX)</label>
-                <div class="input-unit">
-                  <input type="number" id="calc-px" value="16" />
-                  <span class="unit-tag">px</span>
-                </div>
-              </div>
-              <div class="calc-arrows">&larr;&nbsp;&rarr;</div>
-              <div class="calc-group">
-                <label for="calc-rem">Root EM (REM)</label>
-                <div class="input-unit">
-                  <input type="number" id="calc-rem" value="1" step="0.0625" />
-                  <span class="unit-tag">rem</span>
-                </div>
-              </div>
-            </div>
-            <div class="quick-table-container">
-              <h4>Quick Conversion Table</h4>
-              <table class="quick-table">
-                <thead><tr><th>Pixels</th><th>REM</th></tr></thead>
-                <tbody id="quick-table-body"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <article class="tool-documentation" style="margin-top: 0;">
-              <h3>Why Accessible Layouts Use REM Instead of Pixels</h3>
-              <p>REM units scale with the visitor's browser font-size preference, so text stays readable when someone increases their default size — something pixel values ignore, failing WCAG 1.4.4.</p>
-              <p class="full-guide-link"><a href="/px-to-rem-converter">Full guide: rem vs em vs px, and building a type scale →</a></p>
-            </article>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═══════════════ 9. ASPECT RATIO CALCULATOR ═══════════════ -->
-      <div class="tool-card" id="tool-ratio">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>Aspect Ratio &amp; Image Size Calculator</h2>
-        </div>
-        <p class="panel-desc">Find an image or video's aspect ratio, scale it to any width without distortion, and copy the CSS and HTML that stop layout shift.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="ratio-w">Original Width (px)</label>
-                <input type="number" id="ratio-w" min="1" value="1920" />
-              </div>
-              <div class="form-group">
-                <label for="ratio-h">Original Height (px)</label>
-                <input type="number" id="ratio-h" min="1" value="1080" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="ratio-target-w">Resize to Width (px)</label>
-              <input type="number" id="ratio-target-w" min="1" value="800" />
-            </div>
-            <div class="stat-grid">
-              <div class="stat-box"><span class="stat-value" id="ratio-simple">16 : 9</span><span class="stat-label">Aspect Ratio</span></div>
-              <div class="stat-box"><span class="stat-value" id="ratio-decimal">1.778</span><span class="stat-label">W ÷ H</span></div>
-              <div class="stat-box"><span class="stat-value" id="ratio-scaled">800 × 450</span><span class="stat-label">Scaled Size</span></div>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Copy-Paste Output</h3>
-            <div class="output-code-container" style="margin-top: 0;">
-              <div class="output-header">
-                <span>CSS — reserve the space</span>
-                <button class="btn-copy" data-target="output-ratio-css">Copy CSS</button>
-              </div>
-              <textarea id="output-ratio-css" aria-label="CSS — reserve the space" readonly rows="4" class="mono-output"></textarea>
-            </div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>HTML — sized image tag</span>
-                <button class="btn-copy" data-target="output-ratio-html">Copy HTML</button>
-              </div>
-              <textarea id="output-ratio-html" aria-label="HTML — sized image tag" readonly rows="2" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>Aspect Ratios and Layout Shift (CLS)</h3>
-          <p>Telling the browser an image's dimensions up front reserves its space and prevents the page jumping as it loads — the cause of poor CLS scores.</p>
-          <p class="full-guide-link"><a href="/aspect-ratio-calculator">Full guide: standard ratios, object-fit and the aspect-ratio property →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ COLOUR PALETTE GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-palette">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 8.6 11.7c.3-1-.5-1.7-1.5-1.7H17a2.5 2.5 0 0 1 0-5h2.6c1 0 1.7-.8 1.4-1.8A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="11.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="10" cy="7.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="14.5" cy="6.8" r="1.3" fill="currentColor" stroke="none"/></svg></span>Colour Palette Generator</h2>
-        </div>
-        <p class="panel-desc">Turn one brand colour into a full working palette: a 50–900 tint-and-shade scale, complementary and analogous accents, and ready-made CSS design tokens.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label for="palette-hex">Base Colour</label>
-              <div class="color-input-group">
-                <input type="color" id="palette-picker" aria-label="Pick base colour" value="#8b5cf6" />
-                <input type="text" id="palette-hex" value="#8b5cf6" placeholder="#8b5cf6" class="color-hex-input" />
-              </div>
-            </div>
-            <h3 class="mini-heading" style="margin-top:18px;">Accent Suggestions <small>(click any swatch to copy)</small></h3>
-            <div class="palette-row" id="palette-accents"></div>
-            <p class="panel-desc" style="margin-top:14px;">The complement sits opposite your colour on the wheel — highest contrast for call-to-action moments. Analogous neighbours harmonise for backgrounds and secondary UI.</p>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Tint &amp; Shade Scale</h3>
-            <div class="palette-row palette-scale" id="palette-scale"></div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>CSS design tokens</span>
-                <button class="btn-copy" data-target="output-palette-tokens">Copy Tokens</button>
-              </div>
-              <textarea id="output-palette-tokens" aria-label="CSS design tokens" readonly rows="9" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <article class="tool-documentation">
-          <h3>From One Colour to a Design System</h3>
-          <p>Professional palettes are one hue expressed at many lightness levels, named as tokens — which is what makes a rebrand a five-minute change.</p>
-          <p class="full-guide-link"><a href="/color-palette-generator">Full guide: tint scales, colour harmony and design tokens →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 10. CSS GRADIENT GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-gradient">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6.3 6.9 6.3 11a6.3 6.3 0 0 1-12.6 0c0-4.1 6.3-11 6.3-11z"/></svg></span>CSS Gradient Generator</h2>
-          <button class="btn-reset" id="reset-gradient">↺ Reset</button>
-        </div>
-        <p class="panel-desc">Build beautiful CSS gradients visually with a live preview. Adjust colours, angles, and stops, then copy the CSS code.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-group">
-              <label>Gradient Type</label>
-              <div class="toggle-group">
-                <button class="toggle-btn active" data-grad-type="linear" id="grad-type-linear">Linear</button>
-                <button class="toggle-btn" data-grad-type="radial" id="grad-type-radial">Radial</button>
-              </div>
-            </div>
-
-            <div class="form-group" id="angle-group">
-              <label for="grad-angle">Angle: <strong id="angle-value">135</strong>°</label>
-              <input type="range" id="grad-angle" min="0" max="360" value="135" class="styled-range" />
-            </div>
-
-            <div class="form-group">
-              <label>Colour Stops</label>
-              <div id="color-stops-list"></div>
-              <button class="btn-add-stop" id="add-stop">+ Add Colour Stop</button>
-            </div>
-
-            <div class="form-group">
-              <label>Quick Presets</label>
-              <div class="preset-grid" id="gradient-presets"></div>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Live Preview</h3>
-            <div class="gradient-preview-swatch" id="gradient-swatch"></div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>CSS Code</span>
-                <button class="btn-copy" id="btn-copy-gradient" data-target="output-gradient-code">Copy CSS</button>
-              </div>
-              <textarea id="output-gradient-code" aria-label="CSS Code" readonly rows="4" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <article class="tool-documentation">
-          <h3>CSS Gradients in Modern Web Design</h3>
-          <p>Browser-rendered gradients cost no bandwidth, stay sharp at any resolution, and can be restyled in a second — everything a gradient image cannot do.</p>
-          <p class="full-guide-link"><a href="/css-gradient-generator">Full guide: linear vs radial, colour stops and performance →</a></p>
-        </article>
-      </div>
-
-      <!-- ═══════════════ 11. BOX SHADOW GENERATOR ═══════════════ -->
-      <div class="tool-card" id="tool-shadow">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="2.5"/><path d="M9.5 20H18a2 2 0 0 0 2-2V9.5"/></svg></span>CSS Box Shadow Generator</h2>
-          <button class="btn-reset" id="reset-shadow">↺ Reset</button>
-        </div>
-        <p class="panel-desc">Design custom box shadows with visual sliders. Adjust offset, blur, spread, and colour for the perfect shadow effect.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="slider-group">
-              <label for="shadow-x">X Offset: <strong id="shadow-x-val">4</strong>px</label>
-              <input type="range" id="shadow-x" min="-50" max="50" value="4" class="styled-range" />
-            </div>
-            <div class="slider-group">
-              <label for="shadow-y">Y Offset: <strong id="shadow-y-val">8</strong>px</label>
-              <input type="range" id="shadow-y" min="-50" max="50" value="8" class="styled-range" />
-            </div>
-            <div class="slider-group">
-              <label for="shadow-blur">Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
-              <input type="range" id="shadow-blur" min="0" max="100" value="24" class="styled-range" />
-            </div>
-            <div class="slider-group">
-              <label for="shadow-spread">Spread: <strong id="shadow-spread-val">0</strong>px</label>
-              <input type="range" id="shadow-spread" min="-50" max="50" value="0" class="styled-range" />
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="shadow-color">Shadow Colour</label>
-                <div class="color-input-group">
-                  <input type="color" id="shadow-color" value="#000000" />
-                  <span class="color-hex-label" id="shadow-color-hex">#000000</span>
-                </div>
-              </div>
-              <div class="slider-group">
-                <label for="shadow-opacity">Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
-                <input type="range" id="shadow-opacity" min="0" max="100" value="25" class="styled-range" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="shadow-inset" /> Inset Shadow
-              </label>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Live Preview</h3>
-            <div class="shadow-preview-container">
-              <div class="shadow-preview-card" id="shadow-preview">
-                <span class="shadow-card-text">Your Shadow</span>
-              </div>
-            </div>
-            <div class="output-code-container">
-              <div class="output-header">
-                <span>CSS Code</span>
-                <button class="btn-copy" id="btn-copy-shadow" data-target="output-shadow-code">Copy CSS</button>
-              </div>
-              <textarea id="output-shadow-code" aria-label="CSS Code" readonly rows="3" class="mono-output"></textarea>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <article class="tool-documentation">
-          <h3>Box Shadows in UI Design</h3>
-          <p>Shadows create depth and hierarchy in flat interfaces. The professional look comes from low opacity, generous blur and a slight downward offset.</p>
-          <p class="full-guide-link"><a href="/box-shadow-generator">Full guide: layering shadows, elevation scales and dark mode →</a></p>
-        </article>
-      </div>
-
-
-
-      <!-- ═══════════════ 12. WCAG CONTRAST CHECKER ═══════════════ -->
-      <div class="tool-card" id="tool-contrast">
-        <div class="panel-header">
-          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></span>WCAG Colour Contrast Checker</h2>
-          <button class="btn-reset" id="reset-contrast">↺ Reset</button>
-        </div>
-        <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.2 accessibility standards for AA and AAA compliance.</p>
-
-        <div class="tool-grid">
-          <div class="tool-inputs">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fg-color">Text (Foreground) Colour</label>
-                <div class="color-input-group">
-                  <input type="color" id="fg-color-picker" aria-label="Pick text colour" value="#ffffff" />
-                  <input type="text" id="fg-color" value="#ffffff" placeholder="#ffffff" class="color-hex-input" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="bg-color">Background Colour</label>
-                <div class="color-input-group">
-                  <input type="color" id="bg-color-picker" aria-label="Pick background colour" value="#1a1a2e" />
-                  <input type="text" id="bg-color" value="#1a1a2e" placeholder="#1a1a2e" class="color-hex-input" />
-                </div>
-              </div>
-            </div>
-
-            <button class="btn-swap" id="swap-colors">⇄ Swap Colours</button>
-
-            <div class="contrast-ratio-display">
-              <div class="ratio-number" id="contrast-ratio">12.63</div>
-              <div class="ratio-label">: 1 Contrast Ratio</div>
-            </div>
-
-            <div class="wcag-results">
-              <div class="wcag-row">
-                <span class="wcag-label">AA Normal Text <small>(≥ 4.5:1)</small></span>
-                <span class="wcag-badge pass" id="aa-normal">PASS ✓</span>
-              </div>
-              <div class="wcag-row">
-                <span class="wcag-label">AA Large Text <small>(≥ 3:1)</small></span>
-                <span class="wcag-badge pass" id="aa-large">PASS ✓</span>
-              </div>
-              <div class="wcag-row">
-                <span class="wcag-label">AAA Normal Text <small>(≥ 7:1)</small></span>
-                <span class="wcag-badge pass" id="aaa-normal">PASS ✓</span>
-              </div>
-              <div class="wcag-row">
-                <span class="wcag-label">AAA Large Text <small>(≥ 4.5:1)</small></span>
-                <span class="wcag-badge pass" id="aaa-large">PASS ✓</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="tool-previews">
-            <h3>Live Text Preview</h3>
-            <div class="contrast-preview" id="contrast-preview">
-              <h4 class="contrast-heading">Heading Text Sample (24px)</h4>
-              <p class="contrast-body">This is what your body text will look like with these colour combinations. Check if it's easily readable at this size.</p>
-              <small class="contrast-small">Small text (12px) is harder to read and needs higher contrast ratios to pass WCAG compliance.</small>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <article class="tool-documentation">
-          <h3>Why Colour Contrast Matters for Accessibility</h3>
-          <p>Contrast ratio compares perceived brightness. AA needs 4.5:1 for normal text — the level UK and EU law reference.</p>
-          <p class="full-guide-link"><a href="/contrast-checker">Full guide: the four thresholds and the mistakes that fail audits →</a></p>
-        </article>
-      </div>
-
-  </div>
 
   <!-- More free resources: internal links -->
   <section class="container resource-section">
@@ -1295,6 +587,5 @@
   </footer>
 
   <script src="common.js"></script>
-  <script src="script.js?v=1.0.1"></script>
 </body>
 </html>

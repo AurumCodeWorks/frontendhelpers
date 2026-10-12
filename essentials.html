@@ -219,7 +219,7 @@
         </div>
         <p class="panel-desc">Most attacks on websites aren't clever — they exploit the same handful of oversights, year after year. Knowing the top few puts you ahead of the majority of shipped sites.</p>
 
-        <p class="topic-prose">The classics: <strong>XSS</strong> (user-supplied text rendered as live HTML — the reason you escape output; try the <a href="/#tool-entities">HTML entity tool</a>), <strong>CSRF</strong> (another site triggering actions with your users' cookies — mitigated by SameSite cookies and tokens), <strong>supply-chain risk</strong> (that convenient npm package and its 300 dependencies run with full access to your page), and <strong>secrets in client code</strong> — anything shipped to the browser is public, including API keys in your JavaScript. Security headers are the highest-value low-effort defence; this very site ships the set below.</p>
+        <p class="topic-prose">The classics: <strong>XSS</strong> (user-supplied text rendered as live HTML — the reason you escape output; try the <a href="/html-entity-encoder">HTML entity tool</a>), <strong>CSRF</strong> (another site triggering actions with your users' cookies — mitigated by SameSite cookies and tokens), <strong>supply-chain risk</strong> (that convenient npm package and its 300 dependencies run with full access to your page), and <strong>secrets in client code</strong> — anything shipped to the browser is public, including API keys in your JavaScript. Security headers are the highest-value low-effort defence; this very site ships the set below.</p>
 
         <div class="output-code-container">
           <div class="output-header">
@@ -259,7 +259,7 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()</textarea>
           </table>
         </div>
 
-        <p class="topic-prose">The biggest wins are boring: compress and size images properly (reserve space with the <a href="/#tool-ratio">aspect ratio tool</a> to protect CLS), let the browser cache aggressively, load JavaScript only where it earns its weight, and keep third-party scripts on a short leash. Caching is where most sites leave speed on the table — these three recipes cover the common cases:</p>
+        <p class="topic-prose">The biggest wins are boring: compress and size images properly (reserve space with the <a href="/aspect-ratio-calculator">aspect ratio tool</a> to protect CLS), let the browser cache aggressively, load JavaScript only where it earns its weight, and keep third-party scripts on a short leash. Caching is where most sites leave speed on the table — these three recipes cover the common cases:</p>
 
         <div class="output-code-container">
           <div class="output-header">
@@ -292,7 +292,7 @@ Cache-Control: private, no-store</textarea>
         </div>
         <p class="panel-desc">Roughly one in six people has a disability that affects how they use the web. Accessibility isn't an add-on for them — it's baseline quality, and increasingly a legal requirement (WCAG 2.2 AA in the UK and EU).</p>
 
-        <p class="topic-prose">The 80/20 of accessibility is <strong>semantic HTML</strong>: real <code>&lt;button&gt;</code>s, real <code>&lt;a&gt;</code>s, headings in order, landmarks (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>). Native elements bring keyboard support, focus behaviour and screen-reader announcements for free — a <code>&lt;div onclick&gt;</code> brings none of them. Reach for ARIA attributes <em>last</em>, only when no native element fits. And check your colours with the <a href="/#tool-contrast">contrast checker</a>.</p>
+        <p class="topic-prose">The 80/20 of accessibility is <strong>semantic HTML</strong>: real <code>&lt;button&gt;</code>s, real <code>&lt;a&gt;</code>s, headings in order, landmarks (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>). Native elements bring keyboard support, focus behaviour and screen-reader announcements for free — a <code>&lt;div onclick&gt;</code> brings none of them. Reach for ARIA attributes <em>last</em>, only when no native element fits. And check your colours with the <a href="/contrast-checker">contrast checker</a>.</p>
 
         <div class="quick-table-container">
           <table class="quick-table dodont-table">
@@ -381,7 +381,7 @@ git stash / git stash pop    # shelve work in progress</textarea>
             </tbody>
           </table>
         </div>
-        <p class="topic-note">DNS changes take time to spread (propagation, up to 24–48h but usually minutes). Lower the record's TTL before a planned switch, and don't panic-edit while it propagates. Before launch, generate your <a href="/#tool-robots">robots.txt</a> and submit your sitemap.</p>
+        <p class="topic-note">DNS changes take time to spread (propagation, up to 24–48h but usually minutes). Lower the record's TTL before a planned switch, and don't panic-edit while it propagates. Before launch, generate your <a href="/robots-txt-generator">robots.txt</a> and submit your sitemap.</p>
 
         <h3 class="ref-heading">Launch-day checklist</h3>
         <div class="checklist" data-topic="deploy"></div>
