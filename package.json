@@ -8,5 +8,10 @@
     "check": "node scripts/generate.mjs --check && node scripts/check.mjs",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/build.mjs && npx wrangler@4 dev"
+  },
+  "devDependencies": {
+    "@joplin/turndown-plugin-gfm": "1.0.68",
+    "linkedom": "0.18.13",
+    "turndown": "7.2.4"
   }
 }
