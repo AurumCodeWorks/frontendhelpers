@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build dark mode using CSS custom properties. Respect system preferences, add a persistent toggle, avoid pure black, and prevent the flash of wrong theme." />
+  <link rel="canonical" href="https://frontendhelpers.com/dark-mode-implementation-guide" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/dark-mode-implementation-guide" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="How to Implement Dark Mode Properly: A CSS Guide" />
+  <meta property="og:description" content="Build dark mode using CSS custom properties. Respect system preferences, add a persistent toggle, avoid pure black, and prevent the flash of wrong theme." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-dark-mode-implementation-guide.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Implement Dark Mode Properly: A CSS Guide" />
+  <meta name="twitter:description" content="Build dark mode using CSS custom properties. Respect system preferences, add a persistent toggle, avoid pure black, and prevent the flash of wrong theme." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-dark-mode-implementation-guide.png" />
+
+  <title>How to Implement Dark Mode Properly: A CSS Guide | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "How to Implement Dark Mode Properly: A CSS Guide",
+        "description": "A practical guide to building dark mode with CSS custom properties. Respect system preference, add a toggle that persists, avoid pure black, and prevent the flash of wrong theme.",
+        "url": "https://frontendhelpers.com/dark-mode-implementation-guide",
+        "image": "https://frontendhelpers.com/assets/og-dark-mode-implementation-guide.png",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/dark-mode-implementation-guide" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "How to Implement Dark Mode Properly: A CSS Guide", "item": "https://frontendhelpers.com/dark-mode-implementation-guide" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I detect if a user prefers dark mode?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use the prefers-color-scheme media query in CSS, or window.matchMedia(\"(prefers-color-scheme: dark)\") in JavaScript. Honouring the system preference should be your default, with any toggle acting as an override." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my site flash white before dark mode loads?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Because the theme is applied after first paint. Fix it with a small blocking inline script in the head that reads localStorage and sets the theme attribute on documentElement before any CSS renders." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should dark mode use pure black backgrounds?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Pure white text on pure black causes halation, where letters appear to smear, and is fatiguing to read. Use a dark grey or navy around #121212 to #1a1a2e with slightly off-white text." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">How to Implement Dark Mode Properly: A CSS Guide</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>How to implement <span class="hero-highlight">dark mode</span> properly</h1>
+        <p class="page-hero-sub">Design tokens, system preference, a toggle that persists, and the flash-of-wrong-theme problem nobody warns you about.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 8 min read · Updated 19 July 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Start with tokens, not colours</h2>
+        <p>Dark mode is painful to retrofit and trivial to build in — and the difference is entirely whether your colours are named. If your stylesheet is full of raw hex values, supporting a second theme means finding and overriding every one. If it references tokens, a theme is just a different set of values for the same names.</p>
+        <p>Define your palette once as custom properties on <code>:root</code>, then reference only those tokens everywhere else. Name them by <em>role</em>, not appearance: <code>--surface</code> and <code>--text-primary</code> survive a theme switch, while <code>--light-grey</code> becomes a lie the moment dark mode ships.</p>
+
+        <h2>Respect the system preference first</h2>
+        <p>Most operating systems already have a light/dark setting, and visitors expect sites to honour it. The <code>prefers-color-scheme</code> media query reads it, and supporting it should be your default behaviour — a toggle is an override, not the primary mechanism.</p>
+        <p>Also set the <code>color-scheme</code> property. It tells the browser to render native controls — scrollbars, form inputs, date pickers — in the matching theme. Without it you get dark pages with jarring white scrollbars and light dropdowns, a detail covered in our <a href="/css-animations#learn-scrollbars">themed scrollbars lesson</a>.</p>
+
+        <h2>Adding a toggle that persists</h2>
+        <p>The standard approach is a <code>data-theme</code> attribute on the root element that overrides the media query, with the choice saved in <code>localStorage</code>. Three pieces: read the stored value on load, apply it as an attribute, and write the new value when the user toggles.</p>
+        <p>Offer three states if you can — light, dark, and "system" — with system as the default. A toggle that permanently overrides the OS preference is worse than no toggle for people who switch automatically at sunset.</p>
+
+        <h2>The flash of wrong theme</h2>
+        <p>Here's the problem nobody mentions until it happens: if you apply the saved theme in a script at the end of the body, the page renders in the default theme first and then flips. On a dark-mode preference that's a bright white flash — genuinely unpleasant in a dark room.</p>
+        <p>The fix is a small <strong>blocking</strong> inline script in the <code>&lt;head&gt;</code>, before any CSS is applied, that reads localStorage and sets the attribute on <code>documentElement</code> immediately. It's one of the rare legitimate uses of a render-blocking script — it must run before first paint, and it's only a few lines.</p>
+
+        <h2>Dark mode is not inverted light mode</h2>
+        <p>Several design rules change in the dark. <strong>Avoid pure black backgrounds</strong> — pure white text on pure black causes halation, where letters appear to smear for many readers, and it's fatiguing. Use a dark grey or navy, around #121212 to #1a1a2e.</p>
+        <p><strong>Avoid pure white text</strong> for the same reason; a light grey at roughly 87% opacity is more comfortable. <strong>Desaturate your accent colours</strong>, because saturated colours vibrate uncomfortably against dark backgrounds. And remember that <strong>shadows barely register</strong> in dark mode — convey elevation with lighter surface colours or subtle top-edge highlights instead, which is exactly what this site does.</p>
+
+        <h2>Check contrast again</h2>
+        <p>Your light-mode contrast results tell you nothing about dark mode. A grey that passes AA on white will usually fail on a dark background, and it's a common oversight because the design "looks fine" to whoever built it.</p>
+        <p>Run every text-on-surface pairing through the <a href="/contrast-checker">contrast checker</a> in both themes. Also test images and illustrations — logos with white backgrounds and screenshots of light interfaces look broken in dark mode, and often need a variant or a subtle background treatment.</p>
+        <p>Our <a href="/color-palette-generator">palette generator</a> produces the tint and shade scale that makes maintaining two themes straightforward: the same hue at different lightness levels, exported as tokens.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I detect if a user prefers dark mode?</summary>
+            <p class="faq-answer">Use the prefers-color-scheme media query in CSS, or window.matchMedia("(prefers-color-scheme: dark)") in JavaScript. Honouring the system preference should be your default, with any toggle acting as an override.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my site flash white before dark mode loads?</summary>
+            <p class="faq-answer">Because the theme is applied after first paint. Fix it with a small blocking inline script in the head that reads localStorage and sets the theme attribute on documentElement before any CSS renders.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should dark mode use pure black backgrounds?</summary>
+            <p class="faq-answer">No. Pure white text on pure black causes halation, where letters appear to smear, and is fatiguing to read. Use a dark grey or navy around #121212 to #1a1a2e with slightly off-white text.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Build the tint and shade scale that powers two themes.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Verify contrast in both light and dark themes.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animations" class="resource-card">
+            <span class="resource-kicker">Lesson</span>
+            <h3>Theme tokens, interactively</h3>
+            <p>A live demo of token-driven theme switching.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

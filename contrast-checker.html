@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results." />
+  <link rel="canonical" href="https://frontendhelpers.com/contrast-checker" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/contrast-checker" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="WCAG Contrast Checker — Free Colour Contrast Ratio Tool" />
+  <meta property="og:description" content="Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-contrast-checker.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WCAG Contrast Checker — Free Colour Contrast Ratio Tool" />
+  <meta name="twitter:description" content="Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-contrast-checker.png" />
+
+  <title>WCAG Contrast Checker — Free Colour Contrast Ratio Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "WCAG Contrast Checker",
+        "url": "https://frontendhelpers.com/contrast-checker",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based WCAG colour contrast checker reporting AA and AAA pass or fail for normal and large text.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "WCAG Contrast Checker", "item": "https://frontendhelpers.com/contrast-checker" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What contrast ratio do I need to pass WCAG?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.1 also requires 3:1 for meaningful UI components such as input borders and focus indicators." }
+          },
+          {
+            "@type": "Question",
+            "name": "What counts as \"large text\" in WCAG?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Text of at least 24px, or 18.66px if bold. Larger and heavier letterforms stay legible at lower contrast, so they get the more relaxed 3:1 threshold instead of 4.5:1." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does placeholder text need to pass contrast?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Default browser placeholder grey fails, which is one of the most common accessibility issues on the web — and placeholders should never replace a visible label." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I check contrast for text over an image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Check the text against the lightest and the darkest point of the background it crosses, not an average. If either fails, add a semi-transparent scrim between the image and the text, or apply a text shadow, until both extremes pass." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">WCAG Contrast Checker</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>WCAG contrast <span class="hero-highlight">checker</span></h1>
+        <p class="page-hero-sub">Test any text and background pairing against WCAG 2.1 AA and AAA, for both normal and large text, with a live preview of the result.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-contrast">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></span>WCAG Colour Contrast Checker</h2>
+      <button class="btn-reset" id="reset-contrast">↺ Reset</button>
+    </div>
+    <p class="panel-desc">Check if your text and background colour combination meets WCAG 2.1 accessibility standards for AA and AAA compliance.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fg-color">Text (Foreground) Colour</label>
+            <div class="color-input-group">
+              <input type="color" id="fg-color-picker" value="#ffffff" />
+              <input type="text" id="fg-color" value="#ffffff" placeholder="#ffffff" class="color-hex-input" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bg-color">Background Colour</label>
+            <div class="color-input-group">
+              <input type="color" id="bg-color-picker" value="#1a1a2e" />
+              <input type="text" id="bg-color" value="#1a1a2e" placeholder="#1a1a2e" class="color-hex-input" />
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-swap" id="swap-colors">⇄ Swap Colours</button>
+
+        <div class="contrast-ratio-display">
+          <div class="ratio-number" id="contrast-ratio">12.63</div>
+          <div class="ratio-label">: 1 Contrast Ratio</div>
+        </div>
+
+        <div class="wcag-results">
+          <div class="wcag-row">
+            <span class="wcag-label">AA Normal Text <small>(≥ 4.5:1)</small></span>
+            <span class="wcag-badge pass" id="aa-normal">PASS ✓</span>
+          </div>
+          <div class="wcag-row">
+            <span class="wcag-label">AA Large Text <small>(≥ 3:1)</small></span>
+            <span class="wcag-badge pass" id="aa-large">PASS ✓</span>
+          </div>
+          <div class="wcag-row">
+            <span class="wcag-label">AAA Normal Text <small>(≥ 7:1)</small></span>
+            <span class="wcag-badge pass" id="aaa-normal">PASS ✓</span>
+          </div>
+          <div class="wcag-row">
+            <span class="wcag-label">AAA Large Text <small>(≥ 4.5:1)</small></span>
+            <span class="wcag-badge pass" id="aaa-large">PASS ✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Live Text Preview</h3>
+        <div class="contrast-preview" id="contrast-preview">
+          <h4 class="contrast-heading">Heading Text Sample (24px)</h4>
+          <p class="contrast-body">This is what your body text will look like with these colour combinations. Check if it's easily readable at this size.</p>
+          <small class="contrast-small">Small text (12px) is harder to read and needs higher contrast ratios to pass WCAG compliance.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Contrast ratio compares the relative luminance — the perceived brightness — of two colours. It runs from 1:1 (identical, invisible) to 21:1 (pure black on pure white). The calculation is defined by WCAG and weights the red, green and blue channels differently, because human eyes are far more sensitive to green than to blue.</p>
+        <p>That weighting is why intuition misleads people. A mid-yellow and a mid-blue can look equally "medium" while having wildly different luminance, and two colours that feel high-contrast to you may fail outright. Measuring is not optional.</p>
+
+        <h2>The four thresholds, and which one applies</h2>
+        <p><strong>AA</strong> is the level virtually all legislation references — the UK Equality Act, the European Accessibility Act, and Section 508 in the US. It requires <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text. <strong>AAA</strong> is the enhanced level, requiring <strong>7:1</strong> and <strong>4.5:1</strong> respectively.</p>
+        <p>"Large text" has a specific definition: at least <strong>24px</strong>, or <strong>18.66px if bold</strong>. It gets a lower threshold because thicker letterforms remain legible at lower contrast. Note that the requirement covers text and images of text — plus, under WCAG 2.1, a 3:1 minimum for meaningful UI components and graphics such as input borders, icons and focus indicators.</p>
+
+        <h2>The mistakes that fail real audits</h2>
+        <p>Three patterns account for most failures. <strong>Placeholder text</strong> is the worst offender — the default grey in most browsers fails badly, and placeholders are frequently misused as labels, so the information disappears for low-vision users. <strong>Light grey body text</strong> on white is the second: it looks refined in a design mockup on a bright calibrated monitor, and becomes unreadable on a phone in daylight. <strong>Text over images or gradients</strong> is the third, because the ratio changes across the background — check the lightest and darkest points it crosses, not the average, and add a scrim if either end fails.</p>
+        <p>Also remember that disabled controls are exempt from the contrast requirement, but "looks disabled" is not the same as being disabled. If a control is interactive, it must meet the threshold.</p>
+
+        <h2>Designing for contrast from the start</h2>
+        <p>Retrofitting contrast is painful; building it in is nearly free. Generate your palette as a tint-and-shade scale and record which steps are text-safe on which backgrounds — as a rule of thumb, steps around 600 and darker work for text on white, and 200 and lighter work as backgrounds for dark text. Our <a href="/color-palette-generator">palette generator</a> produces exactly that kind of scale.</p>
+        <p>One caution about automated testing: tools like Lighthouse and axe catch a meaningful share of contrast problems, but they cannot evaluate text over images, canvas or video, and they miss states they never trigger — hover, focus, error. Manual spot-checks on those states remain necessary.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Calculating Contrast in JS</h2>
+        <p>If you are building dynamic themes where users can select their own brand colors, you must programmatically ensure that text placed over those colors remains readable. The World Wide Web Consortium (WCAG) provides a specific mathematical formula for calculating this relative luminance.</p>
+        
+        <h3>The WCAG Contrast Algorithm</h3>
+        <p>Here is the implementation in JavaScript to calculate the contrast ratio between two hex colors, allowing you to automatically switch text between black and white depending on the background.</p>
+        <pre><code class="language-javascript">
+// Helper: Convert Hex to RGB, apply sRGB gamma correction, and calculate luminance
+function getLuminance(hex) {
+  const rgb = hex.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16) / 255);
+  const a = rgb.map(v => {
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  // Standard WCAG luminance formula
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+}
+
+// Main function: Calculate ratio between two colors
+function getContrastRatio(hex1, hex2) {
+  const lum1 = getLuminance(hex1);
+  const lum2 = getLuminance(hex2);
+  
+  const brightest = Math.max(lum1, lum2);
+  const darkest = Math.min(lum1, lum2);
+  
+  return (brightest + 0.05) / (darkest + 0.05);
+}
+
+// Usage: Should we use white or black text on a blue background?
+const bgLuminance = getLuminance("#007bff");
+const whiteRatio = getContrastRatio("#007bff", "#ffffff");
+const blackRatio = getContrastRatio("#007bff", "#000000");
+
+const textColor = whiteRatio > blackRatio ? "#ffffff" : "#000000";
+        </code></pre>
+        <p>Integrating this logic into your application ensures you never fail accessibility audits due to user-generated color themes. A ratio of 4.5:1 is the minimum target for standard body text (WCAG AA).</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What contrast ratio do I need to pass WCAG?</summary>
+            <p class="faq-answer">For AA — the level most laws reference — you need 4.5:1 for normal text and 3:1 for large text. For AAA it is 7:1 and 4.5:1. WCAG 2.1 also requires 3:1 for meaningful UI components such as input borders and focus indicators.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What counts as "large text" in WCAG?</summary>
+            <p class="faq-answer">Text of at least 24px, or 18.66px if bold. Larger and heavier letterforms stay legible at lower contrast, so they get the more relaxed 3:1 threshold instead of 4.5:1.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does placeholder text need to pass contrast?</summary>
+            <p class="faq-answer">Yes. Placeholder text is real text and must meet the same 4.5:1 minimum. Default browser placeholder grey fails, which is one of the most common accessibility issues on the web — and placeholders should never replace a visible label.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I check contrast for text over an image?</summary>
+            <p class="faq-answer">Check the text against the lightest and the darkest point of the background it crosses, not an average. If either fails, add a semi-transparent scrim between the image and the text, or apply a text shadow, until both extremes pass.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Colour</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Build a tint and shade scale where you know which steps are text-safe.</p>
+            <span class="resource-cta">Build a palette →</span>
+          </a>
+          <a href="/px-to-rem-converter" class="resource-card">
+            <span class="resource-kicker">Typography</span>
+            <h3>PX to REM Converter</h3>
+            <p>The other half of accessible typography — text that scales with user settings.</p>
+            <span class="resource-cta">Open the converter →</span>
+          </a>
+          <a href="/essentials#ess-a11y" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessibility essentials</h3>
+            <p>Semantic HTML, keyboard navigation and the checks that matter most.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

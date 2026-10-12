@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Practical web development guides: Google indexing diagnostics, Core Web Vitals fixes, accessibility, dark mode, animation performance, and launch checklists." />
+  <link rel="canonical" href="https://frontendhelpers.com/guides" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/guides" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Web Development Guides — SEO, Performance &amp; Accessibility" />
+  <meta property="og:description" content="Practical web development guides: Google indexing diagnostics, Core Web Vitals fixes, accessibility, dark mode, animation performance, and launch checklists." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Development Guides — SEO, Performance &amp; Accessibility" />
+  <meta name="twitter:description" content="Practical web development guides: Google indexing diagnostics, Core Web Vitals fixes, accessibility, dark mode, animation performance, and launch checklists." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-guides.png" />
+
+  <title>Web Development Guides — SEO, Performance &amp; Accessibility | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "Web Development Guides",
+        "url": "https://frontendhelpers.com/guides",
+        "description": "Practical web development guides on SEO, Core Web Vitals, accessibility, dark mode, animation performance and launching a website.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Why Isn’t My Website Showing Up on Google? A Diagnostic Guide", "url": "https://frontendhelpers.com/why-is-my-website-not-on-google" },
+          { "@type": "ListItem", "position": 2, "name": "Core Web Vitals: A Practical Guide to LCP, INP and CLS", "url": "https://frontendhelpers.com/core-web-vitals-guide" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Animation Performance: What to Animate and What to Avoid", "url": "https://frontendhelpers.com/css-animation-performance" },
+          { "@type": "ListItem", "position": 4, "name": "Website Launch Checklist: 20 Checks Before You Go Live", "url": "https://frontendhelpers.com/website-launch-checklist" },
+          { "@type": "ListItem", "position": 5, "name": "How to Implement Dark Mode Properly: A CSS Guide", "url": "https://frontendhelpers.com/dark-mode-implementation-guide" },
+          { "@type": "ListItem", "position": 6, "name": "How to Make Your Website Accessible: A Practical Guide", "url": "https://frontendhelpers.com/accessible-website-guide" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Guides</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Web development <span class="hero-highlight">guides</span></h1>
+        <p class="page-hero-sub">Practical, jargon-free guides to the problems developers actually hit — diagnosing why a site isn't ranking, hitting Core Web Vitals, building accessible interfaces, and shipping without surprises.</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Why these guides exist</h2>
+        <p>Most web development problems have well-documented solutions — buried in specification drafts, browser engineering blogs and Stack Overflow threads from 2019. These guides pull those scattered answers into a single, opinionated walkthrough for each topic, written for developers who want to fix a real problem today rather than read a textbook.</p>
+        <p>Every guide on this page follows the same structure: it names the problem, explains the most common causes in the order that finds the fix fastest, and links to the <a href="/">tools</a> that make the work easier. Where a guide references a technical standard — like WCAG contrast ratios or Core Web Vitals thresholds — it explains the number in plain language before telling you what to do about it. Where there's a genuine trade-off between approaches, the guide names the trade-off rather than hiding it.</p>
+        <p>New guides are added when a question keeps coming up in the developer communities where FrontendHelpers is shared. If there's a topic you'd like covered, <a href="mailto:hello@frontendhelpers.com">get in touch</a>.</p>
+      </article>
+
+      <section class="guides-grid-section">
+        <div class="guides-grid">
+        <a href="/why-is-my-website-not-on-google" class="guide-card">
+          <span class="guide-card-meta">8 min read</span>
+          <h2>Why Isn’t My Website Showing Up on Google? A Diagnostic Guide</h2>
+          <p>A step-by-step diagnostic for websites missing from Google search. Check indexing, robots.txt, noindex tags, canonicals and content quality — in the order that finds the problem fastest.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        <a href="/core-web-vitals-guide" class="guide-card">
+          <span class="guide-card-meta">9 min read</span>
+          <h2>Core Web Vitals: A Practical Guide to LCP, INP and CLS</h2>
+          <p>A practical guide to Core Web Vitals. What LCP, INP and CLS measure, the thresholds Google uses, and the specific fixes that move each metric — with no jargon.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        <a href="/css-animation-performance" class="guide-card">
+          <span class="guide-card-meta">7 min read</span>
+          <h2>CSS Animation Performance: What to Animate and What to Avoid</h2>
+          <p>Why some CSS animations run at 60fps and others stutter. Learn which properties are composited on the GPU, why transform and opacity are cheap, and how to fix janky animations.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        <a href="/website-launch-checklist" class="guide-card">
+          <span class="guide-card-meta">8 min read</span>
+          <h2>Website Launch Checklist: 20 Checks Before You Go Live</h2>
+          <p>A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics and legal pages. Twenty checks that catch the problems people notice first.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        <a href="/dark-mode-implementation-guide" class="guide-card">
+          <span class="guide-card-meta">8 min read</span>
+          <h2>How to Implement Dark Mode Properly: A CSS Guide</h2>
+          <p>A practical guide to building dark mode with CSS custom properties. Respect system preference, add a toggle that persists, avoid pure black, and prevent the flash of wrong theme.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        <a href="/accessible-website-guide" class="guide-card">
+          <span class="guide-card-meta">9 min read</span>
+          <h2>How to Make Your Website Accessible: A Practical Guide</h2>
+          <p>A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, colour contrast and forms — the changes that fix most real problems.</p>
+          <span class="resource-cta">Read the guide →</span>
+        </a>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Free tools to go with them</h2>
+        <div class="resource-cards">
+          <a href="/" class="resource-card">
+            <span class="resource-kicker">Tools</span>
+            <h3>16 free developer tools</h3>
+            <p>Meta tags, schema, robots.txt, contrast, palettes, gradients and more — all client-side.</p>
+            <span class="resource-cta">Browse the tools →</span>
+          </a>
+          <a href="/css-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>72 CSS animations</h3>
+            <p>Copy-paste effects with live previews, plus seven interactive CSS lessons.</p>
+            <span class="resource-cta">Browse the library →</span>
+          </a>
+          <a href="/essentials" class="resource-card">
+            <span class="resource-kicker">Knowledge</span>
+            <h3>Dev Essentials</h3>
+            <p>Security, performance, accessibility and Git — with checklists that track your progress.</p>
+            <span class="resource-cta">Start the checklists →</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

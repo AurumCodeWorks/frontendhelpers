@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, color contrast, and forms to fix real-world issues." />
+  <link rel="canonical" href="https://frontendhelpers.com/accessible-website-guide" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/accessible-website-guide" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="How to Make Your Website Accessible: A Practical Guide" />
+  <meta property="og:description" content="A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, color contrast, and forms to fix real-world issues." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-accessible-website-guide.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Make Your Website Accessible: A Practical Guide" />
+  <meta name="twitter:description" content="A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, color contrast, and forms to fix real-world issues." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-accessible-website-guide.png" />
+
+  <title>How to Make Your Website Accessible: A Practical Guide | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "How to Make Your Website Accessible: A Practical Guide",
+        "description": "A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, colour contrast and forms — the changes that fix most real problems.",
+        "url": "https://frontendhelpers.com/accessible-website-guide",
+        "image": "https://frontendhelpers.com/assets/og-accessible-website-guide.png",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/accessible-website-guide" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "How to Make Your Website Accessible: A Practical Guide", "item": "https://frontendhelpers.com/accessible-website-guide" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the most impactful accessibility fix?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Using semantic HTML — real buttons, links, headings and landmarks. Native elements bring keyboard support, focus behaviour and screen reader semantics for free, which is most of what accessibility requires." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it ever okay to remove the focus outline?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Only if you replace it with something equally visible. Removing focus styling with nothing in its place makes a site unusable by keyboard and fails WCAG. Use :focus-visible for a ring that appears on keyboard navigation but not mouse clicks." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do automated accessibility tools catch everything?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No — they catch roughly a third of issues. They cannot judge whether alt text is meaningful, whether tab order is logical, or whether an error message actually helps. Manual keyboard and screen reader testing is still necessary." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">How to Make Your Website Accessible: A Practical Guide</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>How to make your website <span class="hero-highlight">accessible</span></h1>
+        <p class="page-hero-sub">The changes that fix most real accessibility problems — starting with the ones that cost nothing but attention.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 9 min read · Updated 19 July 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Why this matters, briefly</h2>
+        <p>Around one in six people has a disability affecting how they use the web. Accessibility is also increasingly a legal requirement — the UK Equality Act, the European Accessibility Act and Section 508 in the US all reference WCAG, generally at level AA.</p>
+        <p>The encouraging part is that the majority of real-world problems come from a short list of causes, and most of the fixes are free. You don't need to memorise WCAG to eliminate them.</p>
+
+        <h2>1. Semantic HTML does most of the work</h2>
+        <p>The highest-value accessibility decision is using the right element. A real <code>&lt;button&gt;</code> is keyboard operable, focusable, announced as a button, and triggers on both Enter and Space — all automatically. A <code>&lt;div onclick&gt;</code> has none of that, and reproducing it correctly takes ARIA attributes and event handlers that are easy to get wrong.</p>
+        <p>The same applies throughout: <code>&lt;a&gt;</code> for navigation, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code> and <code>&lt;footer&gt;</code> for landmarks that let screen reader users jump between regions, headings in logical order with one <code>&lt;h1&gt;</code> per page, and real <code>&lt;table&gt;</code> markup for tabular data.</p>
+        <p>The corollary: <strong>reach for ARIA last</strong>. The first rule of ARIA is not to use ARIA if a native element will do, because incorrect ARIA is worse than none — it actively misleads assistive technology.</p>
+
+        <h2>2. Test with your keyboard</h2>
+        <p>This is the fastest audit available and requires no tools. Put your mouse aside and Tab through your site. Three things must hold: every interactive element is reachable, the focus indicator is always visible, and the tab order follows the visual order.</p>
+        <p>If focus disappears, someone has written <code>outline: none</code> without a replacement — the single most damaging line in web accessibility. Replace it with a visible <code>:focus-visible</code> style rather than removing it. Watch for keyboard traps too: modals that don't return focus, or custom widgets you can tab into but not out of.</p>
+
+        <h2>3. Colour contrast</h2>
+        <p>WCAG AA requires <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text (24px, or 18.66px bold), plus 3:1 for meaningful UI components like input borders and focus indicators.</p>
+        <p>Two things fail most often: placeholder text at browser-default grey, and light grey body text that looks elegant on a designer's calibrated monitor and disappears on a phone outdoors. Check your combinations with the <a href="/contrast-checker">contrast checker</a>.</p>
+        <p>Related: never use colour as the only signal. A form field marked invalid by a red border alone is invisible to colour-blind users and to screen readers — pair it with text and an icon.</p>
+
+        <h2>4. Images and alt text</h2>
+        <p>Every image needs an <code>alt</code> attribute, but its content depends on the image's job. <strong>Meaningful images</strong> get a description of what matters about them in context. <strong>Decorative images</strong> get <code>alt=""</code> — empty, not missing — so screen readers skip them silently. <strong>Images of text</strong> should include that text; better still, use real text.</p>
+        <p>Skip "image of" or "photo of" — screen readers already announce it's an image. Describe the content, not the medium.</p>
+
+        <h2>5. Forms</h2>
+        <p>Every input needs a real <code>&lt;label&gt;</code> with a <code>for</code> attribute matching the input's <code>id</code>. Placeholders are not labels: they vanish when typing begins, usually fail contrast, and aren't reliably announced.</p>
+        <p>Error messages should say what's wrong <em>and</em> how to fix it — "Enter a date in DD/MM/YYYY format" rather than "Invalid input". Associate them with <code>aria-describedby</code> and mark the field <code>aria-invalid</code> so the connection is programmatic, not just visual. Group related controls with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code>.</p>
+
+        <h2>6. Motion and media</h2>
+        <p>Honour <code>prefers-reduced-motion</code>: people with vestibular disorders can experience genuine nausea from parallax and large movement. Nothing should flash more than three times per second, which is a seizure risk. Anything animating longer than five seconds needs a way to pause it.</p>
+
+        <h2>Testing beyond the automated tools</h2>
+        <p>Automated tools — Lighthouse, axe, WAVE — catch perhaps a third of issues, and that third is worth catching. But they can't judge whether alt text is <em>meaningful</em>, whether tab order makes sense, or whether an error message helps.</p>
+        <p>Supplement them with the keyboard test above, then try a screen reader: VoiceOver on Mac (Cmd+F5) or NVDA on Windows, both free. Navigating your own site with your eyes closed for five minutes teaches more than any checklist — and the <a href="/essentials#ess-a11y">accessibility essentials</a> page has a trackable version of these checks.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is the most impactful accessibility fix?</summary>
+            <p class="faq-answer">Using semantic HTML — real buttons, links, headings and landmarks. Native elements bring keyboard support, focus behaviour and screen reader semantics for free, which is most of what accessibility requires.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is it ever okay to remove the focus outline?</summary>
+            <p class="faq-answer">Only if you replace it with something equally visible. Removing focus styling with nothing in its place makes a site unusable by keyboard and fails WCAG. Use :focus-visible for a ring that appears on keyboard navigation but not mouse clicks.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do automated accessibility tools catch everything?</summary>
+            <p class="faq-answer">No — they catch roughly a third of issues. They cannot judge whether alt text is meaningful, whether tab order is logical, or whether an error message actually helps. Manual keyboard and screen reader testing is still necessary.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Test any colour pairing against AA and AAA.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/essentials" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Dev Essentials</h3>
+            <p>A trackable accessibility checklist and seven more areas.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/html-table-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>HTML Table Generator</h3>
+            <p>Semantic table markup with proper header scope.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

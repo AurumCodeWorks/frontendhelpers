@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics, and legal. 20 checks to catch critical issues." />
+  <link rel="canonical" href="https://frontendhelpers.com/website-launch-checklist" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/website-launch-checklist" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Website Launch Checklist: 20 Checks Before You Go Live" />
+  <meta property="og:description" content="A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics, and legal. 20 checks to catch critical issues." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-website-launch-checklist.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Website Launch Checklist: 20 Checks Before You Go Live" />
+  <meta name="twitter:description" content="A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics, and legal. 20 checks to catch critical issues." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-website-launch-checklist.png" />
+
+  <title>Website Launch Checklist: 20 Checks Before You Go Live | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Website Launch Checklist: 20 Checks Before You Go Live",
+        "description": "A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics and legal pages. Twenty checks that catch the problems people notice first.",
+        "url": "https://frontendhelpers.com/website-launch-checklist",
+        "image": "https://frontendhelpers.com/assets/og-website-launch-checklist.png",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/website-launch-checklist" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Website Launch Checklist: 20 Checks Before You Go Live", "item": "https://frontendhelpers.com/website-launch-checklist" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the most common website launch mistake?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Leaving a noindex tag or a staging robots.txt in place, which makes the site invisible to search engines. Both are silent — the site looks perfect to visitors — so they can go unnoticed for weeks." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a privacy policy and cookie banner?",
+            "acceptedAnswer": { "@type": "Answer", "text": "If you use analytics, advertising or any non-essential cookies and have UK or EU visitors, yes. Non-essential cookies require informed consent before they are set, and a privacy policy is also required by Google AdSense." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I submit my sitemap to Google after launching?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Verify your site in Search Console and submit the sitemap — it is the fastest way to get discovered. Then use URL Inspection to request indexing for your most important pages." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Website Launch Checklist: 20 Checks Before You Go Live</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Website launch checklist: <span class="hero-highlight">20 checks before you go live</span></h1>
+        <p class="page-hero-sub">The checks worth doing before a site goes public — grouped so you can work through them in one sitting.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 8 min read · Updated 19 July 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>Before anything else: the three that break sites</h2>
+        <p>These three account for most launch disasters, and all take under a minute to verify.</p>
+        <p><strong>1. Check robots.txt.</strong> Visit <code>yourdomain.com/robots.txt</code> and confirm it doesn't say <code>Disallow: /</code>. A staging robots.txt deployed to production makes your site invisible to search engines.</p>
+        <p><strong>2. Search your source for noindex.</strong> View source on a few pages and search for <code>noindex</code>. In WordPress, check that "Discourage search engines" is unticked. This is the single most common launch mistake.</p>
+        <p><strong>3. Sweep for placeholder content.</strong> Search your codebase for "lorem", "ipsum", "TODO" and "FIXME". Shipped placeholder text is embarrassing, gets indexed, and on commercial pages can create real liability.</p>
+
+        <h2>SEO foundations</h2>
+        <p><strong>4.</strong> Every page has a unique title (50–60 characters) and meta description (150–160). Duplicated titles across pages are a wasted opportunity — our <a href="/meta-tag-generator">meta tag generator</a> previews how they'll look.</p>
+        <p><strong>5.</strong> Self-referencing canonical tags are present and point at the right URL, not the homepage.</p>
+        <p><strong>6.</strong> A sitemap.xml exists, lists only indexable URLs, and is submitted in Google Search Console.</p>
+        <p><strong>7.</strong> Open Graph tags are set with a 1200 × 630 image at an <em>absolute</em> URL. Test with Facebook's Sharing Debugger — a broken share card undermines every link you post.</p>
+        <p><strong>8.</strong> One canonical hostname. Pick www or non-www and 301 redirect the other; the same for http → https.</p>
+
+        <h2>Performance</h2>
+        <p><strong>9.</strong> All images have <code>width</code> and <code>height</code> attributes so space is reserved before they load.</p>
+        <p><strong>10.</strong> Below-the-fold images use <code>loading="lazy"</code> — and your hero image does <em>not</em>.</p>
+        <p><strong>11.</strong> Images are compressed and served in modern formats. Unoptimised images remain the single biggest cause of slow pages.</p>
+        <p><strong>12.</strong> Run PageSpeed Insights on your key templates and check Core Web Vitals — see our <a href="/core-web-vitals-guide">Core Web Vitals guide</a> for what the numbers mean.</p>
+        <p><strong>13.</strong> Caching headers are set: long cache lifetimes for fingerprinted assets, revalidation for HTML.</p>
+
+        <h2>Accessibility</h2>
+        <p><strong>14.</strong> Navigate the whole site with only the keyboard. Every interactive element must be reachable, and focus must always be visible.</p>
+        <p><strong>15.</strong> Text contrast passes WCAG AA — 4.5:1 for body text. Check your palette with the <a href="/contrast-checker">contrast checker</a>, including placeholder text, which usually fails.</p>
+        <p><strong>16.</strong> Every meaningful image has descriptive alt text; decorative images have <code>alt=""</code>. Forms use real <code>&lt;label&gt;</code> elements.</p>
+
+        <h2>Security and privacy</h2>
+        <p><strong>17.</strong> HTTPS works everywhere, with a valid certificate and auto-renewal configured.</p>
+        <p><strong>18.</strong> Security headers are set — Content-Security-Policy, X-Content-Type-Options, Referrer-Policy at minimum. Confirm no API keys or secrets are in client-side code.</p>
+        <p><strong>19.</strong> Legal pages exist and are linked: privacy policy, cookie policy, and a cookie consent banner if you use analytics or advertising. Non-essential cookies must wait for consent under UK and EU law.</p>
+
+        <h2>Analytics and the safety net</h2>
+        <p><strong>20.</strong> Analytics is installed and firing, Search Console is verified with the sitemap submitted, and a custom 404 page exists that helps people find their way back rather than dead-ending them.</p>
+
+        <h2>After you launch</h2>
+        <p>Click through the live site on a phone, not just a desktop browser — mobile is where most visitors will arrive and where layout problems surface. Test your key user journey end to end on the real domain, since staging environments hide URL and HTTPS issues.</p>
+        <p>Then check Search Console after a week for crawl errors, and again after a month for indexing coverage. Launching is the start of the feedback loop, not the end of the work. The <a href="/essentials">Dev Essentials</a> page has deeper checklists for each of these areas with progress you can track.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is the most common website launch mistake?</summary>
+            <p class="faq-answer">Leaving a noindex tag or a staging robots.txt in place, which makes the site invisible to search engines. Both are silent — the site looks perfect to visitors — so they can go unnoticed for weeks.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do I need a privacy policy and cookie banner?</summary>
+            <p class="faq-answer">If you use analytics, advertising or any non-essential cookies and have UK or EU visitors, yes. Non-essential cookies require informed consent before they are set, and a privacy policy is also required by Google AdSense.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I submit my sitemap to Google after launching?</summary>
+            <p class="faq-answer">Yes. Verify your site in Search Console and submit the sitemap — it is the fastest way to get discovered. Then use URL Inspection to request indexing for your most important pages.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/why-is-my-website-not-on-google" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Not showing on Google?</h3>
+            <p>A step-by-step diagnostic for missing pages.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/essentials" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Dev Essentials</h3>
+            <p>Trackable checklists for security, performance and more.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/robots-txt-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Robots.txt Generator</h3>
+            <p>Create crawler rules and declare your sitemap.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

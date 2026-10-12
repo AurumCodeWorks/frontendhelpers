@@ -1,0 +1,3 @@
+# ads.txt for frontendhelpers.com
+# Authorized Digital Sellers - Google AdSense
+google.com, pub-3839136991567470, DIRECT, f08c47fec0942fa0

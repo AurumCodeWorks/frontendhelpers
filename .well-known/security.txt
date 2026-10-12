@@ -1,0 +1,7 @@
+# Security policy for FrontendHelpers
+# https://securitytxt.org/ — RFC 9116
+
+Contact: mailto:hello@frontendhelpers.com
+Expires: 2027-07-18T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://frontendhelpers.com/.well-known/security.txt

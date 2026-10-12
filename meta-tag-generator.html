@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free meta tag generator with live Google, Facebook, and Twitter previews. Generate Open Graph and Twitter Card markup, and copy it in one click." />
+  <link rel="canonical" href="https://frontendhelpers.com/meta-tag-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/meta-tag-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Meta Tag Generator — Free Open Graph &amp; Twitter Card Preview" />
+  <meta property="og:description" content="Free meta tag generator with live Google, Facebook, and Twitter previews. Generate Open Graph and Twitter Card markup, and copy it in one click." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-meta-tag-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Meta Tag Generator — Free Open Graph &amp; Twitter Card Preview" />
+  <meta name="twitter:description" content="Free meta tag generator with live Google, Facebook, and Twitter previews. Generate Open Graph and Twitter Card markup, and copy it in one click." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-meta-tag-generator.png" />
+
+  <title>Meta Tag Generator — Free Open Graph &amp; Twitter Card Preview | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Meta Tag Generator",
+        "url": "https://frontendhelpers.com/meta-tag-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based meta tag generator with live search and social share previews, producing Open Graph and Twitter Card markup.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Meta Tag Generator", "item": "https://frontendhelpers.com/meta-tag-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long should a meta description be?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Around 150–160 characters. Google truncates longer descriptions in search results, and frequently rewrites them to match the specific query, so treat yours as a strong suggestion rather than a guarantee." }
+          },
+          {
+            "@type": "Question",
+            "name": "What size should an Open Graph image be?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use 1200 × 630 pixels, a 1.91:1 ratio. Keep important text away from the edges because platforms crop differently, and always reference the image with an absolute URL — relative paths are the most common reason a share card shows no image." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do meta tags improve my Google ranking?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The title tag carries some ranking weight; the meta description does not. Their real value is click-through rate — a compelling title and description win more clicks from the same position, which improves performance over time." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my share preview showing the old image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger, LinkedIn’s Post Inspector or X’s card validator. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Meta Tag Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Meta tag <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Write your title and description, watch how they render in Google, Facebook and Twitter, then copy complete Open Graph and Twitter Card markup.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-meta">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>Meta Tag &amp; Social Share Previewer</h2>
+      <button class="btn-reset" id="reset-meta">↺ Reset</button>
+    </div>
+    <p class="panel-desc">Type in your webpage details to see how they appear when shared on Google, Facebook, and Twitter. Grab the optimised HTML tags.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label for="meta-title">Page Title</label>
+          <input type="text" id="meta-title" placeholder="e.g. My Portfolio — Web Developer London" value="FrontendHelpers — Free SEO &amp; Web Dev Utilities" />
+          <div class="char-progress-wrapper">
+            <span class="char-counter" id="title-counter">0 / 60 chars</span>
+            <div class="char-progress-bar"><div class="char-progress-fill" id="title-progress"></div></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="meta-desc">Meta Description</label>
+          <textarea id="meta-desc" rows="3" placeholder="Describe the page content in 150-160 characters...">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</textarea>
+          <div class="char-progress-wrapper">
+            <span class="char-counter" id="desc-counter">0 / 160 chars</span>
+            <div class="char-progress-bar"><div class="char-progress-fill" id="desc-progress"></div></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="meta-site">Site Name</label>
+          <input type="text" id="meta-site" placeholder="e.g. FrontendHelpers" value="FrontendHelpers" />
+        </div>
+        <div class="form-group">
+          <label for="meta-url">Target URL</label>
+          <input type="url" id="meta-url" placeholder="https://yourwebsite.com" value="https://frontendhelpers.com" />
+        </div>
+        <div class="form-group">
+          <label for="meta-img">Share Card Image URL</label>
+          <input type="url" id="meta-img" placeholder="https://yourwebsite.com/assets/og-image.png" value="https://frontendhelpers.com/assets/og-image.png" />
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Live Preview Cards</h3>
+        
+        <div class="preview-tabs">
+          <button class="preview-tab-btn active" data-preview="google">Google</button>
+          <button class="preview-tab-btn" data-preview="facebook">Facebook</button>
+          <button class="preview-tab-btn" data-preview="twitter">Twitter / X</button>
+        </div>
+
+        <!-- Google Preview -->
+        <div class="preview-box active" id="prev-google">
+          <div class="google-preview">
+            <div class="google-url" id="prev-g-url">https://frontendhelpers.com <span class="arrow">&#9662;</span></div>
+            <div class="google-title" id="prev-g-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
+            <div class="google-desc" id="prev-g-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</div>
+          </div>
+        </div>
+
+        <!-- Facebook Preview -->
+        <div class="preview-box" id="prev-facebook">
+          <div class="fb-preview">
+            <div class="fb-img-container">
+              <img id="prev-fb-img" src="https://frontendhelpers.com/assets/og-image.png" alt="Card Preview" loading="lazy" onerror="this.src='https://placehold.co/600x315/1a1f26/ffffff?text=Preview+Image'" />
+            </div>
+            <div class="fb-info">
+              <div class="fb-domain" id="prev-fb-domain">FRONTENDHELPERS.COM</div>
+              <div class="fb-title" id="prev-fb-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
+              <div class="fb-desc" id="prev-fb-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema ...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Twitter Preview -->
+        <div class="preview-box" id="prev-twitter">
+          <div class="tw-preview">
+            <div class="tw-img-container">
+              <img id="prev-tw-img" src="https://frontendhelpers.com/assets/og-image.png" alt="Card Preview" loading="lazy" onerror="this.src='https://placehold.co/600x315/1a1f26/ffffff?text=Preview+Image'" />
+            </div>
+            <div class="tw-info">
+              <div class="tw-domain" id="prev-tw-domain">frontendhelpers.com</div>
+              <div class="tw-title" id="prev-tw-title">FrontendHelpers — Free SEO &amp; Web Dev Utilities</div>
+              <div class="tw-desc" id="prev-tw-desc">Free, lightweight frontend developer utilities. Check social card preview renderings, generate business schema metadata, and convert fonts between PX and REM.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output HTML Code -->
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Optimised Meta Tags</span>
+            <button class="btn-copy" id="btn-copy-meta" data-target="output-meta-code">Copy Tags</button>
+          </div>
+          <textarea id="output-meta-code" readonly rows="8"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline ad slot -->
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Meta tags don't appear on your page — they describe it to machines. The <code>&lt;title&gt;</code> and meta description shape your entry in search results; Open Graph tags control what Facebook, LinkedIn, Slack and WhatsApp display when someone shares your link; Twitter Card tags do the same for X.</p>
+        <p>The distinction that trips people up: meta tags don't directly improve your ranking. Google has said for years that the meta description is not a ranking factor. What it <em>does</em> affect is click-through rate — and a link that gets clicked more often, from a result that satisfies the searcher, absolutely does influence how you perform over time. Meta tags are a conversion problem dressed as an SEO problem.</p>
+
+        <h2>Writing titles and descriptions that get clicked</h2>
+        <p>Keep titles at roughly <strong>50–60 characters</strong>. Google measures the rendered width in pixels rather than counting characters, so the limit is approximate, but 60 is a safe working ceiling. Lead with the distinctive words — if it truncates, you want the important part already read. Putting your brand name at the end, after a dash or pipe, is the conventional pattern for exactly this reason.</p>
+        <p>Descriptions have room for about <strong>150–160 characters</strong>. Treat it as ad copy, not a summary: say what the visitor gets and why it's worth their click. Google frequently rewrites descriptions to match the specific query anyway, so a well-written one is a strong suggestion rather than a guarantee.</p>
+
+        <h2>Open Graph: the tags that make links look good</h2>
+        <p>Without Open Graph tags, a shared link is a bare URL with whatever text the platform can scrape. With them, it becomes a card with an image, headline and description — dramatically more clickable in a crowded feed.</p>
+        <p>The five that matter are <code>og:title</code>, <code>og:description</code>, <code>og:image</code>, <code>og:url</code> and <code>og:type</code>. The image does most of the work: use <strong>1200 × 630 pixels</strong> (a 1.91:1 ratio) and keep essential text away from the edges, since platforms crop differently. Always use an absolute URL — relative paths silently fail, which is the single most common reason a share card shows no image.</p>
+        <p>Add <code>og:site_name</code> too. It's a small touch that puts your brand name on the card, and it costs one line.</p>
+
+        <h2>Why your share preview looks wrong (and how to fix it)</h2>
+        <p>Social platforms cache aggressively. If you share a link, then fix your tags, the old card will keep appearing — sometimes for weeks. The fix is to force a re-scrape: Facebook's Sharing Debugger and LinkedIn's Post Inspector both re-fetch on demand, and X refreshes its cache when you run a URL through its card validator.</p>
+        <p>The other frequent culprit is JavaScript. Meta tags injected client-side are often missed entirely, because most scrapers read the raw HTML without executing scripts. Meta tags belong in the server-rendered <code>&lt;head&gt;</code>, always.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Meta Tags in Next.js & React</h2>
+        <p>While the generator above provides static HTML, modern web applications often need dynamic meta tags based on the current route or database content. Here is how to implement the generated tags in a Next.js (App Router) environment using the built-in Metadata API.</p>
+        
+        <h3>Next.js (App Router) Implementation</h3>
+        <p>In Next.js 13+, you no longer use the <code>&lt;Head&gt;</code> component for standard SEO tags. Instead, export a <code>metadata</code> object or <code>generateMetadata</code> function from your <code>page.tsx</code> or <code>layout.tsx</code>.</p>
+        <pre><code class="language-javascript">
+// app/blog/[slug]/page.tsx
+import { Metadata } from 'next'
+
+export async function generateMetadata({ params }): Promise&lt;Metadata&gt; {
+  // Fetch data based on the route
+  const post = await getPostBySlug(params.slug)
+  
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: https://frontendhelpers.com/blog/ + post.slug,
+      siteName: 'FrontendHelpers',
+      images: [
+        {
+          url: post.ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.ogImageUrl],
+    },
+  }
+}
+        </code></pre>
+        <p>By using <code>generateMetadata</code>, Next.js will automatically render the exact HTML tags output by our generator, ensuring crawlers and social scrapers receive fully hydrated meta information on the initial server response.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How long should a meta description be?</summary>
+            <p class="faq-answer">Around 150–160 characters. Google truncates longer descriptions in search results, and frequently rewrites them to match the specific query, so treat yours as a strong suggestion rather than a guarantee.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What size should an Open Graph image be?</summary>
+            <p class="faq-answer">Use 1200 × 630 pixels, a 1.91:1 ratio. Keep important text away from the edges because platforms crop differently, and always reference the image with an absolute URL — relative paths are the most common reason a share card shows no image.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do meta tags improve my Google ranking?</summary>
+            <p class="faq-answer">The title tag carries some ranking weight; the meta description does not. Their real value is click-through rate — a compelling title and description win more clicks from the same position, which improves performance over time.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why is my share preview showing the old image?</summary>
+            <p class="faq-answer">Social platforms cache link previews aggressively. Force a refresh with Facebook’s Sharing Debugger, LinkedIn’s Post Inspector or X’s card validator. Also check the tags are in the server-rendered HTML — scrapers usually do not run JavaScript.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/schema-markup-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Schema Markup Generator</h3>
+            <p>Add structured data so Google can show rich results for your pages.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/robots-txt-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Robots.txt Generator</h3>
+            <p>Control what search engines crawl — and avoid deindexing yourself.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/aspect-ratio-calculator" class="resource-card">
+            <span class="resource-kicker">Images</span>
+            <h3>Aspect Ratio Calculator</h3>
+            <p>Get your 1200×630 OG image dimensions right, and stop layout shift.</p>
+            <span class="resource-cta">Open the calculator →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

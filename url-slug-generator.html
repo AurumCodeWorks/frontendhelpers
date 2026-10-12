@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free URL slug generator. Turn headlines into clean, lowercase, hyphenated slugs with optional stop-word removal and accent handling for your CMS." />
+  <link rel="canonical" href="https://frontendhelpers.com/url-slug-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/url-slug-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="URL Slug Generator — Free SEO-Friendly URL Maker" />
+  <meta property="og:description" content="Free URL slug generator. Turn headlines into clean, lowercase, hyphenated slugs with optional stop-word removal and accent handling for your CMS." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-url-slug-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="URL Slug Generator — Free SEO-Friendly URL Maker" />
+  <meta name="twitter:description" content="Free URL slug generator. Turn headlines into clean, lowercase, hyphenated slugs with optional stop-word removal and accent handling for your CMS." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-url-slug-generator.png" />
+
+  <title>URL Slug Generator — Free SEO-Friendly URL Maker | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "URL Slug Generator",
+        "url": "https://frontendhelpers.com/url-slug-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based URL slug generator with stop-word removal and accent normalisation.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "URL Slug Generator", "item": "https://frontendhelpers.com/url-slug-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Should URLs use hyphens or underscores?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Hyphens. Google treats a hyphen as a word separator and an underscore as a joiner, so css-animations reads as two words while css_animations reads as one meaningless token. Google has recommended hyphens for over a decade." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I remove stop words from URL slugs?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Usually yes — words like the, and and of add length without search value. But check the result, because occasionally a stop word carries meaning, such as \"not\" or in a title like \"The Who\"." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I change a URL slug after publishing?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You can, but you will lose the backlinks, shares and ranking history attached to the old URL unless you add a 301 redirect from old to new. It is far better to get the slug right before publishing." }
+          },
+          {
+            "@type": "Question",
+            "name": "How long should a URL slug be?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Aim for three to six meaningful words. Long slugs get truncated in search results and are awkward to share, while very short ones may not describe the page well enough to earn a click." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">URL Slug Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>URL slug <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Turn any headline into a clean, lowercase, hyphen-separated URL slug — the format both search engines and readers prefer.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-slug">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.7 1.7"/><path d="M13.5 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.7-1.7"/></svg></span>SEO-Friendly URL Slug Generator</h2>
+    </div>
+    <p class="panel-desc">Turn any headline into a clean, lowercase, hyphen-separated URL slug — the format search engines and readers both prefer.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label for="slug-input">Page Title or Headline</label>
+          <input type="text" id="slug-input" placeholder="e.g. 10 Best CSS Tricks for Beginners (2026 Guide)" value="10 Best CSS Tricks for Beginners (2026 Guide)" />
+        </div>
+        <div class="form-group">
+          <label for="slug-separator">Word Separator</label>
+          <select id="slug-separator">
+            <option value="-">Hyphen — recommended by Google</option>
+            <option value="_">Underscore</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="slug-stopwords" checked /> Remove stop words (a, the, for, and…)
+          </label>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Generated Slug</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>URL-ready slug</span>
+            <button class="btn-copy" data-target="output-slug">Copy Slug</button>
+          </div>
+          <textarea id="output-slug" readonly rows="2" class="mono-output"></textarea>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Full URL preview</span>
+            <button class="btn-copy" data-target="output-slug-url">Copy URL</button>
+          </div>
+          <textarea id="output-slug-url" readonly rows="2" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>The slug is the human-readable tail of a URL, and it does three jobs at once. It tells a person what a page is about before they click, it gives search engines a keyword signal, and it survives being copied into messages and documents without turning into unreadable percent-encoded noise.</p>
+        <p>Google has recommended simple, descriptive words separated by hyphens for well over a decade. The alternative — <code>/page?id=4821</code> — tells nobody anything, and when shared it looks like something you shouldn't click.</p>
+
+        <h2>Hyphens, not underscores</h2>
+        <p>This one has a definitive answer. Google treats a hyphen as a <strong>word separator</strong> and an underscore as a <strong>word joiner</strong>. That means <code>css-animations</code> is read as two words, while <code>css_animations</code> is read as the single token "cssanimations" — which nobody searches for.</p>
+        <p>Also keep slugs lowercase. Web servers on Linux treat URLs as case-sensitive, so <code>/My-Page</code> and <code>/my-page</code> can resolve to different pages — or one of them to a 404 — creating duplicate content or broken links depending on which version gets shared.</p>
+
+        <h2>Removing stop words — and when not to</h2>
+        <p>Words like "the", "and", "of" and "for" carry little search value, so removing them makes slugs shorter and more keyword-dense. <code>/10-best-css-tricks-beginners-2026-guide</code> reads better than the full headline and loses nothing.</p>
+        <p>But don't strip blindly. Occasionally a stop word is load-bearing — removing "not" reverses a meaning, and phrases like "The Who" or "Fear of the Dark" break entirely. Read the result before publishing; this tool also keeps the original words if removing them would leave the slug empty.</p>
+
+        <h2>Never change a published slug</h2>
+        <p>Once a URL is live, it accumulates value: backlinks pointing at it, social shares, bookmarks, and its own ranking history. Change the slug and all of it points to a 404 — you lose the link equity and the visitors at the same time.</p>
+        <p>If you genuinely must change one, set up a <strong>301 redirect</strong> from the old URL to the new one. That passes the accumulated authority across and keeps existing links working. Treat it as a last resort rather than routine tidying, and take a moment to get the slug right before publishing instead.</p>
+        <p>A few practical limits: keep slugs reasonably short (three to six meaningful words is a good target), strip accents to their ASCII equivalents so the URL doesn't get percent-encoded, and drop dates unless the content is genuinely time-bound — <code>/2024-guide</code> looks stale the moment the year turns.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Building a Slugify Function</h2>
+        <p>If you are generating slugs programmatically on your backend (e.g., when a user saves a new blog post), you need a robust function that handles diacritics, special characters, and multiple spaces.</p>
+        
+        <h3>JavaScript Implementation (Node.js & Browser)</h3>
+        <p>Here is a production-ready slugify function that safely normalizes strings, removes diacritics using the Internationalization API, and strips unwanted characters.</p>
+        <pre><code class="language-javascript">
+function createSlug(text, separator = '-') {
+  return text
+    .toString()
+    // Normalize to NFD (decomposes combined graphemes)
+    .normalize('NFD')
+    // Remove diacritics (accents)
+    .replace(/[\u0300-\u036f]/g, '')
+    // Convert to lowercase
+    .toLowerCase()
+    // Replace spaces and special chars with the separator
+    .replace(/[^a-z0-9]+/g, separator)
+    // Remove leading/trailing separators
+    .replace(new RegExp(^+|+$, 'g'), '');
+}
+
+console.log(createSlug("Café au Lait: 100% Delicious!")); 
+// Output: cafe-au-lait-100-delicious
+        </code></pre>
+        <p>This implementation matches the output of our generator and ensures your database routes remain clean and predictable regardless of user input.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Should URLs use hyphens or underscores?</summary>
+            <p class="faq-answer">Hyphens. Google treats a hyphen as a word separator and an underscore as a joiner, so css-animations reads as two words while css_animations reads as one meaningless token. Google has recommended hyphens for over a decade.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I remove stop words from URL slugs?</summary>
+            <p class="faq-answer">Usually yes — words like the, and and of add length without search value. But check the result, because occasionally a stop word carries meaning, such as "not" or in a title like "The Who".</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I change a URL slug after publishing?</summary>
+            <p class="faq-answer">You can, but you will lose the backlinks, shares and ranking history attached to the old URL unless you add a 301 redirect from old to new. It is far better to get the slug right before publishing.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How long should a URL slug be?</summary>
+            <p class="faq-answer">Aim for three to six meaningful words. Long slugs get truncated in search results and are awkward to share, while very short ones may not describe the page well enough to earn a click.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/text-case-converter" class="resource-card">
+            <span class="resource-kicker">Text</span>
+            <h3>Text Case Converter</h3>
+            <p>Convert between kebab-case, camelCase, snake_case and more.</p>
+            <span class="resource-cta">Open the converter →</span>
+          </a>
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Write the title and description that appear alongside your URL.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/utm-link-builder" class="resource-card">
+            <span class="resource-kicker">Analytics</span>
+            <h3>UTM Link Builder</h3>
+            <p>Tag campaign links so analytics can attribute your traffic.</p>
+            <span class="resource-cta">Open the builder →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

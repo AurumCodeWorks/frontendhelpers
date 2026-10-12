@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Eight free CSS loading animations with live previews: spinners, bouncing dots, progress bars, skeleton shimmers, and ripples. Pure CSS, no libraries." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-loading-animations" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-loading-animations" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Loading Animations — 8 Free Spinners, Dots &amp; Skeletons" />
+  <meta property="og:description" content="Eight free CSS loading animations with live previews: spinners, bouncing dots, progress bars, skeleton shimmers, and ripples. Pure CSS, no libraries." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-loading-animations.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Loading Animations — 8 Free Spinners, Dots &amp; Skeletons" />
+  <meta name="twitter:description" content="Eight free CSS loading animations with live previews: spinners, bouncing dots, progress bars, skeleton shimmers, and ripples. Pure CSS, no libraries." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-loading-animations.png" />
+
+  <title>CSS Loading Animations — 8 Free Spinners, Dots &amp; Skeletons | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "CSS Loading Animations — 8 Free Spinners, Dots & Skeletons",
+        "url": "https://frontendhelpers.com/css-loading-animations",
+        "description": "Eight free CSS loading animations with live previews: ring spinners, bouncing dots, progress bars, skeleton shimmers, ripples and orbits. Pure CSS, copy-paste ready, no libraries.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "about": { "@type": "Thing", "name": "CSS animations" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Loaders", "item": "https://frontendhelpers.com/css-loading-animations" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "When should I use a skeleton screen instead of a spinner?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use a skeleton whenever you are loading content into a layout you already know — lists, cards, articles. It sets expectations about what is arriving and reduces perceived wait. Use a spinner for short indeterminate waits where the resulting layout is unknown." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do CSS loading animations need JavaScript?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Every loader here is pure CSS and animates as soon as it is in the DOM. JavaScript is only needed to add or remove the element when your request starts and finishes." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a loading spinner accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Give it role=\"status\" and an aria-label such as \"Loading results\" so screen readers announce it. Also honour prefers-reduced-motion, since continuous spinning can cause discomfort for people with vestibular disorders." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main" data-fixed-cat="loader">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/css-animations">CSS Animations</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Loaders</span>
+    </nav>
+
+    <section class="gallery-hero">
+      <h1>CSS loading <span class="hero-highlight">animations</span></h1>
+      <p class="gallery-hero-sub">Spinners, bouncing dots, skeleton shimmers and progress bars — every one pure CSS, previewed live, and free to copy.</p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search within loaders…" aria-label="Search Loaders animations" />
+        </div>
+      </div>
+    </div>
+
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+      <article class="tool-documentation">
+        <h2>Choosing the right loader for the wait</h2>
+        <p>The type of loader should match how long the wait will be and whether you can measure it. For waits under about a second, showing nothing at all is often best — a spinner that flashes for 300ms reads as a glitch rather than progress.</p>
+        <p>For short indeterminate waits, a <strong>spinner</strong> or <strong>bouncing dots</strong> works. For anything you can measure, use a <strong>progress bar</strong>: knowing that a task is 70% done is far less stressful than watching an endless spin. And when you're loading content into a known layout, a <strong>skeleton screen</strong> beats both.</p>
+
+        <h2>Why skeleton screens feel faster</h2>
+        <p>Skeletons outperform spinners for the same wait because they set expectations. A spinner says "something is happening somewhere"; a skeleton shows the shape of what's arriving, so the eye already knows where the headline and the image will land. When the content appears, it slots into place instead of replacing an unrelated animation.</p>
+        <p>The rule that makes them work: size each placeholder bar like the content it stands in for. Skeletons that don't match the final layout cause a jump when the real content loads — which is exactly the layout shift you were trying to avoid.</p>
+
+        <h2>Accessibility: loaders need to be announced</h2>
+        <p>A purely visual loader is invisible to a screen reader user, who gets silence and no indication anything is happening. Give the element <code>role="status"</code> and an <code>aria-label</code> such as "Loading results", and assistive technology will announce it politely without interrupting.</p>
+        <p>Also respect <code>prefers-reduced-motion</code>. Continuously spinning elements can trigger discomfort for people with vestibular disorders — a static or fading indicator is a reasonable substitute, and the reduced-motion snippet in our <a href="/css-animations#guide-howto">how-to guide</a> handles this globally.</p>
+
+        <h2>Keeping loaders cheap</h2>
+        <p>Every loader here animates only <code>transform</code>, <code>opacity</code> or <code>background-position</code>, which browsers composite on the GPU. That matters more than usual for loaders: they run precisely when the main thread is busy fetching and parsing, so an animation that requires layout work will stutter exactly when it's most visible.</p>
+      </article>
+
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+          <details class="faq-item">
+            <summary>When should I use a skeleton screen instead of a spinner?</summary>
+            <p class="faq-answer">Use a skeleton whenever you are loading content into a layout you already know — lists, cards, articles. It sets expectations about what is arriving and reduces perceived wait. Use a spinner for short indeterminate waits where the resulting layout is unknown.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do CSS loading animations need JavaScript?</summary>
+            <p class="faq-answer">No. Every loader here is pure CSS and animates as soon as it is in the DOM. JavaScript is only needed to add or remove the element when your request starts and finishes.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a loading spinner accessible?</summary>
+            <p class="faq-answer">Give it role="status" and an aria-label such as "Loading results" so screen readers announce it. Also honour prefers-reduced-motion, since continuous spinning can cause discomfort for people with vestibular disorders.</p>
+          </details>
+      </div>
+    </section>
+
+    <section class="resource-section" style="padding-left:0;padding-right:0;">
+      <h2>Related categories</h2>
+      <div class="resource-cards">
+          <a href="/css-ui-feedback-animations" class="resource-card">
+            <span class="resource-kicker">UI Feedback</span>
+            <h3>UI Feedback</h3>
+            <p>Toasts, modals, tooltips and progress bars</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-entrance-animations" class="resource-card">
+            <span class="resource-kicker">Entrances</span>
+            <h3>Entrances</h3>
+            <p>Fades and slides for content arriving on screen</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-image-animations" class="resource-card">
+            <span class="resource-kicker">Images</span>
+            <h3>Images &amp; Carousels</h3>
+            <p>Hover zooms, Ken Burns and blur-up reveals</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+      </div>
+      <p class="back-to-hub"><a href="/css-animations">← Back to all 72 CSS animations</a></p>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.1.0"></script>
+</body>
+</html>

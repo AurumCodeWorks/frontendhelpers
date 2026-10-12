@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════════════════════
+   DEV ESSENTIALS — page styles
+   (design tokens + .tool-card/.chip/.page-hero from style.css)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── READINESS SCORE PANEL ─────────────────────────────────── */
+.score-panel {
+  margin-top: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.score-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.score-title {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.score-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+.score-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-panel .btn-reset { align-self: flex-start; }
+
+/* ── TOPIC CARDS ───────────────────────────────────────────── */
+.topic-progress {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
+.topic-progress.done {
+  color: var(--accent);
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.topic-prose {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin-bottom: 18px;
+  max-width: 1080px;
+}
+
+.topic-prose strong { color: var(--text); }
+
+.topic-prose a,
+.topic-note a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+.topic-prose a:hover,
+.topic-note a:hover { text-decoration: underline; }
+
+.topic-prose code,
+.topic-note code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--secondary);
+}
+
+.topic-note {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  padding: 10px 14px;
+  background: rgba(6, 182, 212, 0.06);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 8px;
+  margin: 14px 0 4px;
+  max-width: 1080px;
+}
+
+.ref-heading {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 24px 0 12px;
+  color: var(--text);
+}
+
+/* ── CHECKLISTS ────────────────────────────────────────────── */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Two columns on wide screens — items are short, the card is wide */
+@media (min-width: 1100px) {
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  /* undo the global uppercase form-label styling */
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.check-item:hover { border-color: rgba(255, 255, 255, 0.2); }
+
+.check-item input {
+  appearance: none;
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border: 2px solid var(--text-dim);
+  border-radius: 6px;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: var(--transition);
+}
+
+.check-item input::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transition: transform 0.15s ease;
+  background: #04110b;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.check-item input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.check-item input:checked::before { transform: scale(1); }
+
+.check-item span {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  transition: var(--transition);
+}
+
+.check-item.done { border-color: rgba(16, 185, 129, 0.3); }
+
+.check-item.done span {
+  color: var(--text-disabled);
+  text-decoration: line-through;
+  text-decoration-color: rgba(16, 185, 129, 0.5);
+}
+
+/* ── REQUEST JOURNEY STEPPER ───────────────────────────────── */
+.journey {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 8px;
+}
+
+.journey-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.journey-step {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.journey-step:hover { color: var(--text); }
+
+.journey-step.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(6, 182, 212, 0.25));
+  border-color: var(--secondary);
+  color: var(--text);
+}
+
+.journey-step.visited { color: var(--accent); }
+
+.journey-detail h4 {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--secondary);
+}
+
+.journey-detail p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  min-height: 66px;
+}
+
+.journey-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.journey-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.journey-btn:hover:not(:disabled) {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.journey-btn:disabled { opacity: 0.35; cursor: default; }
+
+.journey-pos {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-disabled);
+}
+
+/* ── STATUS CODE TABLE ─────────────────────────────────────── */
+.status-search { max-width: 420px; margin-bottom: 12px; }
+
+.status-table-wrap { max-height: 380px; overflow-y: auto; }
+
+.status-table td:first-child {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--secondary);
+  white-space: nowrap;
+}
+
+.status-table tr.hidden { display: none; }
+
+/* ── TABLES: tints ─────────────────────────────────────────── */
+
+.quick-table th.good, .quick-table td.good { color: var(--accent); }
+.quick-table th.poor, .quick-table td.poor { color: var(--danger); }
+
+.cwv-table td.good, .cwv-table td.poor,
+.versus-table td.good { font-weight: 600; white-space: nowrap; }
+
+.dodont-table code { white-space: nowrap; }
+
+/* ── GIT CHEAT SHEET ───────────────────────────────────────── */
+.git-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 1400px) {
+  .git-groups { grid-template-columns: repeat(4, 1fr); }
+}
+
+.git-group {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.git-group .output-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.git-group textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  resize: none;
+  display: block;
+}
+
+/* ── TESTING PYRAMID ───────────────────────────────────────── */
+.pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 18px;
+}
+
+.pyramid-tier {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border-radius: 8px;
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  padding: 0 14px;
+}
+
+.tier-e2e {
+  width: min(38%, 340px);
+  background: rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+}
+
+.tier-int {
+  width: min(64%, 580px);
+  background: rgba(6, 182, 212, 0.18);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+}
+
+.tier-unit {
+  width: min(90%, 820px);
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+/* ── DECISION GUIDE CARD ───────────────────────────────────── */
+.guide-card { border-color: rgba(245, 158, 11, 0.35); }
+
+.guide-icon {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--warning);
+}
+
+.guide-kicker {
+  font-family: var(--font-title);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warning);
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 4px 12px;
+  border-radius: 14px;
+  white-space: nowrap;
+}
+
+.chip-guide.active,
+.chip-guide:hover {
+  border-color: var(--warning);
+}
+
+.versus-table td:first-child,
+.scenario-table td:first-child { color: var(--text); }
+
+/* ── FURTHER READING ROWS ──────────────────────────────────── */
+.further-reading {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.further-reading span {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-disabled);
+  margin-right: 6px;
+}
+
+.further-reading a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+.further-reading a:hover { text-decoration: underline; }
+
+/* ── SEARCH FIELD (shared look with pages 2–3) ─────────────── */
+.gallery-search-wrap { position: relative; }
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.gallery-search {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  padding: 12px 16px 12px 40px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.gallery-search:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.12);
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 24px 0;
+  font-size: 0.9rem;
+}
+
+/* ── ARTICLES ──────────────────────────────────────────────── */
+.gallery-articles { padding-bottom: 40px; }
+
+.gallery-articles .tool-documentation h2 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.gallery-articles a { color: var(--secondary); text-decoration: none; }
+.gallery-articles a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .git-groups { grid-template-columns: 1fr; }
+  .score-panel { max-width: none; }
+  .journey-detail p { min-height: 0; }
+  .panel-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

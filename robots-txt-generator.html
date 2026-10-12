@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free robots.txt generator. Create valid crawler rules with allow/disallow paths and sitemap URLs, and avoid common mistakes that deindex websites." />
+  <link rel="canonical" href="https://frontendhelpers.com/robots-txt-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/robots-txt-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Robots.txt Generator — Free Crawler Rules &amp; Sitemap Tool" />
+  <meta property="og:description" content="Free robots.txt generator. Create valid crawler rules with allow/disallow paths and sitemap URLs, and avoid common mistakes that deindex websites." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-robots-txt-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Robots.txt Generator — Free Crawler Rules &amp; Sitemap Tool" />
+  <meta name="twitter:description" content="Free robots.txt generator. Create valid crawler rules with allow/disallow paths and sitemap URLs, and avoid common mistakes that deindex websites." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-robots-txt-generator.png" />
+
+  <title>Robots.txt Generator — Free Crawler Rules &amp; Sitemap Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Robots.txt Generator",
+        "url": "https://frontendhelpers.com/robots-txt-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based robots.txt generator producing valid crawler directives with allow, disallow and sitemap declarations.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Robots.txt Generator", "item": "https://frontendhelpers.com/robots-txt-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does robots.txt stop a page appearing in Google?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It stops crawling, not indexing. A disallowed page can still be listed if other sites link to it — Google just shows the bare URL with no description. To keep a page out of the index, allow crawling and use a noindex meta tag instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "Where does robots.txt need to be located?",
+            "acceptedAnswer": { "@type": "Answer", "text": "At the root of the domain, for example example.com/robots.txt. Placed anywhere else it is ignored completely. Each subdomain needs its own file — blog.example.com will not use the main domain’s robots.txt." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use robots.txt to hide private pages?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It is a public file, so listing a path there advertises its existence to anyone who looks, and malicious bots ignore it entirely. Anything genuinely private needs authentication or server-level access control." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I include my sitemap in robots.txt?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. A Sitemap: line with the absolute URL is the cheapest indexing hint available, works across all major search engines, and applies globally regardless of which user-agent group it sits in." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Robots.txt Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Robots.txt <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Create a valid robots.txt that tells search engines what to crawl and what to skip — including your sitemap location.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-robots">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h6"/></svg></span>Robots.txt Generator</h2>
+    </div>
+    <p class="panel-desc">Create a valid robots.txt that tells search engine crawlers what to index and what to skip — plus your sitemap location.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="robots-agent">User-Agent</label>
+            <input type="text" id="robots-agent" placeholder="* (all crawlers)" value="*" />
+          </div>
+          <div class="form-group">
+            <label for="robots-mode">Base Policy</label>
+            <select id="robots-mode">
+              <option value="allow">Allow everything (recommended)</option>
+              <option value="block">Block everything (staging sites)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="robots-disallow">Blocked Paths <small>(one per line, e.g. /admin/)</small></label>
+          <textarea id="robots-disallow" rows="4" placeholder="/admin/&#10;/private/&#10;/cart/"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="robots-sitemap">Sitemap URL <small>(strongly recommended)</small></label>
+          <input type="url" id="robots-sitemap" placeholder="https://yourwebsite.com/sitemap.xml" value="" />
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Generated File</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>robots.txt — place at your site root</span>
+            <button class="btn-copy" data-target="output-robots">Copy File</button>
+          </div>
+          <textarea id="output-robots" readonly rows="9" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>robots.txt is the first file a well-behaved crawler requests from your domain. It controls <strong>crawling</strong>: which paths bots may fetch. That protects your crawl budget and stops search engines wasting attention on carts, admin panels and internal search results.</p>
+        <p>What it does <em>not</em> control is <strong>indexing</strong>. This distinction causes more SEO damage than any other robots.txt misunderstanding. If another site links to a page you've disallowed, Google can still list that URL in search results — it simply won't have crawled the content, so it shows a bare URL with no description. To keep a page out of the index you must let it be crawled and serve a <code>noindex</code> meta tag. Blocking it in robots.txt actively prevents Google from seeing that tag.</p>
+
+        <h2>The mistake that deindexes entire sites</h2>
+        <p>A single line — <code>Disallow: /</code> — blocks your whole site. It's the correct setting for a staging environment, and catastrophic on production. The classic disaster is a staging robots.txt being deployed to live, and it happens often enough that checking robots.txt should be a standard post-deploy step.</p>
+        <p>Two subtler traps: robots.txt must live at the domain root (<code>example.com/robots.txt</code>) — anywhere else and it's ignored entirely. And it doesn't apply across subdomains, so <code>blog.example.com</code> needs its own file.</p>
+
+        <h2>Never use it to hide sensitive paths</h2>
+        <p>robots.txt is a public file that anyone can read, and listing a path there advertises its existence. Writing <code>Disallow: /admin-panel-v2/</code> tells every curious visitor exactly where to look. It's an instruction to polite crawlers, not an access control, and malicious bots ignore it completely.</p>
+        <p>Anything genuinely sensitive needs authentication, not a crawler directive. Our <a href="/essentials#ess-sec">security essentials</a> covers the difference between obscurity and actual protection.</p>
+
+        <h2>Always declare your sitemap</h2>
+        <p>Adding a <code>Sitemap:</code> line is the cheapest indexing help available. It works for every major search engine, requires no account, and gives crawlers a direct route to every URL you care about. Use the absolute URL, and note that this directive is independent of user-agent groups — it applies globally wherever you place it.</p>
+        <p>After changing robots.txt, test it. Google Search Console's robots.txt report shows exactly how Googlebot interprets your file, which is far more reliable than reading the rules yourself and hoping.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Serving robots.txt Dynamically</h2>
+        <p>While static sites can just drop a <code>robots.txt</code> file in their public folder, dynamic applications often need to change their robots policy based on the environment (e.g., blocking crawlers entirely on staging environments).</p>
+        
+        <h3>Implementation in Node.js / Express</h3>
+        <p>Here is how to serve a dynamic robots.txt file that automatically blocks crawlers unless the application is running in the production environment.</p>
+        <pre><code class="language-javascript">
+const express = require('express');
+const app = express();
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  
+  if (process.env.NODE_ENV === 'production') {
+    // Production: Allow everything, declare sitemap
+    res.send(User-agent: *
+Allow: /
+Sitemap: https://yourdomain.com/sitemap.xml);
+  } else {
+    // Staging/Dev: Block everything
+    res.send(User-agent: *
+Disallow: /);
+  }
+});
+        </code></pre>
+        <p>This simple middleware guarantees that your staging server will never accidentally be indexed by Google, which is a common cause of duplicate content penalties.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does robots.txt stop a page appearing in Google?</summary>
+            <p class="faq-answer">No. It stops crawling, not indexing. A disallowed page can still be listed if other sites link to it — Google just shows the bare URL with no description. To keep a page out of the index, allow crawling and use a noindex meta tag instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Where does robots.txt need to be located?</summary>
+            <p class="faq-answer">At the root of the domain, for example example.com/robots.txt. Placed anywhere else it is ignored completely. Each subdomain needs its own file — blog.example.com will not use the main domain’s robots.txt.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I use robots.txt to hide private pages?</summary>
+            <p class="faq-answer">No. It is a public file, so listing a path there advertises its existence to anyone who looks, and malicious bots ignore it entirely. Anything genuinely private needs authentication or server-level access control.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I include my sitemap in robots.txt?</summary>
+            <p class="faq-answer">Yes. A Sitemap: line with the absolute URL is the cheapest indexing hint available, works across all major search engines, and applies globally regardless of which user-agent group it sits in.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Generate the meta tags — including noindex — that control indexing.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/schema-markup-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Schema Markup Generator</h3>
+            <p>Structured data that helps search engines understand your pages.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/essentials#ess-deploy" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Deployment essentials</h3>
+            <p>DNS records, HTTPS and the launch-day checklist worth following.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

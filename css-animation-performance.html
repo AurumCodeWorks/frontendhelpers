@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn why some CSS animations run at 60fps and others stutter. See which properties are GPU-composited, why transforms are cheap, and how to fix jank." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-animation-performance" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-animation-performance" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Animation Performance: What to Animate and What to Avoid" />
+  <meta property="og:description" content="Learn why some CSS animations run at 60fps and others stutter. See which properties are GPU-composited, why transforms are cheap, and how to fix jank." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-animation-performance.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Animation Performance: What to Animate and What to Avoid" />
+  <meta name="twitter:description" content="Learn why some CSS animations run at 60fps and others stutter. See which properties are GPU-composited, why transforms are cheap, and how to fix jank." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-animation-performance.png" />
+
+  <title>CSS Animation Performance: What to Animate and What to Avoid | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Animation Performance: What to Animate and What to Avoid",
+        "description": "Why some CSS animations run at 60fps and others stutter. Learn which properties are composited on the GPU, why transform and opacity are cheap, and how to fix janky animations.",
+        "url": "https://frontendhelpers.com/css-animation-performance",
+        "image": "https://frontendhelpers.com/assets/og-css-animation-performance.png",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-animation-performance" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Animation Performance: What to Animate and What to Avoid", "item": "https://frontendhelpers.com/css-animation-performance" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which CSS properties are cheapest to animate?",
+            "acceptedAnswer": { "@type": "Answer", "text": "transform and opacity. They are handled by the compositor on the GPU, skipping layout and paint entirely, so they stay smooth even when the main thread is busy." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my CSS animation stuttering?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You are most likely animating a layout property such as width, height, top or margin, which forces the browser to recalculate layout every frame. Switch to transform: scale() or translate() instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use will-change to speed up animations?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Only when you have measured a real problem. Each promoted layer uses GPU memory, and applying will-change broadly or leaving it on permanently can make performance worse rather than better." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Animation Performance: What to Animate and What to Avoid</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS animation performance: <span class="hero-highlight">what to animate</span></h1>
+        <p class="page-hero-sub">Why transform and opacity run at 60fps while width and top stutter — and how to fix animations that jank.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 19 July 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>The rendering pipeline, briefly</h2>
+        <p>Understanding animation performance requires knowing what the browser does each frame. There are three stages: <strong>layout</strong> (calculating where every element goes), <strong>paint</strong> (filling in pixels — colours, text, shadows), and <strong>composite</strong> (assembling the painted layers into the final image).</p>
+        <p>The cost difference between them is enormous. Changing a property that affects layout forces the browser to redo all three stages, for potentially the entire page. Changing a composite-only property skips straight to the last stage — and that stage runs on the GPU, off the main thread.</p>
+        <p>At 60fps the browser has about <strong>16.7 milliseconds</strong> per frame for everything. Layout on a complex page can consume that alone, which is why the property you choose matters more than any other optimisation.</p>
+
+        <h2>The cheap properties: transform and opacity</h2>
+        <p>Only two properties reliably skip layout and paint entirely: <code>transform</code> and <code>opacity</code>. Everything you want visually is usually achievable through them.</p>
+        <p>Instead of animating <code>width</code> and <code>height</code>, use <code>transform: scale()</code>. Instead of <code>top</code> and <code>left</code>, use <code>transform: translate()</code>. Instead of toggling <code>display</code>, transition <code>opacity</code> — paired with <code>visibility</code> so the hidden element leaves the tab order, as covered in our <a href="/css-menu-animations">menu animations</a>.</p>
+        <p>This is why every effect in the <a href="/css-animations">animation library</a> animates transform or opacity: they're the two the compositor can handle alone.</p>
+
+        <h2>The expensive ones</h2>
+        <p><strong>Layout-triggering properties</strong> are the worst: <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, <code>margin</code>, <code>padding</code>, <code>font-size</code>. Each frame forces a full recalculation, and because layout can cascade, changing one element's size can reflow its siblings and ancestors too.</p>
+        <p><strong>Paint-triggering properties</strong> are cheaper but not free: <code>background-color</code>, <code>box-shadow</code>, <code>border-radius</code>, <code>color</code>. They skip layout but still repaint the affected area — usually fine for a small element, noticeable on a large one. Animating a big <code>box-shadow</code> is a classic cause of hover jank.</p>
+        <p><code>filter</code> is a special case: GPU-accelerated but genuinely costly at scale, especially <code>blur()</code> on large elements.</p>
+
+        <h2>Diagnosing a janky animation</h2>
+        <p>Open DevTools' <strong>Performance</strong> panel, record while the animation runs, and look at the flame chart. Purple blocks are layout, green is paint. If you see either repeating every frame during your animation, you've found the cause.</p>
+        <p>Chrome's <strong>Rendering</strong> panel is faster for a quick check: enable "Paint flashing" and green highlights show repainted regions. An animation that flashes a large area every frame is doing far too much work.</p>
+
+        <h2>will-change, and why to be careful</h2>
+        <p><code>will-change: transform</code> tells the browser to promote an element to its own compositor layer in advance, which can smooth an animation that stutters on its first frame.</p>
+        <p>It's frequently misused. Each promoted layer consumes GPU memory, and applying <code>will-change</code> broadly — or leaving it on permanently — can degrade performance rather than improve it. Apply it shortly before the animation starts and remove it afterwards, and only when you've measured an actual problem.</p>
+
+        <h2>Practical rules</h2>
+        <p>Animate <code>transform</code> and <code>opacity</code> by default. Keep interface feedback between 150 and 300ms, and entrances between 300 and 600ms. Limit how many elements animate simultaneously, since even cheap animations add up. Always honour <code>prefers-reduced-motion</code>, which is an accessibility requirement rather than a performance one but belongs in the same habit.</p>
+        <p>And remember that CSS animations beat JavaScript ones for simple UI motion not just on bundle size, but because the browser can optimise them ahead of time and run them off the main thread — meaning they keep running smoothly even while your JavaScript is busy.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Which CSS properties are cheapest to animate?</summary>
+            <p class="faq-answer">transform and opacity. They are handled by the compositor on the GPU, skipping layout and paint entirely, so they stay smooth even when the main thread is busy.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why is my CSS animation stuttering?</summary>
+            <p class="faq-answer">You are most likely animating a layout property such as width, height, top or margin, which forces the browser to recalculate layout every frame. Switch to transform: scale() or translate() instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use will-change to speed up animations?</summary>
+            <p class="faq-answer">Only when you have measured a real problem. Each promoted layer uses GPU memory, and applying will-change broadly or leaving it on permanently can make performance worse rather than better.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>72 CSS animations</h3>
+            <p>Copy-paste effects that all animate compositor-friendly properties.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/core-web-vitals-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Core Web Vitals</h3>
+            <p>How LCP, INP and CLS are measured and what fixes them.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/js-tips" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>32 JavaScript tricks</h3>
+            <p>Debouncing, rAF throttling and other performance patterns.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

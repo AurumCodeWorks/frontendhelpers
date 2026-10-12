@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free CSS gradient generator. Build linear and radial gradients visually, add unlimited color stops, choose from presets, and copy production-ready CSS." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-gradient-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-gradient-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Gradient Generator — Visual Linear &amp; Radial Gradient Tool" />
+  <meta property="og:description" content="Free CSS gradient generator. Build linear and radial gradients visually, add unlimited color stops, choose from presets, and copy production-ready CSS." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-gradient-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Gradient Generator — Visual Linear &amp; Radial Gradient Tool" />
+  <meta name="twitter:description" content="Free CSS gradient generator. Build linear and radial gradients visually, add unlimited color stops, choose from presets, and copy production-ready CSS." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-gradient-generator.png" />
+
+  <title>CSS Gradient Generator — Visual Linear &amp; Radial Gradient Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "CSS Gradient Generator",
+        "url": "https://frontendhelpers.com/css-gradient-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based visual CSS gradient generator supporting linear and radial gradients with unlimited colour stops.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Gradient Generator", "item": "https://frontendhelpers.com/css-gradient-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I make a diagonal CSS gradient?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Set the angle to 135deg for a top-left to bottom-right diagonal, or 45deg for bottom-left to top-right. Angles are measured clockwise from pointing straight up, so 0deg is bottom-to-top and 90deg is left-to-right." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use more than two colours in a CSS gradient?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — a gradient accepts unlimited colour stops. Add as many as you need and set each one’s position along the gradient. Keep neighbouring stops close in hue to avoid a muddy grey band in the middle of the blend." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do CSS gradients hurt page performance?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Static gradients are rendered by the GPU with no network cost, and they replace image files entirely. Only avoid animating the gradient definition itself — animate background-position across an oversized gradient instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I add a gradient to text?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Apply the gradient as a background, then clip it to the text with background-clip: text and set the text colour to transparent. Include the -webkit- prefixed versions for full browser support." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Gradient Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS gradient <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Build linear and radial CSS gradients visually, with live preview and unlimited colour stops. Copy the CSS and paste it straight into your stylesheet.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-gradient">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6.3 6.9 6.3 11a6.3 6.3 0 0 1-12.6 0c0-4.1 6.3-11 6.3-11z"/></svg></span>CSS Gradient Generator</h2>
+      <button class="btn-reset" id="reset-gradient">↺ Reset</button>
+    </div>
+    <p class="panel-desc">Build beautiful CSS gradients visually with a live preview. Adjust colours, angles, and stops, then copy the CSS code.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label>Gradient Type</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-grad-type="linear" id="grad-type-linear">Linear</button>
+            <button class="toggle-btn" data-grad-type="radial" id="grad-type-radial">Radial</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="angle-group">
+          <label for="grad-angle">Angle: <strong id="angle-value">135</strong>°</label>
+          <input type="range" id="grad-angle" min="0" max="360" value="135" class="styled-range" />
+        </div>
+
+        <div class="form-group">
+          <label>Colour Stops</label>
+          <div id="color-stops-list"></div>
+          <button class="btn-add-stop" id="add-stop">+ Add Colour Stop</button>
+        </div>
+
+        <div class="form-group">
+          <label>Quick Presets</label>
+          <div class="preset-grid" id="gradient-presets"></div>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Live Preview</h3>
+        <div class="gradient-preview-swatch" id="gradient-swatch"></div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS Code</span>
+            <button class="btn-copy" id="btn-copy-gradient" data-target="output-gradient-code">Copy CSS</button>
+          </div>
+          <textarea id="output-gradient-code" readonly rows="4" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>A gradient rendered by the browser costs you nothing in network weight. There is no file to download, no extra HTTP request, and no cache to invalidate — the entire effect travels as a line of CSS inside a stylesheet you were already loading.</p>
+        <p>They are also resolution-independent. A gradient image has to be exported at multiple sizes and still risks visible banding or blurring on high-density displays; a CSS gradient is recalculated by the GPU at whatever size and pixel density the device happens to have, so it is always crisp. And because it is just CSS, you can change it in a second — swap a colour, adjust the angle, or drive the whole thing from custom properties for theming.</p>
+
+        <h2>Linear vs radial: choosing the right type</h2>
+        <p><strong>Linear gradients</strong> flow along a straight line at whatever angle you specify. They are the workhorse: hero backgrounds, buttons, card overlays, and subtle top-to-bottom shading that adds depth without drawing attention. The angle is measured clockwise from pointing up, so <code>0deg</code> runs bottom-to-top, <code>90deg</code> runs left-to-right, and <code>135deg</code> — the most common choice for a diagonal — runs from top-left to bottom-right.</p>
+        <p><strong>Radial gradients</strong> radiate outward from a point. They are ideal for spotlight effects, soft glows behind a focal element, and giving a flat surface a subtle sense of light direction. Used large and low-contrast, a radial gradient reads as atmosphere rather than decoration.</p>
+
+        <h2>Colour stops, and how to avoid muddy gradients</h2>
+        <p>Each colour stop is a colour plus a position along the gradient. Two stops give you a simple blend; adding more lets you build complex, multi-hue transitions. The usual mistake is choosing two colours that sit opposite each other on the colour wheel — blending blue directly into orange passes through a grey, muddy middle, because the interpolation runs straight through the desaturated centre of the colour space.</p>
+        <p>The fix is to keep your stops closer together in hue, or to add an intermediate stop that steers the blend around the wheel rather than through it. Gradients between neighbouring hues — blue to purple, orange to pink, teal to green — look rich almost automatically. Our <a href="/color-palette-generator">colour palette generator</a> can produce harmonious analogous colours to use as stops.</p>
+
+        <h2>Performance and accessibility notes</h2>
+        <p>Static gradients are effectively free to render. Animated ones are not: transitioning the gradient definition itself forces the browser to repaint every frame. If you want movement, animate <code>background-position</code> across an oversized gradient instead — that is compositor-friendly, and it is exactly the technique used in the animation library on this site.</p>
+        <p>One accessibility caveat: text placed over a gradient has a contrast ratio that changes across the gradient. Check the text against the <em>lightest</em> and the <em>darkest</em> point it crosses, not just the average, using the <a href="/contrast-checker">contrast checker</a>. If it fails at either end, add a semi-transparent scrim between the gradient and the text.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Animating Gradients</h2>
+        <p>Static gradients look great, but animating them adds a premium, dynamic feel to modern web applications. However, CSS does not allow you to directly animate the <code>background-image</code> property (which is what gradients are).</p>
+        
+        <h3>The Background-Position Hack</h3>
+        <p>To animate a gradient, you generate a gradient that is much larger than its container, and then smoothly animate its <code>background-position</code> using CSS keyframes.</p>
+        <pre><code class="language-css">
+.animated-gradient-bg {
+  /* Create a gradient and size it to 400% of the container */
+  background: linear-gradient(-45deg, #ff3d00, #ffb300, #00b0ff, #7c4dff);
+  background-size: 400% 400%;
+  
+  /* Apply the animation */
+  animation: gradientFlow 10s ease infinite;
+  
+  /* Container dimensions */
+  width: 100%;
+  height: 100vh;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+        </code></pre>
+        <p>This technique is performant and works perfectly for hero sections or loading skeletons. For highly complex, interactive gradients (like the organic mesh gradients seen on Stripe's website), developers typically bypass CSS entirely and use WebGL or HTML5 Canvas.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I make a diagonal CSS gradient?</summary>
+            <p class="faq-answer">Set the angle to 135deg for a top-left to bottom-right diagonal, or 45deg for bottom-left to top-right. Angles are measured clockwise from pointing straight up, so 0deg is bottom-to-top and 90deg is left-to-right.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I use more than two colours in a CSS gradient?</summary>
+            <p class="faq-answer">Yes — a gradient accepts unlimited colour stops. Add as many as you need and set each one’s position along the gradient. Keep neighbouring stops close in hue to avoid a muddy grey band in the middle of the blend.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do CSS gradients hurt page performance?</summary>
+            <p class="faq-answer">No. Static gradients are rendered by the GPU with no network cost, and they replace image files entirely. Only avoid animating the gradient definition itself — animate background-position across an oversized gradient instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I add a gradient to text?</summary>
+            <p class="faq-answer">Apply the gradient as a background, then clip it to the text with background-clip: text and set the text colour to transparent. Include the -webkit- prefixed versions for full browser support.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Colour</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Turn one brand colour into a full tint and shade scale with CSS tokens.</p>
+            <span class="resource-cta">Build a palette →</span>
+          </a>
+          <a href="/box-shadow-generator" class="resource-card">
+            <span class="resource-kicker">CSS</span>
+            <h3>Box Shadow Generator</h3>
+            <p>Design layered shadows visually and copy the CSS.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Accessibility</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Check text over your gradient passes AA and AAA at both ends.</p>
+            <span class="resource-cta">Check contrast →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

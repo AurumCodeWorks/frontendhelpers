@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="72 free, copy-paste CSS animations with live previews: entrances, loaders, hover effects, and menus. Plus 7 interactive CSS lessons. No libraries needed." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-animations" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-animations" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Free CSS Animations Library — 72 Copy-Paste Effects" />
+  <meta property="og:description" content="72 free, copy-paste CSS animations with live previews: entrances, loaders, hover effects, and menus. Plus 7 interactive CSS lessons. No libraries needed." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free CSS Animations Library — 72 Copy-Paste Effects" />
+  <meta name="twitter:description" content="72 free, copy-paste CSS animations with live previews: entrances, loaders, hover effects, and menus. Plus 7 interactive CSS lessons. No libraries needed." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css.png" />
+
+  <title>Free CSS Animations Library — 72 Copy-Paste Effects | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Free CSS Animations Library — 72 Copy-Paste Effects",
+    "url": "https://frontendhelpers.com/css-animations",
+    "description": "Live-preview gallery of 72 production-ready CSS animations: entrances, attention seekers, hover effects, loaders, text effects, ambient motion, forms, accordions, carousels, menus and UI feedback. Pure CSS, free for commercial use.",
+    "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+    "about": { "@type": "Thing", "name": "CSS animations" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I use these CSS animations in commercial projects?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — every animation in the library is free for personal and commercial use, with no attribution required. Copy the CSS, rename the classes if you like, and ship it." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do these animations need JavaScript?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Every effect is pure CSS — including the accordion, carousel, dropdown menus and hamburger toggle, which use native elements and modern selectors instead of scripts. JavaScript is only ever suggested for triggering (adding a class on scroll or on error)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Will CSS animations slow my website down?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not when they animate the right properties. Almost every effect here animates only transform, opacity or filter, which browsers composite on the GPU off the main thread — zero bundle weight and no jank, unlike JavaScript animation libraries." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do the animations respect reduced-motion settings?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The page previews pause automatically when your OS prefers reduced motion, and the library ships a copyable prefers-reduced-motion safety net you can add once to your own site to settle every animation instantly for those users." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+          <span class="tool-count" id="anim-count-badge">46 Animations</span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active" aria-current="page">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+          </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main">
+
+    <!-- Hero -->
+    <section class="gallery-hero">
+      <h1 class="fh-fade-in-up">Production-ready <span class="hero-highlight">CSS animations</span>, free to copy</h1>
+      <p class="gallery-hero-sub">Every preview on this page runs on pure CSS — the exact code you copy. Filter by category, click a card for the full snippet, and paste it straight into your project. Then go deeper: <a href="#css-fundamentals" class="hero-jump">CSS fundamentals — seven interactive lessons, from colours to positioning ↓</a></p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <!-- Toolbar: search + learning dropdown + category filters -->
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search animations… e.g. fade, loader, glow" aria-label="Search animations" />
+        </div>
+
+        <div class="learn-dropdown" id="learn-dropdown">
+          <button class="learn-dd-btn" id="learn-dd-btn" aria-expanded="false" aria-haspopup="true" aria-controls="learn-dd-menu">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" aria-hidden="true"><path d="M12 6.5C10.5 4.8 8.3 4 5.5 4H3v14h2.5c2.8 0 5 .8 6.5 2.5 1.5-1.7 3.7-2.5 6.5-2.5H21V4h-2.5c-2.8 0-5 .8-6.5 2.5z"/><path d="M12 6.5v14"/></svg>
+            Tutorials &amp; Guides
+            <svg class="dd-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="learn-dd-menu" id="learn-dd-menu" hidden>
+            <span class="dd-group">CSS Fundamentals</span>
+            <a href="#learn-colours">01 · Colours &amp; HSL</a>
+            <a href="#learn-specificity">02 · Specificity &amp; the cascade</a>
+            <a href="#learn-zindex">03 · Z-index &amp; stacking contexts</a>
+            <a href="#learn-responsive">04 · Responsive design</a>
+            <a href="#learn-scrollbars">05 · Themed scrollbars</a>
+            <a href="#learn-themes">06 · Theme tokens &amp; switching</a>
+            <a href="#learn-positioning">07 · Positioning: relative &amp; absolute</a>
+            <span class="dd-group">Guides</span>
+            <a href="#guide-howto">How to use these animations</a>
+            <a href="#guide-performance">Why these animations are fast</a>
+            <a href="#guide-when">When (and when not) to animate</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-chips" id="filter-chips" role="group" aria-label="Filter by category"></div>
+    </div>
+
+    <!-- Animation grid (rendered by css-animations.js, paginated) -->
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search. Try a broader term like “fade”, “dots” or “text”.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+    <!-- Category landing pages -->
+    <section class="cat-links-section" aria-label="Browse animations by category">
+      <h2>Browse by category</h2>
+      <p>Each category has its own page with the full set, plus guidance on when to use those effects and how to keep them accessible.</p>
+      <div class="cat-links">
+        <a href="/css-entrance-animations">Entrance animations <span>10</span></a>
+        <a href="/css-attention-animations">Attention animations <span>8</span></a>
+        <a href="/css-hover-effects">Hover effects <span>8</span></a>
+        <a href="/css-loading-animations">Loading animations <span>8</span></a>
+        <a href="/css-text-animations">Text animations <span>7</span></a>
+        <a href="/css-background-animations">Background animations <span>5</span></a>
+        <a href="/css-form-animations">Form animations <span>6</span></a>
+        <a href="/css-accordion-animations">Accordion animations <span>4</span></a>
+        <a href="/css-image-animations">Image animations <span>6</span></a>
+        <a href="/css-menu-animations">Menu animations <span>4</span></a>
+        <a href="/css-ui-feedback-animations">UI feedback animations <span>6</span></a>
+      </div>
+    </section>
+
+
+
+
+    <!-- ═══════════ CSS FUNDAMENTALS: LEARN SECTION ═══════════ -->
+    <section class="fundamentals" id="css-fundamentals">
+      <h2>CSS fundamentals every frontend developer should master</h2>
+      <p class="fundamentals-intro">Animations are the fun part — these seven foundations are what make everything else work. Each one below is interactive: drag, toggle, scroll and resize to see the concept behave, then copy the pattern.</p>
+
+      <div class="learn-grid">
+
+        <!-- 1. COLOURS -->
+        <article class="learn-card" id="learn-colours">
+          <span class="learn-kicker">01 · Colours</span>
+          <h3>HSL: colours you can actually reason about</h3>
+          <p>Hex codes like <code>#8b5cf6</code> are fine for copying, but impossible to tweak by eye. HSL describes colour the way designers think: <strong>hue</strong> (position on the colour wheel), <strong>saturation</strong> (intensity) and <strong>lightness</strong>. Need a hover shade? Drop lightness by 8. Need a matching accent? Shift the hue, keep the rest. Drag the sliders — all three formats describe the identical colour.</p>
+
+          <div class="learn-demo color-demo">
+            <div class="fund-swatch" id="fund-swatch"></div>
+            <div class="fund-sliders">
+              <label>Hue <strong id="fund-hue-val">258</strong>°
+                <input type="range" id="fund-hue" min="0" max="360" value="258" class="styled-range" /></label>
+              <label>Saturation <strong id="fund-sat-val">90</strong>%
+                <input type="range" id="fund-sat" min="0" max="100" value="90" class="styled-range" /></label>
+              <label>Lightness <strong id="fund-light-val">66</strong>%
+                <input type="range" id="fund-light" min="0" max="100" value="66" class="styled-range" /></label>
+            </div>
+            <div class="fund-outputs">
+              <button class="fund-out" id="fund-out-hsl" title="Click to copy">hsl(258, 90%, 66%)</button>
+              <button class="fund-out" id="fund-out-hex" title="Click to copy">#8b5cf6</button>
+              <button class="fund-out" id="fund-out-rgb" title="Click to copy">rgb(139, 92, 246)</button>
+            </div>
+          </div>
+
+          <p>In real projects, name your colours once as <strong>custom properties</strong> (design tokens) and reference them everywhere — change the token, and the whole site follows. That is exactly how this site is themed.</p>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>Design tokens pattern</span>
+              <button class="btn-copy" data-target="learn-code-colors">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-colors">:root {
+  --brand:      hsl(258, 90%, 66%);
+  --brand-dark: hsl(258, 90%, 56%);   /* hover: -10 lightness */
+  --brand-soft: hsl(258 90% 66% / 0.15); /* translucent tint */
+}
+
+.button        { background: var(--brand); }
+.button:hover  { background: var(--brand-dark); }
+.badge         { background: var(--brand-soft); color: var(--brand); }</pre>
+          </div>
+        </article>
+
+        <!-- 2. SPECIFICITY -->
+        <article class="learn-card" id="learn-specificity">
+          <span class="learn-kicker">02 · Styling &amp; the cascade</span>
+          <h3>Specificity: why your style “doesn’t apply”</h3>
+          <p>When two rules target the same element, CSS doesn’t pick the one you wrote last — it picks the most <strong>specific</strong> selector. Specificity is scored in three columns: <strong>(IDs, classes, elements)</strong>, compared left to right. This is the single most common reason a style “mysteriously” fails to apply.</p>
+
+          <div class="learn-demo">
+            <table class="quick-table spec-table">
+              <thead><tr><th>Selector</th><th>Score</th><th>Wins?</th></tr></thead>
+              <tbody>
+                <tr><td><code>h2</code></td><td>(0, 0, 1)</td><td>—</td></tr>
+                <tr><td><code>.title</code></td><td>(0, 1, 0)</td><td>—</td></tr>
+                <tr><td><code>.card .title</code></td><td>(0, 2, 0)</td><td>—</td></tr>
+                <tr><td><code>#header .title</code></td><td>(1, 1, 0)</td><td>✓ highest</td></tr>
+                <tr><td><code>style="…"</code> (inline)</td><td>beats all selectors</td><td>avoid</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>The professional habit: keep selectors flat — <strong>one class per rule</strong> — so specificity stays low and predictable, and you never need <code>!important</code> to win a fight you accidentally started.</p>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>The conflict, illustrated</span>
+              <button class="btn-copy" data-target="learn-code-spec">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-spec">/* Both rules target the same link… */
+#sidebar .link         { color: red; }   /* (1,1,0) — wins */
+.nav .menu .item .link { color: blue; }  /* (0,4,0) — loses,
+                                            despite 4 classes */
+
+/* ✅ The maintainable style: flat, single-class selectors */
+.nav-link         { color: blue; }
+.nav-link.is-active { color: red; }</pre>
+          </div>
+        </article>
+
+        <!-- 3. Z-INDEX -->
+        <article class="learn-card" id="learn-zindex">
+          <span class="learn-kicker">03 · Z-index &amp; stacking</span>
+          <h3>Why z-index: 9999 still loses</h3>
+          <p>Z-index isn’t a global ranking — it only competes <strong>inside the same stacking context</strong>. A parent with a <code>z-index</code>, <code>transform</code>, <code>filter</code>, <code>opacity</code> below 1, or <code>position: sticky</code> creates a new context, and its children can <em>never</em> escape it — not even with <code>z-index: 9999</code>. Toggle the checkbox and watch the badge lose to a humble <code>z-index: 1</code>:</p>
+
+          <div class="learn-demo">
+            <div class="stack-demo" id="stack-demo">
+              <div class="stack-panel stack-a">Panel A
+                <span class="stack-badge">badge · z-index: 9999</span>
+              </div>
+              <div class="stack-panel stack-b">Panel B · z-index: 1</div>
+            </div>
+            <label class="checkbox-label stack-toggle">
+              <input type="checkbox" id="stack-trap" />
+              Apply the fix: Promote Panel A (the parent) to <code>z-index: 2</code>
+            </label>
+          </div>
+
+          <p>The fix is never a bigger number on the child — it’s raising the <strong>parent’s</strong> z-index, or removing whatever created the unwanted context. (The tooltips in this site’s sidebar hit exactly this trap during development.)</p>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>The trap and the fix</span>
+              <button class="btn-copy" data-target="learn-code-stack">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-stack">/* THE TRAP */
+.panel-a        { position: relative; z-index: 0; } /* new context */
+.panel-a .badge { position: absolute; z-index: 9999; } /* trapped */
+.panel-b        { position: relative; z-index: 1; } /* paints on top */
+
+/* THE FIX — promote the PARENT, not the child */
+.panel-a        { position: relative; z-index: 2; }</pre>
+          </div>
+        </article>
+
+        <!-- 4. RESPONSIVE -->
+        <article class="learn-card" id="learn-responsive">
+          <span class="learn-kicker">04 · Responsive design</span>
+          <h3>Layouts that adapt without breakpoints</h3>
+          <p>Modern responsive design is less about stacking media queries and more about letting CSS do the maths. <code>repeat(auto-fit, minmax())</code> adds and removes grid columns to fit whatever space exists, and <code>clamp()</code> scales type fluidly between a floor and a ceiling. <strong>Drag the handle</strong> at the bottom-right corner of the box:</p>
+
+          <div class="learn-demo">
+            <div class="resize-box">
+              <h4 class="fluid-title">Fluid headline</h4>
+              <div class="autofit-grid">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+              </div>
+              <span class="resize-hint">drag ↘</span>
+            </div>
+          </div>
+
+          <p>Media queries still matter — write them <strong>mobile-first</strong> (base styles for small screens, then <code>min-width</code> enhancements upward). The animation gallery above uses exactly this auto-fit pattern, which is why it gains columns on a 2K monitor without a single extra breakpoint.</p>
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>The self-adapting toolkit</span>
+              <button class="btn-copy" data-target="learn-code-responsive">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-responsive">/* Columns appear and disappear to fit the space */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* Type scales smoothly: never below 1.8rem, never above 3rem */
+h1 { font-size: clamp(1.8rem, 4.5vw, 3rem); }
+
+/* Mobile-first: base = small screens, enhance upward */
+@media (min-width: 768px)  { /* tablets and up */ }
+@media (min-width: 1600px) { /* large monitors */ }</pre>
+          </div>
+        </article>
+
+        <!-- 5. CUSTOM SCROLLBARS (full-width bonus card) -->
+        <article class="learn-card learn-card-wide" id="learn-scrollbars">
+          <span class="learn-kicker">05 · Themed Scrollbars</span>
+          <h3>Custom scrollbars: the detail that completes a theme</h3>
+          <p>A dark, carefully-themed site with a default light-grey scrollbar is a suit with trainers — the browser default breaks the illusion on the most-used control on the page. Two systems exist for styling them, and the trick is knowing how they interact. <strong>Every scrollbar on this site</strong> — the page itself, code blocks, this demo box — uses exactly the CSS below.</p>
+
+          <div class="learn-demo scrollbar-demo-wrap">
+            <div class="scrollbar-demo">
+              <p><strong>Scroll me</strong> — this box, and the whole page, use the themed scrollbar.</p>
+              <p>The <code>::-webkit-scrollbar</code> family of pseudo-elements works in Chrome, Edge, Safari and every Chromium browser, and gives you full control: width, track, thumb, gradients, rounded corners, hover states.</p>
+              <p>Firefox instead implements the standard properties: <code>scrollbar-width</code> (auto, thin, none) and <code>scrollbar-color</code> (thumb colour, track colour). Simpler — no gradients — but perfectly themeable.</p>
+              <p><strong>The gotcha:</strong> Chrome 121+ supports the standard properties too, and if you set <code>scrollbar-color</code> there, it switches the scrollbar to basic mode and <em>ignores</em> all your <code>::-webkit-scrollbar</code> styling.</p>
+              <p>The fix is the <code>@supports not selector(::-webkit-scrollbar)</code> guard below: fancy pseudo-elements where they're supported, standard properties everywhere else. Each browser gets the best version it can render.</p>
+              <p>One accessibility rule: theme scrollbars, don't hide them. A thumb needs enough contrast against its track to be findable, and <code>scrollbar-width: none</code> on a scrollable region hides the only visual clue that there's more content.</p>
+            </div>
+          </div>
+
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>Themed scrollbars — the complete pattern</span>
+              <button class="btn-copy" data-target="learn-code-scrollbar">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-scrollbar">/* Chrome, Edge, Safari — full custom look */
+::-webkit-scrollbar {
+  width: 11px;                      /* vertical bar */
+  height: 11px;                     /* horizontal bar */
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6, #06b6d4);
+  border-radius: 8px;
+  border: 2px solid #060913;        /* match your page bg — */
+  background-clip: padding-box;     /* creates a slim gap    */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9d74f8, #2fc9e8);
+  border: 2px solid #060913;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* Firefox (and anything without webkit scrollbars).
+   Scoped with @supports so it can't override the fancy
+   version in Chrome 121+, which supports BOTH systems
+   and prefers this one when set. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #8b5cf6 rgba(255, 255, 255, 0.05);
+  }
+}</pre>
+          </div>
+          <p>Bare <code>::-webkit-scrollbar</code> selectors apply to the page <em>and every scrollable element</em> at once. To style just one container, prefix them: <code>.code-box::-webkit-scrollbar-thumb { … }</code>.</p>
+        </article>
+
+        <!-- 6. THEME TOKENS -->
+        <article class="learn-card" id="learn-themes">
+          <span class="learn-kicker">06 · Theme Tokens</span>
+          <h3>Design tokens: theme switching in one attribute</h3>
+          <p>Hard-coded colours are why dark mode retrofits take weeks. The professional pattern: name every colour <strong>once</strong> as a custom property on <code>:root</code>, reference only the tokens everywhere else, and switching themes becomes swapping one <code>data-theme</code> attribute. This entire site is built on tokens — try it live:</p>
+
+          <div class="learn-demo">
+            <div class="theme-demo" id="theme-demo" data-theme="midnight">
+              <div class="theme-demo-card">
+                <h5>Token-driven card</h5>
+                <p>Every colour here comes from four variables.</p>
+                <button type="button" class="theme-demo-btn">Primary action</button>
+              </div>
+              <div class="theme-demo-controls" role="group" aria-label="Pick a theme">
+                <button type="button" class="theme-pick active" data-set-theme="midnight">Midnight</button>
+                <button type="button" class="theme-pick" data-set-theme="light">Light</button>
+                <button type="button" class="theme-pick" data-set-theme="ocean">Ocean</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>The theme-switching pattern</span>
+              <button class="btn-copy" data-target="learn-code-themes">Copy Code</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-themes">/* 1. Name the colours ONCE — the tokens */
+:root {
+  --bg: #0b1224;
+  --surface: #141c30;
+  --text: #e2e8f0;
+  --accent: #06b6d4;
+}
+
+/* 2. Each theme just re-assigns the same tokens */
+[data-theme="light"] {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --accent: #7c3aed;
+}
+
+/* 3. Components only ever reference tokens */
+body    { background: var(--bg); color: var(--text); }
+.card   { background: var(--surface); }
+.button { background: var(--accent); }
+
+/* JS: 3 lines to switch and remember the choice */
+// document.documentElement.dataset.theme = 'light';
+// localStorage.setItem('theme', 'light');
+// on load: dataset.theme = localStorage.getItem('theme') || '';</pre>
+          </div>
+          <p>Respect the visitor's OS preference as the default with <code>@media (prefers-color-scheme: light)</code>, and let the toggle override it. Pair with <code>color-scheme</code> (see lesson 05) so native controls follow your theme too.</p>
+        </article>
+
+        <!-- 7. POSITIONING -->
+        <article class="learn-card" id="learn-positioning">
+          <span class="learn-kicker">07 · Positioning</span>
+          <h3>Relative vs absolute: who positions whom</h3>
+          <p>The rule that unlocks all of CSS positioning: <strong><code>absolute</code> positions an element against its nearest <em>positioned</em> ancestor</strong> — and <code>position: relative</code> on the parent is how you volunteer it for that job. Relative also lets an element nudge from its own spot <em>while keeping its space in the flow</em>; absolute removes it from the flow entirely. Watch the siblings:</p>
+
+          <div class="learn-demo">
+            <div class="pos-controls" role="group" aria-label="Pick a position value">
+              <label><input type="radio" name="pos-mode" value="static" checked /> static</label>
+              <label><input type="radio" name="pos-mode" value="relative" /> relative</label>
+              <label><input type="radio" name="pos-mode" value="absolute" /> absolute</label>
+            </div>
+            <div class="pos-parent">
+              <span class="pos-parent-label">.parent — position: relative</span>
+              <div class="pos-sibling">sibling before</div>
+              <div class="pos-box" id="pos-box">.box</div>
+              <div class="pos-sibling">sibling after</div>
+            </div>
+            <p class="pos-note" id="pos-note">static — the default: the box sits in the normal flow; top/left do nothing.</p>
+          </div>
+
+          <p><code>sticky</code> is the hybrid: it scrolls normally until it reaches your offset, then pins — the header on this site and the bar in this box both use it:</p>
+
+          <div class="learn-demo sticky-demo-wrap">
+            <div class="sticky-demo">
+              <div class="sticky-demo-bar">position: sticky; top: 0 — I pin while my parent scrolls</div>
+              <p>Scroll this box. The bar above stays pinned to the top of the container while this content moves underneath it.</p>
+              <p>Sticky needs two things to work: an offset (<code>top: 0</code>) and a scrollable ancestor taller than the element.</p>
+              <p>Classic uses: table headers, section labels in long lists, the toolbar on this very page.</p>
+              <p>If sticky "doesn't work", check that no ancestor has <code>overflow: hidden</code> — that silently disables it.</p>
+            </div>
+          </div>
+
+          <div class="output-code-container">
+            <div class="output-header">
+              <span>The positioning cheat sheet</span>
+              <button class="btn-copy" data-target="learn-code-position">Copy CSS</button>
+            </div>
+            <pre class="mono-output learn-code" id="learn-code-position">/* The pattern behind 90% of overlays, badges and tooltips */
+.parent {
+  position: relative;   /* becomes the anchor — moves nothing */
+}
+.badge {
+  position: absolute;   /* leaves the flow entirely */
+  top: -8px;
+  right: -8px;          /* measured from .parent's corner */
+}
+
+/* relative: nudge visually, keep your reserved space */
+.nudge { position: relative; top: 4px; left: 8px; }
+
+/* fixed: pinned to the viewport, ignores scrolling */
+.cookie-banner { position: fixed; bottom: 20px; left: 20px; }
+
+/* sticky: in-flow until it hits the offset, then pins */
+.table-header { position: sticky; top: 0; }</pre>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- How to use + SEO content -->
+    <section class="gallery-articles">
+      <article class="tool-documentation" id="guide-howto">
+        <h2>How to use these animations</h2>
+        <ol class="howto-steps">
+          <li><strong>Copy the CSS.</strong> Click any card’s <em>Copy CSS</em> button — the snippet contains the class and its keyframes, fully self-contained.</li>
+          <li><strong>Paste it into your stylesheet.</strong> All classes are prefixed <code>fh-</code>, so they won’t collide with your existing styles. Rename them freely.</li>
+          <li><strong>Add the class to your element.</strong> The card’s <em>Code</em> view shows a ready-made HTML usage example for every effect.</li>
+        </ol>
+        <p>Respect users who prefer less motion. Add this once, globally, and every animation on your site will settle instantly for people who have reduced motion enabled in their OS settings:</p>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Reduced-motion safety net</span>
+            <button class="btn-copy" data-target="reduced-motion-snippet">Copy CSS</button>
+          </div>
+          <textarea id="reduced-motion-snippet" class="mono-output" readonly rows="6">@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</textarea>
+        </div>
+      </article>
+
+      <article class="tool-documentation" id="guide-performance">
+        <h2>Why these animations are fast: transform and opacity</h2>
+        <p>Almost every effect in this library animates only two properties: <code>transform</code> and <code>opacity</code>. Browsers can hand these off to the GPU compositor, which means the animation runs on its own thread at 60fps even while JavaScript is busy. Animating layout properties like <code>width</code>, <code>height</code>, <code>top</code> or <code>margin</code> forces the browser to recalculate layout on every frame — the main cause of janky, stuttering motion on mid-range phones.</p>
+        <p>That is also why a pure-CSS approach beats pulling in a JavaScript animation library for simple UI motion: zero bundle weight, no main-thread work, and the browser can optimise the whole animation ahead of time. Save JavaScript animation for things CSS genuinely cannot express, such as physics, gestures, or interruptible timelines.</p>
+      </article>
+
+      <article class="tool-documentation" id="guide-when">
+        <h2>When (and when not) to animate</h2>
+        <p>Good UI motion answers a question the user already has: <em>where did this come from, what changed, what can I do next?</em> Entrance animations orient the eye when content appears; hover effects confirm that an element is interactive; loaders reassure users that work is happening. Used this way, motion measurably improves perceived performance and task confidence.</p>
+        <p>The failure mode is decoration: animating everything, everywhere, on every scroll. Keep durations between 150ms and 600ms for interface feedback, reserve longer, looping effects for ambient backgrounds, and never gate a user’s next action behind an animation they must wait for. One well-placed effect reads as polish; ten read as noise.</p>
+      </article>
+    </section>
+
+    <!-- FAQ (mirrors the FAQPage structured data in the head) -->
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Can I use these CSS animations in commercial projects?</summary>
+          <p class="faq-answer">Yes — every animation in the library is free for personal and commercial use, with no attribution required. Copy the CSS, rename the classes if you like, and ship it.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do these animations need JavaScript?</summary>
+          <p class="faq-answer">No. Every effect is pure CSS — including the accordion, carousel, dropdown menus and hamburger toggle, which use native elements and modern selectors instead of scripts. JavaScript is only ever suggested for <em>triggering</em> (adding a class on scroll or on error).</p>
+        </details>
+        <details class="faq-item">
+          <summary>Will CSS animations slow my website down?</summary>
+          <p class="faq-answer">Not when they animate the right properties. Almost every effect here animates only <code>transform</code>, <code>opacity</code> or <code>filter</code>, which browsers composite on the GPU off the main thread — zero bundle weight and no jank, unlike JavaScript animation libraries.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do the animations respect reduced-motion settings?</summary>
+          <p class="faq-answer">The page previews pause automatically when your OS prefers reduced motion, and the <a href="#guide-howto">how-to guide</a> ships a copyable <code>prefers-reduced-motion</code> safety net you can add once to your own site.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+</div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.0.1"></script>
+</body>
+</html>

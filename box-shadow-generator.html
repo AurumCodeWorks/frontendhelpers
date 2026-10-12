@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals." />
+  <link rel="canonical" href="https://frontendhelpers.com/box-shadow-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/box-shadow-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Box Shadow Generator — Visual Shadow Builder" />
+  <meta property="og:description" content="Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-box-shadow-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Box Shadow Generator — Visual Shadow Builder" />
+  <meta name="twitter:description" content="Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-box-shadow-generator.png" />
+
+  <title>CSS Box Shadow Generator — Visual Shadow Builder | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "CSS Box Shadow Generator",
+        "url": "https://frontendhelpers.com/box-shadow-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based CSS box-shadow generator with visual sliders and live preview.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Box Shadow Generator", "item": "https://frontendhelpers.com/box-shadow-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What do the box-shadow values mean?",
+            "acceptedAnswer": { "@type": "Answer", "text": "In order: horizontal offset, vertical offset, blur radius, spread radius, then colour. Add the inset keyword at the start to draw the shadow inside the element instead of outside it." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a subtle, realistic shadow?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use low opacity (roughly 8–25%), a generous blur, and a small positive vertical offset so the shadow sits below the element. High-opacity shadows with no offset are the most common cause of shadows looking fake." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I add more than one shadow to an element?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — separate multiple shadows with commas. Layering a tight contact shadow with a wider ambient one produces far more convincing depth than a single shadow, and it is how most design systems build their elevation scales." }
+          },
+          {
+            "@type": "Question",
+            "name": "How should shadows work in dark mode?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Black shadows barely register on dark backgrounds. Convey depth instead with a lighter surface colour, a subtle top border highlight, or a soft coloured glow matching your accent colour." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Box Shadow Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS box shadow <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Design box shadows with live sliders for offset, blur, spread and opacity — including inset shadows — then copy the CSS.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-shadow">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="2.5"/><path d="M9.5 20H18a2 2 0 0 0 2-2V9.5"/></svg></span>CSS Box Shadow Generator</h2>
+      <button class="btn-reset" id="reset-shadow">↺ Reset</button>
+    </div>
+    <p class="panel-desc">Design custom box shadows with visual sliders. Adjust offset, blur, spread, and colour for the perfect shadow effect.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="slider-group">
+          <label>X Offset: <strong id="shadow-x-val">4</strong>px</label>
+          <input type="range" id="shadow-x" min="-50" max="50" value="4" class="styled-range" />
+        </div>
+        <div class="slider-group">
+          <label>Y Offset: <strong id="shadow-y-val">8</strong>px</label>
+          <input type="range" id="shadow-y" min="-50" max="50" value="8" class="styled-range" />
+        </div>
+        <div class="slider-group">
+          <label>Blur Radius: <strong id="shadow-blur-val">24</strong>px</label>
+          <input type="range" id="shadow-blur" min="0" max="100" value="24" class="styled-range" />
+        </div>
+        <div class="slider-group">
+          <label>Spread: <strong id="shadow-spread-val">0</strong>px</label>
+          <input type="range" id="shadow-spread" min="-50" max="50" value="0" class="styled-range" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="shadow-color">Shadow Colour</label>
+            <div class="color-input-group">
+              <input type="color" id="shadow-color" value="#000000" />
+              <span class="color-hex-label" id="shadow-color-hex">#000000</span>
+            </div>
+          </div>
+          <div class="slider-group">
+            <label>Opacity: <strong id="shadow-opacity-val">25</strong>%</label>
+            <input type="range" id="shadow-opacity" min="0" max="100" value="25" class="styled-range" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="shadow-inset" /> Inset Shadow
+          </label>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Live Preview</h3>
+        <div class="shadow-preview-container">
+          <div class="shadow-preview-card" id="shadow-preview">
+            <span class="shadow-card-text">Your Shadow</span>
+          </div>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS Code</span>
+            <button class="btn-copy" id="btn-copy-shadow" data-target="output-shadow-code">Copy CSS</button>
+          </div>
+          <textarea id="output-shadow-code" readonly rows="3" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>The <code>box-shadow</code> property takes its values in a fixed order, and knowing what each one does turns guesswork into intent:</p>
+        <p><strong>Horizontal offset</strong> moves the shadow right (positive) or left (negative). <strong>Vertical offset</strong> moves it down or up. <strong>Blur radius</strong> controls how soft the edge is — 0 gives a hard-edged shape, higher values diffuse it. <strong>Spread</strong> grows or shrinks the shadow before blurring, which is the value most people forget exists. <strong>Colour</strong> finishes it, and is almost always best expressed with alpha transparency.</p>
+        <p>Add <code>inset</code> at the start and the shadow is drawn inside the element instead of outside — the standard way to make a field look recessed or a button look pressed.</p>
+
+        <h2>Why realistic shadows use low opacity and large blur</h2>
+        <p>The single biggest giveaway of an amateur shadow is opacity that is too high. Real shadows in the physical world are diffuse and subtle; a shadow at 50% black looks like a sticker, not depth. Professional interfaces overwhelmingly use something in the range of 8–25% opacity with a generous blur.</p>
+        <p>The second giveaway is a shadow with no vertical offset. Light in almost every interface is implicitly from above, so shadows should sit slightly <em>below</em> their element. A shadow offset only horizontally reads as wrong even to people who cannot articulate why.</p>
+
+        <h2>Layering shadows for real depth</h2>
+        <p>The technique that separates polished UI from flat UI is stacking multiple shadows in a single declaration, separated by commas. Physical objects cast both a tight, darker contact shadow right at their base and a wider, softer ambient shadow further out. Simulating both is far more convincing than one shadow trying to do everything:</p>
+        <p><code>box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);</code></p>
+        <p>Build an elevation scale from this idea — a small shadow for resting cards, a medium one for hover, a large one for modals — and apply it consistently. Consistent elevation is what makes an interface feel like a coherent system rather than a collection of screens.</p>
+
+        <h2>Shadows, performance and dark mode</h2>
+        <p>Box shadows are cheap to paint but not free, and animating them can cause repaints on every frame. If you want a lift-on-hover effect, transition <code>transform</code> for the movement and keep the shadow change modest — or pre-render two shadow states and cross-fade a pseudo-element, which stays on the compositor.</p>
+        <p>Dark interfaces need a different approach entirely. A black shadow on a dark background is nearly invisible, so depth has to come from elsewhere: a subtle light border on the top edge, a slightly lighter surface colour, or a coloured glow that matches your accent. That is why this site uses rim highlights and soft coloured glows rather than heavy drop shadows.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Programmatic Shadow Layering</h2>
+        <p>Beautiful, natural-looking shadows in UI design are rarely achieved with a single drop shadow. In the real world, light diffuses. To recreate this in CSS, designers layer multiple shadows on top of each other, starting from a small, dark shadow (ambient occlusion) out to a large, faint shadow (diffused light).</p>
+        
+        <h3>The Mathematics of Smooth Shadows</h3>
+        <p>If you are building a design system component library in JavaScript, you can generate these layered shadows algorithmically based on a single "elevation" parameter.</p>
+        <pre><code class="language-javascript">
+function generateElevation(level) {
+  // level is typically between 1 and 5
+  if (level < 1 || level > 5) return 'none';
+  
+  const y1 = level;
+  const blur1 = level * 2;
+  const alpha1 = 0.1 + (level * 0.01); // Slightly darker inner shadow
+  
+  const y2 = level * 3;
+  const blur2 = level * 6;
+  const alpha2 = 0.05 + (level * 0.01); // Fainter outer diffusion
+  
+  return 
+    0px px px rgba(0,0,0,),
+    0px px px rgba(0,0,0,)
+  .trim();
+}
+
+// Example usage:
+document.getElementById('card').style.boxShadow = generateElevation(3);
+// Output: 0px 3px 6px rgba(0,0,0,0.13), 0px 9px 18px rgba(0,0,0,0.08)
+        </code></pre>
+        <p>By defining your shadows through an algorithm like this, you guarantee that all elevated components in your application share the same simulated light source, resulting in a cohesive and premium aesthetic.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What do the box-shadow values mean?</summary>
+            <p class="faq-answer">In order: horizontal offset, vertical offset, blur radius, spread radius, then colour. Add the inset keyword at the start to draw the shadow inside the element instead of outside it.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a subtle, realistic shadow?</summary>
+            <p class="faq-answer">Use low opacity (roughly 8–25%), a generous blur, and a small positive vertical offset so the shadow sits below the element. High-opacity shadows with no offset are the most common cause of shadows looking fake.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I add more than one shadow to an element?</summary>
+            <p class="faq-answer">Yes — separate multiple shadows with commas. Layering a tight contact shadow with a wider ambient one produces far more convincing depth than a single shadow, and it is how most design systems build their elevation scales.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How should shadows work in dark mode?</summary>
+            <p class="faq-answer">Black shadows barely register on dark backgrounds. Convey depth instead with a lighter surface colour, a subtle top border highlight, or a soft coloured glow matching your accent colour.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/css-gradient-generator" class="resource-card">
+            <span class="resource-kicker">CSS</span>
+            <h3>CSS Gradient Generator</h3>
+            <p>Build linear and radial gradients visually with live preview.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/color-palette-generator" class="resource-card">
+            <span class="resource-kicker">Colour</span>
+            <h3>Colour Palette Generator</h3>
+            <p>Generate tints, shades and accents as ready-made CSS tokens.</p>
+            <span class="resource-cta">Build a palette →</span>
+          </a>
+          <a href="/css-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>72 CSS animations</h3>
+            <p>Copy-paste hover lifts, entrances, loaders and more — all pure CSS.</p>
+            <span class="resource-cta">Browse the library →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

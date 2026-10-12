@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-hover-effects" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-hover-effects" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Hover Effects — 8 Free Button &amp; Card Hover Animations" />
+  <meta property="og:description" content="Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-hover-effects.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Hover Effects — 8 Free Button &amp; Card Hover Animations" />
+  <meta name="twitter:description" content="Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-hover-effects.png" />
+
+  <title>CSS Hover Effects — 8 Free Button &amp; Card Hover Animations | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "CSS Hover Effects — 8 Free Button & Card Hover Animations",
+        "url": "https://frontendhelpers.com/css-hover-effects",
+        "description": "Eight free CSS hover effects with live previews: lift, grow, glow, shine sweep, border draw, underline slide, 3D tilt and gradient shift. Pure CSS, copy-paste ready.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "about": { "@type": "Thing", "name": "CSS animations" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Hover Effects", "item": "https://frontendhelpers.com/css-hover-effects" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do CSS hover effects work on mobile?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not meaningfully. Touch devices have no hover, and the state usually fires on tap after the user has committed. Use hover to enhance, never to reveal content, and scope hover-only styles with @media (hover: hover)." }
+          },
+          {
+            "@type": "Question",
+            "name": "How long should a hover transition be?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Between 150 and 300 milliseconds. Interface feedback needs to feel instant — longer transitions feel sluggish because the user has already decided to click before the animation finishes." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should hover effects also apply on keyboard focus?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Keyboard users never trigger hover, so pairing every hover rule with :focus-visible is what keeps an interface navigable by keyboard — and it is a WCAG requirement, not an optional extra." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main" data-fixed-cat="hover">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/css-animations">CSS Animations</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Hover Effects</span>
+    </nav>
+
+    <section class="gallery-hero">
+      <h1>CSS hover <span class="hero-highlight">effects</span></h1>
+      <p class="gallery-hero-sub">Lifts, glows, shine sweeps, underline slides and 3D tilts — hover any card below to see the effect, then copy the CSS.</p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search within hover effects…" aria-label="Search Hover Effects animations" />
+        </div>
+      </div>
+    </div>
+
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+      <article class="tool-documentation">
+        <h2>Hover effects are feedback, not decoration</h2>
+        <p>A hover state answers a question the user is already asking: <em>is this thing clickable?</em> That's why the most effective hover effects are subtle and instant — they confirm interactivity rather than performing. A card that lifts 4px on hover communicates "you can click me" more clearly than one that spins.</p>
+        <p>Keep durations short. Interface feedback belongs in the <strong>150–300ms</strong> range; anything slower feels laggy because the user has already decided to click. Save longer, more elaborate motion for entrances, where there's no pending interaction to delay.</p>
+
+        <h2>The critical caveat: hover doesn't exist on touch</h2>
+        <p>Roughly half of web traffic has no hover at all. On touch devices, a hover state typically fires on tap — after the user has already committed — so any information you hide behind hover is effectively invisible to them.</p>
+        <p>The rule that follows: hover may <em>enhance</em>, never <em>reveal</em>. If a caption, a menu, or a "delete" button only appears on hover, mobile users can't reach it. Where you need hover-only styling, scope it with <code>@media (hover: hover)</code> so touch devices skip it entirely rather than getting a sticky stuck-on state.</p>
+
+        <h2>Always pair hover with focus</h2>
+        <p>Keyboard users never trigger hover. Every hover effect on an interactive element should have a matching <code>:focus-visible</code> style, or the entire interface becomes untraceable when tabbing through it. Writing <code>a:hover, a:focus-visible { … }</code> costs nothing and is a WCAG requirement, not a nicety.</p>
+
+        <h2>Why these effects stay smooth</h2>
+        <p>Each effect here transitions <code>transform</code>, <code>opacity</code>, <code>box-shadow</code> or <code>background-position</code> — properties the browser can handle without recalculating layout. Animating <code>width</code>, <code>height</code>, <code>margin</code> or <code>top</code> on hover forces layout on every frame and is the usual cause of janky hover states on lower-powered devices.</p>
+      </article>
+
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+          <details class="faq-item">
+            <summary>Do CSS hover effects work on mobile?</summary>
+            <p class="faq-answer">Not meaningfully. Touch devices have no hover, and the state usually fires on tap after the user has committed. Use hover to enhance, never to reveal content, and scope hover-only styles with @media (hover: hover).</p>
+          </details>
+          <details class="faq-item">
+            <summary>How long should a hover transition be?</summary>
+            <p class="faq-answer">Between 150 and 300 milliseconds. Interface feedback needs to feel instant — longer transitions feel sluggish because the user has already decided to click before the animation finishes.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should hover effects also apply on keyboard focus?</summary>
+            <p class="faq-answer">Yes. Keyboard users never trigger hover, so pairing every hover rule with :focus-visible is what keeps an interface navigable by keyboard — and it is a WCAG requirement, not an optional extra.</p>
+          </details>
+      </div>
+    </section>
+
+    <section class="resource-section" style="padding-left:0;padding-right:0;">
+      <h2>Related categories</h2>
+      <div class="resource-cards">
+          <a href="/css-menu-animations" class="resource-card">
+            <span class="resource-kicker">Menus</span>
+            <h3>Menus &amp; Dropdowns</h3>
+            <p>Dropdowns, staggered items and hamburger morphs</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-form-animations" class="resource-card">
+            <span class="resource-kicker">Forms</span>
+            <h3>Forms &amp; Inputs</h3>
+            <p>Focus glows, floating labels and toggles</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-image-animations" class="resource-card">
+            <span class="resource-kicker">Images</span>
+            <h3>Images &amp; Carousels</h3>
+            <p>Hover zooms, greyscale reveals and caption slides</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+      </div>
+      <p class="back-to-hub"><a href="/css-animations">← Back to all 72 CSS animations</a></p>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.1.0"></script>
+</body>
+</html>

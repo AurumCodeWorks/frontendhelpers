@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free aspect ratio calculator. Find image or video ratios, resize without distortion, and generate CSS/HTML to prevent Cumulative Layout Shift (CLS)." />
+  <link rel="canonical" href="https://frontendhelpers.com/aspect-ratio-calculator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/aspect-ratio-calculator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Aspect Ratio Calculator — Image &amp; Video Size Calculator" />
+  <meta property="og:description" content="Free aspect ratio calculator. Find image or video ratios, resize without distortion, and generate CSS/HTML to prevent Cumulative Layout Shift (CLS)." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-aspect-ratio-calculator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aspect Ratio Calculator — Image &amp; Video Size Calculator" />
+  <meta name="twitter:description" content="Free aspect ratio calculator. Find image or video ratios, resize without distortion, and generate CSS/HTML to prevent Cumulative Layout Shift (CLS)." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-aspect-ratio-calculator.png" />
+
+  <title>Aspect Ratio Calculator — Image &amp; Video Size Calculator | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Aspect Ratio Calculator",
+        "url": "https://frontendhelpers.com/aspect-ratio-calculator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based aspect ratio calculator for images and video, producing CSS aspect-ratio and sized HTML img markup.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Aspect Ratio Calculator", "item": "https://frontendhelpers.com/aspect-ratio-calculator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I calculate aspect ratio?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Divide width by height and simplify the fraction using the greatest common divisor. 1920 × 1080 divides by 120 to give 16:9. This calculator does it automatically and snaps near-matches to recognisable standard ratios." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do images need width and height attributes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "They let the browser reserve the correct space before the image downloads, preventing the page from jumping as it loads. That jump is Cumulative Layout Shift, a Core Web Vital that affects your search ranking." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between object-fit cover and contain?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Cover fills the container completely and crops whatever overflows — good for thumbnails and hero images. Contain fits the entire image inside, leaving empty space — good for logos and product shots that must not be cropped." }
+          },
+          {
+            "@type": "Question",
+            "name": "What aspect ratio should a social share image be?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use 1.91:1, which is 1200 × 630 pixels. That is the Open Graph standard used by Facebook, LinkedIn, Slack and X, and keeping to it avoids unpredictable cropping across platforms." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Aspect Ratio Calculator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Aspect ratio <span class="hero-highlight">calculator</span></h1>
+        <p class="page-hero-sub">Find any image or video’s aspect ratio, scale it to a new width without distortion, and copy the CSS and HTML that prevent layout shift.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-ratio">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>Aspect Ratio &amp; Image Size Calculator</h2>
+    </div>
+    <p class="panel-desc">Find an image or video's aspect ratio, scale it to any width without distortion, and copy the CSS and HTML that stop layout shift.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ratio-w">Original Width (px)</label>
+            <input type="number" id="ratio-w" min="1" value="1920" />
+          </div>
+          <div class="form-group">
+            <label for="ratio-h">Original Height (px)</label>
+            <input type="number" id="ratio-h" min="1" value="1080" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ratio-target-w">Resize to Width (px)</label>
+          <input type="number" id="ratio-target-w" min="1" value="800" />
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><span class="stat-value" id="ratio-simple">16 : 9</span><span class="stat-label">Aspect Ratio</span></div>
+          <div class="stat-box"><span class="stat-value" id="ratio-decimal">1.778</span><span class="stat-label">W ÷ H</span></div>
+          <div class="stat-box"><span class="stat-value" id="ratio-scaled">800 × 450</span><span class="stat-label">Scaled Size</span></div>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Copy-Paste Output</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>CSS — reserve the space</span>
+            <button class="btn-copy" data-target="output-ratio-css">Copy CSS</button>
+          </div>
+          <textarea id="output-ratio-css" readonly rows="4" class="mono-output"></textarea>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>HTML — sized image tag</span>
+            <button class="btn-copy" data-target="output-ratio-html">Copy HTML</button>
+          </div>
+          <textarea id="output-ratio-html" readonly rows="2" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>When a browser meets an image without knowing its dimensions, it renders the page as though the image takes no space — then reflows everything the moment it arrives. That jump is <strong>Cumulative Layout Shift</strong>, one of Google's Core Web Vitals, and it's the reason you sometimes tap the wrong thing on a page that's still loading.</p>
+        <p>The fix costs nothing. Give every <code>&lt;img&gt;</code> its <code>width</code> and <code>height</code> attributes and modern browsers compute the ratio and reserve the space before the file downloads. Those attributes don't lock the display size — CSS still controls that — they simply tell the browser the shape in advance. A good CLS score is <strong>0.1 or below</strong>; anything over 0.25 is rated poor.</p>
+
+        <h2>Ratios worth recognising</h2>
+        <p><strong>16:9</strong> is the video standard — YouTube, most screens, and most hero videos. <strong>4:3</strong> is classic photography and older displays. <strong>1:1</strong> squares suit avatars and product grids where uniformity matters more than composition. <strong>9:16</strong> is vertical video for stories and shorts. <strong>1.91:1</strong> — practically 1200 × 630 — is the Open Graph share image ratio, which is why our <a href="/meta-tag-generator">meta tag generator</a> recommends exactly those dimensions.</p>
+        <p>Two ratios show up in design more than in specs: <strong>3:2</strong>, the native ratio of most DSLR sensors, and <strong>21:9</strong> ultrawide, used for cinematic banners.</p>
+
+        <h2>Scaling without distortion</h2>
+        <p>The rule is simple and constantly broken: scale both dimensions by the same factor. If you halve the width, halve the height. Setting one dimension and eyeballing the other is what produces the subtly stretched images that make a site look amateur.</p>
+        <p>In CSS, <code>object-fit</code> handles the cases where a ratio mismatch is unavoidable. <code>object-fit: cover</code> fills the container and crops the overflow — right for thumbnails and hero images where composition matters less than filling the space. <code>object-fit: contain</code> fits the whole image inside, leaving empty space — right for logos and product shots that must not be cropped.</p>
+
+        <h2>The modern CSS aspect-ratio property</h2>
+        <p>For responsive containers whose dimensions aren't known in advance, <code>aspect-ratio: 16 / 9</code> keeps a fluid element's shape at any width. It replaced the old padding-top percentage hack, which worked but was completely opaque to anyone reading the stylesheet later.</p>
+        <p>Use both approaches together: width and height attributes on the image element so the browser reserves space during load, and <code>aspect-ratio</code> in CSS for embeds, video wrappers and any container that must hold its shape as the layout flexes.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: CSS aspect-ratio Property</h2>
+        <p>Before 2021, developers had to use the awkward "padding-top hack" to maintain responsive aspect ratios for videos and iframes. Today, native CSS provides a clean, single-line solution.</p>
+        
+        <h3>Using the native CSS aspect-ratio</h3>
+        <p>The <code>aspect-ratio</code> property tells the browser how to calculate the height of an element based on its width (or vice-versa). This is incredibly powerful for preventing Cumulative Layout Shift (CLS) when images or embedded videos load.</p>
+        <pre><code class="language-css">
+/* The modern approach */
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #f0f0f0; /* Placeholder color while loading */
+}
+
+/* Applying it to images to prevent layout shift */
+.card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover; /* Ensures the image fills the space without squishing */
+}
+        </code></pre>
+        <p>This property is now supported in all major browsers. It accepts either a fraction (like <code>16 / 9</code>) or a decimal (like <code>1.777</code>). If you only provide one number, the browser assumes it's divided by 1. For example, <code>aspect-ratio: 1;</code> perfectly creates a responsive square.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I calculate aspect ratio?</summary>
+            <p class="faq-answer">Divide width by height and simplify the fraction using the greatest common divisor. 1920 × 1080 divides by 120 to give 16:9. This calculator does it automatically and snaps near-matches to recognisable standard ratios.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why do images need width and height attributes?</summary>
+            <p class="faq-answer">They let the browser reserve the correct space before the image downloads, preventing the page from jumping as it loads. That jump is Cumulative Layout Shift, a Core Web Vital that affects your search ranking.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the difference between object-fit cover and contain?</summary>
+            <p class="faq-answer">Cover fills the container completely and crops whatever overflows — good for thumbnails and hero images. Contain fits the entire image inside, leaving empty space — good for logos and product shots that must not be cropped.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What aspect ratio should a social share image be?</summary>
+            <p class="faq-answer">Use 1.91:1, which is 1200 × 630 pixels. That is the Open Graph standard used by Facebook, LinkedIn, Slack and X, and keeping to it avoids unpredictable cropping across platforms.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Generate the Open Graph tags your 1200×630 image belongs in.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/css-animations#learn-responsive" class="resource-card">
+            <span class="resource-kicker">Lesson</span>
+            <h3>Responsive design</h3>
+            <p>How clamp() and auto-fit grids adapt layouts without breakpoints.</p>
+            <span class="resource-cta">Start the lesson →</span>
+          </a>
+          <a href="/essentials#ess-perf" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Performance essentials</h3>
+            <p>Core Web Vitals thresholds and the caching recipes that matter.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

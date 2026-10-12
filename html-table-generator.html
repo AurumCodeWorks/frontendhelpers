@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free HTML table generator with live preview. Create semantic table markup with proper thead, scope attributes, zebra striping, and copyable CSS." />
+  <link rel="canonical" href="https://frontendhelpers.com/html-table-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/html-table-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="HTML Table Generator — Free Semantic Table Markup Tool" />
+  <meta property="og:description" content="Free HTML table generator with live preview. Create semantic table markup with proper thead, scope attributes, zebra striping, and copyable CSS." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-html-table-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HTML Table Generator — Free Semantic Table Markup Tool" />
+  <meta name="twitter:description" content="Free HTML table generator with live preview. Create semantic table markup with proper thead, scope attributes, zebra striping, and copyable CSS." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-html-table-generator.png" />
+
+  <title>HTML Table Generator — Free Semantic Table Markup Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "HTML Table Generator",
+        "url": "https://frontendhelpers.com/html-table-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based HTML table generator producing semantic markup with thead, scope attributes and starter CSS.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "HTML Table Generator", "item": "https://frontendhelpers.com/html-table-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is it bad practice to use HTML tables?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Only for page layout. For genuine tabular data — rows and columns of related values — a real table element is the correct, accessible and SEO-friendly choice. Building tables out of divs discards accessibility for no benefit." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does scope=\"col\" do in a table?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It tells assistive technology that a th cell is the header for its column, so screen readers announce the header alongside each value — \"Revenue, Q3: £48,000\" instead of an unlabelled number. Use scope=\"row\" for row headers." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make an HTML table responsive?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The simplest reliable method is wrapping it in a container with overflow-x: auto so it scrolls horizontally with its structure intact. Add tabindex=\"0\" to that wrapper so keyboard users can scroll it as well." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I add a caption to my table?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes where the table needs a title. A caption element gives the table an accessible name that screen readers announce on entry, providing context before the user starts navigating cells." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">HTML Table Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>HTML table <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Build clean, semantic table markup with accessible headers and a live preview — plus a starter stylesheet to make it look right.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-table">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16M15 4v16"/></svg></span>HTML Table Generator</h2>
+    </div>
+    <p class="panel-desc">Build clean, semantic table markup — with a proper header row and accessible scope attributes — plus a starter stylesheet to make it look right.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="table-rows">Body Rows</label>
+            <input type="number" id="table-rows" min="1" max="30" value="3" />
+          </div>
+          <div class="form-group">
+            <label for="table-cols">Columns</label>
+            <input type="number" id="table-cols" min="1" max="12" value="3" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="table-header" checked /> Include header row (&lt;thead&gt;)
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="table-zebra" /> Zebra-striped rows in the CSS
+          </label>
+        </div>
+        <h3 class="mini-heading" style="margin-top:18px;">Live Preview <small>(markup + starter CSS, as it renders on a plain page)</small></h3>
+        <div class="table-preview" id="table-preview"></div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Copy-Paste Output</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>HTML markup</span>
+            <button class="btn-copy" data-target="output-table-html">Copy HTML</button>
+          </div>
+          <textarea id="output-table-html" readonly rows="9" class="mono-output"></textarea>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Starter CSS</span>
+            <button class="btn-copy" data-target="output-table-css">Copy CSS</button>
+          </div>
+          <textarea id="output-table-css" readonly rows="6" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Sighted readers understand a table instantly because they can see the grid. Screen reader users can't — they navigate cell by cell, and rely entirely on the markup to know what each value means.</p>
+        <p>That's what <code>&lt;thead&gt;</code>, <code>&lt;th&gt;</code> and the <code>scope</code> attribute provide. With them, moving through a table announces "Revenue, Q3: £48,000" — the header travels with the value. Without them, it announces "48,000" and the user has to remember which column they're in. On a wide table, that's the difference between usable and useless.</p>
+        <p><code>scope="col"</code> marks a header for its column; <code>scope="row"</code> marks one for its row. Adding a <code>&lt;caption&gt;</code> is worth doing too — it gives the whole table a title that assistive technology announces on entry.</p>
+
+        <h2>The layout-tables myth, and its modern inversion</h2>
+        <p>In the 1990s, tables were the only reliable way to build page layouts, and the practice persisted long after CSS could do the job properly. The correction — "never use tables" — became received wisdom.</p>
+        <p>It over-corrected. The rule was always <em>don't use tables for layout</em>, not <em>don't use tables</em>. Today the more common mistake is the reverse: building tabular data out of divs and flexbox because tables feel outdated. That throws away every accessibility benefit above, plus keyboard navigation and the browser's own column alignment, and gains nothing — CSS can style a real <code>&lt;table&gt;</code> however you like.</p>
+        <p>The test is simple: if your content is rows and columns of related values, it is a table. Use one.</p>
+
+        <h2>Making tables work on mobile</h2>
+        <p>Wide tables are the genuine hard problem in responsive design. Three approaches work, depending on the data.</p>
+        <p><strong>Horizontal scroll</strong> is the simplest and safest: wrap the table in a container with <code>overflow-x: auto</code>, keeping the structure intact. Add <code>tabindex="0"</code> to that wrapper so keyboard users can scroll it too — an easily missed accessibility detail. <strong>Stacked cards</strong> re-flow each row into a block with labels shown inline, which reads well on phones but needs the labels duplicating in CSS or data attributes. <strong>Column hiding</strong> shows only essential columns on narrow screens, which works when some columns are genuinely secondary.</p>
+
+        <h2>Styling that aids comprehension</h2>
+        <p>A few choices measurably improve how quickly people read a table. Zebra striping helps the eye track across long rows. Right-aligning numeric columns lines up the digits so magnitudes are comparable at a glance — a detail that separates a considered table from a default one. Generous cell padding beats tight borders for readability, and a sticky header row keeps context visible while scrolling long data sets.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Rendering Tables from JSON</h2>
+        <p>In modern web applications, you rarely write static HTML tables by hand. Instead, you receive data in JSON format from an API and need to render a table dynamically.</p>
+        
+        <h3>Dynamic Table Rendering in React</h3>
+        <p>Here is a clean, reusable approach to rendering a data table in React. It accepts an array of objects and automatically generates the table headers based on the object keys.</p>
+        <pre><code class="language-javascript">
+export default function DynamicTable({ data }) {
+  if (!data || data.length === 0) {
+    return &lt;p&gt;No data available.&lt;/p&gt;;
+  }
+
+  // Extract headers from the first object's keys
+  const headers = Object.keys(data[0]);
+
+  return (
+    &lt;table className="data-table"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          {headers.map(header =&gt; (
+            &lt;th key={header}&gt;
+              // Capitalize first letter
+              {header.charAt(0).toUpperCase() + header.slice(1)}
+            &lt;/th&gt;
+          ))}
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        {data.map((row, index) =&gt; (
+          &lt;tr key={index}&gt;
+            {headers.map(header =&gt; (
+              &lt;td key={${index}-}&gt;{row[header]}&lt;/td&gt;
+            ))}
+          &lt;/tr&gt;
+        ))}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  );
+}
+        </code></pre>
+        <p>This component is highly scalable. To improve it further for production, you would typically add pagination, column sorting, and define custom renderers for specific column types (like formatting dates or currencies) rather than rendering the raw string value.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is it bad practice to use HTML tables?</summary>
+            <p class="faq-answer">Only for page layout. For genuine tabular data — rows and columns of related values — a real table element is the correct, accessible and SEO-friendly choice. Building tables out of divs discards accessibility for no benefit.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What does scope="col" do in a table?</summary>
+            <p class="faq-answer">It tells assistive technology that a th cell is the header for its column, so screen readers announce the header alongside each value — "Revenue, Q3: £48,000" instead of an unlabelled number. Use scope="row" for row headers.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make an HTML table responsive?</summary>
+            <p class="faq-answer">The simplest reliable method is wrapping it in a container with overflow-x: auto so it scrolls horizontally with its structure intact. Add tabindex="0" to that wrapper so keyboard users can scroll it as well.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I add a caption to my table?</summary>
+            <p class="faq-answer">Yes where the table needs a title. A caption element gives the table an accessible name that screen readers announce on entry, providing context before the user starts navigating cells.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/html-entity-encoder" class="resource-card">
+            <span class="resource-kicker">HTML</span>
+            <h3>HTML Entity Encoder</h3>
+            <p>Escape special characters safely inside your table cells.</p>
+            <span class="resource-cta">Open the encoder →</span>
+          </a>
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Accessibility</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>Check your table text and zebra stripes pass contrast requirements.</p>
+            <span class="resource-cta">Check contrast →</span>
+          </a>
+          <a href="/essentials#ess-a11y" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessibility essentials</h3>
+            <p>Semantic HTML, keyboard navigation and the checks that matter.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

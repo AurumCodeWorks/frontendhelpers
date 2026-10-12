@@ -1,0 +1,62 @@
+# FrontendHelpers
+
+> Free, browser-based tools and reference material for frontend web developers: SEO and HTML generators, CSS utilities, a library of copy-paste CSS animations, modern JavaScript snippets with explanations, and practical guides. Every tool runs client-side; nothing is uploaded.
+
+All generated output and published snippets are free to use in personal and commercial work with no attribution required. Built and maintained by AurumCodeWorks. Content is written in British English. Pages are plain HTML at clean URLs (no .html extension).
+
+## Tools
+
+- [Meta Tag Generator — Free Open Graph & Twitter Card Preview](https://frontendhelpers.com/meta-tag-generator): Free meta tag generator with live Google, Facebook, and Twitter previews. Generate Open Graph and Twitter Card markup, and copy it in one click.
+- [Schema Markup Generator — Free JSON-LD Structured Data Tool](https://frontendhelpers.com/schema-markup-generator): Free JSON-LD schema markup generator for businesses. Build valid structured data with addresses, contacts, and price ranges, and copy script tags instantly.
+- [Robots.txt Generator — Free Crawler Rules & Sitemap Tool](https://frontendhelpers.com/robots-txt-generator): Free robots.txt generator. Create valid crawler rules with allow/disallow paths and sitemap URLs, and avoid common mistakes that deindex websites.
+- [URL Slug Generator — Free SEO-Friendly URL Maker](https://frontendhelpers.com/url-slug-generator): Free URL slug generator. Turn headlines into clean, lowercase, hyphenated slugs with optional stop-word removal and accent handling for your CMS.
+- [UTM Link Builder — Free Campaign URL Builder for Analytics](https://frontendhelpers.com/utm-link-builder): Free UTM link builder for Google Analytics. Add source, medium, campaign, term, and content parameters to any URL with automatic lowercasing.
+- [Keyword Density Checker — Free Word Count & Reading Time Tool](https://frontendhelpers.com/keyword-density-checker): Free keyword density checker. Analyze text for word count, reading time, sentence count, and repeated terms with phrase-aware density checks in browser.
+- [Text Case Converter — camelCase, snake_case, kebab-case & More](https://frontendhelpers.com/text-case-converter): Free text case converter. Instantly convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, or UPPERCASE, with one-click copy.
+- [Lorem Ipsum Generator — Free Placeholder Text Tool](https://frontendhelpers.com/lorem-ipsum-generator): Free lorem ipsum generator. Create placeholder text by paragraphs, sentences, or words, copy it in one click, and learn how to use dummy text effectively.
+- [HTML Entity Encoder & Decoder — Free Escape Tool](https://frontendhelpers.com/html-entity-encoder): Free HTML entity encoder and decoder. Convert special characters to safe HTML entities and back to display code samples safely and prevent XSS vulnerabilities.
+- [HTML Table Generator — Free Semantic Table Markup Tool](https://frontendhelpers.com/html-table-generator): Free HTML table generator with live preview. Create semantic table markup with proper thead, scope attributes, zebra striping, and copyable CSS.
+- [PX to REM Converter — Free Pixel to REM Calculator](https://frontendhelpers.com/px-to-rem-converter): Free PX to REM converter with a live conversion table. Convert pixels to rem and back, and learn when to use rem, em, or px for scalable typography.
+- [Aspect Ratio Calculator — Image & Video Size Calculator](https://frontendhelpers.com/aspect-ratio-calculator): Free aspect ratio calculator. Find image or video ratios, resize without distortion, and generate CSS/HTML to prevent Cumulative Layout Shift (CLS).
+- [Colour Palette Generator — Tints, Shades & CSS Design Tokens](https://frontendhelpers.com/color-palette-generator): Free color palette generator. Turn one brand color into a full 50–900 tint/shade scale with accents, and export ready-made CSS custom properties.
+- [CSS Gradient Generator — Visual Linear & Radial Gradient Tool](https://frontendhelpers.com/css-gradient-generator): Free CSS gradient generator. Build linear and radial gradients visually, add unlimited color stops, choose from presets, and copy production-ready CSS.
+- [CSS Box Shadow Generator — Visual Shadow Builder](https://frontendhelpers.com/box-shadow-generator): Free CSS box-shadow generator with live preview. Adjust offset, blur, spread, and inset, then copy production-ready CSS for cards, buttons, and modals.
+- [WCAG Contrast Checker — Free Colour Contrast Ratio Tool](https://frontendhelpers.com/contrast-checker): Free WCAG color contrast checker. Test text and background combinations against AA/AAA standards with live previews and instant pass/fail results.
+
+## Libraries and reference
+
+- [Free CSS Animations Library — 72 Copy-Paste Effects](https://frontendhelpers.com/css-animations): 72 free, copy-paste CSS animations with live previews: entrances, loaders, hover effects, and menus. Plus 7 interactive CSS lessons. No libraries needed.
+- [JavaScript Tricks & Tips — 32 Modern Snippets Explained](https://frontendhelpers.com/js-tips): 32 modern JavaScript tricks with the reasoning behind them: optional chaining, structuredClone, event delegation, debounce, AbortController, and more.
+- [Web Developer Essentials — Security, Performance, Git & More](https://frontendhelpers.com/essentials): Essential non-code web development knowledge: security, performance, accessibility, Git, testing, and privacy. Includes interactive progress checklists.
+- [React vs Angular — Interactive Comparison & Deep Dive](https://frontendhelpers.com/frameworks): Compare React vs Angular side-by-side. Understand why modern frontend frameworks are valuable, compare state models, templating, APIs, and histories.
+
+## CSS animations by category
+
+- [CSS Accordion Animations — 4 Free Expand & Collapse Effects](https://frontendhelpers.com/css-accordion-animations): Four free pure-CSS accordion animations: smooth grid-based height expansion, chevron rotation, content fade-in, and morphing icons. No JS required.
+- [CSS Attention Animations — 8 Free Pulse, Shake & Bounce Effects](https://frontendhelpers.com/css-attention-animations): Eight free CSS attention-seeking animations with live previews: pulse, shake, wobble, bounce, and more. Pure CSS, copy-paste ready, no libraries.
+- [CSS Background Animations — 5 Free Gradient, Float & Blob Effects](https://frontendhelpers.com/css-background-animations): Five free CSS ambient background animations with live previews: floating drift, gradient pan, morphing aurora, and pulse rings. Pure CSS, copy-paste ready.
+- [CSS Entrance Animations — 10 Free Fade & Slide-In Effects](https://frontendhelpers.com/css-entrance-animations): Ten free CSS entrance animations with live previews: fade, slide, zoom, bounce, flip, blur, and roll. Perfect for scroll reveals. Pure CSS, copy-paste ready.
+- [CSS Form Animations — 6 Free Input, Toggle & Validation Effects](https://frontendhelpers.com/css-form-animations): Six free CSS form animations with live previews: focus glow, floating labels, toggle switches, checkboxes, button clicks, and validation shakes. Pure CSS.
+- [CSS Image Animations — 6 Free Hover Zoom, Ken Burns & Carousel Effects](https://frontendhelpers.com/css-image-animations): Six free CSS image animations with previews: hover zoom, Ken Burns pan, grayscale to color, caption slide-up, scroll-snap carousel, and blur-up reveal.
+- [CSS Loading Animations — 8 Free Spinners, Dots & Skeletons](https://frontendhelpers.com/css-loading-animations): Eight free CSS loading animations with live previews: spinners, bouncing dots, progress bars, skeleton shimmers, and ripples. Pure CSS, no libraries.
+- [CSS Dropdown Menu Animations — 4 Free Navigation Effects](https://frontendhelpers.com/css-menu-animations): Four free CSS menu animations with previews: fade, grow, staggered cascade, and a hamburger morph. Pure CSS with keyboard accessibility support.
+- [CSS Text Animations — 7 Free Typewriter, Gradient & Glitch Effects](https://frontendhelpers.com/css-text-animations): Seven free CSS text animations with live previews: typewriter, gradient text, letter wave, glitch, neon flicker, and focus blur. Pure CSS, copy-paste ready.
+- [CSS UI Feedback Animations — 6 Free Toast, Modal & Tooltip Effects](https://frontendhelpers.com/css-ui-feedback-animations): Six free CSS UI feedback animations with previews: toast slide-in, modal pop-in, tooltip fade, tab underline slide, and progress pings. Pure CSS.
+- [CSS Hover Effects — 8 Free Button & Card Hover Animations](https://frontendhelpers.com/css-hover-effects): Eight free CSS hover effects: lift, grow, glow, shine, border draw, underline slide, 3D tilt, and gradient shift. Pure CSS, copy-paste ready.
+
+## Guides
+
+- [Why Isn’t My Website Showing Up on Google? A Diagnostic Guide](https://frontendhelpers.com/why-is-my-website-not-on-google): Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast.
+- [Core Web Vitals: A Practical Guide to LCP, INP and CLS](https://frontendhelpers.com/core-web-vitals-guide): A practical guide to Core Web Vitals. What LCP, INP and CLS measure, the thresholds Google uses, and the specific fixes that move each metric — with no jargon.
+- [How to Make Your Website Accessible: A Practical Guide](https://frontendhelpers.com/accessible-website-guide): A practical web accessibility guide covering semantic HTML, keyboard navigation, focus states, alt text, color contrast, and forms to fix real-world issues.
+- [How to Implement Dark Mode Properly: A CSS Guide](https://frontendhelpers.com/dark-mode-implementation-guide): Build dark mode using CSS custom properties. Respect system preferences, add a persistent toggle, avoid pure black, and prevent the flash of wrong theme.
+- [Website Launch Checklist: 20 Checks Before You Go Live](https://frontendhelpers.com/website-launch-checklist): A practical pre-launch checklist for websites: SEO, performance, accessibility, security, analytics, and legal. 20 checks to catch critical issues.
+- [CSS Animation Performance: What to Animate and What to Avoid](https://frontendhelpers.com/css-animation-performance): Learn why some CSS animations run at 60fps and others stutter. See which properties are GPU-composited, why transforms are cheap, and how to fix jank.
+
+## Optional
+
+- [Web Development Guides — SEO, Performance & Accessibility](https://frontendhelpers.com/guides): Practical web development guides: Google indexing diagnostics, Core Web Vitals fixes, accessibility, dark mode, animation performance, and launch checklists.
+- [About FrontendHelpers — Free Tools, Built by Hand](https://frontendhelpers.com/about): About FrontendHelpers: a free, hand-built collection of browser-based web development tools, CSS animations, and guides with no tracking or accounts.
+- [Privacy Policy](https://frontendhelpers.com/privacy-policy): Privacy Policy for FrontendHelpers: Learn how we protect your privacy, process client-side tool inputs, and handle cookies and Google AdSense.
+- [Cookie Policy](https://frontendhelpers.com/cookie-policy): Cookie Policy for FrontendHelpers: Learn about the cookies we use for analytics, preferences, and Google AdSense advertising.
+- [Terms of Service](https://frontendhelpers.com/terms): Terms of Service for FrontendHelpers: Guidelines, acceptable use, and terms for using our free web development and SEO tools.

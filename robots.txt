@@ -1,0 +1,16 @@
+# FrontendHelpers crawler policy
+#
+# Everything here is free, public reference material, and we want it
+# found: in search engines, in AI answers that cite their sources, and
+# by coding agents fetching docs on a developer's behalf.
+#
+# Content Signals (https://contentsignals.org):
+#   search    = building a search index and showing links/snippets
+#   ai-input  = using content to ground or answer AI queries (RAG)
+#   ai-train  = training or fine-tuning AI models
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+Sitemap: https://frontendhelpers.com/sitemap.xml

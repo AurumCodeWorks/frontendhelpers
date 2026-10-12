@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Six free CSS image animations with previews: hover zoom, Ken Burns pan, grayscale to color, caption slide-up, scroll-snap carousel, and blur-up reveal." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-image-animations" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-image-animations" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Image Animations — 6 Free Hover Zoom, Ken Burns &amp; Carousel Effects" />
+  <meta property="og:description" content="Six free CSS image animations with previews: hover zoom, Ken Burns pan, grayscale to color, caption slide-up, scroll-snap carousel, and blur-up reveal." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-image-animations.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Image Animations — 6 Free Hover Zoom, Ken Burns &amp; Carousel Effects" />
+  <meta name="twitter:description" content="Six free CSS image animations with previews: hover zoom, Ken Burns pan, grayscale to color, caption slide-up, scroll-snap carousel, and blur-up reveal." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-image-animations.png" />
+
+  <title>CSS Image Animations — 6 Free Hover Zoom, Ken Burns &amp; Carousel Effects | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "CSS Image Animations — 6 Free Hover Zoom, Ken Burns & Carousel Effects",
+        "url": "https://frontendhelpers.com/css-image-animations",
+        "description": "Six free CSS image animations with live previews: hover zoom, Ken Burns pan, greyscale to colour, caption slide-up, a JavaScript-free scroll-snap carousel and blur-up reveal.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "about": { "@type": "Thing", "name": "CSS animations" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Images & Carousels", "item": "https://frontendhelpers.com/css-image-animations" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I build a carousel with only CSS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. A flex container with scroll-snap-type: x mandatory and slides set to scroll-snap-align gives you a working, swipeable carousel with native momentum and keyboard support, with no JavaScript at all." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my image zoom effect shift the page layout?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You are likely scaling the container rather than the image inside it. Put overflow: hidden on the frame and scale the image within, so the frame keeps its footprint and nothing around it reflows." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I lazy-load all my images?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Use loading=\"lazy\" for images below the fold, but never on your hero or largest visible image — lazy-loading it delays the Largest Contentful Paint metric that Google uses to measure your page speed." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main" data-fixed-cat="image">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/css-animations">CSS Animations</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Images &amp; Carousels</span>
+    </nav>
+
+    <section class="gallery-hero">
+      <h1>CSS image <span class="hero-highlight">animations</span></h1>
+      <p class="gallery-hero-sub">Hover zooms, Ken Burns drift, caption slides, blur-up reveals and a working carousel that needs no JavaScript at all.</p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search within images &amp; carousels…" aria-label="Search Images &amp; Carousels animations" />
+        </div>
+      </div>
+    </div>
+
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+      <article class="tool-documentation">
+        <h2>A carousel with no JavaScript</h2>
+        <p>The carousel here uses <strong>CSS scroll snap</strong>: a horizontally scrolling flex container with <code>scroll-snap-type: x mandatory</code>, and each slide set to <code>scroll-snap-align: center</code>. Swiping or scrolling docks each slide into place with native momentum and no script at all.</p>
+        <p>This approach is better than most JavaScript carousels for a reason beyond bundle size: it works with the platform. Keyboard scrolling, touch momentum, and screen reader navigation all behave normally, because it's genuinely just a scrolling container. Add anchor links for dot navigation, or a few lines of JavaScript only if you need autoplay.</p>
+
+        <h2>Clip the frame, animate the image</h2>
+        <p>Every hover effect here scales the image <em>inside</em> a container with <code>overflow: hidden</code>, rather than scaling the container itself. That keeps the frame's footprint fixed, so nothing around it reflows — the difference between a smooth zoom and a page that shifts when you mouse over a thumbnail.</p>
+        <p>The Ken Burns effect applies the same principle over a long duration: a slow scale and drift that makes a still photograph feel alive in a hero section. Keep it slow — 12 seconds or more — and subtle, or it becomes seasick rather than cinematic.</p>
+
+        <h2>Images, layout shift and loading</h2>
+        <p>Animated or not, images are the main cause of Cumulative Layout Shift. Always give them <code>width</code> and <code>height</code> attributes so the browser reserves space before the file arrives — our <a href="/aspect-ratio-calculator">aspect ratio calculator</a> produces the correct pair. Add <code>loading="lazy"</code> to anything below the fold, but never to your hero image, since lazy-loading your largest visible element delays the LCP metric that Google measures.</p>
+        <p>The blur-up reveal is the loading pattern popularised by Medium: the image sharpens into place instead of popping in. Trigger it by adding the class on the image's <code>load</code> event.</p>
+
+        <h2>Filters cost more than transforms</h2>
+        <p>The greyscale-to-colour effect uses <code>filter</code>, which is GPU-accelerated but heavier than a plain transform — especially on large images. It's fine for a logo wall or a team grid; be more careful applying it to full-bleed hero imagery on lower-powered devices.</p>
+      </article>
+
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+          <details class="faq-item">
+            <summary>Can I build a carousel with only CSS?</summary>
+            <p class="faq-answer">Yes. A flex container with scroll-snap-type: x mandatory and slides set to scroll-snap-align gives you a working, swipeable carousel with native momentum and keyboard support, with no JavaScript at all.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my image zoom effect shift the page layout?</summary>
+            <p class="faq-answer">You are likely scaling the container rather than the image inside it. Put overflow: hidden on the frame and scale the image within, so the frame keeps its footprint and nothing around it reflows.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I lazy-load all my images?</summary>
+            <p class="faq-answer">No. Use loading="lazy" for images below the fold, but never on your hero or largest visible image — lazy-loading it delays the Largest Contentful Paint metric that Google uses to measure your page speed.</p>
+          </details>
+      </div>
+    </section>
+
+    <section class="resource-section" style="padding-left:0;padding-right:0;">
+      <h2>Related categories</h2>
+      <div class="resource-cards">
+          <a href="/css-hover-effects" class="resource-card">
+            <span class="resource-kicker">Hover</span>
+            <h3>Hover Effects</h3>
+            <p>Lifts, glows, shine sweeps and 3D tilts</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-loading-animations" class="resource-card">
+            <span class="resource-kicker">Loaders</span>
+            <h3>Loaders</h3>
+            <p>Skeleton shimmers and progress indicators</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-background-animations" class="resource-card">
+            <span class="resource-kicker">Backgrounds</span>
+            <h3>Ambient</h3>
+            <p>Gradient pans, floating and morphing blobs</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+      </div>
+      <p class="back-to-hub"><a href="/css-animations">← Back to all 72 CSS animations</a></p>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.1.0"></script>
+</body>
+</html>

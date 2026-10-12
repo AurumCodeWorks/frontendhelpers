@@ -1,0 +1,46 @@
+# Permanent redirects from legacy .html URLs to clean URLs.
+# Cloudflare Pages strips .html itself, but with a temporary 307;
+# these explicit 301s tell search engines the move is permanent.
+/index.html / 301
+/about.html /about 301
+/accessible-website-guide.html /accessible-website-guide 301
+/aspect-ratio-calculator.html /aspect-ratio-calculator 301
+/box-shadow-generator.html /box-shadow-generator 301
+/color-palette-generator.html /color-palette-generator 301
+/contrast-checker.html /contrast-checker 301
+/cookie-policy.html /cookie-policy 301
+/core-web-vitals-guide.html /core-web-vitals-guide 301
+/css-accordion-animations.html /css-accordion-animations 301
+/css-animation-performance.html /css-animation-performance 301
+/css-animations.html /css-animations 301
+/css-attention-animations.html /css-attention-animations 301
+/css-background-animations.html /css-background-animations 301
+/css-entrance-animations.html /css-entrance-animations 301
+/css-form-animations.html /css-form-animations 301
+/css-gradient-generator.html /css-gradient-generator 301
+/css-hover-effects.html /css-hover-effects 301
+/css-image-animations.html /css-image-animations 301
+/css-loading-animations.html /css-loading-animations 301
+/css-menu-animations.html /css-menu-animations 301
+/css-text-animations.html /css-text-animations 301
+/css-ui-feedback-animations.html /css-ui-feedback-animations 301
+/dark-mode-implementation-guide.html /dark-mode-implementation-guide 301
+/essentials.html /essentials 301
+/frameworks.html /frameworks 301
+/guides.html /guides 301
+/html-entity-encoder.html /html-entity-encoder 301
+/html-table-generator.html /html-table-generator 301
+/js-tips.html /js-tips 301
+/keyword-density-checker.html /keyword-density-checker 301
+/lorem-ipsum-generator.html /lorem-ipsum-generator 301
+/meta-tag-generator.html /meta-tag-generator 301
+/privacy-policy.html /privacy-policy 301
+/px-to-rem-converter.html /px-to-rem-converter 301
+/robots-txt-generator.html /robots-txt-generator 301
+/schema-markup-generator.html /schema-markup-generator 301
+/terms.html /terms 301
+/text-case-converter.html /text-case-converter 301
+/url-slug-generator.html /url-slug-generator 301
+/utm-link-builder.html /utm-link-builder 301
+/website-launch-checklist.html /website-launch-checklist 301
+/why-is-my-website-not-on-google.html /why-is-my-website-not-on-google 301

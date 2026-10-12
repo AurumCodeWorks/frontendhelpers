@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free lorem ipsum generator. Create placeholder text by paragraphs, sentences, or words, copy it in one click, and learn how to use dummy text effectively." />
+  <link rel="canonical" href="https://frontendhelpers.com/lorem-ipsum-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/lorem-ipsum-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Lorem Ipsum Generator — Free Placeholder Text Tool" />
+  <meta property="og:description" content="Free lorem ipsum generator. Create placeholder text by paragraphs, sentences, or words, copy it in one click, and learn how to use dummy text effectively." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-lorem-ipsum-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lorem Ipsum Generator — Free Placeholder Text Tool" />
+  <meta name="twitter:description" content="Free lorem ipsum generator. Create placeholder text by paragraphs, sentences, or words, copy it in one click, and learn how to use dummy text effectively." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-lorem-ipsum-generator.png" />
+
+  <title>Lorem Ipsum Generator — Free Placeholder Text Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Lorem Ipsum Generator",
+        "url": "https://frontendhelpers.com/lorem-ipsum-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based lorem ipsum generator producing placeholder text by paragraphs, sentences or words.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Lorem Ipsum Generator", "item": "https://frontendhelpers.com/lorem-ipsum-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is lorem ipsum text copyright-free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Lorem ipsum is scrambled Latin derived from a 2,000-year-old text by Cicero, and the generated output carries no copyright restrictions. Use it freely in personal and commercial work." }
+          },
+          {
+            "@type": "Question",
+            "name": "How many words are in a lorem ipsum paragraph?",
+            "acceptedAnswer": { "@type": "Answer", "text": "This generator produces paragraphs of roughly 40 to 70 words, made of 4 to 6 sentences — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use lorem ipsum or real content in designs?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use lorem ipsum for early layout and spacing work, then swap in real or realistic content before final sign-off. Dummy text hides problems that real content reveals, such as unexpectedly long product names or sparse categories." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does lorem ipsum start with \"Lorem ipsum dolor sit amet\"?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It is the conventional opening, taken from the middle of Cicero’s original sentence \"dolorem ipsum quia dolor sit amet\". Keeping the familiar opening signals immediately to everyone reviewing a mockup that the text is placeholder, not real copy." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Lorem Ipsum Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Lorem ipsum <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Generate placeholder text by paragraph, sentence or word count, then copy it straight into your mockup. Runs entirely in your browser.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-lorem">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>Lorem Ipsum Generator</h2>
+    </div>
+    <p class="panel-desc">Generate placeholder text for mockups and layouts — by paragraph, sentence or word count, ready to copy.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="lorem-count">Amount</label>
+            <input type="number" id="lorem-count" min="1" max="50" value="3" />
+          </div>
+          <div class="form-group">
+            <label for="lorem-unit">Unit</label>
+            <select id="lorem-unit">
+              <option value="paragraphs">Paragraphs</option>
+              <option value="sentences">Sentences</option>
+              <option value="words">Words</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="lorem-start" checked /> Start with “Lorem ipsum dolor sit amet…”
+          </label>
+        </div>
+        <div class="form-group">
+          <button class="btn-copy" id="lorem-regen" style="width:100%;">↻ Regenerate</button>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Placeholder Text</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>Ready to paste</span>
+            <button class="btn-copy" data-target="output-lorem">Copy Text</button>
+          </div>
+          <textarea id="output-lorem" readonly rows="11"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Lorem ipsum is scrambled Latin derived from a first-century BC text by Cicero, <em>de Finibus Bonorum et Malorum</em>. Typesetters have used it since the 1500s for a simple reason: it looks like natural language — with realistic word lengths, sentence rhythm and letter distribution — without being readable.</p>
+        <p>That unreadability is the entire point. Put real, legible English into a mockup and stakeholders start editing the copy. Put obvious filler like "xxxxx" in and you lose the visual texture that makes a layout look real. Lorem ipsum sits precisely between the two, keeping a design review focused on spacing, hierarchy and typography.</p>
+
+        <h2>How much placeholder text do you actually need?</h2>
+        <p>Match the amount to what the real content will be, not to what fills the box neatly. A layout that only looks good with exactly three tidy paragraphs will break the moment a client writes five, or one. Deliberately test the extremes: generate a single short sentence to see how the design handles sparse content, then generate ten paragraphs to check that long content still flows.</p>
+        <p>The same applies to headings. Real headlines are rarely the perfect length — generate a few words for a short one and a full sentence for a long one, and make sure neither breaks your layout.</p>
+
+        <h2>The one rule: never ship it</h2>
+        <p>Placeholder text that reaches production is a classic embarrassment, and it carries real costs. Google indexes it, so your page can end up ranking for "lorem ipsum" instead of your actual topic. It looks unfinished to visitors, damaging trust at exactly the moment you want it. On e-commerce or service sites it can even create legal exposure if it stands in for terms, pricing or product descriptions.</p>
+        <p>Make it a pre-launch step: search your whole codebase for "lorem" and "ipsum" before every deploy. The launch checklist on our <a href="/essentials">Dev Essentials</a> page covers this alongside the other checks worth doing before a site goes live.</p>
+
+        <h2>When to skip lorem ipsum entirely</h2>
+        <p>Filler text is right for early layout exploration, but there is a growing case for designing with real or realistic content instead — sometimes called content-first design. Real copy exposes problems dummy text hides: a product name that is far longer than expected, a category with only one item, a testimonial that runs to two hundred words.</p>
+        <p>A practical middle path is to use lorem ipsum while you are working out spacing and hierarchy, then swap in the closest thing to real content you can get before signing the design off. If the layout survives both, it will survive production.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Dynamic Placeholder Injection</h2>
+        <p>While copy-pasting Lorem Ipsum is fine for static mockups, modern frontend development often requires generating placeholder text dynamically to test how UI components respond to varying content lengths.</p>
+        
+        <h3>Mocking Data in React</h3>
+        <p>You can create a simple utility function in React to generate mock data arrays on the fly. This is extremely useful for prototyping lists, grids, and tables before your backend API is ready.</p>
+        <pre><code class="language-javascript">
+// utils/mockData.js
+export function generateMockPosts(count) {
+  const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  
+  return Array.from({ length: count }, (_, i) => ({
+    id: i + 1,
+    title: Placeholder Post Title ,
+    excerpt: lorem.substring(0, Math.floor(Math.random() * 50) + 50) + "...",
+    content: lorem,
+    date: new Date().toISOString()
+  }));
+}
+
+// components/PostGrid.jsx
+import { generateMockPosts } from '../utils/mockData';
+
+export default function PostGrid() {
+  // Generate 6 mock posts for the UI
+  const posts = generateMockPosts(6);
+  
+  return (
+    &lt;div className="grid"&gt;
+      {posts.map(post => (
+        &lt;article key={post.id}&gt;
+          &lt;h3&gt;{post.title}&lt;/h3&gt;
+          &lt;p&gt;{post.excerpt}&lt;/p&gt;
+        &lt;/article&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+        </code></pre>
+        <p>This approach allows you to stress-test your CSS grid layouts and flexbox containers by randomizing the length of the excerpt, ensuring your UI won't break when real, unpredictable user data is introduced.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is lorem ipsum text copyright-free?</summary>
+            <p class="faq-answer">Yes. Lorem ipsum is scrambled Latin derived from a 2,000-year-old text by Cicero, and the generated output carries no copyright restrictions. Use it freely in personal and commercial work.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How many words are in a lorem ipsum paragraph?</summary>
+            <p class="faq-answer">This generator produces paragraphs of roughly 40 to 70 words, made of 4 to 6 sentences — close to the length of a typical body paragraph on a real web page, so your layout is tested realistically.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use lorem ipsum or real content in designs?</summary>
+            <p class="faq-answer">Use lorem ipsum for early layout and spacing work, then swap in real or realistic content before final sign-off. Dummy text hides problems that real content reveals, such as unexpectedly long product names or sparse categories.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does lorem ipsum start with "Lorem ipsum dolor sit amet"?</summary>
+            <p class="faq-answer">It is the conventional opening, taken from the middle of Cicero’s original sentence "dolorem ipsum quia dolor sit amet". Keeping the familiar opening signals immediately to everyone reviewing a mockup that the text is placeholder, not real copy.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/html-table-generator" class="resource-card">
+            <span class="resource-kicker">HTML</span>
+            <h3>HTML Table Generator</h3>
+            <p>Build semantic table markup with accessible headers, plus starter CSS.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/text-case-converter" class="resource-card">
+            <span class="resource-kicker">Text</span>
+            <h3>Text Case Converter</h3>
+            <p>Convert between camelCase, kebab-case, snake_case, Title Case and more.</p>
+            <span class="resource-cta">Open the converter →</span>
+          </a>
+          <a href="/keyword-density-checker" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Keyword Density Analyser</h3>
+            <p>Word counts, reading time and the terms your copy actually repeats.</p>
+            <span class="resource-cta">Analyse your copy →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

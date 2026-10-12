@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free HTML entity encoder and decoder. Convert special characters to safe HTML entities and back to display code samples safely and prevent XSS vulnerabilities." />
+  <link rel="canonical" href="https://frontendhelpers.com/html-entity-encoder" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/html-entity-encoder" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="HTML Entity Encoder &amp; Decoder — Free Escape Tool" />
+  <meta property="og:description" content="Free HTML entity encoder and decoder. Convert special characters to safe HTML entities and back to display code samples safely and prevent XSS vulnerabilities." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-html-entity-encoder.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HTML Entity Encoder &amp; Decoder — Free Escape Tool" />
+  <meta name="twitter:description" content="Free HTML entity encoder and decoder. Convert special characters to safe HTML entities and back to display code samples safely and prevent XSS vulnerabilities." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-html-entity-encoder.png" />
+
+  <title>HTML Entity Encoder &amp; Decoder — Free Escape Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "HTML Entity Encoder",
+        "url": "https://frontendhelpers.com/html-entity-encoder",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based HTML entity encoder and decoder handling named and numeric character references.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "HTML Entity Encoder", "item": "https://frontendhelpers.com/html-entity-encoder" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which characters must be escaped in HTML?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Five: the ampersand, less-than, greater-than, double quote and apostrophe. Escape the ampersand first when doing it manually, or you will double-encode the entities you just created." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does escaping HTML prevent XSS attacks?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Escaping output is the primary defence. Unescaped user content can inject executable scripts that read cookies and hijack sessions. Escaping renders the same input as harmless visible text — but it must be applied wherever untrusted content enters the page." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between named and numeric entities?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Named entities like &amp;copy; are readable but limited to a defined list. Numeric entities like &amp;#169; work for any Unicode character. With UTF-8 you can usually write characters directly and reserve entities for the five reserved characters." }
+          },
+          {
+            "@type": "Question",
+            "name": "When should I use &amp;nbsp;?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For a space that must not break across lines — between a number and its unit, or in a name that should stay together. Avoid using it for layout spacing; that is what CSS margin and padding are for." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">HTML Entity Encoder</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>HTML entity <span class="hero-highlight">encoder</span></h1>
+        <p class="page-hero-sub">Convert special characters to safe HTML entities and back — for code samples, CMS pasting, and keeping user content from breaking your markup.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-entities">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8.5 7-5 5 5 5"/><path d="m15.5 7 5 5-5 5"/></svg></span>HTML Entity Encoder / Decoder</h2>
+    </div>
+    <p class="panel-desc">Convert special characters to safe HTML entities and back — for displaying code snippets, avoiding broken markup, and preventing injected HTML.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label>Direction</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="entity-mode-encode">Encode</button>
+            <button class="toggle-btn" id="entity-mode-decode">Decode</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="entity-input">Input</label>
+          <textarea id="entity-input" rows="6" placeholder="e.g. &lt;div class=&quot;card&quot;&gt; → paste anything here">&lt;button class="cta" disabled&gt;Sign up &amp; save 20%&lt;/button&gt;</textarea>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Result</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span id="entity-output-label">Encoded HTML</span>
+            <button class="btn-copy" data-target="output-entities">Copy Result</button>
+          </div>
+          <textarea id="output-entities" readonly rows="6" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>HTML reserves a handful of characters for its own syntax, and writing them literally causes the browser to misinterpret your content. The critical five are <strong>&amp;</strong> (starts an entity), <strong>&lt;</strong> and <strong>&gt;</strong> (delimit tags), and <strong>"</strong> and <strong>'</strong> (delimit attribute values).</p>
+        <p>Encoding replaces each with a reference — <code>&amp;lt;</code> for <code>&lt;</code>, <code>&amp;amp;</code> for <code>&amp;</code> — which tells the browser to <em>display</em> the character rather than interpret it. Order matters when encoding by hand: escape the ampersand first, or you'll double-encode the entities you just created.</p>
+
+        <h2>Why this is a security control, not a formatting one</h2>
+        <p>Escaping output is the primary defence against <strong>cross-site scripting</strong>. If user-submitted text goes into your page unescaped, a comment containing a script tag becomes executable code running with your site's privileges — able to read cookies, hijack sessions and act as the logged-in user.</p>
+        <p>Escaping neutralises it entirely: the same input renders as harmless visible text. Modern frameworks escape by default, which is why XSS is rarer than it was — but every framework also has an escape hatch (<code>dangerouslySetInnerHTML</code> in React, <code>v-html</code> in Vue, <code>innerHTML</code> in vanilla JS). Those are where XSS lives today, so treat any use of them as needing justification.</p>
+
+        <h2>Named versus numeric references</h2>
+        <p>There are two forms. <strong>Named</strong> references like <code>&amp;copy;</code> and <code>&amp;nbsp;</code> are readable but limited to a defined list. <strong>Numeric</strong> references like <code>&amp;#169;</code> or hexadecimal <code>&amp;#xA9;</code> work for any Unicode character.</p>
+        <p>In practice, with UTF-8 encoding — which every modern site should declare — you can write most characters like é, — and © directly. Reserve entities for the five reserved characters, and for cases where the literal is invisible or ambiguous in source: <code>&amp;nbsp;</code> for a non-breaking space is the classic example, since it looks identical to a normal space in your editor.</p>
+
+        <h2>Decoding, and when you need it</h2>
+        <p>Decoding runs the other way — turning <code>&amp;lt;div&amp;gt;</code> back into readable text. It comes up when an API returns pre-escaped content, when a database stores escaped strings, or when content has been double-encoded somewhere in a pipeline and displays as literal <code>&amp;amp;lt;</code> on the page.</p>
+        <p>This tool decodes using the browser's own parser, so it handles named and numeric references correctly rather than relying on a lookup table that inevitably misses cases. One caution: never decode untrusted content and then insert it as HTML — that undoes the protection escaping provided in the first place.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Safe Encoding in JavaScript</h2>
+        <p>Cross-Site Scripting (XSS) is one of the most common web vulnerabilities. It occurs when untrusted user input is rendered directly into the DOM without being properly encoded. While modern frameworks like React and Vue automatically encode text bindings, you must manually encode data if you are using Vanilla JS or <code>innerHTML</code>.</p>
+        
+        <h3>Creating a Safe Encode Function</h3>
+        <p>The safest and most robust way to encode HTML entities in Vanilla JavaScript is to leverage the browser's own DOM API, rather than attempting to write complex regex replacements.</p>
+        <pre><code class="language-javascript">
+function encodeHTML(str) {
+  // Create a detached text node
+  const textNode = document.createTextNode(str);
+  
+  // Create a detached div
+  const div = document.createElement('div');
+  
+  // Append the text node to the div
+  div.appendChild(textNode);
+  
+  // The browser automatically encodes the text content
+  return div.innerHTML;
+}
+
+// Example usage:
+const maliciousInput = "&lt;script&gt;alert('XSS!')&lt;/script&gt;";
+console.log(encodeHTML(maliciousInput));
+// Output: &amp;lt;script&amp;gt;alert('XSS!')&amp;lt;/script&amp;gt;
+        </code></pre>
+        <p>This technique is virtually bulletproof because it uses the exact same parsing engine the browser uses to render the page, ensuring no obscure edge cases or malformed tags slip through your regex filters.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Which characters must be escaped in HTML?</summary>
+            <p class="faq-answer">Five: the ampersand, less-than, greater-than, double quote and apostrophe. Escape the ampersand first when doing it manually, or you will double-encode the entities you just created.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does escaping HTML prevent XSS attacks?</summary>
+            <p class="faq-answer">Escaping output is the primary defence. Unescaped user content can inject executable scripts that read cookies and hijack sessions. Escaping renders the same input as harmless visible text — but it must be applied wherever untrusted content enters the page.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the difference between named and numeric entities?</summary>
+            <p class="faq-answer">Named entities like &amp;copy; are readable but limited to a defined list. Numeric entities like &amp;#169; work for any Unicode character. With UTF-8 you can usually write characters directly and reserve entities for the five reserved characters.</p>
+          </details>
+          <details class="faq-item">
+            <summary>When should I use &amp;nbsp;?</summary>
+            <p class="faq-answer">For a space that must not break across lines — between a number and its unit, or in a name that should stay together. Avoid using it for layout spacing; that is what CSS margin and padding are for.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/html-table-generator" class="resource-card">
+            <span class="resource-kicker">HTML</span>
+            <h3>HTML Table Generator</h3>
+            <p>Build semantic, accessible table markup with starter CSS.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/text-case-converter" class="resource-card">
+            <span class="resource-kicker">Text</span>
+            <h3>Text Case Converter</h3>
+            <p>Convert text between the six developer naming conventions.</p>
+            <span class="resource-cta">Open the converter →</span>
+          </a>
+          <a href="/essentials#ess-sec" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Security essentials</h3>
+            <p>XSS, CSRF, secrets in client code and the headers that protect you.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

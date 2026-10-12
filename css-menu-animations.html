@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Four free CSS menu animations with previews: fade, grow, staggered cascade, and a hamburger morph. Pure CSS with keyboard accessibility support." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-menu-animations" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-menu-animations" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Dropdown Menu Animations — 4 Free Navigation Effects" />
+  <meta property="og:description" content="Four free CSS menu animations with previews: fade, grow, staggered cascade, and a hamburger morph. Pure CSS with keyboard accessibility support." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-menu-animations.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Dropdown Menu Animations — 4 Free Navigation Effects" />
+  <meta name="twitter:description" content="Four free CSS menu animations with previews: fade, grow, staggered cascade, and a hamburger morph. Pure CSS with keyboard accessibility support." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-menu-animations.png" />
+
+  <title>CSS Dropdown Menu Animations — 4 Free Navigation Effects | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "CSS Dropdown Menu Animations — 4 Free Navigation Effects",
+        "url": "https://frontendhelpers.com/css-menu-animations",
+        "description": "Four free CSS dropdown and menu animations with live previews: fade, grow from origin, staggered cascade items and a hamburger to X morph. Pure CSS with keyboard support.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "about": { "@type": "Thing", "name": "CSS animations" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Menus & Dropdowns", "item": "https://frontendhelpers.com/css-menu-animations" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is my hidden dropdown still focusable?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Because opacity: 0 alone does not remove an element from the tab order or from screen readers. Add visibility: hidden to the transition so the closed menu genuinely disappears while still fading smoothly." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a hover dropdown keyboard-accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Add :focus-within alongside :hover in the same rule, so the menu opens when any descendant receives focus. For production navigation, a click-triggered menu with Escape support and aria-expanded is more robust." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should dropdown menus open on hover or click?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Click is generally better: it works identically on touch devices, supports explicit Escape-to-close, and lets you manage aria-expanded accurately. Hover suits simple cases and progressive enhancement." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main" data-fixed-cat="menu">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/css-animations">CSS Animations</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Menus &amp; Dropdowns</span>
+    </nav>
+
+    <section class="gallery-hero">
+      <h1>CSS menu &amp; dropdown <span class="hero-highlight">animations</span></h1>
+      <p class="gallery-hero-sub">Dropdown fades, springy grows, staggered cascades and a hamburger that morphs into an X — with keyboard support built in.</p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search within menus &amp; dropdowns…" aria-label="Search Menus &amp; Dropdowns animations" />
+        </div>
+      </div>
+    </div>
+
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+      <article class="tool-documentation">
+        <h2>The visibility trick that makes dropdowns safe</h2>
+        <p>The most common dropdown bug is hiding a menu with <code>opacity: 0</code> alone. An element at zero opacity still occupies space, still receives clicks, and — critically — is still in the keyboard tab order and still announced by screen readers. A "closed" menu built that way silently traps keyboard users in invisible links.</p>
+        <p>The fix is to include <code>visibility: hidden</code> in the transition alongside opacity. Because visibility is discrete rather than continuous, it flips at the end of the transition on close and immediately on open — so the menu fades smoothly but genuinely disappears when closed. Every dropdown here uses that pattern.</p>
+
+        <h2>Making hover menus keyboard-accessible</h2>
+        <p>A dropdown that only opens on <code>:hover</code> is unreachable by keyboard. Adding <code>:focus-within</code> to the same rule fixes it in one line: the menu opens when any descendant receives focus, so tabbing into the trigger reveals it exactly as hovering does.</p>
+        <p>For production navigation, a click-triggered menu driven by JavaScript is generally better than hover — it works identically on touch, allows explicit Escape-to-close, and lets you manage <code>aria-expanded</code> honestly. Use the hover pattern for simple cases and progressive enhancement.</p>
+
+        <h2>Transform origin communicates where things come from</h2>
+        <p>The difference between the fade and the grow effect is spatial information. A menu that scales up from <code>transform-origin: top left</code> visibly emerges from its button; a menu that simply fades in appears from nowhere. The former helps users connect the panel with the control that opened it — worth the extra line for menus that open in unexpected places.</p>
+
+        <h2>Staggering, and knowing when to stop</h2>
+        <p>The staggered effect adds an incremental <code>transition-delay</code> per item, cascading them into view. It looks considered on a menu of three to five items and sluggish beyond that — the last item in a ten-item menu arrives long after the user has started reading. Cap the stagger, and set delays back to zero on close so the menu snaps shut instantly.</p>
+      </article>
+
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+          <details class="faq-item">
+            <summary>Why is my hidden dropdown still focusable?</summary>
+            <p class="faq-answer">Because opacity: 0 alone does not remove an element from the tab order or from screen readers. Add visibility: hidden to the transition so the closed menu genuinely disappears while still fading smoothly.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a hover dropdown keyboard-accessible?</summary>
+            <p class="faq-answer">Add :focus-within alongside :hover in the same rule, so the menu opens when any descendant receives focus. For production navigation, a click-triggered menu with Escape support and aria-expanded is more robust.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should dropdown menus open on hover or click?</summary>
+            <p class="faq-answer">Click is generally better: it works identically on touch devices, supports explicit Escape-to-close, and lets you manage aria-expanded accurately. Hover suits simple cases and progressive enhancement.</p>
+          </details>
+      </div>
+    </section>
+
+    <section class="resource-section" style="padding-left:0;padding-right:0;">
+      <h2>Related categories</h2>
+      <div class="resource-cards">
+          <a href="/css-hover-effects" class="resource-card">
+            <span class="resource-kicker">Hover</span>
+            <h3>Hover Effects</h3>
+            <p>Underline slides, glows and button lifts</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-accordion-animations" class="resource-card">
+            <span class="resource-kicker">Accordions</span>
+            <h3>Accordions</h3>
+            <p>Smooth expand, chevron rotate and icon morphs</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-ui-feedback-animations" class="resource-card">
+            <span class="resource-kicker">UI Feedback</span>
+            <h3>UI Feedback</h3>
+            <p>Tooltips, toasts, modals and tab indicators</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+      </div>
+      <p class="back-to-hub"><a href="/css-animations">← Back to all 72 CSS animations</a></p>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.1.0"></script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free PX to REM converter with a live conversion table. Convert pixels to rem and back, and learn when to use rem, em, or px for scalable typography." />
+  <link rel="canonical" href="https://frontendhelpers.com/px-to-rem-converter" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/px-to-rem-converter" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="PX to REM Converter — Free Pixel to REM Calculator" />
+  <meta property="og:description" content="Free PX to REM converter with a live conversion table. Convert pixels to rem and back, and learn when to use rem, em, or px for scalable typography." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-px-to-rem.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PX to REM Converter — Free Pixel to REM Calculator" />
+  <meta name="twitter:description" content="Free PX to REM converter with a live conversion table. Convert pixels to rem and back, and learn when to use rem, em, or px for scalable typography." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-px-to-rem.png" />
+
+  <title>PX to REM Converter — Free Pixel to REM Calculator | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "PX to REM Converter",
+        "url": "https://frontendhelpers.com/px-to-rem-converter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based converter between pixel and rem units for any root font size, with a live quick-reference conversion table.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "PX to REM Converter", "item": "https://frontendhelpers.com/px-to-rem-converter" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is 16px in rem?",
+            "acceptedAnswer": { "@type": "Answer", "text": "At the default root font size of 16px, 16px equals exactly 1rem. The formula is rem = px ÷ root font size, so 24px is 1.5rem, 32px is 2rem and 8px is 0.5rem." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use rem or px for font sizes?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use rem for font sizes. Pixel values ignore the visitor's browser font-size preference, so text set in px will not scale when someone increases their default text size — which fails WCAG success criterion 1.4.4. Rem scales with the root font size and respects that preference." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between rem and em?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Rem is always relative to the root element's font size, so 1.5rem is the same size anywhere on the page. Em is relative to the font size of the current element's parent, so it compounds when nested — three nested elements at 1.2em each end up at roughly 1.73 times the base size." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I change the root font size to 62.5% to make maths easier?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It is a popular trick — setting html { font-size: 62.5% } makes 1rem equal 10px, so 1.6rem is 16px. It works, but it overrides the visitor's chosen browser default, and any third-party component sized in rem will render smaller than its author intended. Using a converter with the real 16px default avoids both problems." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">PX to REM Converter</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>PX to REM <span class="hero-highlight">converter</span></h1>
+        <p class="page-hero-sub">Convert pixels to rem — and rem back to pixels — for any root font size, with a live quick-reference table. Everything runs in your browser; nothing you type is sent anywhere.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+      <div class="tool-card" id="tool-pxrem">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="1.5"/><path d="M7.5 9v3.5M12 9v3.5M16.5 9v3.5"/></svg></span>PX ↔ REM Typography Converter</h2>
+        </div>
+        <p class="panel-desc">Instantly convert between pixel sizes and proportional REM spacing units, based on a custom document root font size.</p>
+
+        <div class="tool-grid">
+          <div class="pxrem-card">
+            <h3>Calculator Settings</h3>
+            <div class="form-group">
+              <label for="base-size">Base Font Size (Default is 16px)</label>
+              <input type="number" id="base-size" value="16" min="8" max="32" />
+            </div>
+            <div class="calc-row">
+              <div class="calc-group">
+                <label for="calc-px">Pixels (PX)</label>
+                <div class="input-unit">
+                  <input type="number" id="calc-px" value="16" />
+                  <span class="unit-tag">px</span>
+                </div>
+              </div>
+              <div class="calc-arrows">&larr;&nbsp;&rarr;</div>
+              <div class="calc-group">
+                <label for="calc-rem">Root EM (REM)</label>
+                <div class="input-unit">
+                  <input type="number" id="calc-rem" value="1" step="0.0625" />
+                  <span class="unit-tag">rem</span>
+                </div>
+              </div>
+            </div>
+            <div class="quick-table-container">
+              <h4>Quick Conversion Table</h4>
+              <table class="quick-table">
+                <thead><tr><th>Pixels</th><th>REM</th></tr></thead>
+                <tbody id="quick-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tool-previews">
+            <h3>How to use it</h3>
+            <ol class="howto-steps">
+              <li><strong>Check the base size.</strong> Leave it at 16px unless your project overrides the root font size — 16px is every major browser's default.</li>
+              <li><strong>Type in either box.</strong> Enter a pixel value to get rem, or a rem value to get pixels. Both directions update instantly.</li>
+              <li><strong>Use the table for your scale.</strong> The quick-reference table recalculates for your base size, so you can build a whole type scale in one glance.</li>
+            </ol>
+            <p class="panel-desc" style="margin-top:16px;">The maths is simply <strong>rem = px ÷ root font size</strong>. At the 16px default, that makes 16px = 1rem, 24px = 1.5rem and 8px = 0.5rem.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Pixel values are absolute. When you set <code>font-size: 16px</code>, that text is locked at 16 pixels regardless of what the person reading it has asked for. Browsers let users raise their default text size — a setting that people with low vision genuinely rely on — and pixel-based text simply ignores it. That is not a stylistic preference; it is a failure of <strong>WCAG 2.1 success criterion 1.4.4 (Resize Text)</strong>, which requires text to scale to 200% without loss of content or function.</p>
+        <p>Rem units solve this because they are relative to the root element's font size. If a visitor sets their browser default to 20px, every rem-based measurement on your page scales proportionally — your headings, body copy, spacing and layout all grow together, keeping the design's hierarchy intact instead of breaking it.</p>
+        <p>There is a second, practical benefit: consistency. Because rem always resolves against the same root value, <code>1.5rem</code> is identical everywhere in your stylesheet. That makes a type scale predictable, and makes global adjustments trivial — change the root font size once and the entire interface rescales.</p>
+
+        <h2>rem vs em vs px — which to use when</h2>
+        <p>The three units each have a job, and most confusion comes from using one where another belongs:</p>
+      </article>
+
+      <div class="quick-table-container tool-page-table">
+        <table class="quick-table">
+          <thead><tr><th>Unit</th><th>Relative to</th><th>Best used for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>rem</strong></td><td>Root font size (the <code>&lt;html&gt;</code> element)</td><td>Font sizes, spacing, layout widths, media queries — anything that should scale with user preference</td></tr>
+            <tr><td><strong>em</strong></td><td>The current element's font size</td><td>Padding and margins <em>inside</em> a component that should scale with that component's own text — e.g. button padding</td></tr>
+            <tr><td><strong>px</strong></td><td>Nothing — it is absolute</td><td>Hairline borders, box-shadow offsets, and anything that genuinely should not scale (a 1px border should stay 1px)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="tool-documentation">
+        <p>The trap with <code>em</code> is compounding. Because it inherits from the parent's font size, nesting multiplies it: three levels of <code>1.2em</code> gives you 1.2 × 1.2 × 1.2 ≈ <strong>1.73×</strong> the base size, not 1.2×. That is why em is excellent for padding that should track its own button's text, and a poor default for typography.</p>
+
+        <h2>The 62.5% trick — and why to think twice</h2>
+        <p>A widely shared shortcut sets <code>html { font-size: 62.5%; }</code>, making 1rem equal 10px so the mental maths becomes easy (1.6rem = 16px). It works, and plenty of production sites use it. But it carries two costs worth knowing before you adopt it.</p>
+        <p>First, it overrides the visitor's chosen default rather than respecting it — someone who set their browser to 20px now gets 12.5px as their baseline. Second, any third-party component or CSS framework sized in rem will render 62.5% smaller than its author intended, because it assumed the standard root. Using a converter against the real 16px default sidesteps both issues entirely, which is why this tool defaults to 16.</p>
+
+        <h2>Building a type scale in rem</h2>
+        <p>Most design systems settle on a small set of steps rather than arbitrary values. A common, comfortable scale at a 16px root looks like: 0.75rem (12px) for fine print, 0.875rem (14px) for secondary text, 1rem (16px) for body copy, 1.25rem (20px) and 1.5rem (24px) for subheadings, then 2rem (32px) and 3rem (48px) for headings. Defining those as custom properties — <code>--text-sm</code>, <code>--text-base</code>, <code>--text-lg</code> — keeps your CSS readable and your spacing rhythm consistent.</p>
+        <p>For headings that should adapt to viewport width as well as user preference, combine rem with <code>clamp()</code>: <code>font-size: clamp(1.5rem, 4vw, 3rem)</code> gives a floor, a fluid middle and a ceiling, all still respecting the root size.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Automated REM Scaling</h2>
+        <p>While this calculator is useful for one-off conversions, manually calculating REM values across a massive codebase is tedious. Modern CSS and preprocessors offer ways to automate this conversion natively.</p>
+        
+        <h3>SCSS Implementation</h3>
+        <p>If you use SCSS/SASS, you can write a simple function to handle the math for you. This allows you to write your styles thinking in pixels, but output accessible REM values in the compiled CSS.</p>
+        <pre><code class="language-css">
+// Define your base context (usually 16px)
+$base-font-size: 16px;
+
+// The conversion function
+@function rem($pixels) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @return ($pixels / $base-font-size) * 1rem;
+}
+
+// Usage
+.card {
+  padding: rem(24);       // Compiles to: padding: 1.5rem;
+  margin-bottom: rem(32); // Compiles to: margin-bottom: 2rem;
+  font-size: rem(18);     // Compiles to: font-size: 1.125rem;
+}
+        </code></pre>
+        <p>If you prefer native CSS without preprocessors, modern tooling like PostCSS (specifically the <code>postcss-pxtorem</code> plugin) can achieve the same result during your build step. It scans your CSS files for <code>px</code> values and automatically transpiles them to <code>rem</code> based on your configured root size.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is 16px in rem?</summary>
+            <p class="faq-answer">At the default root font size of 16px, <strong>16px equals exactly 1rem</strong>. The formula is <code>rem = px ÷ root font size</code>, so 24px is 1.5rem, 32px is 2rem and 8px is 0.5rem.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use rem or px for font sizes?</summary>
+            <p class="faq-answer">Use rem. Pixel values ignore the visitor's browser font-size preference, so text set in px won't scale when someone increases their default text size — which fails WCAG success criterion 1.4.4. Rem scales with the root font size and respects that preference.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the difference between rem and em?</summary>
+            <p class="faq-answer">Rem is always relative to the root element's font size, so 1.5rem is the same size anywhere on the page. Em is relative to the current element's font size and compounds when nested — three nested elements at 1.2em each end up at roughly 1.73× the base size.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I change the root font size to 62.5%?</summary>
+            <p class="faq-answer">It makes 1rem equal 10px, which simplifies the maths, but it overrides the visitor's chosen browser default and makes third-party rem-based components render smaller than intended. Using a converter against the real 16px default avoids both problems.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/contrast-checker" class="resource-card">
+            <span class="resource-kicker">Accessibility</span>
+            <h3>WCAG Contrast Checker</h3>
+            <p>The other half of accessible typography — check your text and background colours pass AA and AAA.</p>
+            <span class="resource-cta">Open the checker →</span>
+          </a>
+          <a href="/aspect-ratio-calculator" class="resource-card">
+            <span class="resource-kicker">Layout</span>
+            <h3>Aspect Ratio Calculator</h3>
+            <p>Scale images without distortion and reserve their space to stop layout shift.</p>
+            <span class="resource-cta">Open the calculator →</span>
+          </a>
+          <a href="/css-animations#learn-responsive" class="resource-card">
+            <span class="resource-kicker">Lesson</span>
+            <h3>Responsive design, interactively</h3>
+            <p>How <code>clamp()</code> and auto-fit grids adapt layouts without stacking breakpoints.</p>
+            <span class="resource-cta">Start the lesson →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

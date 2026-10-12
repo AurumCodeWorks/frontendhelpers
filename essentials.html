@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Essential non-code web development knowledge: security, performance, accessibility, Git, testing, and privacy. Includes interactive progress checklists." />
+  <link rel="canonical" href="https://frontendhelpers.com/essentials" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/essentials" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Web Developer Essentials — Security, Performance, Git &amp; More" />
+  <meta property="og:description" content="Essential non-code web development knowledge: security, performance, accessibility, Git, testing, and privacy. Includes interactive progress checklists." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-essentials.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Developer Essentials — Security, Performance, Git &amp; More" />
+  <meta name="twitter:description" content="Essential non-code web development knowledge: security, performance, accessibility, Git, testing, and privacy. Includes interactive progress checklists." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-essentials.png" />
+
+  <title>Web Developer Essentials — Security, Performance, Git &amp; More | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="essentials.css" />
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Web Developer Essentials — Security, Performance, Git & More",
+    "url": "https://frontendhelpers.com/essentials",
+    "description": "The web development knowledge that isn't code: security, performance, accessibility, networking, Git, deployment, testing and privacy, with interactive progress checklists and a balanced website builders vs hand-coding guide.",
+    "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+    "about": { "@type": "Thing", "name": "Web development best practices" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Dev Essentials", "item": "https://frontendhelpers.com/essentials" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What order should I learn these web development essentials in?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Start with How the Web Works — it makes everything else explainable. Then Git (so you can experiment safely), accessibility and performance (they shape how you build), security and deployment (they get you to production responsibly), and testing and privacy as your projects grow real users." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my checklist progress saved, and is it private?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes and yes. Ticks are stored in your browser's localStorage on your device only — nothing is sent to any server, there's no account, and clearing your browser data (or the Reset button) wipes it." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do these checklists apply if I use React, Vue or another framework?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Every item is framework-agnostic. Frameworks change how you write components, not how HTTP, caching, accessibility, Git, DNS or GDPR work — which is exactly why this knowledge transfers between every job and stack." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+          <span class="tool-count" id="ess-count-badge">8 Essentials</span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials" class="active" aria-current="page">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+          </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- Hero + readiness score -->
+  <section class="container page-hero">
+    <h1>The web dev knowledge that <span class="hero-highlight">isn't code</span></h1>
+    <p class="page-hero-sub">HTML, CSS, JavaScript and SEO get you building — these eight areas get you trusted with production. Work through the checklists below; your progress saves in this browser, so you can come back and keep going.</p>
+
+    <div class="score-panel" role="region" aria-label="Your progress">
+      <div class="score-info">
+        <span class="score-title">Your readiness score</span>
+        <span class="score-count" id="score-count">0 of 52 checks</span>
+      </div>
+      <div class="score-bar" aria-hidden="true"><div class="score-fill" id="score-fill"></div></div>
+      <button class="btn-reset" id="reset-progress">↺ Reset progress</button>
+    </div>
+  </section>
+
+  <!-- Topic jump bar -->
+  <nav class="tools-toolbar" id="tools-toolbar" aria-label="Jump to a topic">
+    <div class="container">
+    <div class="filter-chips tool-chips">
+      <a class="chip" href="#ess-web"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13.5 13.5 0 0 1 0 18 13.5 13.5 0 0 1 0-18z"/></svg>How the Web Works</a>
+      <a class="chip" href="#ess-sec"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5.5v5c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-5z"/></svg>Security</a>
+      <a class="chip" href="#ess-perf"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 19a9 9 0 1 1 13 0"/><path d="m12 14 3.5-5"/></svg>Performance</a>
+      <a class="chip" href="#ess-a11y"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M4.5 9h15"/><path d="M12 9v6"/><path d="m12 15-3.5 6"/><path d="m12 15 3.5 6"/></svg>Accessibility</a>
+      <a class="chip" href="#ess-git"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v12"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M18 8.5a9 9 0 0 1-9 9"/></svg>Git</a>
+      <a class="chip" href="#ess-deploy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16.6A4.6 4.6 0 0 0 18 8h-1.3A8 8 0 1 0 4 15.3"/><path d="M12 12v9"/><path d="m8 16 4-4 4 4"/></svg>Deployment</a>
+      <a class="chip" href="#ess-test"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5.5"/></svg>Testing</a>
+      <a class="chip" href="#ess-priv"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="11" width="15" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>Privacy</a>
+      <a class="chip chip-guide" href="#ess-builders"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M9 20h6"/><path d="M4 7h16"/><path d="M6.5 7 4 12.5a2.6 2.6 0 0 0 5 0z"/><path d="M17.5 7 15 12.5a2.6 2.6 0 0 0 5 0z"/></svg>Builders vs Code</a>
+    </div>
+    </div>
+    </nav>
+
+  <div class="container tools-flow">
+
+      <!-- ═══════════════ 1. HOW THE WEB WORKS ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-web">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13.5 13.5 0 0 1 0 18 13.5 13.5 0 0 1 0-18z"/></svg></span>How the Web Works</h2>
+          <span class="topic-progress" data-topic-count="web">0/6</span>
+        </div>
+        <p class="panel-desc">Understanding what happens between typing a URL and seeing a page is the skill that separates web developers from framework users. It makes every bug — slow loads, CORS errors, stale caches — explainable instead of mysterious.</p>
+
+        <p class="topic-prose">Every page load is the same journey: the browser resolves the domain to an IP address (DNS), opens a connection (TCP), secures it (TLS), sends an HTTP request, receives a response, then parses HTML into the DOM, computes styles, and paints pixels. Each stage can fail, be slow, or be cached — and each produces different symptoms. Step through the journey:</p>
+
+        <div class="journey" id="journey">
+          <div class="journey-steps" id="journey-steps" role="tablist" aria-label="Request journey stages"></div>
+          <div class="journey-detail">
+            <h4 id="journey-title">DNS lookup</h4>
+            <p id="journey-desc"></p>
+            <div class="journey-nav">
+              <button class="journey-btn" id="journey-prev">← Back</button>
+              <span class="journey-pos" id="journey-pos">1 / 7</span>
+              <button class="journey-btn" id="journey-next">Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="ref-heading">HTTP status codes — quick reference</h3>
+        <div class="gallery-search-wrap status-search">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="status-search" class="gallery-search" placeholder="Search codes… e.g. 404, redirect, auth" aria-label="Search HTTP status codes" />
+        </div>
+        <div class="quick-table-container status-table-wrap">
+          <table class="quick-table status-table">
+            <thead><tr><th>Code</th><th>Name</th><th>What it actually means</th></tr></thead>
+            <tbody id="status-table-body"></tbody>
+          </table>
+          <p class="no-results" id="status-no-results" hidden>No codes match — try “4”, “redirect” or “server”.</p>
+        </div>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="web"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/How_browsers_work" target="_blank" rel="noopener">MDN: How browsers work</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview" target="_blank" rel="noopener">MDN: HTTP overview</a></p>
+      </div>
+
+      <!-- ═══════════════ 2. SECURITY ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-sec">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5.5v5c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-5z"/></svg></span>Security</h2>
+          <span class="topic-progress" data-topic-count="sec">0/8</span>
+        </div>
+        <p class="panel-desc">Most attacks on websites aren't clever — they exploit the same handful of oversights, year after year. Knowing the top few puts you ahead of the majority of shipped sites.</p>
+
+        <p class="topic-prose">The classics: <strong>XSS</strong> (user-supplied text rendered as live HTML — the reason you escape output; try the <a href="/#tool-entities">HTML entity tool</a>), <strong>CSRF</strong> (another site triggering actions with your users' cookies — mitigated by SameSite cookies and tokens), <strong>supply-chain risk</strong> (that convenient npm package and its 300 dependencies run with full access to your page), and <strong>secrets in client code</strong> — anything shipped to the browser is public, including API keys in your JavaScript. Security headers are the highest-value low-effort defence; this very site ships the set below.</p>
+
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Security headers starter pack</span>
+            <button class="btn-copy" data-target="sec-headers-snippet">Copy Headers</button>
+          </div>
+          <textarea id="sec-headers-snippet" class="mono-output" readonly rows="7">Content-Security-Policy: default-src 'self'
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Permissions-Policy: camera=(), microphone=(), geolocation=()</textarea>
+        </div>
+        <p class="topic-note">Tighten or loosen CSP per site — start strict, then allow only what breaks. Test with your browser DevTools console open; violations are logged there.</p>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="sec"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">OWASP Top 10</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/Security" target="_blank" rel="noopener">MDN: Web security</a></p>
+      </div>
+
+      <!-- ═══════════════ 3. PERFORMANCE ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-perf">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 19a9 9 0 1 1 13 0"/><path d="m12 14 3.5-5"/></svg></span>Performance &amp; Core Web Vitals</h2>
+          <span class="topic-progress" data-topic-count="perf">0/7</span>
+        </div>
+        <p class="panel-desc">Speed is a feature users feel and Google measures. Three numbers — the Core Web Vitals — summarise it, and they're ranking factors.</p>
+
+        <div class="quick-table-container">
+          <table class="quick-table cwv-table">
+            <thead><tr><th>Vital</th><th>Measures</th><th class="good">Good</th><th class="poor">Poor</th></tr></thead>
+            <tbody>
+              <tr><td><strong>LCP</strong></td><td>Largest Contentful Paint — when the main content appears</td><td class="good">≤ 2.5s</td><td class="poor">&gt; 4.0s</td></tr>
+              <tr><td><strong>INP</strong></td><td>Interaction to Next Paint — how fast the page responds to input</td><td class="good">≤ 200ms</td><td class="poor">&gt; 500ms</td></tr>
+              <tr><td><strong>CLS</strong></td><td>Cumulative Layout Shift — how much the page jumps around</td><td class="good">≤ 0.1</td><td class="poor">&gt; 0.25</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="topic-prose">The biggest wins are boring: compress and size images properly (reserve space with the <a href="/#tool-ratio">aspect ratio tool</a> to protect CLS), let the browser cache aggressively, load JavaScript only where it earns its weight, and keep third-party scripts on a short leash. Caching is where most sites leave speed on the table — these three recipes cover the common cases:</p>
+
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>Cache-Control recipes</span>
+            <button class="btn-copy" data-target="cache-recipes-snippet">Copy Recipes</button>
+          </div>
+          <textarea id="cache-recipes-snippet" class="mono-output" readonly rows="8"># Fingerprinted static assets (app.3f2a1c.js) — cache forever
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages — always revalidate so deploys reach users
+Cache-Control: no-cache
+
+# Personalised or API responses — never share between users
+Cache-Control: private, no-store</textarea>
+        </div>
+        <p class="topic-note"><code>no-cache</code> does not mean “don't cache” — it means “store it, but check with the server before reusing it”. The one that disables caching entirely is <code>no-store</code>.</p>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="perf"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://web.dev/articles/vitals" target="_blank" rel="noopener">web.dev: Core Web Vitals</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/Performance" target="_blank" rel="noopener">MDN: Web performance</a></p>
+      </div>
+
+
+
+      <!-- ═══════════════ 4. ACCESSIBILITY ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-a11y">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M4.5 9h15"/><path d="M12 9v6"/><path d="m12 15-3.5 6"/><path d="m12 15 3.5 6"/></svg></span>Accessibility</h2>
+          <span class="topic-progress" data-topic-count="a11y">0/8</span>
+        </div>
+        <p class="panel-desc">Roughly one in six people has a disability that affects how they use the web. Accessibility isn't an add-on for them — it's baseline quality, and increasingly a legal requirement (WCAG 2.2 AA in the UK and EU).</p>
+
+        <p class="topic-prose">The 80/20 of accessibility is <strong>semantic HTML</strong>: real <code>&lt;button&gt;</code>s, real <code>&lt;a&gt;</code>s, headings in order, landmarks (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>). Native elements bring keyboard support, focus behaviour and screen-reader announcements for free — a <code>&lt;div onclick&gt;</code> brings none of them. Reach for ARIA attributes <em>last</em>, only when no native element fits. And check your colours with the <a href="/#tool-contrast">contrast checker</a>.</p>
+
+        <div class="quick-table-container">
+          <table class="quick-table dodont-table">
+            <thead><tr><th class="poor">Avoid</th><th class="good">Prefer</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td><code>&lt;div onclick&gt;</code></td><td><code>&lt;button&gt;</code></td><td>Keyboard, focus and screen-reader support built in</td></tr>
+              <tr><td><code>outline: none</code></td><td>Visible <code>:focus-visible</code> style</td><td>Keyboard users need to see where they are</td></tr>
+              <tr><td><code>alt=""</code> on meaningful images</td><td>Descriptive <code>alt</code> text</td><td>Empty alt is only correct for decoration</td></tr>
+              <tr><td>Colour as the only signal</td><td>Colour + icon/text</td><td>1 in 12 men has a colour vision deficiency</td></tr>
+              <tr><td>Tiny tap targets</td><td>≥ 24 × 24 px targets</td><td>WCAG 2.2 minimum; fingers aren't cursors</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="a11y"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2 quick reference</a> · <a href="https://www.a11yproject.com/checklist/" target="_blank" rel="noopener">The A11Y Project checklist</a></p>
+      </div>
+
+      <!-- ═══════════════ 5. GIT ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-git">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v12"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M18 8.5a9 9 0 0 1-9 9"/></svg></span>Git &amp; Version Control</h2>
+          <span class="topic-progress" data-topic-count="git">0/6</span>
+        </div>
+        <p class="panel-desc">Git is the safety net that makes fearless experimentation possible — and the collaboration layer every team assumes you know. You need about twenty commands, used well, not two hundred.</p>
+
+        <p class="topic-prose">The mental model that makes Git click: commits are <strong>snapshots</strong> of your whole project, branches are just <strong>movable labels</strong> pointing at a snapshot, and almost nothing is ever truly lost. Small, focused commits with messages that explain <em>why</em> turn your history into documentation.</p>
+
+        <div class="git-groups">
+          <div class="git-group">
+            <div class="output-header"><span>Daily rhythm</span><button class="btn-copy" data-target="git-daily">Copy</button></div>
+            <textarea id="git-daily" class="mono-output" readonly rows="4">git status              # what changed?
+git add -p              # stage changes piece by piece
+git commit -m "why, not just what"
+git push</textarea>
+          </div>
+          <div class="git-group">
+            <div class="output-header"><span>Branch &amp; merge</span><button class="btn-copy" data-target="git-branch">Copy</button></div>
+            <textarea id="git-branch" class="mono-output" readonly rows="4">git switch -c feature/name   # create + switch
+git switch main
+git merge feature/name
+git branch -d feature/name   # tidy up</textarea>
+          </div>
+          <div class="git-group">
+            <div class="output-header"><span>Undo safely</span><button class="btn-copy" data-target="git-undo">Copy</button></div>
+            <textarea id="git-undo" class="mono-output" readonly rows="4">git restore file.css         # discard unstaged edits
+git restore --staged file    # unstage, keep edits
+git revert abc123            # undo a commit, keep history
+git reflog                   # find "lost" commits</textarea>
+          </div>
+          <div class="git-group">
+            <div class="output-header"><span>Sync &amp; inspect</span><button class="btn-copy" data-target="git-sync">Copy</button></div>
+            <textarea id="git-sync" class="mono-output" readonly rows="4">git pull --rebase            # update without merge noise
+git log --oneline --graph    # readable history
+git diff main...feature      # what would this PR change?
+git stash / git stash pop    # shelve work in progress</textarea>
+          </div>
+        </div>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="git"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://git-scm.com/book" target="_blank" rel="noopener">Pro Git (free book)</a> · <a href="https://learngitbranching.js.org/" target="_blank" rel="noopener">Learn Git Branching (interactive)</a></p>
+      </div>
+
+      <!-- ═══════════════ 6. DEPLOYMENT ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-deploy">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16.6A4.6 4.6 0 0 0 18 8h-1.3A8 8 0 1 0 4 15.3"/><path d="M12 12v9"/><path d="m8 16 4-4 4 4"/></svg></span>Deployment &amp; Hosting</h2>
+          <span class="topic-progress" data-topic-count="deploy">0/7</span>
+        </div>
+        <p class="panel-desc">A site on localhost helps nobody. Getting comfortable with domains, DNS and hosting turns “it works on my machine” into a URL you can put on a business card.</p>
+
+        <p class="topic-prose">The modern path for static sites is genuinely easy: push to Git, connect a host (Cloudflare Pages, Netlify, GitHub Pages, Vercel), and every push deploys automatically with HTTPS included. The part that still confuses everyone is <strong>DNS</strong> — the records that point your domain at your host:</p>
+
+        <div class="quick-table-container">
+          <table class="quick-table dns-table">
+            <thead><tr><th>Record</th><th>Points to</th><th>Typical use</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A</strong></td><td>An IPv4 address</td><td>Root domain → server IP</td></tr>
+              <tr><td><strong>AAAA</strong></td><td>An IPv6 address</td><td>Same as A, for IPv6</td></tr>
+              <tr><td><strong>CNAME</strong></td><td>Another domain name</td><td><code>www</code> → your host's URL</td></tr>
+              <tr><td><strong>TXT</strong></td><td>Arbitrary text</td><td>Domain verification, email security (SPF/DKIM)</td></tr>
+              <tr><td><strong>MX</strong></td><td>A mail server</td><td>Where your domain's email goes</td></tr>
+              <tr><td><strong>NS</strong></td><td>Name servers</td><td>Which DNS provider is in charge</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="topic-note">DNS changes take time to spread (propagation, up to 24–48h but usually minutes). Lower the record's TTL before a planned switch, and don't panic-edit while it propagates. Before launch, generate your <a href="/#tool-robots">robots.txt</a> and submit your sitemap.</p>
+
+        <h3 class="ref-heading">Launch-day checklist</h3>
+        <div class="checklist" data-topic="deploy"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://www.cloudflare.com/learning/dns/what-is-dns/" target="_blank" rel="noopener">Cloudflare: What is DNS?</a> · <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Publishing_your_website" target="_blank" rel="noopener">MDN: Publishing your website</a></p>
+      </div>
+
+
+
+      <!-- ═══════════════ 7. TESTING ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-test">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5.5"/></svg></span>Testing</h2>
+          <span class="topic-progress" data-topic-count="test">0/5</span>
+        </div>
+        <p class="panel-desc">Tests aren't bureaucracy — they're the difference between “I think it still works” and “I know it still works”, every time you change anything.</p>
+
+        <div class="pyramid" aria-hidden="true">
+          <div class="pyramid-tier tier-e2e"><span>E2E — few, slow, whole-app confidence</span></div>
+          <div class="pyramid-tier tier-int"><span>Integration — components working together</span></div>
+          <div class="pyramid-tier tier-unit"><span>Unit — many, fast, pure logic</span></div>
+        </div>
+
+        <div class="quick-table-container">
+          <table class="quick-table">
+            <thead><tr><th>Layer</th><th>Typical tools</th><th>Answers</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Unit</strong></td><td>Vitest, Jest</td><td>“Does this function return the right thing?”</td></tr>
+              <tr><td><strong>Integration</strong></td><td>Testing Library</td><td>“Does this form validate and submit correctly?”</td></tr>
+              <tr><td><strong>End-to-end</strong></td><td>Playwright, Cypress</td><td>“Can a real user actually check out?”</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="topic-prose">Start where the value is: pure logic first (date maths, price calculations, validators — cheap to test, painful to break), then your <strong>critical user paths</strong> (sign-up, checkout, the thing your site exists for). A handful of tests on what matters beats hundreds of tests on what doesn't. Test behaviour users can see, not implementation details — tests that break on every refactor teach teams to ignore them.</p>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="test"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener">Playwright docs</a> · <a href="https://testing-library.com/docs/guiding-principles/" target="_blank" rel="noopener">Testing Library principles</a></p>
+      </div>
+
+      <!-- ═══════════════ 8. PRIVACY ═══════════════ -->
+      <div class="tool-card topic-card" id="ess-priv">
+        <div class="panel-header">
+          <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="11" width="15" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></span>Privacy &amp; Data Responsibility</h2>
+          <span class="topic-progress" data-topic-count="priv">0/5</span>
+        </div>
+        <p class="panel-desc">Privacy law (GDPR in Europe, similar laws spreading worldwide) turned “collect everything, sort it out later” into a liability. The principle that keeps you safe is simple: collect the minimum, and be honest about it.</p>
+
+        <div class="quick-table-container">
+          <table class="quick-table consent-table">
+            <thead><tr><th>Usually fine without consent</th><th>Needs informed consent first</th></tr></thead>
+            <tbody>
+              <tr><td>Strictly necessary cookies (login sessions, carts)</td><td>Analytics cookies that identify or profile visitors</td></tr>
+              <tr><td>Anonymous, aggregated counts</td><td>Advertising and cross-site tracking cookies</td></tr>
+              <tr><td>Data the user explicitly submits to you</td><td>Sharing data with third parties for their own use</td></tr>
+              <tr><td>Local preferences (theme, language) kept on-device</td><td>Fingerprinting or location tracking</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="topic-prose">You've already seen this page practise it: the cookie banner here defaults analytics to <strong>denied</strong> until you accept, and every tool on this site runs client-side precisely so your input never needs collecting. “We don't store it” is the easiest privacy policy to honour. When you do collect data, know why, say so plainly, and delete it when the reason expires.</p>
+
+        <h3 class="ref-heading">Make it a habit</h3>
+        <div class="checklist" data-topic="priv"></div>
+        <p class="further-reading"><span>Go deeper:</span> <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/" target="_blank" rel="noopener">ICO: UK GDPR guidance</a> · <a href="https://gdpr.eu/checklist/" target="_blank" rel="noopener">GDPR.eu compliance checklist</a></p>
+      </div>
+
+      <!-- ═══════════════ 9. DECISION GUIDE: BUILDERS VS CODE ═══════════════ -->
+      <div class="tool-card topic-card guide-card" id="ess-builders">
+        <div class="panel-header">
+          <h2><span class="tool-icon guide-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M9 20h6"/><path d="M4 7h16"/><path d="M6.5 7 4 12.5a2.6 2.6 0 0 0 5 0z"/><path d="M17.5 7 15 12.5a2.6 2.6 0 0 0 5 0z"/></svg></span>Website Builders vs Hand-Coding</h2>
+          <span class="guide-kicker">Decision guide</span>
+        </div>
+        <p class="panel-desc">Wix, Squarespace, Shopify, WordPress, Webflow — or a code editor? There's no universally right answer, only a right answer for a given project. Here's the honest comparison.</p>
+
+        <p class="topic-prose"><strong>Builders earn their popularity.</strong> They take a site from idea to live in an afternoon, with hosting, SSL, updates and backups managed for you. Templates give non-designers a professional look, e-commerce works out of the box, and a small business owner can edit their own content without waiting on a developer. For a brochure site, a booking page, or validating a business idea quickly, that trade is genuinely good.</p>
+
+        <p class="topic-prose"><strong>Hand-coding buys control.</strong> Every byte is yours: no platform ceiling on performance, no feature blocked behind a pricing tier, no lock-in when you want to move hosts, and no subscription running for the site's lifetime. It's also how skills compound — every project you hand-build makes you a better engineer, because everything on the page is something you understood well enough to create.</p>
+
+        <p class="topic-prose"><strong>The considerations people skip.</strong> Extensible platforms inherit the security posture of their least-maintained extension — the platforms themselves patch quickly, so in practice the risk usually lives in outdated or abandoned third-party plugins and themes. That's not a reason to avoid builders; it's a reason to keep extensions <em>few, reputable and updated</em>, exactly as you'd audit npm packages in a coded project. Also weigh: export paths if you outgrow the platform, performance ceilings on heavy themes, and what the monthly fee totals over five years.</p>
+
+        <div class="quick-table-container">
+          <table class="quick-table versus-table">
+            <thead><tr><th></th><th>Website builder</th><th>Hand-coded</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Speed to launch</strong></td><td class="good">Hours to days</td><td>Days to weeks</td></tr>
+              <tr><td><strong>Cost model</strong></td><td>Monthly subscription</td><td class="good">Hosting only (often pennies)</td></tr>
+              <tr><td><strong>Customisation</strong></td><td>Within the platform's limits</td><td class="good">Unlimited</td></tr>
+              <tr><td><strong>Performance control</strong></td><td>Theme-dependent</td><td class="good">Total — every byte is chosen</td></tr>
+              <tr><td><strong>Maintenance</strong></td><td class="good">Platform handles it</td><td>You handle it</td></tr>
+              <tr><td><strong>Security responsibility</strong></td><td>Platform core + your plugin choices</td><td>Entirely yours — smaller surface, but yours</td></tr>
+              <tr><td><strong>Portability</strong></td><td>Varies — check export options</td><td class="good">Move anywhere, any time</td></tr>
+              <tr><td><strong>Skills growth</strong></td><td>Platform skills</td><td class="good">Transferable engineering skills</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="ref-heading">Which should you choose?</h3>
+        <div class="quick-table-container">
+          <table class="quick-table scenario-table">
+            <thead><tr><th>Scenario</th><th>Sensible default</th></tr></thead>
+            <tbody>
+              <tr><td>Small business brochure site, no dev on staff</td><td>Builder — managed and self-editable is the point</td></tr>
+              <tr><td>Validating an online shop idea fast</td><td>Builder (e.g. hosted e-commerce), migrate if it takes off</td></tr>
+              <tr><td>Portfolio, or learning web development</td><td>Hand-code — the process is the value</td></tr>
+              <tr><td>Unique product, app or custom functionality</td><td>Hand-code — you'll fight a builder's limits</td></tr>
+              <tr><td>Content site with non-technical editors, custom frontend</td><td>Hybrid — headless CMS + hand-coded frontend</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="topic-prose">Plenty of professionals use both, per project. The skill isn't loyalty to one camp — it's matching the tool to the job, knowing what you're trading away, and being able to build it yourself when the project deserves it.</p>
+      </div>
+
+  </div>
+
+  <!-- FAQ (mirrors the FAQPage structured data in the head) -->
+  <section class="container faq-section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What order should I learn these web development essentials in?</summary>
+        <p class="faq-answer">Start with How the Web Works — it makes everything else explainable. Then Git (so you can experiment safely), accessibility and performance (they shape how you build), security and deployment (they get you to production responsibly), and testing and privacy as your projects grow real users.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is my checklist progress saved, and is it private?</summary>
+        <p class="faq-answer">Yes and yes. Ticks are stored in your browser's localStorage on your device only — nothing is sent to any server, there's no account, and clearing your browser data (or the Reset button) wipes it. It's the same on-device-first approach the Privacy topic on this page recommends.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do these checklists apply if I use React, Vue or another framework?</summary>
+        <p class="faq-answer">Every item is framework-agnostic. Frameworks change how you write components, not how HTTP, caching, accessibility, Git, DNS or GDPR work — which is exactly why this knowledge transfers between every job and stack.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Closing SEO articles -->
+  <section class="container gallery-articles">
+    <article class="tool-documentation">
+      <h2>Why this knowledge separates juniors from seniors</h2>
+      <p>Frameworks and syntax are the entry ticket — but production trust is earned in the areas on this page. The developer who can explain why a page is slow (and prove it with the Network tab), keep user data safe by default, ship without breaking the site, and make interfaces work for everyone is the one teams rely on. None of it requires memorising specifications: each area has a small core of habits, and the checklists above are exactly those habits.</p>
+      <p>Work through them one topic at a time against a real project — your own site is perfect. Your ticks are saved in this browser, so treat it as a running self-audit: every box you can honestly tick is something a code reviewer, a security audit or a lighthouse report won't catch you on later.</p>
+    </article>
+    <article class="tool-documentation">
+      <h2>Keep the whole toolbox handy</h2>
+      <p>These essentials pair with the rest of FrontendHelpers: audit your metadata and generate robots.txt with the <a href="/">SEO &amp; HTML tools</a>, keep motion tasteful and performant with the <a href="/css-animations">CSS animation library</a>, and write cleaner code with the <a href="/js-tips">explained JavaScript tricks</a> — all free, all client-side, no sign-up.</p>
+    </article>
+  </section>
+
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+</div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="essentials.js?v=1.0.1"></script>
+</body>
+</html>

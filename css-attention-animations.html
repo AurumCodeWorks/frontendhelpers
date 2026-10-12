@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Eight free CSS attention-seeking animations with live previews: pulse, shake, wobble, bounce, and more. Pure CSS, copy-paste ready, no libraries." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-attention-animations" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-attention-animations" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Attention Animations — 8 Free Pulse, Shake &amp; Bounce Effects" />
+  <meta property="og:description" content="Eight free CSS attention-seeking animations with live previews: pulse, shake, wobble, bounce, and more. Pure CSS, copy-paste ready, no libraries." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-attention-animations.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Attention Animations — 8 Free Pulse, Shake &amp; Bounce Effects" />
+  <meta name="twitter:description" content="Eight free CSS attention-seeking animations with live previews: pulse, shake, wobble, bounce, and more. Pure CSS, copy-paste ready, no libraries." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-attention-animations.png" />
+
+  <title>CSS Attention Animations — 8 Free Pulse, Shake &amp; Bounce Effects | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css-animations.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "CSS Attention Animations — 8 Free Pulse, Shake & Bounce Effects",
+        "url": "https://frontendhelpers.com/css-attention-animations",
+        "description": "Eight free CSS attention-seeking animations with live previews: pulse, heartbeat, shake, wobble, tada, jello, swing and bounce. Pure CSS, copy-paste ready, no libraries.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "about": { "@type": "Thing", "name": "CSS animations" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Attention", "item": "https://frontendhelpers.com/css-attention-animations" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How many attention animations should be on one screen?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ideally one. These effects work by exploiting sensitivity to movement, so their power comes from scarcity — several competing animated elements cancel each other out and none succeeds in drawing the eye." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I replay a CSS animation?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Remove the class, force a reflow by reading a layout property such as offsetWidth, then re-add the class. Alternatively remove the class on the animationend event so the next trigger runs cleanly." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is a shake animation enough to signal a form error?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Motion alone is invisible to screen reader users and to anyone with reduced motion enabled. Always pair it with an error message, aria-invalid and aria-describedby so the problem is conveyed in text too." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations" class="active">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container gallery-main" data-fixed-cat="attention">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/css-animations">CSS Animations</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Attention</span>
+    </nav>
+
+    <section class="gallery-hero">
+      <h1>CSS attention <span class="hero-highlight">animations</span></h1>
+      <p class="gallery-hero-sub">Pulses, heartbeats, shakes, wobbles and celebratory effects — motion designed to pull the eye to one specific thing.</p>
+      <div class="reduced-motion-note" id="reduced-motion-note" hidden>
+        <strong>Reduced motion is on.</strong> Your system prefers reduced motion, so previews are paused. The code you copy still includes everything.
+      </div>
+    </section>
+
+    <div class="gallery-toolbar">
+      <div class="toolbar-row">
+        <div class="gallery-search-wrap">
+          <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="search" id="anim-search" class="gallery-search" placeholder="Search within attention…" aria-label="Search Attention animations" />
+        </div>
+      </div>
+    </div>
+
+    <section class="anim-grid" id="anim-grid" aria-live="polite"></section>
+    <p class="no-results" id="no-results" hidden>No animations match your search in this category.</p>
+    <nav class="anim-pagination" id="anim-pagination" aria-label="Animation pages"></nav>
+
+      <article class="tool-documentation">
+        <h2>Attention animations are a budget you can overspend</h2>
+        <p>These effects work by exploiting the eye's sensitivity to movement — which means their power comes entirely from scarcity. One pulsing element on a screen is impossible to miss; three pulsing elements compete and none of them wins. Treat attention animation as a budget of roughly one per view.</p>
+        <p>The same logic applies over time. A pulse that runs forever stops being noticed within seconds and becomes background noise, or worse, an irritation the user actively tries to ignore. Loop only where the state genuinely persists — a live indicator, an unread badge — and use finite animations everywhere else.</p>
+
+        <h2>Matching the effect to the message</h2>
+        <p><strong>Shake</strong> is the universal "no": use it for failed validation and rejected actions, where its negative connotation is exactly right. Never use it to draw attention to something positive — the association is too strong.</p>
+        <p><strong>Pulse</strong> and <strong>heartbeat</strong> read as "alive" or "waiting for you" — good for notification counts, live status and primary calls to action. <strong>Tada</strong>, <strong>jello</strong> and <strong>wobble</strong> are celebratory or playful, which makes them right for success states and character-driven brands, and jarring in serious or professional contexts.</p>
+        <p><strong>Bounce</strong> and <strong>swing</strong> imply physical weight, which suits scroll indicators and hanging elements where the metaphor makes sense.</p>
+
+        <h2>Never rely on motion alone</h2>
+        <p>Motion is not an accessible signal by itself. Users who have enabled reduced motion won't see it, screen reader users never do, and anyone glancing away misses it entirely. Every attention animation must be paired with something durable — a text message, a colour change, an icon, a count.</p>
+        <p>Validation is the clearest example: a field that only shakes tells a screen reader user nothing. Pair it with an error message, <code>aria-invalid</code> and <code>aria-describedby</code>, and the shake becomes a helpful enhancement rather than the entire signal.</p>
+
+        <h2>Triggering and repeating cleanly</h2>
+        <p>Finite animations only run once per class application. To replay one — a shake on each failed submit — remove the class, force a reflow, then re-add it; or listen for <code>animationend</code> and remove the class there so the next trigger works. Both patterns are shown in the code for each effect.</p>
+      </article>
+
+    <section class="faq-section" style="padding-left:0;padding-right:0;">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+          <details class="faq-item">
+            <summary>How many attention animations should be on one screen?</summary>
+            <p class="faq-answer">Ideally one. These effects work by exploiting sensitivity to movement, so their power comes from scarcity — several competing animated elements cancel each other out and none succeeds in drawing the eye.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I replay a CSS animation?</summary>
+            <p class="faq-answer">Remove the class, force a reflow by reading a layout property such as offsetWidth, then re-add the class. Alternatively remove the class on the animationend event so the next trigger runs cleanly.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is a shake animation enough to signal a form error?</summary>
+            <p class="faq-answer">No. Motion alone is invisible to screen reader users and to anyone with reduced motion enabled. Always pair it with an error message, aria-invalid and aria-describedby so the problem is conveyed in text too.</p>
+          </details>
+      </div>
+    </section>
+
+    <section class="resource-section" style="padding-left:0;padding-right:0;">
+      <h2>Related categories</h2>
+      <div class="resource-cards">
+          <a href="/css-entrance-animations" class="resource-card">
+            <span class="resource-kicker">Entrances</span>
+            <h3>Entrances</h3>
+            <p>Fades, slides and zooms for arriving content</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-ui-feedback-animations" class="resource-card">
+            <span class="resource-kicker">UI Feedback</span>
+            <h3>UI Feedback</h3>
+            <p>Toasts, modals, tooltips and progress bars</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+          <a href="/css-form-animations" class="resource-card">
+            <span class="resource-kicker">Forms</span>
+            <h3>Forms &amp; Inputs</h3>
+            <p>Focus glows, toggles and validation shakes</p>
+            <span class="resource-cta">Browse the category →</span>
+          </a>
+      </div>
+      <p class="back-to-hub"><a href="/css-animations">← Back to all 72 CSS animations</a></p>
+    </section>
+
+  </main>
+
+  <!-- Code modal -->
+  <div class="code-modal-overlay" id="code-modal" hidden>
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="code-modal-header">
+        <h3 id="modal-title">Animation code</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close code view">×</button>
+      </div>
+      <div class="code-modal-body">
+        <div class="output-code-container" style="margin-top:0;">
+          <div class="output-header">
+            <span>HTML usage</span>
+            <button class="btn-copy" id="modal-copy-html">Copy HTML</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-html-code"></pre>
+        </div>
+        <div class="output-code-container">
+          <div class="output-header">
+            <span>CSS</span>
+            <button class="btn-copy" id="modal-copy-css">Copy CSS</button>
+          </div>
+          <pre class="mono-output modal-code" id="modal-css-code"></pre>
+        </div>
+        <p class="modal-note" id="modal-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="css-animations.js?v=1.1.0"></script>
+</body>
+</html>

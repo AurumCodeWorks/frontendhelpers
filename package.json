@@ -1,0 +1,11 @@
+{
+  "name": "frontendhelpers",
+  "private": true,
+  "type": "module",
+  "description": "FrontendHelpers.com — free browser-based tools and references for frontend developers.",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/build.mjs && npx wrangler@4 pages dev dist"
+  }
+}

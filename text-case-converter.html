@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free text case converter. Instantly convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, or UPPERCASE, with one-click copy." />
+  <link rel="canonical" href="https://frontendhelpers.com/text-case-converter" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/text-case-converter" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Text Case Converter — camelCase, snake_case, kebab-case &amp; More" />
+  <meta property="og:description" content="Free text case converter. Instantly convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, or UPPERCASE, with one-click copy." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-text-case-converter.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Text Case Converter — camelCase, snake_case, kebab-case &amp; More" />
+  <meta name="twitter:description" content="Free text case converter. Instantly convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, or UPPERCASE, with one-click copy." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-text-case-converter.png" />
+
+  <title>Text Case Converter — camelCase, snake_case, kebab-case &amp; More | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Text Case Converter",
+        "url": "https://frontendhelpers.com/text-case-converter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based text case converter supporting camelCase, PascalCase, snake_case, kebab-case, Title Case and UPPERCASE.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Text Case Converter", "item": "https://frontendhelpers.com/text-case-converter" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between camelCase and PascalCase?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Both join words with capitals, but camelCase starts lowercase (getUserName) and PascalCase starts uppercase (GetUserName). JavaScript uses camelCase for variables and functions, and PascalCase for classes and React components." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should URLs use hyphens or underscores?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Hyphens. Google treats a hyphen as a word separator, so css-tricks reads as two words, while css_tricks is read as one. Google has recommended hyphens in URLs for well over a decade." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do databases use snake_case?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Many SQL dialects fold unquoted identifiers to lowercase, which makes camelCase unreliable across systems — userName can silently become username. snake_case survives that folding intact, so word boundaries stay readable." }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the converter handle acronyms like XMLHttpRequest?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It splits on the boundary between a lowercase and an uppercase character, so runs of consecutive capitals stay grouped. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Text Case Converter</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Text case <span class="hero-highlight">converter</span></h1>
+        <p class="page-hero-sub">Convert any text between the six naming conventions developers use daily — camelCase, PascalCase, snake_case, kebab-case, Title Case and UPPERCASE.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-case">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7V5h14v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg></span>Text Case Converter</h2>
+    </div>
+    <p class="panel-desc">Convert any text between the six cases developers juggle daily — camelCase for JavaScript, kebab-case for CSS and URLs, snake_case for databases, and more.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label for="case-input">Your Text</label>
+          <textarea id="case-input" rows="3" placeholder="Type or paste anything…">Frontend helpers makes web development easier</textarea>
+        </div>
+        <p class="panel-desc">Mixed input is fine — existing camelCase, hyphens, underscores and spaces are all understood and re-split into words first.</p>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Converted</h3>
+        <div class="case-grid">
+          <div class="case-row"><span class="case-label">camelCase</span><code class="case-value" id="case-camel"></code><button class="btn-copy" data-target="case-camel">Copy</button></div>
+          <div class="case-row"><span class="case-label">PascalCase</span><code class="case-value" id="case-pascal"></code><button class="btn-copy" data-target="case-pascal">Copy</button></div>
+          <div class="case-row"><span class="case-label">snake_case</span><code class="case-value" id="case-snake"></code><button class="btn-copy" data-target="case-snake">Copy</button></div>
+          <div class="case-row"><span class="case-label">kebab-case</span><code class="case-value" id="case-kebab"></code><button class="btn-copy" data-target="case-kebab">Copy</button></div>
+          <div class="case-row"><span class="case-label">Title Case</span><code class="case-value" id="case-title"></code><button class="btn-copy" data-target="case-title">Copy</button></div>
+          <div class="case-row"><span class="case-label">UPPERCASE</span><code class="case-value" id="case-upper"></code><button class="btn-copy" data-target="case-upper">Copy</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>The conventions aren't arbitrary — each one exists because of a constraint in its environment.</p>
+        <p><strong>camelCase</strong> dominates JavaScript because identifiers can't contain hyphens (a hyphen is the minus operator) and the language's own APIs use it. <strong>PascalCase</strong> distinguishes things that get instantiated or rendered — classes, and components in React, where an uppercase first letter is what tells JSX to treat a tag as a component rather than an HTML element.</p>
+        <p><strong>kebab-case</strong> owns CSS and URLs. Both are case-insensitive contexts where hyphens read naturally, and Google explicitly treats hyphens as word separators in URLs while underscores join words together. <strong>snake_case</strong> rules databases and Python, largely because many SQL dialects fold unquoted identifiers to lowercase, making camelCase unreliable across systems.</p>
+
+        <h2>The conversion is harder than it looks</h2>
+        <p>Converting between cases means first splitting text into words — and the input rarely announces its own format. This converter handles the common cases: it splits on spaces, hyphens and underscores, and it detects camelCase boundaries by looking for a lowercase character followed by an uppercase one.</p>
+        <p>The edge cases that break naive converters are worth knowing if you write your own. Consecutive capitals (<code>XMLHttpRequest</code>, <code>parseJSON</code>) are genuinely ambiguous — is <code>JSON</code> one word or four letters? Numbers create similar problems: should <code>address2</code> become <code>address-2</code> or <code>address2</code>? There is no universally correct answer, only a convention your codebase applies consistently.</p>
+
+        <h2>Where conversion actually comes up</h2>
+        <p>The most frequent real-world case is crossing a boundary between systems. An API returns <code>snake_case</code> JSON and your JavaScript wants <code>camelCase</code>. A design token named in kebab-case needs a camelCase equivalent in a theme object. A database column becomes a form field name.</p>
+        <p>For one-off work a converter is faster than fiddling with a regex. For anything systematic, do the conversion in one place — a single mapping layer where API responses enter your app — rather than scattering ad-hoc renames through your codebase.</p>
+
+        <h2>Consistency beats correctness</h2>
+        <p>There is no objectively best convention, and arguing about it is one of programming's great time sinks. What genuinely costs teams time is <em>inconsistency</em>: when developers have to guess whether a helper is <code>getUserId</code>, <code>get_user_id</code> or <code>GetUserID</code>, every lookup becomes a search.</p>
+        <p>Pick a convention per layer, follow the ecosystem's default where one exists, write it down, and enforce it with a linter so it stops being a discussion. If you need to rename existing code, do it as its own commit — mixing renames into a feature change makes the diff unreviewable.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Programmatic Case Conversion</h2>
+        <p>Converting case in code is surprisingly difficult due to edge cases like consecutive capital letters (e.g., XMLHTTPRequest). Below is a robust JavaScript implementation for converting strings to camelCase.</p>
+        
+        <h3>Robust camelCase Function</h3>
+        <p>This function handles spaces, underscores, and hyphens, safely converting them into camelCase.</p>
+        <pre><code class="language-javascript">
+function toCamelCase(str) {
+  return str
+    // Replace dashes and underscores with spaces
+    .replace(/[-_]+/g, ' ')
+    // Replace non-alphanumeric characters with spaces
+    .replace(/[^\w\s]/gi, '')
+    // Split into words, capitalize the first letter of each word (except the first)
+    .replace(/\s+(.)/g, function(match, group1) {
+      return group1.toUpperCase();
+    })
+    // Ensure the very first character is lowercase
+    .replace(/^(.)/, function(match, group1) {
+      return group1.toLowerCase();
+    })
+    // Remove remaining spaces
+    .replace(/\s+/g, '');
+}
+
+console.log(toCamelCase("user_first_name")); // "userFirstName"
+console.log(toCamelCase("hello-world")); // "helloWorld"
+        </code></pre>
+        <p>For large-scale structural changes (like converting entire database schemas or API responses), consider using dedicated libraries like <code>lodash/camelCase</code> which have been battle-tested against thousands of edge cases.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is the difference between camelCase and PascalCase?</summary>
+            <p class="faq-answer">Both join words with capitals, but camelCase starts lowercase (getUserName) and PascalCase starts uppercase (GetUserName). JavaScript uses camelCase for variables and functions, and PascalCase for classes and React components.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should URLs use hyphens or underscores?</summary>
+            <p class="faq-answer">Hyphens. Google treats a hyphen as a word separator, so css-tricks reads as two words, while css_tricks is read as one. Google has recommended hyphens in URLs for well over a decade.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why do databases use snake_case?</summary>
+            <p class="faq-answer">Many SQL dialects fold unquoted identifiers to lowercase, which makes camelCase unreliable across systems — userName can silently become username. snake_case survives that folding intact, so word boundaries stay readable.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How does the converter handle acronyms like XMLHttpRequest?</summary>
+            <p class="faq-answer">It splits on the boundary between a lowercase and an uppercase character, so runs of consecutive capitals stay grouped. Acronyms are genuinely ambiguous in case conversion — check the result when your input contains them.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/url-slug-generator" class="resource-card">
+            <span class="resource-kicker">URLs</span>
+            <h3>URL Slug Generator</h3>
+            <p>Turn headlines into clean kebab-case slugs with stop words removed.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/html-entity-encoder" class="resource-card">
+            <span class="resource-kicker">HTML</span>
+            <h3>HTML Entity Encoder</h3>
+            <p>Escape special characters safely for markup and code samples.</p>
+            <span class="resource-cta">Open the encoder →</span>
+          </a>
+          <a href="/js-tips" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>32 JavaScript tricks</h3>
+            <p>Modern snippets with the reasoning behind them, and runnable demos.</p>
+            <span class="resource-cta">Browse the library →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

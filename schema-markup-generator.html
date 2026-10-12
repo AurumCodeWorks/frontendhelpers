@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free JSON-LD schema markup generator for businesses. Build valid structured data with addresses, contacts, and price ranges, and copy script tags instantly." />
+  <link rel="canonical" href="https://frontendhelpers.com/schema-markup-generator" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/schema-markup-generator" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Schema Markup Generator — Free JSON-LD Structured Data Tool" />
+  <meta property="og:description" content="Free JSON-LD schema markup generator for businesses. Build valid structured data with addresses, contacts, and price ranges, and copy script tags instantly." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-schema-markup-generator.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Schema Markup Generator — Free JSON-LD Structured Data Tool" />
+  <meta name="twitter:description" content="Free JSON-LD schema markup generator for businesses. Build valid structured data with addresses, contacts, and price ranges, and copy script tags instantly." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-schema-markup-generator.png" />
+
+  <title>Schema Markup Generator — Free JSON-LD Structured Data Tool | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Schema Markup Generator",
+        "url": "https://frontendhelpers.com/schema-markup-generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based JSON-LD schema markup generator for LocalBusiness, Organization and ProfessionalService types.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Schema Markup Generator", "item": "https://frontendhelpers.com/schema-markup-generator" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is JSON-LD and why does Google prefer it?",
+            "acceptedAnswer": { "@type": "Answer", "text": "JSON-LD is structured data expressed as a JSON object inside a single script tag, separate from your HTML. Google recommends it because it does not depend on your markup structure — you can redesign a page without breaking the data." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does structured data improve my ranking?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not directly. It makes your page eligible for rich results — star ratings, FAQs, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can structured data get my site penalised?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, if it describes content not visible on the page. Marking up ratings or details users cannot see violates Google’s guidelines and can trigger a manual action removing your rich results. Only mark up what is genuinely on the page." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I test my schema markup?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use Google’s Rich Results Test to see which rich result types you qualify for, and the Schema Markup Validator at validator.schema.org for syntax errors. Search Console then reports issues found across your live site." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Schema Markup Generator</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Schema markup <span class="hero-highlight">generator</span></h1>
+        <p class="page-hero-sub">Generate valid JSON-LD structured data for a business or organisation, so search engines can understand what your page represents.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-schema">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-8l1-8z"/></svg></span>Structured JSON-LD Schema Creator</h2>
+    </div>
+    <p class="panel-desc">Generate schema.org markup for local services or businesses. Structured schema helps Google display rich search results (reviews, price metrics, maps).</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schema-type">Business Type</label>
+            <select id="schema-type">
+              <option value="ProfessionalService">Professional Service</option>
+              <option value="LocalBusiness">Local Business</option>
+              <option value="Organization">Organization</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="schema-name">Business Name</label>
+            <input type="text" id="schema-name" placeholder="e.g. My Business" value="FrontendHelpers" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schema-url">Business Website URL</label>
+            <input type="url" id="schema-url" placeholder="https://yourwebsite.com" value="https://frontendhelpers.com" />
+          </div>
+          <div class="form-group">
+            <label for="schema-logo">Logo Image URL</label>
+            <input type="url" id="schema-logo" placeholder="https://yourwebsite.com/assets/logo.png" value="https://frontendhelpers.com/favicon.svg" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schema-email">Business Email</label>
+            <input type="email" id="schema-email" placeholder="hello@yourwebsite.com" value="" />
+          </div>
+          <div class="form-group">
+            <label for="schema-phone">Phone Number</label>
+            <input type="tel" id="schema-phone" placeholder="e.g. +44 7123 456789" value="" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="schema-street">Street Address</label>
+          <input type="text" id="schema-street" placeholder="e.g. 12 High Street" value="" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schema-locality">City / Locality</label>
+            <input type="text" id="schema-locality" placeholder="e.g. London" value="" />
+          </div>
+          <div class="form-group">
+            <label for="schema-zip">Postal Code</label>
+            <input type="text" id="schema-zip" placeholder="e.g. EC1A 1BB" value="" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schema-country">Country Code</label>
+            <input type="text" id="schema-country" placeholder="e.g. GB" value="GB" />
+          </div>
+          <div class="form-group">
+            <label for="schema-price">Price Range (e.g. ££)</label>
+            <input type="text" id="schema-price" placeholder="e.g. ££" value="££" />
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>JSON-LD Code Output</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>Copy-Paste Schema Script</span>
+            <button class="btn-copy" id="btn-copy-schema" data-target="output-schema-code">Copy Script</button>
+          </div>
+          <textarea id="output-schema-code" readonly rows="16" class="mono-output"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>Search engines read your page as text and make educated guesses about what it means. Structured data removes the guessing: it states explicitly that this string is a business name, that one is a postcode, and this number is an opening hour — in a vocabulary (schema.org) that Google, Bing, Yahoo and Yandex jointly maintain.</p>
+        <p>The payoff is <strong>rich results</strong>. Correct structured data is what lets a recipe show a star rating in search, an event show its date, or a local business appear with its address and hours in a knowledge panel. Those enhanced listings occupy more space and attract more clicks than a plain blue link.</p>
+
+        <h2>Why JSON-LD rather than Microdata</h2>
+        <p>There are three ways to add structured data, and Google explicitly recommends <strong>JSON-LD</strong>. Unlike Microdata and RDFa, which scatter attributes throughout your HTML, JSON-LD sits in a single <code>&lt;script&gt;</code> block — usually in the <code>&lt;head&gt;</code> — completely separate from your markup.</p>
+        <p>That separation is the whole advantage. You can restructure your HTML without breaking your structured data, generate it server-side independently of your templates, and read it as one coherent object rather than reverse-engineering it from attributes spread across a page.</p>
+
+        <h2>The rule that gets sites penalised</h2>
+        <p>Structured data must describe content that is <strong>actually visible on the page</strong>. Marking up a review rating that appears nowhere, or listing opening hours you don't display, violates Google's structured data guidelines and can trigger a manual action that removes your rich results entirely — sometimes site-wide.</p>
+        <p>This is the most common way well-intentioned SEO work backfires. The safe rule: if a user can't see it on the page, don't put it in the schema.</p>
+
+        <h2>Testing and building up</h2>
+        <p>Always validate before shipping. Google's <strong>Rich Results Test</strong> shows which rich result types your markup qualifies for, and the <strong>Schema Markup Validator</strong> at validator.schema.org catches syntax errors and unrecognised properties. Search Console then reports errors it finds across your live site.</p>
+        <p>Start small. A correct <code>LocalBusiness</code> or <code>Organization</code> block with name, URL, logo and address delivers most of the value. Once that's validating cleanly, layer on the types that fit your content — <code>FAQPage</code> for question sections (this site uses it on every page), <code>BreadcrumbList</code> for navigation trails, <code>Article</code> for posts. Each type has required and recommended properties; missing a required one disqualifies the whole block, which is exactly what the validators are for.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Injecting JSON-LD in Modern Apps</h2>
+        <p>Search engines require schema markup to be present in the initial DOM. If you are building a Single Page Application (SPA) with React or Vue, injecting JSON-LD dynamically requires care to ensure crawlers actually see it.</p>
+        
+        <h3>React Implementation (Next.js / Gatsby)</h3>
+        <p>The safest way to inject JSON-LD in a React component is by dangerously setting the inner HTML of a script tag. This prevents React from escaping the JSON string.</p>
+        <pre><code class="language-javascript">
+// components/LocalBusinessSchema.jsx
+export default function LocalBusinessSchema({ businessData }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": businessData.name,
+    "image": businessData.logo,
+    "telephone": businessData.phone,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": businessData.street,
+      "addressLocality": businessData.city,
+      "postalCode": businessData.zip,
+      "addressCountry": businessData.country
+    }
+  };
+
+  return (
+    &lt;script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    /&gt;
+  );
+}
+        </code></pre>
+        <p>Ensure this component is rendered inside the <code>&lt;head&gt;</code> of your document if possible, though Googlebot will parse JSON-LD even if it's placed in the <code>&lt;body&gt;</code>.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is JSON-LD and why does Google prefer it?</summary>
+            <p class="faq-answer">JSON-LD is structured data expressed as a JSON object inside a single script tag, separate from your HTML. Google recommends it because it does not depend on your markup structure — you can redesign a page without breaking the data.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does structured data improve my ranking?</summary>
+            <p class="faq-answer">Not directly. It makes your page eligible for rich results — star ratings, FAQs, business details — which occupy more space in search and attract more clicks. The benefit is visibility and click-through rather than a ranking boost.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can structured data get my site penalised?</summary>
+            <p class="faq-answer">Yes, if it describes content not visible on the page. Marking up ratings or details users cannot see violates Google’s guidelines and can trigger a manual action removing your rich results. Only mark up what is genuinely on the page.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I test my schema markup?</summary>
+            <p class="faq-answer">Use Google’s Rich Results Test to see which rich result types you qualify for, and the Schema Markup Validator at validator.schema.org for syntax errors. Search Console then reports issues found across your live site.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Titles, descriptions and Open Graph tags with live previews.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/robots-txt-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Robots.txt Generator</h3>
+            <p>Control crawling and declare your sitemap location.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/essentials#ess-web" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>How the web works</h3>
+            <p>The request journey, status codes and what they mean.</p>
+            <span class="resource-cta">Read the guide →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>

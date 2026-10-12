@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast." />
+  <link rel="canonical" href="https://frontendhelpers.com/why-is-my-website-not-on-google" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/why-is-my-website-not-on-google" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Why Isn’t My Website Showing Up on Google? A Diagnostic Guide" />
+  <meta property="og:description" content="Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-why-is-my-website-not-on-google.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Why Isn’t My Website Showing Up on Google? A Diagnostic Guide" />
+  <meta name="twitter:description" content="Step-by-step diagnostic for websites missing from Google. Check indexing, robots.txt, noindex, canonicals, and content quality to find problems fast." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-why-is-my-website-not-on-google.png" />
+
+  <title>Why Isn’t My Website Showing Up on Google? A Diagnostic Guide | FrontendHelpers</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Why Isn’t My Website Showing Up on Google? A Diagnostic Guide",
+        "description": "A step-by-step diagnostic for websites missing from Google search. Check indexing, robots.txt, noindex tags, canonicals and content quality — in the order that finds the problem fastest.",
+        "url": "https://frontendhelpers.com/why-is-my-website-not-on-google",
+        "image": "https://frontendhelpers.com/assets/og-why-is-my-website-not-on-google.png",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/why-is-my-website-not-on-google" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://frontendhelpers.com/guides" },
+          { "@type": "ListItem", "position": 3, "name": "Why Isn’t My Website Showing Up on Google? A Diagnostic Guide", "item": "https://frontendhelpers.com/why-is-my-website-not-on-google" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does it take Google to index a new website?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Discovery usually takes days and full indexing one to four weeks, longer for a new domain with no inbound links. Submitting a sitemap in Search Console and using URL Inspection to request indexing speeds this up considerably." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between crawling and indexing?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Crawling is Google fetching your page; indexing is Google storing it for search results. robots.txt blocks crawling, while a noindex meta tag blocks indexing. Blocking a page in robots.txt actually prevents Google seeing its noindex tag." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does \"Discovered – currently not indexed\" mean?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Google knows the URL exists but has chosen not to index it, usually because the content is thin, duplicated, or judged low value. It is a content quality signal rather than a technical fault." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/guides">Guides</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Why Isn’t My Website Showing Up on Google? A Diagnostic Guide</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Why isn’t my website <span class="hero-highlight">showing up on Google?</span></h1>
+        <p class="page-hero-sub">Work through these checks in order. The first three find the cause about 80% of the time.</p>
+        <p class="guide-meta"><span>Guide</span> · By <a href="/about">AurumCodeWorks</a> · 8 min read · Updated 19 July 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>First: is it actually missing, or just ranking badly?</h2>
+        <p>These are different problems with different fixes, and it's worth separating them before you change anything. Search Google for <code>site:yourdomain.com</code>. If results appear, your site <strong>is</strong> indexed and you have a ranking problem. If nothing appears, it isn't indexed and you have a technical problem.</p>
+        <p>Everything below addresses the second case, in the order that finds the cause fastest.</p>
+
+        <h2>1. Has Google had time to find you?</h2>
+        <p>New sites aren't indexed instantly. Discovery typically takes days, and full indexing can take one to four weeks — longer for a brand-new domain with no inbound links, because Google has no signal that the site exists.</p>
+        <p>Speed it up by setting up <strong>Google Search Console</strong>, verifying ownership, and submitting your sitemap. Then use URL Inspection on your most important pages and click "Request indexing". There's a daily quota of roughly ten, so spend it on pages that matter.</p>
+
+        <h2>2. Is robots.txt blocking the crawler?</h2>
+        <p>Visit <code>yourdomain.com/robots.txt</code>. If you see <code>Disallow: /</code> under <code>User-agent: *</code>, that single line blocks your entire site from being crawled. It's the correct setting for a staging environment and catastrophic on production — and deploying a staging robots.txt to live is one of the most common ways sites vanish from search.</p>
+        <p>An important subtlety: robots.txt controls <em>crawling</em>, not <em>indexing</em>. A blocked page can still appear as a bare URL if other sites link to it. Our <a href="/robots-txt-generator">robots.txt generator</a> produces a correct file, and Search Console's robots.txt report shows exactly how Googlebot reads yours.</p>
+
+        <h2>3. Is there a noindex tag?</h2>
+        <p>This is the most common cause of all, and the most invisible — the page looks perfect to a human visitor. View your page source and search for <code>noindex</code>. If you find <code>&lt;meta name="robots" content="noindex"&gt;</code>, that tag is explicitly telling search engines to exclude the page.</p>
+        <p>It usually arrives one of two ways: a CMS setting like WordPress's "Discourage search engines from indexing this site" checkbox, which is easy to enable during development and forget; or a staging configuration promoted to production. Check both the HTML and your server's <code>X-Robots-Tag</code> header, since the same directive can be sent as a header.</p>
+
+        <h2>4. Are your canonical tags pointing elsewhere?</h2>
+        <p>A canonical tag tells Google which version of a page is authoritative. If every page on your site carries a canonical pointing at your homepage — a surprisingly common template bug — you're instructing Google to ignore all of them and index only the homepage.</p>
+        <p>Each page's canonical should normally point to itself. Check a few pages and confirm the URL in the tag matches the page you're on.</p>
+
+        <h2>5. Can Google actually render your content?</h2>
+        <p>If your content is injected by JavaScript after page load, Google may index an empty shell. Googlebot does execute JavaScript, but rendering is queued separately from crawling and can lag by days — and any script error means it sees nothing.</p>
+        <p>Test with Search Console's URL Inspection tool: use "Test live URL", then view the rendered HTML. If your headings and body copy aren't there, that's your answer. Server-side rendering or static generation removes the problem entirely.</p>
+
+        <h2>6. Is the content substantial enough to index?</h2>
+        <p>Google doesn't index everything it crawls. Pages that are very thin, near-duplicates of other pages, or auto-generated with little unique value often sit in Search Console's <em>"Discovered – currently not indexed"</em> or <em>"Crawled – currently not indexed"</em> state.</p>
+        <p>That status is Google telling you the page didn't clear its quality bar. The fix isn't technical — it's giving the page a genuine reason to exist: content that answers something specific, better than the pages already ranking.</p>
+
+        <h2>7. Technical basics worth confirming</h2>
+        <p>Make sure your pages return a <strong>200 status code</strong> (not 404 or 5xx), that HTTPS works and redirects correctly, and that your site is reachable at one canonical hostname — pick www or non-www and 301 everything else to it. Confirm your sitemap lists real, indexable URLs and is submitted in Search Console.</p>
+        <p>Finally, check for a manual action in Search Console under Security &amp; Manual Actions. It's rare, but if Google has penalised your site, nothing else you do will help until it's resolved.</p>
+
+        <h2>The realistic timeline</h2>
+        <p>Once you've fixed the cause, indexing still takes time — days for a small site with requested indexing, several weeks for a large one. Resist the urge to keep changing things while you wait; you'll lose track of which change fixed what. Make the fix, request indexing, and check back in a week.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How long does it take Google to index a new website?</summary>
+            <p class="faq-answer">Discovery usually takes days and full indexing one to four weeks, longer for a new domain with no inbound links. Submitting a sitemap in Search Console and using URL Inspection to request indexing speeds this up considerably.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What is the difference between crawling and indexing?</summary>
+            <p class="faq-answer">Crawling is Google fetching your page; indexing is Google storing it for search results. robots.txt blocks crawling, while a noindex meta tag blocks indexing. Blocking a page in robots.txt actually prevents Google seeing its noindex tag.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What does "Discovered – currently not indexed" mean?</summary>
+            <p class="faq-answer">Google knows the URL exists but has chosen not to index it, usually because the content is thin, duplicated, or judged low value. It is a content quality signal rather than a technical fault.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/robots-txt-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Robots.txt Generator</h3>
+            <p>Create valid crawler rules and declare your sitemap.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Control titles, descriptions and canonical tags.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/schema-markup-generator" class="resource-card">
+            <span class="resource-kicker">Tool</span>
+            <h3>Schema Markup Generator</h3>
+            <p>Help Google understand what your pages represent.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/guides">← All guides</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

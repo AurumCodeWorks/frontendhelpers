@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free UTM link builder for Google Analytics. Add source, medium, campaign, term, and content parameters to any URL with automatic lowercasing." />
+  <link rel="canonical" href="https://frontendhelpers.com/utm-link-builder" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://frontendhelpers.com/utm-link-builder" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="UTM Link Builder — Free Campaign URL Builder for Analytics" />
+  <meta property="og:description" content="Free UTM link builder for Google Analytics. Add source, medium, campaign, term, and content parameters to any URL with automatic lowercasing." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-utm-link-builder.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="UTM Link Builder — Free Campaign URL Builder for Analytics" />
+  <meta name="twitter:description" content="Free UTM link builder for Google Analytics. Add source, medium, campaign, term, and content parameters to any URL with automatic lowercasing." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-utm-link-builder.png" />
+
+  <title>UTM Link Builder — Free Campaign URL Builder for Analytics | FrontendHelpers</title>
+
+  <!-- Preconnect Google Fonts -->
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xpli7xsyy2");
+    const clarityConsent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    window.clarity('consentv2', {
+      'analytics_storage': clarityConsent,
+      'ad_storage': clarityConsent
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "UTM Link Builder",
+        "url": "https://frontendhelpers.com/utm-link-builder",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any (browser-based)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+        "description": "Free browser-based UTM campaign URL builder for Google Analytics and other analytics platforms.",
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "UTM Link Builder", "item": "https://frontendhelpers.com/utm-link-builder" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between utm_source and utm_medium?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Source is where the link lives — newsletter, twitter, a specific partner site. Medium is the type of channel — email, social, cpc, referral. Source answers \"which one\" and medium answers \"what kind\", and analytics reports are built around the pair." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are UTM parameters case-sensitive?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, in most analytics platforms. Email and email are recorded as two separate sources, splitting your data. Always use lowercase — this builder converts values automatically for that reason." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use UTM parameters on internal links?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Tagging links between pages on your own site starts a new session in most analytics tools and overwrites the visitor’s original source, corrupting your attribution. Use internal link tracking or custom events instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do UTM parameters hurt SEO?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not directly, but tagged URLs that get indexed can create duplicate versions of the same page in search results. A self-referencing canonical tag on the clean URL prevents this." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Ambient floating orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container tool-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">All tools</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">UTM Link Builder</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>UTM campaign <span class="hero-highlight">link builder</span></h1>
+        <p class="page-hero-sub">Tag any URL with UTM parameters so your analytics can tell you exactly which campaign, channel and link brought each visitor.</p>
+      </section>
+
+      <!-- ═══ THE TOOL ═══ -->
+<div class="tool-card" id="tool-utm">
+    <div class="panel-header">
+      <h2><span class="tool-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>UTM Campaign Link Builder</h2>
+    </div>
+    <p class="panel-desc">Build tracking links for newsletters, social posts and ads — so Google Analytics can tell you exactly which campaign brought each visitor.</p>
+
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="form-group">
+          <label for="utm-url">Destination URL</label>
+          <input type="url" id="utm-url" placeholder="https://yourwebsite.com/landing-page" value="https://frontendhelpers.com/" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="utm-source">Campaign Source <small>(required — where the link lives)</small></label>
+            <input type="text" id="utm-source" placeholder="e.g. newsletter, twitter, google" value="newsletter" />
+          </div>
+          <div class="form-group">
+            <label for="utm-medium">Campaign Medium <small>(required — the channel type)</small></label>
+            <input type="text" id="utm-medium" placeholder="e.g. email, social, cpc" value="email" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="utm-campaign">Campaign Name</label>
+            <input type="text" id="utm-campaign" placeholder="e.g. spring-launch" value="" />
+          </div>
+          <div class="form-group">
+            <label for="utm-term">Campaign Term <small>(paid keywords)</small></label>
+            <input type="text" id="utm-term" placeholder="e.g. css+tools" value="" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="utm-content">Campaign Content <small>(A/B variants)</small></label>
+          <input type="text" id="utm-content" placeholder="e.g. header-button vs footer-link" value="" />
+        </div>
+      </div>
+
+      <div class="tool-previews">
+        <h3>Tracking Link</h3>
+        <div class="output-code-container" style="margin-top: 0;">
+          <div class="output-header">
+            <span>Tagged URL</span>
+            <button class="btn-copy" data-target="output-utm">Copy Link</button>
+          </div>
+          <textarea id="output-utm" readonly rows="5" class="mono-output"></textarea>
+        </div>
+        <p class="panel-desc" id="utm-hint" style="margin-top: 10px;"></p>
+      </div>
+    </div>
+  </div>
+
+      <!-- ═══ DEEP CONTENT ═══ -->
+      <article class="tool-documentation">
+        <h2>How to use this tool</h2>
+        <p>UTM parameters are tags appended to a URL that analytics tools read on arrival. Without them, visitors from your newsletter, a partner blog and a paid post all collapse into vague buckets like "direct" or "referral" — and you lose the ability to tell which effort actually worked.</p>
+        <p>They're invisible to the visitor's experience and don't affect the page they land on. The five standard parameters are <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_term</code> and <code>utm_content</code>, and they've been the de facto standard since Urchin — the "U" in UTM — became Google Analytics.</p>
+
+        <h2>Source, medium and campaign: the three that matter</h2>
+        <p><strong>Source</strong> is <em>where</em> the link lives: <code>newsletter</code>, <code>twitter</code>, <code>partner-blog</code>. <strong>Medium</strong> is the <em>type</em> of channel: <code>email</code>, <code>social</code>, <code>cpc</code>, <code>referral</code>. Source and medium are the pair analytics reports are built around, and both should be on every tagged link.</p>
+        <p><strong>Campaign</strong> groups links that belong to the same initiative — <code>spring-launch</code>, <code>black-friday</code> — so you can measure the whole effort across channels. <strong>Term</strong> is for paid keywords, and <strong>content</strong> distinguishes variants: use it to tell a header button from a footer link in the same email, or version A from version B in a test.</p>
+
+        <h2>Consistency matters more than cleverness</h2>
+        <p>UTM values are case-sensitive in most analytics platforms. <code>Email</code>, <code>email</code> and <code>E-mail</code> become three separate rows in your reports, splitting the data for the same channel — which is exactly the confusion you adopted UTMs to avoid. This builder lowercases values and converts spaces to hyphens automatically for that reason.</p>
+        <p>Agree a naming convention before you start tagging and write it down. A short shared document listing your approved mediums (email, social, cpc, referral, display) and how campaigns are named will save you far more time than it costs.</p>
+
+        <h2>Two mistakes worth avoiding</h2>
+        <p><strong>Never tag internal links.</strong> Adding UTM parameters to links between pages on your own site starts a brand-new session in most analytics tools, wrongly attributing the visitor to that campaign and destroying your understanding of the original source. Use internal link tracking or events instead.</p>
+        <p><strong>Be careful with tagged URLs in indexable places.</strong> If a tagged link gets crawled and indexed, you can end up with duplicate URLs for the same page competing in search. A self-referencing canonical tag on the clean URL protects against this — the <a href="/meta-tag-generator">meta tag generator</a> produces one.</p>
+        <p>Tagged links are also long and ugly. For anything a human will see — printed material, social bios, spoken URLs — run the tagged link through a shortener, which preserves the parameters through the redirect.</p>
+      </article>
+
+            <!-- ═══ DEVELOPER GUIDE ═══ -->
+      <article class="tool-documentation">
+        <h2>Developer Implementation Guide: Parsing UTMs in JavaScript</h2>
+        <p>Once a user lands on your site via a UTM-tagged link, you need to capture those parameters to attribute the session. Modern browsers provide the <code>URLSearchParams</code> API to handle this cleanly.</p>
+        
+        <h3>Capturing UTM Parameters on Load</h3>
+        <p>You can execute this script on your landing page to extract UTMs and save them to <code>sessionStorage</code> or include them in a form submission.</p>
+        <pre><code class="language-javascript">
+function captureUTMs() {
+  // Parse the current URL's query string
+  const params = new URLSearchParams(window.location.search);
+  
+  const utmData = {
+    source: params.get('utm_source'),
+    medium: params.get('utm_medium'),
+    campaign: params.get('utm_campaign'),
+    term: params.get('utm_term'),
+    content: params.get('utm_content')
+  };
+
+  // Only store if a source exists
+  if (utmData.source) {
+    sessionStorage.setItem('session_utms', JSON.stringify(utmData));
+    console.log("UTMs captured:", utmData);
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', captureUTMs);
+        </code></pre>
+        <p>Storing UTMs in <code>sessionStorage</code> is highly recommended because a user might navigate through several pages on your site before finally signing up or making a purchase. This ensures the original attribution data isn't lost during navigation.</p>
+      </article>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is the difference between utm_source and utm_medium?</summary>
+            <p class="faq-answer">Source is where the link lives — newsletter, twitter, a specific partner site. Medium is the type of channel — email, social, cpc, referral. Source answers "which one" and medium answers "what kind", and analytics reports are built around the pair.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Are UTM parameters case-sensitive?</summary>
+            <p class="faq-answer">Yes, in most analytics platforms. Email and email are recorded as two separate sources, splitting your data. Always use lowercase — this builder converts values automatically for that reason.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should I use UTM parameters on internal links?</summary>
+            <p class="faq-answer">No. Tagging links between pages on your own site starts a new session in most analytics tools and overwrites the visitor’s original source, corrupting your attribution. Use internal link tracking or custom events instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do UTM parameters hurt SEO?</summary>
+            <p class="faq-answer">Not directly, but tagged URLs that get indexed can create duplicate versions of the same page in search results. A self-referencing canonical tag on the clean URL prevents this.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ═══ RELATED ═══ -->
+      <section class="resource-section tool-page-related">
+        <h2>Related tools</h2>
+        <div class="resource-cards">
+          <a href="/url-slug-generator" class="resource-card">
+            <span class="resource-kicker">URLs</span>
+            <h3>URL Slug Generator</h3>
+            <p>Turn headlines into clean, search-friendly URL slugs.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/meta-tag-generator" class="resource-card">
+            <span class="resource-kicker">SEO</span>
+            <h3>Meta Tag Generator</h3>
+            <p>Add canonical tags and control how shared links appear.</p>
+            <span class="resource-cta">Open the generator →</span>
+          </a>
+          <a href="/keyword-density-checker" class="resource-card">
+            <span class="resource-kicker">Content</span>
+            <h3>Keyword Density Analyser</h3>
+            <p>Word counts, reading time and your most-repeated terms.</p>
+            <span class="resource-cta">Analyse your copy →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/">← Back to all 16 free developer tools</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="script.js?v=1.1.0"></script>
+</body>
+</html>
