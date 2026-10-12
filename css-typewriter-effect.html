@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build a pure CSS typewriter effect with steps() and ch: blinking caret, type-and-delete loop, multiple lines, monospace caveats and reduced motion." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-typewriter-effect" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-typewriter-effect" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Typewriter Effect: Pure CSS Typing Animation" />
+  <meta property="og:description" content="Build a pure CSS typewriter effect with steps() and ch: blinking caret, type-and-delete loop, multiple lines, monospace caveats and reduced motion." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-text-animations.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Typewriter Effect: Pure CSS Typing Animation" />
+  <meta name="twitter:description" content="Build a pure CSS typewriter effect with steps() and ch: blinking caret, type-and-delete loop, multiple lines, monospace caveats and reduced motion." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-text-animations.png" />
+
+  <title>CSS Typewriter Effect: Pure CSS Typing Animation</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this recipe (all classes prefixed tw-) -->
+  <style>
+    .tw-type,
+    .tw-loop,
+    .tw-term { font-family: ui-monospace, Menlo, Consolas, monospace; }
+    .tw-type, .tw-loop { font-size: 1.15rem; }
+    .tw-term { font-size: 0.95rem; line-height: 1.7; text-align: left; }
+
+    /* Demo staging only: fixed-width boxes so text grows from the left inside centred cards */
+    .tw-stage-type {
+      width: calc(16ch + 2px);
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 1.15rem;
+    }
+    .tw-loop { width: 15ch; }
+    .tw-term { width: calc(17ch + 2px); }
+
+    /* Demo 1: type once, then blink */
+    .tw-type {
+      display: inline-block;
+      width: 16ch;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid currentColor;
+      animation:
+        tw-type 1.6s steps(16) both,
+        tw-blink 0.75s step-end 1.6s 4 forwards;
+    }
+    @keyframes tw-type { from { width: 0; } }
+    @keyframes tw-blink {
+      from, to { border-right-color: currentColor; }
+      50%      { border-right-color: transparent; }
+    }
+
+    /* Demo 2: type, hold, delete, repeat */
+    .tw-loop { display: inline-flex; align-items: center; }
+    .tw-loop-text {
+      width: 14ch;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: tw-type-delete 5s steps(14) infinite;
+    }
+    .tw-loop::after {
+      content: "";
+      width: 0.55ch;
+      height: 1.15em;
+      margin-left: 1px;
+      background: currentColor;
+      animation: tw-caret-fade 0.75s step-end infinite;
+    }
+    @keyframes tw-type-delete {
+      0%        { width: 0; }
+      40%, 60%  { width: 14ch; }
+      90%, 100% { width: 0; }
+    }
+    @keyframes tw-caret-fade { 50% { opacity: 0; } }
+    .tw-paused .tw-loop-text,
+    .tw-paused .tw-loop::after { animation-play-state: paused; }
+
+    /* Demo 3: several lines, one after another */
+    .tw-line {
+      display: block;
+      width: calc(var(--n) * 1ch);
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid transparent;
+      animation:
+        tw-type calc(var(--n) * 60ms) steps(var(--n)) var(--delay) both,
+        tw-caret-on calc(var(--n) * 60ms) linear var(--delay);
+    }
+    .tw-l1 { --n: 17; --delay: 0s; }
+    .tw-l2 { --n: 13; --delay: 1.27s; }
+    .tw-l3 {
+      --n: 12;
+      --delay: 2.3s;
+      animation:
+        tw-type calc(var(--n) * 60ms) steps(var(--n)) var(--delay) both,
+        tw-caret-on calc(var(--n) * 60ms) linear var(--delay),
+        tw-blink 0.75s step-end 3.02s 2 forwards;
+    }
+    @keyframes tw-caret-on { from, to { border-right-color: currentColor; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tw-type,
+      .tw-loop-text,
+      .tw-loop::after,
+      .tw-line { animation: none; }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Typewriter Effect: Pure CSS Typing Animation",
+        "description": "Build a pure CSS typewriter effect with steps() and ch: blinking caret, type-and-delete loop, multiple lines, monospace caveats and reduced motion.",
+        "url": "https://frontendhelpers.com/css-typewriter-effect",
+        "image": "https://frontendhelpers.com/assets/og-css-text-animations.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-typewriter-effect" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Typewriter Effect", "item": "https://frontendhelpers.com/css-typewriter-effect" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I make a typewriter effect with only CSS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Put the text in an element with white-space: nowrap and overflow: hidden, set its width in ch to the number of characters, and animate the width from 0 using steps(N), where N is the character count. A border-right that blinks with a step-end animation acts as the caret. Use a monospace font so each step reveals exactly one letter." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my CSS typewriter cut letters in half?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The ch unit is the width of the 0 glyph, so it only matches every letter in a monospace font. In a proportional font, narrow letters like i and wide ones like m drift away from the step boundaries. Switch to a monospace font, or reveal per-letter spans with JavaScript. Letter-spacing also needs adding to each step." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a CSS typewriter effect on multiple lines?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Make each line its own element with its own character count, width and steps() value, then give each line an animation-delay equal to the total duration of the lines before it plus a short pause. Use animation-fill-mode: both so later lines stay hidden until their turn." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is a typewriter animation accessible?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It can be. Keep the full text in the DOM so screen readers read it straight away, never type out essential instructions, show the finished text when prefers-reduced-motion is set to reduce, and give any loop that runs longer than five seconds a pause control." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Typewriter Effect</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS typewriter effect: <span class="hero-highlight">pure CSS typing</span></h1>
+        <p class="page-hero-sub">Text that types itself out, letter by letter, with a blinking caret — built from steps(), the ch unit and two keyframes, and honest about where it breaks.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <h2>How the trick works</h2>
+        <p>A CSS typewriter doesn't add letters at all. The whole sentence is in the HTML from the start; CSS hides most of it and then uncovers it one character at a time. Three declarations do the hiding: <code>white-space: nowrap</code> keeps the text on a single line, <code>overflow: hidden</code> clips whatever sits outside the box, and a <code>width</code> measured in <code>ch</code> sets how much of the line is visible. Animate that width from <code>0</code> to the full length and the text appears to be typed.</p>
+        <p>A plain width animation would slide smoothly and reveal half-letters. The typing feel comes from the <code>steps()</code> easing function, which splits the animation into equal jumps instead of a smooth curve. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/easing-function/steps">MDN's steps() reference</a> describes the integer as the number of equal intervals and notes that the jump position defaults to <code>end</code>, so <code>steps(16)</code> means sixteen jumps, with the final one landing as the animation finishes. Make the number of steps equal the number of characters and each jump reveals exactly one more letter.</p>
+        <p>All three demos below are plain CSS; the page’s only script restarts or pauses them.</p>
+
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="tw-stage-type"><span class="tw-type">Build succeeded.</span></div>
+              <button type="button" class="recipe-replay">Replay</button>
+            </div>
+            <figcaption><strong>Type once</strong> — 16 characters, steps(16), then the caret blinks four times and settles.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <span class="tw-loop"><span class="tw-loop-text">Now you see it</span></span>
+              <button type="button" class="recipe-replay tw-pause">Pause</button>
+            </div>
+            <figcaption><strong>Type and delete</strong> — one keyframe set types, holds, erases and waits, forever.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="tw-term">
+                <span class="tw-line tw-l1">$ npm create site</span>
+                <span class="tw-line tw-l2">Installing...</span>
+                <span class="tw-line tw-l3">Done in 2.4s</span>
+              </div>
+              <button type="button" class="recipe-replay">Replay</button>
+            </div>
+            <figcaption><strong>Multiple lines</strong> — each line waits for the one above, and everything finishes inside five seconds.</figcaption>
+          </figure>
+        </div>
+
+        <h2>Recipe 1: type once, with a blinking caret</h2>
+        <p>This is the version most people want for a hero line or a terminal-style heading. The caret is the element's own <code>border-right</code>. Because a border sits outside the content box, <code>overflow: hidden</code> never clips it, so it always rides along at the edge of the revealed text.</p>
+        <pre><code class="language-html">&lt;span class="tw-type"&gt;Build succeeded.&lt;/span&gt;</code></pre>
+        <pre><code class="language-css">.tw-type {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  display: inline-block;
+  width: 16ch;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid currentColor;
+  animation:
+    tw-type 1.6s steps(16) both,
+    tw-blink 0.75s step-end 1.6s 4 forwards;
+}
+@keyframes tw-type { from { width: 0; } }
+@keyframes tw-blink {
+  from, to { border-right-color: currentColor; }
+  50%      { border-right-color: transparent; }
+}</code></pre>
+        <p>A few details are deliberate. The <code>tw-type</code> keyframes only declare <code>from</code>; the browser uses the element's own <code>width: 16ch</code> as the end point, so you change the length in one place. <code>display: inline-block</code> is needed because width has no effect on a plain inline span. The caret stays solid while typing, as a real cursor does, then blinks four times starting at 1.6s and stops on the visible frame thanks to <code>forwards</code>. In a centred container, give the line a fixed-width wrapper (the demo cards do), or it drifts sideways as it grows. A caret that blinks forever is moving content that never ends; more on why that matters below.</p>
+        <p>Our <a href="/css-text-animations#anim-typewriter">typewriter card in the text animation library</a> is the same idea in its shortest form, with an infinite caret, if you need a quick copy-paste version.</p>
+
+        <h2>Getting the numbers right</h2>
+        <p>The rule is simple: <strong>steps = characters = width in ch</strong>. Count every character, including spaces and punctuation. Duration is then a choice of speed: multiply the count by a per-character time. Around 100ms per character feels like deliberate typing; 60ms feels brisk.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Text</th><th>Characters</th><th>steps()</th><th>Final width</th><th>At 100ms/char</th><th>At 60ms/char</th></tr></thead>
+            <tbody>
+              <tr><td>Hello, world.</td><td>13</td><td>steps(13)</td><td>13ch</td><td>1.3s</td><td>0.78s</td></tr>
+              <tr><td>Done in 2.4s</td><td>12</td><td>steps(12)</td><td>12ch</td><td>1.2s</td><td>0.72s</td></tr>
+              <tr><td>Now you see it</td><td>14</td><td>steps(14)</td><td>14ch</td><td>1.4s</td><td>0.84s</td></tr>
+              <tr><td>Build succeeded.</td><td>16</td><td>steps(16)</td><td>16ch</td><td>1.6s</td><td>0.96s</td></tr>
+              <tr><td>$ npm create site</td><td>17</td><td>steps(17)</td><td>17ch</td><td>1.7s</td><td>1.02s</td></tr>
+              <tr><td>The quick brown fox jumps over the lazy dog</td><td>43</td><td>steps(43)</td><td>43ch</td><td>4.3s</td><td>2.58s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The last row is the warning. A 43-character sentence takes over four seconds at a natural pace, and nobody waits that long to read a headline. Keep typed text short, or speed it up. If your steps are fewer than your characters, the text jumps two letters at a time; if they are more, some steps reveal nothing and the rhythm stutters. Off-by-one errors are the usual cause of a final letter that never quite appears.</p>
+        <p>If you add <code>letter-spacing</code>, each character becomes wider than <code>1ch</code>, so the final width must include it: <code>calc(16 * (1ch + 0.05em))</code> for <code>letter-spacing: 0.05em</code>.</p>
+
+        <h2>Why ch only lines up in monospace fonts</h2>
+        <p>According to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length">MDN's &lt;length&gt; reference</a>, <code>1ch</code> is the advance measure of the <code>0</code> glyph in the element's font. In a monospace font every character shares that advance, so <em>n</em> steps of <code>1ch</code> land exactly on <em>n</em> letter boundaries. In a proportional font like the one this paragraph uses, an <code>i</code> is much narrower than a <code>0</code> and an <code>m</code> is much wider. The steps drift away from the letters: some frames slice a glyph in half, others reveal two at once, and the final width of <em>N</em>ch may clip the end of the sentence or leave a gap before the caret.</p>
+        <p>There is no CSS-only fix for that, so the honest options are:</p>
+        <ul>
+          <li><strong>Use a monospace font for the typed text.</strong> The demos do this, and a typewriter look is monospace by nature anyway.</li>
+          <li><strong>Accept an approximation.</strong> Keep <code>steps(N)</code> but set the final width to the measured width of the text in <code>em</code> so nothing is clipped. Intermediate frames will occasionally cut a letter. At 60–100ms a frame, many people won't notice; check it at a large font size before shipping.</li>
+          <li><strong>Reveal each letter separately.</strong> Wrap every character in a span and stagger their appearance, usually with JavaScript. This is exact in any font, including emoji and characters from other scripts, which are not <code>1ch</code> wide even in monospace fonts.</li>
+        </ul>
+
+        <h2>Recipe 2: typing, pausing, deleting, looping</h2>
+        <p>Rotating taglines usually type a phrase, hold it, erase it and start again. One keyframe set can do all four. The key fact is that a stepped timing function applies to each segment between keyframes, not to the whole animation, so <code>steps(14)</code> gives 14 jumps on the way up and another 14 on the way down, while the flat segments in between do nothing.</p>
+        <pre><code class="language-html">&lt;span class="tw-loop"&gt;&lt;span class="tw-loop-text"&gt;Now you see it&lt;/span&gt;&lt;/span&gt;</code></pre>
+        <pre><code class="language-css">.tw-loop {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  display: inline-flex;
+  align-items: center;
+}
+.tw-loop-text {
+  width: 14ch;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: tw-type-delete 5s steps(14) infinite;
+}
+.tw-loop::after {
+  content: "";
+  width: 0.55ch;
+  height: 1.15em;
+  margin-left: 1px;
+  background: currentColor;
+  animation: tw-caret-fade 0.75s step-end infinite;
+}
+@keyframes tw-type-delete {
+  0%        { width: 0; }
+  40%, 60%  { width: 14ch; }
+  90%, 100% { width: 0; }
+}
+@keyframes tw-caret-fade { 50% { opacity: 0; } }
+.tw-paused .tw-loop-text,
+.tw-paused .tw-loop::after { animation-play-state: paused; }</code></pre>
+        <p>In a 5-second cycle that works out to two seconds of typing (about 143ms a letter), a one-second hold, a faster 1.5-second delete (about 107ms a letter) and half a second of empty line. This version also shows the other caret technique: a block caret drawn by <code>::after</code> on a wrapper. It has to live on the wrapper, because a pseudo-element inside the clipped element would be clipped with the text. An empty <code>content: ""</code> is ignored by screen readers.</p>
+        <p>CSS alone can only loop one phrase. Cycling several different phrases needs a separate element per phrase or a script, which is where the JavaScript version below earns its place.</p>
+
+        <h2>Recipe 3: multiple lines in sequence</h2>
+        <p>A line can't wrap while it is being typed, because <code>white-space: nowrap</code> is what keeps the clipping working. (<code>white-space</code> is now a shorthand, and <code>nowrap</code> actually sets its <code>text-wrap-mode</code> longhand; the old spelling still works everywhere.) So each line is its own element with its own count, and later lines wait their turn with <code>animation-delay</code>. Custom properties keep the arithmetic in one place: <code>--n</code> drives the width, the step count and the duration at 60ms a character.</p>
+        <pre><code class="language-html">&lt;div class="tw-term"&gt;
+  &lt;span class="tw-line tw-l1"&gt;$ npm create site&lt;/span&gt;
+  &lt;span class="tw-line tw-l2"&gt;Installing...&lt;/span&gt;
+  &lt;span class="tw-line tw-l3"&gt;Done in 2.4s&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        <pre><code class="language-css">.tw-term { font-family: ui-monospace, Menlo, Consolas, monospace; }
+.tw-line {
+  display: block;
+  width: calc(var(--n) * 1ch);
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  animation:
+    tw-type calc(var(--n) * 60ms) steps(var(--n)) var(--delay) both,
+    tw-caret-on calc(var(--n) * 60ms) linear var(--delay);
+}
+.tw-l1 { --n: 17; --delay: 0s; }
+.tw-l2 { --n: 13; --delay: 1.27s; }
+.tw-l3 {
+  --n: 12;
+  --delay: 2.3s;
+  animation:
+    tw-type calc(var(--n) * 60ms) steps(var(--n)) var(--delay) both,
+    tw-caret-on calc(var(--n) * 60ms) linear var(--delay),
+    tw-blink 0.75s step-end 3.02s 2 forwards;
+}
+@keyframes tw-caret-on { from, to { border-right-color: currentColor; } }</code></pre>
+        <p>Each delay is the previous delay plus that line's duration plus a 0.25s pause: line two starts at 0 + 1.02 + 0.25 = 1.27s, line three at 1.27 + 0.78 + 0.25 = 2.3s, and line three finishes at 3.02s. <code>both</code> matters here: the backwards fill holds lines two and three at zero width during their delay, so they don't flash up fully before their turn. The caret is transparent by default and the short <code>tw-caret-on</code> animation shows it only on the line currently typing; the last line then blinks twice and stays solid. The <code>tw-type</code> and <code>tw-blink</code> keyframes are the ones from recipe 1.</p>
+
+        <h2>Keep it real text, and respect reduced motion</h2>
+        <p>Because the words are in the DOM from the first frame, clipping them doesn't hide them from assistive technology. A screen reader announces the full sentence at once rather than letter by letter, which is exactly what you want. Search engines read it, and people can still select and copy it. Don't undo that by inserting characters with a script into a live region, or by splitting text into spans without providing the complete string to screen readers.</p>
+        <p>Sighted readers, on the other hand, have to wait. Never type out anything essential: form instructions, error messages, prices or the main call to action. Use the effect for flavour around content that is already readable elsewhere.</p>
+        <p>Two requirements are easy to miss. First, honour the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion">prefers-reduced-motion media feature</a>, which tells you that someone has asked their operating system to minimise non-essential motion. The demos switch every animation off, and because each element's base width is already the full width, the finished text simply appears:</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .tw-type,
+  .tw-loop-text,
+  .tw-loop::after,
+  .tw-line { animation: none; }
+}</code></pre>
+        <p>Second, <a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html">WCAG 2.2.2 Pause, Stop, Hide</a> (Level A) requires a way to pause, stop or hide moving or blinking content that starts automatically, lasts more than five seconds and sits alongside other content. That is why recipes 1 and 3 stop within five seconds, and why the looping demo has a Pause button that adds a class setting <code>animation-play-state: paused</code>. An infinite caret blink falls under the same rule.</p>
+
+        <h2>When JavaScript is the better tool</h2>
+        <p>The CSS technique is ideal for one short, fixed string in a monospace font. Reach for a few lines of JavaScript when the text varies (user names, translated strings, content from a CMS), when you are cycling through several phrases, or when the typed text must use a proportional font. No library is needed:</p>
+        <pre><code class="language-html">&lt;p&gt;We build &lt;span class="typed" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;span class="visually-hidden"&gt;fast sites, accessible forms and clean CSS.&lt;/span&gt;&lt;/p&gt;</code></pre>
+        <pre><code class="language-js">const el = document.querySelector('.typed');
+const phrases = ['fast sites.', 'accessible forms.', 'clean CSS.'];
+const wait = ms =&gt; new Promise(r =&gt; setTimeout(r, ms));
+
+async function run() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = phrases[0];
+    return;
+  }
+  for (let i = 0; ; i = (i + 1) % phrases.length) {
+    const chars = [...phrases[i]];
+    for (let n = 1; n &lt;= chars.length; n++) {
+      el.textContent = chars.slice(0, n).join('');
+      await wait(80);
+    }
+    await wait(1500);
+    for (let n = chars.length - 1; n &gt;= 0; n--) {
+      el.textContent = chars.slice(0, n).join('');
+      await wait(40);
+    }
+    await wait(300);
+  }
+}
+run();</code></pre>
+        <p>Spreading the string with <code>[...phrases[i]]</code> splits it by code point rather than UTF-16 unit, so a simple emoji is never cut in half; for joined sequences such as flags or family emoji, split with <code>Intl.Segmenter</code> instead. The changing text is hidden from screen readers with <code>aria-hidden</code>, and the complete sentence sits in a visually hidden span, so assistive technology gets the content once instead of hearing it rebuilt every 80ms. Because it loops, it still needs a pause control under WCAG 2.2.2. It also works in any font, because the browser lays out real letters. For animation costs in general, see our guide to <a href="/css-animation-performance">CSS animation performance</a>; animating <code>width</code> triggers layout, which is fine for one small line but not something to scale up to whole paragraphs.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I make a typewriter effect with only CSS?</summary>
+            <p class="faq-answer">Put the text in an element with white-space: nowrap and overflow: hidden, set its width in ch to the number of characters, and animate the width from 0 using steps(N), where N is the character count. A border-right that blinks with a step-end animation acts as the caret. Use a monospace font so each step reveals exactly one letter.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my CSS typewriter cut letters in half?</summary>
+            <p class="faq-answer">The ch unit is the width of the 0 glyph, so it only matches every letter in a monospace font. In a proportional font, narrow letters like i and wide ones like m drift away from the step boundaries. Switch to a monospace font, or reveal per-letter spans with JavaScript. Letter-spacing also needs adding to each step.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a CSS typewriter effect on multiple lines?</summary>
+            <p class="faq-answer">Make each line its own element with its own character count, width and steps() value, then give each line an animation-delay equal to the total duration of the lines before it plus a short pause. Use animation-fill-mode: both so later lines stay hidden until their turn.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is a typewriter animation accessible?</summary>
+            <p class="faq-answer">It can be. Keep the full text in the DOM so screen readers read it straight away, never type out essential instructions, show the finished text when prefers-reduced-motion is set to reduce, and give any loop that runs longer than five seconds a pause control.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-text-animations#anim-typewriter" class="resource-card">
+            <span class="resource-kicker">Library card</span>
+            <h3>Typewriter snippet</h3>
+            <p>The one-line copy-paste version with steps(13) and a blinking caret.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-text-animations" class="resource-card">
+            <span class="resource-kicker">Library</span>
+            <h3>CSS text animations</h3>
+            <p>Gradient flows, reveals and other effects for headings and copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Which properties are cheap to animate and how to diagnose jank.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.recipe-replay').forEach(btn => btn.addEventListener('click', () => {
+      const stage = btn.closest('.recipe-stage');
+      if (btn.classList.contains('tw-pause')) {
+        btn.textContent = stage.classList.toggle('tw-paused') ? 'Play' : 'Pause';
+        return;
+      }
+      stage.getAnimations({ subtree: true }).forEach(a => { a.cancel(); a.play(); });
+    }));
+  </script>
+  <script src="common.js"></script>
+</body>
+</html>

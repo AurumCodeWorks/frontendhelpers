@@ -1501,6 +1501,16 @@ textarea#output-meta-code {
   color: var(--secondary);
 }
 
+/* Code blocks: the inline-code chip above must not apply line by line */
+.tool-page .tool-documentation pre code {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: inherit;
+  color: var(--text);
+}
+
 .tool-page-table { margin: 4px 0 24px; }
 
 .tool-page-faq { padding: 8px 0 24px; }
@@ -2138,3 +2148,70 @@ input.invalid, textarea.invalid {
 .seo-explanation h2 { font-family: var(--font-title); font-size: 1.35rem; font-weight: 600; margin: 32px 0 12px; }
 .seo-explanation h2:first-child { margin-top: 0; }
 .seo-explanation p { color: var(--text-dim); line-height: 1.8; margin: 0 0 14px; }
+
+/* ── EFFECT RECIPE PAGES: live demo frames ─────────────────── */
+/* <div class="recipe-demos">
+     <figure class="recipe-demo"><div class="recipe-stage">…</div>
+       <figcaption>Name — one-line note</figcaption></figure> … </div> */
+.recipe-demos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0 32px;
+}
+.recipe-demo {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(15, 22, 42, 0.4);
+  overflow: hidden;
+}
+.recipe-stage {
+  min-height: 170px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--text);
+}
+.recipe-demo figcaption {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.recipe-demo figcaption strong { color: var(--text); }
+.recipe-replay {
+  margin-top: 12px;
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.recipe-replay:hover { color: var(--text); border-color: var(--secondary); }
+
+/* ── CHANGELOG ─────────────────────────────────────────────── */
+.changelog { max-width: 860px; }
+.changelog-entry { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); scroll-margin-top: 90px; }
+.changelog-entry:first-child { border-top: 0; padding-top: 0; }
+.changelog-entry h2 { font-family: var(--font-title); font-size: 1.2rem; font-weight: 600; margin-bottom: 14px; }
+.changelog-entry time { color: var(--secondary); }
+.changelog-entry ul { list-style: none; margin: 0; padding: 0; }
+.changelog-entry li { display: flex; gap: 12px; align-items: baseline; padding: 7px 0; line-height: 1.6; color: var(--text-dim); }
+.change-tag {
+  flex: 0 0 74px;
+  text-align: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 0;
+  border-radius: 4px;
+}
+.change-new { background: rgba(6, 182, 212, 0.14); color: var(--secondary); }
+.change-improved { background: rgba(139, 92, 246, 0.16); color: #c4b5fd; }
+.change-fixed { background: rgba(34, 197, 94, 0.14); color: #86efac; }
+.changelog-note { margin-top: 40px; color: var(--text-dim); }
