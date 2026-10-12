@@ -62,7 +62,7 @@ if (!s.includes(`(${url})`)) {
 
 // Library page — "In-depth recipes" section
 s = read('css-animations.html');
-if (!s.includes(`href="/${slug}"`)) {
+if (!s.includes(`href="/${slug}" class="`)) {
   const at = s.indexOf('<h2>In-depth recipes</h2>');
   const end = s.indexOf('</div>', s.indexOf('<div class="resource-cards">', at));
   s = s.slice(0, end) + card('Recipe', 'Read the recipe →', '        ').trimStart().replace(/^/, '  ') + '\n      ' + s.slice(end);
@@ -72,7 +72,7 @@ if (!s.includes(`href="/${slug}"`)) {
 // Category pages — first card under "Related categories"
 for (const cat of categories) {
   s = read(`${cat}.html`);
-  if (s.includes(`href="/${slug}"`)) continue;
+  if (s.includes(`href="/${slug}" class="resource-card"`)) continue;
   const at = s.indexOf('<div class="resource-cards">', s.indexOf('Related categories')) + '<div class="resource-cards">'.length;
   const indent = s.slice(at).match(/^\n(\s*)/)[1];
   write(`${cat}.html`, s.slice(0, at) + '\n' + card('Deep dive', 'Read the recipe →', indent) + s.slice(at));
@@ -81,7 +81,7 @@ for (const cat of categories) {
 
 // Guides index — after the last card
 s = read('guides.html');
-if (!s.includes(`href="/${slug}"`)) {
+if (!s.includes(`href="/${slug}" class="`)) {
   const cards = [...s.matchAll(/( *)<a href="\/[\w-]+" class="guide-card">[\s\S]*?<\/a>/g)];
   const last = cards[cards.length - 1], ind = last[1];
   const block = [

@@ -8,6 +8,13 @@
   <author><name>AurumCodeWorks</name></author>
   <updated>2026-10-12T00:00:00Z</updated>
   <entry>
+    <title>Four more effect recipes and keyboard fixes</title>
+    <id>https://frontendhelpers.com/changelog#2026-10-12-5</id>
+    <link href="https://frontendhelpers.com/changelog#2026-10-12-5"/>
+    <updated>2026-10-12T00:00:00Z</updated>
+    <content type="html">&lt;ul&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-hover-underline-animation"&gt;Hover underline animations, including one that survives links wrapping onto two lines&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-flip-card"&gt;3D flip cards that work with hover, keyboard focus and a button&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-accordion-animation"&gt;Animating accordion height to auto: grid rows, interpolate-size and ::details-content&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;New:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-dialog-animation"&gt;Animating the native dialog element in and out with @starting-style&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Fixed:&lt;/strong&gt; &lt;a href="https://frontendhelpers.com/css-accordion-animations"&gt;The Smooth Accordion and Hamburger Morph animations can now be operated from the keyboard&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
     <title>Eight in-depth CSS effect recipes</title>
     <id>https://frontendhelpers.com/changelog#2026-10-12-4</id>
     <link href="https://frontendhelpers.com/changelog#2026-10-12-4"/>

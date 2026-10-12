@@ -327,7 +327,7 @@
       </article>
       <article class="tool-documentation anim-ref" id="anim-burger-morph">
         <h3>Hamburger Morph</h3>
-        <p>The three bars morph into an X using :has() on a hidden checkbox — pure CSS state. In production, sync the checkbox with your menu's open state.</p>
+        <p>The three bars morph into an X using :has() on a visually hidden (but still focusable) checkbox — pure CSS state. For a real navigation menu, use a button with aria-expanded and toggle a class instead, so screen readers announce whether the menu is open.</p>
         <p class="anim-ref-label">Markup</p>
         <pre><code class="language-html">&lt;label class="fh-burger" aria-label="Toggle menu"&gt;
   &lt;input type="checkbox" /&gt;
@@ -343,8 +343,21 @@
   border: 1px solid #3a4358;
   border-radius: 10px;
   cursor: pointer;
+  position: relative;
 }
-.fh-burger input { display: none; }
+/* The checkbox covers the button invisibly, so it stays
+   clickable AND reachable with Tab (display: none is neither) */
+.fh-burger input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.fh-burger:has(input:focus-visible) {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
 .fh-burger span {
   width: 20px;
   height: 2px;

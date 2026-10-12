@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-accordion-animation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-accordion-animation" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="Animate Accordion Height in CSS: interpolate-size &amp; More" />
+  <meta property="og:description" content="Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-accordion-animation.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Animate Accordion Height in CSS: interpolate-size &amp; More" />
+  <meta name="twitter:description" content="Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-accordion-animation.png" />
+
+  <title>Animate Accordion Height in CSS: interpolate-size &amp; More</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Technique 1: grid rows, works in every current browser */
+    .ac-grid-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      visibility: hidden;
+      transition: grid-template-rows 0.35s ease, visibility 0.35s;
+    }
+    .ac-grid-btn[aria-expanded="true"] + .ac-grid-panel {
+      grid-template-rows: 1fr;
+      visibility: visible;
+    }
+    .ac-grid-inner {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Technique 2: native <details>, animated where supported */
+    .ac-details::details-content {
+      opacity: 0;
+      transition: opacity 0.35s ease, content-visibility 0.35s allow-discrete;
+    }
+    .ac-details[open]::details-content {
+      opacity: 1;
+    }
+    @supports (interpolate-size: allow-keywords) {
+      .ac-details {
+        interpolate-size: allow-keywords;
+      }
+      .ac-details::details-content {
+        height: 0;
+        overflow: clip;
+        transition: height 0.35s ease, opacity 0.35s ease, content-visibility 0.35s allow-discrete;
+      }
+      .ac-details[open]::details-content {
+        height: auto;
+      }
+    }
+
+    /* Reduced motion: no height animation, at most a quick fade */
+    @media (prefers-reduced-motion: reduce) {
+      .ac-grid-panel {
+        transition: none;
+      }
+      .ac-details::details-content {
+        transition: opacity 0.2s ease;
+      }
+    }
+
+    /* Demo layout only */
+    .recipe-stage.ac-stage { place-items: start stretch; }
+    .ac-grid,
+    .ac-details { border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 10px; background: rgba(255, 255, 255, 0.03); }
+    .ac-group { display: grid; gap: 0.5rem; }
+    .ac-grid-btn {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+    }
+    .ac-grid-btn::after { content: "+"; color: var(--secondary); }
+    .ac-grid-btn[aria-expanded="true"]::after { content: "\2212"; }
+    .ac-summary { padding: 0.7rem 1rem; font-weight: 600; cursor: pointer; color: var(--text); }
+    .ac-grid-btn:focus-visible,
+    .ac-summary:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; border-radius: 8px; }
+    .ac-text { padding: 0 1rem 0.9rem; color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Animate Accordion Height in CSS: interpolate-size & More",
+        "description": "Animate accordion height to auto: the grid-rows trick that works everywhere, interpolate-size, ::details-content and exclusive details groups.",
+        "url": "https://frontendhelpers.com/css-accordion-animation",
+        "image": "https://frontendhelpers.com/assets/og-css-accordion-animation.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-accordion-animation" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "Accordion Height Animation", "item": "https://frontendhelpers.com/css-accordion-animation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I transition height to auto in CSS now?",
+            "acceptedAnswer": { "@type": "Answer", "text": "In Chrome and Edge 129 and later, yes: set interpolate-size: allow-keywords on :root, or write the open height as calc-size(auto, size), and a transition from height: 0 to height: auto animates. Firefox and Safari did not support either feature as of October 2026, so they jump straight to the final height. For an animation that works everywhere today, transition grid-template-rows from 0fr to 1fr." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my grid-template-rows accordion not collapse fully?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The grid item inside the animated container keeps a minimum height equal to its content. Give that inner wrapper overflow: hidden and min-height: 0, and move any padding onto an element inside it, because padding on the wrapper itself stays visible when the row is 0fr." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make only one details element open at a time?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Give every details element in the group the same name attribute, such as name=\"faq\". Opening one closes the others, with no JavaScript. It works in Chrome and Edge 120, Safari 17.2 and Firefox 130 onwards; older browsers ignore it and let each item open independently." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should accordions animate when prefers-reduced-motion is set?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not their height. Content that opens instantly loses nothing, so remove the height or grid-template-rows transition inside a prefers-reduced-motion: reduce media query. A brief opacity fade is an acceptable replacement because it signals the change without moving anything across the screen." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Accordion Height Animation</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>Animate accordion height in CSS: <span class="hero-highlight">from grid rows to interpolate-size</span></h1>
+        <p class="page-hero-sub">Smooth opening and closing without guessing a max-height: a grid technique that runs in every current browser, the newer interpolate-size and ::details-content features layered over native details, and the support facts you need to choose.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage ac-stage">
+              <div class="ac-grid">
+                <button type="button" class="ac-grid-btn" aria-expanded="false" aria-controls="ac-grid-panel">Delivery options</button>
+                <div class="ac-grid-panel" id="ac-grid-panel">
+                  <div class="ac-grid-inner">
+                    <div class="ac-text">Standard delivery takes three to five working days. Order before 2pm for next-day delivery, or collect from any of our shops at no charge.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Grid rows</strong> — <code>grid-template-rows</code> from <code>0fr</code> to <code>1fr</code> on a button-driven panel; animates in every current browser.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage ac-stage">
+              <details class="ac-details">
+                <summary class="ac-summary">Returns policy</summary>
+                <div class="ac-text">Send back any unworn item within 30 days for a full refund. Print the prepaid label from your order confirmation and drop the parcel at a post office.</div>
+              </details>
+            </div>
+            <figcaption><strong>Native details</strong> — <code>::details-content</code> plus <code>interpolate-size</code>: slides in Chrome and Edge, fades in Safari and Firefox, and simply toggles anywhere older.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage ac-stage">
+              <div class="ac-group">
+                <details class="ac-details" name="ac-plan" open>
+                  <summary class="ac-summary">Starter</summary>
+                  <div class="ac-text">One site, shared hosting and email support during office hours.</div>
+                </details>
+                <details class="ac-details" name="ac-plan">
+                  <summary class="ac-summary">Team</summary>
+                  <div class="ac-text">Five sites, staging environments and a named contact.</div>
+                </details>
+                <details class="ac-details" name="ac-plan">
+                  <summary class="ac-summary">Agency</summary>
+                  <div class="ac-text">Unlimited sites, client billing and a phone line that answers at weekends.</div>
+                </details>
+              </div>
+            </div>
+            <figcaption><strong>Exclusive group</strong> — three <code>&lt;details name="ac-plan"&gt;</code> elements: opening one closes the others, with no script.</figcaption>
+          </figure>
+        </div>
+        <script>
+          document.querySelectorAll('.ac-grid-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const open = btn.getAttribute('aria-expanded') === 'true';
+              btn.setAttribute('aria-expanded', String(!open));
+            });
+          });
+        </script>
+
+        <h2>Why height: auto would not transition</h2>
+        <p>A transition needs two values the browser can calculate between. <code>0</code> and <code>240px</code> are both lengths, so every frame in between is simple arithmetic. <code>auto</code> is not a length but an instruction to work the height out from the content, and for most of CSS’s history intrinsic keywords like it could not be interpolated. Change <code>height</code> from <code>0</code> to <code>auto</code> and the panel jumps to full size, whatever <code>transition</code> says.</p>
+        <p>Two workarounds became habits. The first transitions <code>max-height</code> to a number you hope exceeds the content, say <code>1000px</code>. The duration then covers all 1,000 pixels: a 200px panel finishes opening in the first fifth of the animation, and on closing nothing visibly moves until <code>max-height</code> drops below the content, which feels like lag. Guess too low and long content is cut off, perhaps only on a narrow phone.</p>
+        <p>The second uses JavaScript: read <code>scrollHeight</code>, set it as an explicit height, then restore <code>auto</code> on <code>transitionend</code>. Closing runs in reverse and needs a forced reflow between the two writes, or nothing animates. It works, but it is fragile, layout-thrashing code.</p>
+
+        <h2>The grid-rows technique: works in every current browser</h2>
+        <p>CSS grid offers a cleaner route. A row sized <code>1fr</code> takes the full height of its content; a row sized <code>0fr</code> takes none. Both are the same type of value, so <code>grid-template-rows</code> can transition between them, and because nothing is guessed the timing is right for any amount of content.</p>
+        <pre><code class="language-html">&lt;div class="ac-grid"&gt;
+  &lt;button type="button" class="ac-grid-btn" aria-expanded="false" aria-controls="ac-grid-panel"&gt;Delivery options&lt;/button&gt;
+  &lt;div class="ac-grid-panel" id="ac-grid-panel"&gt;
+    &lt;div class="ac-grid-inner"&gt;
+      &lt;div class="ac-text"&gt;Standard delivery takes three to five working days. …&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <pre><code class="language-css">.ac-grid-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.35s ease, visibility 0.35s;
+}
+.ac-grid-btn[aria-expanded="true"] + .ac-grid-panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+.ac-grid-inner {
+  min-height: 0;
+  overflow: hidden;
+}</code></pre>
+        <pre><code class="language-js">document.querySelectorAll('.ac-grid-btn').forEach((btn) =&gt; {
+  btn.addEventListener('click', () =&gt; {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+  });
+});</code></pre>
+        <p>The inner wrapper is the part people forget. A grid item’s automatic minimum height is its content height, so without help the row refuses to shrink below the text. <code>overflow: hidden</code> resets that minimum to zero and clips the text; <code>min-height: 0</code> states the intent explicitly. Put padding on an element inside the wrapper, never on the wrapper itself, or it stays visible when the row is <code>0fr</code>.</p>
+        <p>The <code>visibility</code> transition is for accessibility. Clipped content is still in the page, so without it a keyboard user could tab into a link inside a closed panel. An element stays visible for the whole of a transition that has <code>visible</code> at either end, so the panel only hides once it has finished closing.</p>
+        <p>Firefox 66 was first to interpolate <code>grid-template-rows</code> (March 2019), then Safari 16 and Chrome 107 in autumn 2022. Every technique here animates layout, so the browser recalculates the page each frame; for a short panel that is cheap, and our guide to <a href="/css-animation-performance">CSS animation performance</a> explains when it matters.</p>
+        <p>Our <a href="/css-accordion-animations">accordion animations</a> collection has a paste-ready version, the <a href="/css-accordion-animations#anim-accordion-smooth">Smooth Accordion card</a>, which drives the same grid from a checkbox and label without script. Its checkbox is hidden visually rather than with <code>display: none</code>, so it can still take keyboard focus, but screen readers announce it as a checkbox rather than an expandable section, so in production prefer a real button or native <code>&lt;details&gt;</code>.</p>
+
+        <h2>interpolate-size: animating to auto directly</h2>
+        <p>Chrome and Edge 129, released in September 2024, added a property that switches on what used to be impossible. <code>interpolate-size: allow-keywords</code> lets the browser animate between a length or percentage and an intrinsic keyword: <code>auto</code>, <code>min-content</code>, <code>max-content</code>, <code>fit-content</code>, and <code>content</code> for <code>flex-basis</code>. It is inherited, so the setup recommended in Chrome’s announcement, <a href="https://developer.chrome.com/docs/css-ui/animate-to-height-auto" rel="noopener">Animate to height: auto</a>, is one declaration on the root element.</p>
+        <pre><code class="language-css">:root {
+  interpolate-size: allow-keywords;
+}</code></pre>
+        <p>It is opt-in because, as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/interpolate-size" rel="noopener">MDN’s interpolate-size reference</a> explains, many existing style sheets assume keyword sizes snap, and animating them by default would break those sites. One end of the transition must be a length or percentage, so <code>auto</code> to <code>max-content</code> still jumps. Browsers that do not know the property ignore it: in October 2026 that still means Firefox and Safari, where implementation bugs are open but nothing has shipped. The demos here scope it to <code>.ac-details</code> so no other transition on the site changes.</p>
+        <p><code>calc-size()</code> is the per-value alternative. Its first argument is the keyword; in the second, the word <code>size</code> stands for the resolved value. Such a value animates even without <code>interpolate-size</code>, and allows arithmetic that <code>calc()</code> refuses, such as <code>calc-size(auto, size + 2rem)</code>. Write a plain <code>height: auto</code> first as the fallback.</p>
+        <pre><code class="language-css">.panel {
+  height: 0;
+  overflow: clip;
+  transition: height 0.35s ease;
+}
+.panel.is-open {
+  height: auto;                  /* other browsers: no animation */
+  height: calc-size(auto, size); /* Chrome and Edge 129+ */
+}</code></pre>
+        <p>A percentage inside the calculation resolves against the containing block, not <code>size</code>, so scale with a multiplier such as <code>size * 1.5</code>. Support matches <code>interpolate-size</code> exactly; reach for <code>calc-size()</code> only when you need the arithmetic.</p>
+
+        <h2>Animating native details with ::details-content</h2>
+        <p>A <code>&lt;details&gt;</code> element toggles instantly, and animating a wrapper div only half helps: on closing, the browser hides the content before any transition can play. The <code>::details-content</code> pseudo-element selects the part that expands and collapses, which closes that gap. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::details-content" rel="noopener">MDN’s ::details-content reference</a> marks it Baseline 2025: Chrome and Edge 131 (November 2024), Safari 18.4 (March 2025) and Firefox 143 (September 2025).</p>
+        <pre><code class="language-html">&lt;details class="ac-details"&gt;
+  &lt;summary class="ac-summary"&gt;Returns policy&lt;/summary&gt;
+  &lt;div class="ac-text"&gt;Send back any unworn item within 30 days for a full refund. …&lt;/div&gt;
+&lt;/details&gt;</code></pre>
+        <pre><code class="language-css">.ac-details::details-content {
+  opacity: 0;
+  transition: opacity 0.35s ease, content-visibility 0.35s allow-discrete;
+}
+.ac-details[open]::details-content {
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .ac-details {
+    interpolate-size: allow-keywords;
+  }
+  .ac-details::details-content {
+    height: 0;
+    overflow: clip;
+    transition: height 0.35s ease, opacity 0.35s ease, content-visibility 0.35s allow-discrete;
+  }
+  .ac-details[open]::details-content {
+    height: auto;
+  }
+}</code></pre>
+        <p>When a <code>&lt;details&gt;</code> closes, the browser’s own style sheet hides the content with <code>content-visibility: hidden</code>. That property is discrete, so it normally flips at once and cuts the closing animation short. The <code>allow-discrete</code> keyword, which sets <code>transition-behavior</code>, keeps the content rendered until the transition ends. Chrome’s post <a href="https://developer.chrome.com/blog/styling-details" rel="noopener">More options for styling details</a> uses the same pairing.</p>
+        <p>This is progressive enhancement in three layers. Browsers without <code>::details-content</code> drop the rules and show an ordinary <code>&lt;details&gt;</code>. Safari and Firefox, which have the pseudo-element but not <code>interpolate-size</code>, get the opacity fade. Chrome and Edge get the full slide. Keeping the height rules inside <code>@supports</code> means browsers that cannot animate them never apply the zero height at all.</p>
+        <p>Two gaps remain. Firefox does not yet transition <code>content-visibility</code>, so its fade plays only on opening. Safari cannot chain another pseudo-element after <code>::details-content</code>, such as <code>::details-content::before</code>.</p>
+
+        <h2>One open at a time: the name attribute</h2>
+        <p>Give several <code>&lt;details&gt;</code> elements the same <code>name</code> and the browser treats them as a group: opening one closes whichever was open. The third demo is only this markup with the classes above, and no script.</p>
+        <pre><code class="language-html">&lt;div class="ac-group"&gt;
+  &lt;details class="ac-details" name="ac-plan" open&gt;
+    &lt;summary class="ac-summary"&gt;Starter&lt;/summary&gt;
+    &lt;div class="ac-text"&gt;One site, shared hosting and email support during office hours.&lt;/div&gt;
+  &lt;/details&gt;
+  &lt;details class="ac-details" name="ac-plan"&gt;
+    &lt;summary class="ac-summary"&gt;Team&lt;/summary&gt;
+    &lt;div class="ac-text"&gt;Five sites, staging environments and a named contact.&lt;/div&gt;
+  &lt;/details&gt;
+  &lt;details class="ac-details" name="ac-plan"&gt;
+    &lt;summary class="ac-summary"&gt;Agency&lt;/summary&gt;
+    &lt;div class="ac-text"&gt;Unlimited sites, client billing and a phone line that answers at weekends.&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+        <p>Chrome and Edge 120 and Safari 17.2 shipped this in December 2023, and Firefox 130 followed in September 2024. Older browsers ignore the attribute and let every item open independently, a perfectly usable fallback. Grouped elements need not be siblings, and if several carry <code>open</code> in the HTML, only the first in source order renders open.</p>
+        <p>Use it sparingly. An exclusive group suits short lists such as settings sections or the plans in the demo. In FAQs readers often want to compare two answers, which is why the FAQ on this page lets several stay open.</p>
+
+        <h2>Why native details beats a div and a script</h2>
+        <p>The grid demo needed a button, <code>aria-expanded</code>, <code>aria-controls</code> and a click handler, and still lacks things <code>&lt;details&gt;</code> provides free. A <code>&lt;summary&gt;</code> is focusable, toggles with Enter or Space, and is exposed to assistive technology with an expanded or collapsed state, so screen readers announce it without any ARIA. The usual accordion bugs, such as a stale <code>aria-expanded</code> or a focusable link inside a closed panel, come from reproducing that by hand. Our <a href="/accessible-website-guide">accessible website guide</a> covers the wider checklist.</p>
+        <p>Find in page is the less obvious win. Chrome has opened a closed <code>&lt;details&gt;</code> when a find-in-page match is inside it since version 97, Safari since 26.2 (December 2025) and Firefox since 148 (February 2026), though Safari does not yet scroll the match into view correctly. Text in the grid demo’s closed panel cannot be found at all.</p>
+        <p>For a custom panel, <code>hidden="until-found"</code> restores searching: when a match is found the browser removes the attribute and fires a <code>beforematch</code> event, which your script should use to update <code>aria-expanded</code>. It works in Chrome and Edge 102, Firefox 148 and Safari 26.2; other browsers treat it as plain <code>hidden</code>.</p>
+
+        <h2>Browser support in October 2026</h2>
+        <p>Versions come from MDN’s browser compatibility data as published on 8 October 2026; Edge uses Chrome’s version numbers. Every fallback leaves the content readable.</p>
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Technique</th><th>Chrome/Edge</th><th>Safari</th><th>Firefox</th><th>Fallback behaviour</th></tr></thead>
+            <tbody>
+              <tr><td><code>grid-template-rows</code> 0fr → 1fr</td><td>107 (Oct 2022)</td><td>16 (Sep 2022)</td><td>66 (Mar 2019)</td><td>Panel opens and closes instantly</td></tr>
+              <tr><td><code>interpolate-size</code> and <code>calc-size()</code></td><td>129 (Sep 2024)</td><td>Not supported</td><td>Not supported</td><td>No height animation; the final height applies at once</td></tr>
+              <tr><td><code>::details-content</code></td><td>131 (Nov 2024)</td><td>18.4 (Mar 2025)</td><td>143 (Sep 2025)</td><td>Rules ignored; a plain details that toggles instantly</td></tr>
+              <tr><td><code>content-visibility</code> with <code>allow-discrete</code></td><td>117 (Sep 2023)</td><td>18 (Sep 2024)</td><td>Not supported</td><td>Content hides as closing starts, so no closing animation</td></tr>
+              <tr><td><code>&lt;details name&gt;</code> exclusive group</td><td>120 (Dec 2023)</td><td>17.2 (Dec 2023)</td><td>130 (Sep 2024)</td><td>Items open independently</td></tr>
+              <tr><td>Find in page opens details; <code>hidden="until-found"</code></td><td>97 (Jan 2022); 102 (May 2022)</td><td>26.2 (Dec 2025), match not scrolled into view</td><td>148 (Feb 2026)</td><td>Closed content is not searchable; until-found acts as <code>hidden</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Respect reduced motion</h2>
+        <p>An accordion’s slide is not essential motion: the content arrives either way, so the right response to <code>prefers-reduced-motion</code> is to remove the height animation altogether and let panels open at full height in one frame. A short opacity fade on <code>::details-content</code> is a fair replacement, because it signals that something changed without moving anything across the screen.</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .ac-grid-panel {
+    transition: none;
+  }
+  .ac-details::details-content {
+    transition: opacity 0.2s ease;
+  }
+}</code></pre>
+        <p>These rules sit at the end of the style sheet so they beat the transition inside <code>@supports</code>, which has the same specificity. <code>content-visibility</code> leaves the list too: with the height snapping to zero there is nothing left to fade on closing.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Can I transition height to auto in CSS now?</summary>
+            <p class="faq-answer">In Chrome and Edge 129 and later, yes: set interpolate-size: allow-keywords on :root, or write the open height as calc-size(auto, size), and a transition from height: 0 to height: auto animates. Firefox and Safari did not support either feature as of October 2026, so they jump straight to the final height. For an animation that works everywhere today, transition grid-template-rows from 0fr to 1fr.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why does my grid-template-rows accordion not collapse fully?</summary>
+            <p class="faq-answer">The grid item inside the animated container keeps a minimum height equal to its content. Give that inner wrapper overflow: hidden and min-height: 0, and move any padding onto an element inside it, because padding on the wrapper itself stays visible when the row is 0fr.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make only one details element open at a time?</summary>
+            <p class="faq-answer">Give every details element in the group the same name attribute, such as name="faq". Opening one closes the others, with no JavaScript. It works in Chrome and Edge 120, Safari 17.2 and Firefox 130 onwards; older browsers ignore it and let each item open independently.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Should accordions animate when prefers-reduced-motion is set?</summary>
+            <p class="faq-answer">Not their height. Content that opens instantly loses nothing, so remove the height or grid-template-rows transition inside a prefers-reduced-motion: reduce media query. A brief opacity fade is an acceptable replacement because it signals the change without moving anything across the screen.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-accordion-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS accordion animations</h3>
+            <p>Smooth panels, rotating chevrons, content fades and plus-minus icons, each with code to copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>Keyboard access, focus, labels and contrast: the checks every interactive component should pass.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Why layout animations cost more than transform and opacity, and how to keep them smooth.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Animate link underlines with ::after and scaleX, a background-size gradient that survives line wraps, or text-decoration transitions, accessibly." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-hover-underline-animation" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-hover-underline-animation" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Hover Underline Animations That Work With Wrapping" />
+  <meta property="og:description" content="Animate link underlines with ::after and scaleX, a background-size gradient that survives line wraps, or text-decoration transitions, accessibly." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-hover-underline-animation.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Hover Underline Animations That Work With Wrapping" />
+  <meta name="twitter:description" content="Animate link underlines with ::after and scaleX, a background-size gradient that survives line wraps, or text-decoration transitions, accessibly." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-hover-underline-animation.png" />
+
+  <title>CSS Hover Underline Animations That Work With Wrapping</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* Technique 1: a scaled ::after bar */
+    .ul-pseudo {
+      position: relative;
+      color: #e2e8f0;
+      text-decoration: none;
+    }
+    .ul-pseudo::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 2px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ul-pseudo:focus-visible::after { transform: scaleX(1); }
+    @media (hover: hover) {
+      .ul-pseudo:hover::after { transform: scaleX(1); }
+    }
+
+    /* Variants: grow from the centre; in from the left, out to the right */
+    .ul-centre::after { transform-origin: center; }
+    .ul-through::after { transform-origin: right; }
+    .ul-through:focus-visible::after { transform-origin: left; }
+    @media (hover: hover) {
+      .ul-through:hover::after { transform-origin: left; }
+    }
+
+    /* Technique 2: a gradient strip that follows line wraps */
+    .ul-grad {
+      color: #e2e8f0;
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      background-size: 0% 2px;
+      transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ul-grad:focus-visible { background-size: 100% 2px; }
+    @media (hover: hover) {
+      .ul-grad:hover { background-size: 100% 2px; }
+    }
+
+    /* Optional: every line draws at the same time */
+    .ul-clone {
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    /* Technique 3: the real underline, animated */
+    .ul-deco {
+      color: #67e8f9;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.3em;
+      text-decoration-color: rgba(103, 232, 249, 0.45);
+      transition:
+        text-decoration-thickness 0.2s ease,
+        text-underline-offset 0.2s ease,
+        text-decoration-color 0.2s ease;
+    }
+    .ul-deco:focus-visible {
+      text-decoration-thickness: 3px;
+      text-underline-offset: 0.15em;
+      text-decoration-color: #67e8f9;
+    }
+    @media (hover: hover) {
+      .ul-deco:hover {
+        text-decoration-thickness: 3px;
+        text-underline-offset: 0.15em;
+        text-decoration-color: #67e8f9;
+      }
+    }
+
+    /* Reduced motion: the new state appears at once */
+    @media (prefers-reduced-motion: reduce) {
+      .ul-pseudo::after,
+      .ul-grad,
+      .ul-deco { transition: none; }
+    }
+
+    /* Demo layout only */
+    .ul-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; font-weight: 600; }
+    .ul-wraps { display: grid; gap: 0.9rem; justify-items: start; }
+    .ul-narrow { max-width: 10.5em; font-size: 0.95rem; line-height: 1.6; color: var(--text-dim); }
+    .ul-tag { display: block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+    .ul-prose { max-width: 21em; line-height: 1.7; color: var(--text-dim); }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Hover Underline Animations That Work With Wrapping",
+        "description": "Animate link underlines with ::after and scaleX, a background-size gradient that survives line wraps, or text-decoration transitions, accessibly.",
+        "url": "https://frontendhelpers.com/css-hover-underline-animation",
+        "image": "https://frontendhelpers.com/assets/og-css-hover-underline-animation.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-hover-underline-animation" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Hover Underline Animations", "item": "https://frontendhelpers.com/css-hover-underline-animation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does my animated underline break when a link wraps onto two lines?",
+            "acceptedAnswer": { "@type": "Answer", "text": "An ::after bar is a single box positioned against a link that the browser has split into one fragment per line, so it cannot underline both lines. Paint the line with a background-image gradient and animate background-size instead, or animate text-decoration-thickness and text-underline-offset. Both follow the text across the wrap." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you animate text-decoration in CSS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not on and off: text-decoration-line is discrete, so an underline appears or disappears in one step. Its details are animatable, though. text-decoration-thickness, text-underline-offset and text-decoration-color all transition smoothly, provided both ends use lengths or colours rather than keywords such as auto or from-font." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it OK to remove the underline from links?",
+            "acceptedAnswer": { "@type": "Answer", "text": "In navigation, footers and tab bars, where position already says the item is a link, yes. In body text it leaves colour as the only cue, which fails WCAG 1.4.1 Use of Color unless the link colour also has 3:1 contrast with the surrounding text. Keep the underline in prose and animate its thickness, offset or colour instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I stop hover underlines sticking on phones?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Touch browsers apply :hover after a tap and leave it there until the user taps elsewhere. Put the :hover rules inside @media (hover: hover), which only matches when the primary input can hover, and keep the matching :focus-visible rules outside the query so keyboard users always get the effect." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Hover Underline Animations</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS hover underline animations <span class="hero-highlight">that survive line wraps</span></h1>
+        <p class="page-hero-sub">Three ways to animate a link underline, what each one does when the link breaks across two lines, and how to keep the effect usable with a keyboard, on a touchscreen and with reduced motion.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="ul-nav">
+                <a href="#" class="ul-pseudo">Left</a>
+                <a href="#" class="ul-pseudo ul-centre">Centre</a>
+                <a href="#" class="ul-pseudo ul-through">Through</a>
+              </div>
+            </div>
+            <figcaption><strong>Scaled ::after</strong> — three <code>transform-origin</code> settings; hover or Tab to each link.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="ul-wraps">
+                <div class="ul-narrow"><span class="ul-tag">::after</span><a href="#" class="ul-pseudo">A link long enough to wrap</a> here.</div>
+                <div class="ul-narrow"><span class="ul-tag">Gradient, slice</span><a href="#" class="ul-grad">A link long enough to wrap</a> here.</div>
+                <div class="ul-narrow"><span class="ul-tag">Gradient, clone</span><a href="#" class="ul-grad ul-clone">A link long enough to wrap</a> here.</div>
+              </div>
+            </div>
+            <figcaption><strong>Wrapped links</strong> — the same two-line link with each technique; only the gradients underline both lines.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="ul-prose">Links in running text keep their underline. On hover or focus, <a href="#" class="ul-deco">this underline thickens and moves closer</a> instead of appearing from nowhere.</div>
+            </div>
+            <figcaption><strong>Real underline</strong> — thickness, offset and colour transitions on a <code>text-decoration</code> that is always visible.</figcaption>
+          </figure>
+        </div>
+
+        <h2>Three ways to draw an underline you can animate</h2>
+        <p>A plain underline is either on or off. <code>text-decoration-line</code> animates discretely, so switching it from <code>none</code> to <code>underline</code> happens in one step however long the transition is. To make a line grow, draw or thicken, you need something with values in between, and CSS offers three: a pseudo-element you can scale, a background gradient whose size you can change, and the newer text-decoration longhands that take lengths and colours.</p>
+        <p>They look identical on a one-word link. They differ when a link breaks across two lines, which is exactly the case most underline snippets never test. The scaled pseudo-element is the version in our <a href="/css-hover-effects#anim-hover-underline">Underline Slide card</a>, and a tab-bar variant lives in the <a href="/css-ui-feedback-animations#anim-tab-underline">Tab Underline Slide card</a>. The demos above work with a mouse or the Tab key. For more ready-made snippets, browse the <a href="/css-hover-effects">CSS hover effects</a> category.</p>
+
+        <h2>The pseudo-element underline: scaleX and transform-origin</h2>
+        <p>The link gets <code>position: relative</code>, and an empty <code>::after</code> is absolutely positioned along its bottom edge, 2px tall and filled with <code>currentColor</code>. At rest it is squashed to nothing with <code>scaleX(0)</code>; on hover or keyboard focus it scales back to full width.</p>
+        <pre><code class="language-css">.ul-pseudo {
+  position: relative;
+  color: #e2e8f0;
+  text-decoration: none;
+}
+.ul-pseudo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ul-pseudo:focus-visible::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .ul-pseudo:hover::after { transform: scaleX(1); }
+}</code></pre>
+        <p>Only <code>transform</code> changes, so the browser paints the bar once and scales it on the compositor, which makes this the cheapest of the three techniques to run. <code>currentColor</code> keeps the bar in step with the text, even if the link colour also changes on hover. Setting <code>left</code> and <code>right</code> to 0 stretches the bar between the link’s edges without a width calculation, and the negative <code>bottom</code> drops it clear of descenders.</p>
+        <p><code>transform-origin</code> decides where the growth starts. <code>left</code> grows rightwards. <code>center</code> expands outwards from the middle, the look used by the tab underline in our library. The third variant draws in from the left and leaves to the right:</p>
+        <pre><code class="language-css">.ul-centre::after { transform-origin: center; }
+.ul-through::after { transform-origin: right; }
+.ul-through:focus-visible::after { transform-origin: left; }
+@media (hover: hover) {
+  .ul-through:hover::after { transform-origin: left; }
+}</code></pre>
+        <p>The trick is that the origin changes instantly while the scale transitions. On hover the origin jumps to the left while the bar is still zero width, so the jump is invisible, and the bar grows rightwards. On leave the origin snaps back to the right and the bar shrinks towards it, so it seems to slide out of the far side. Keep <code>transform-origin</code> out of the transition list, or the bar slides sideways mid-animation.</p>
+
+        <h2>Why the pseudo-element breaks on wrapped links</h2>
+        <p>An absolutely positioned child of an inline element uses that inline as its containing block. When the link wraps, the browser splits the inline into a fragment on each line, but <code>::after</code> is still a single box. CSS defines the containing block as running from the start of the first fragment to the end of the last, a shape that matches neither line. Hover the top example in the second demo: the bar is drawn once, never under both lines. In current Chrome it sits under the last line only; other engines can place it differently, and the result also shifts with where the line happens to break.</p>
+        <p>In navigation that is rarely a problem. Menu items are short, and <code>white-space: nowrap</code> or <code>display: inline-block</code> keeps each one on a single line. In running text, card headings and any link that a translation might lengthen, you cannot promise a single line, so the pseudo-element is the wrong tool.</p>
+
+        <h2>A gradient underline that follows the text</h2>
+        <p>Backgrounds on inline elements are painted fragment by fragment, so a background can follow text round a wrap where a pseudo-element cannot. This technique paints a single-colour “gradient” (<code>linear-gradient(currentColor, currentColor)</code> is simply a way to turn one colour into a background image), sizes it to a thin strip along the bottom of the link, and animates <code>background-size</code> from 0% to 100% to draw the line.</p>
+        <pre><code class="language-css">.ul-grad {
+  color: #e2e8f0;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ul-grad:focus-visible { background-size: 100% 2px; }
+@media (hover: hover) {
+  .ul-grad:hover { background-size: 100% 2px; }
+}</code></pre>
+        <p><code>background-position: 0 100%</code> pins the strip to the left and the bottom, and <code>no-repeat</code> stops it tiling up the link. The second value of <code>background-size</code> is the line’s thickness, so 2px stays 2px whatever the width.</p>
+        <p>How the strip crosses the wrap depends on <code>box-decoration-break</code>. With the default, <code>slice</code>, the browser treats the fragments as one long line laid end to end, sizes the background against that total width and then cuts it into pieces. So 100% means the whole link, and the line draws along the first line before continuing on the second, in reading order. With <code>clone</code>, each fragment gets its own copy of the background, sized against that fragment alone, so every line draws at the same time:</p>
+        <pre><code class="language-css">.ul-clone {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}</code></pre>
+        <p>Support needs a little care. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-decoration-break" rel="noopener">box-decoration-break reference</a> marks the property as limited availability: Firefox has supported it unprefixed since version 32 and Chrome and Edge since version 130, while Safari only recognises <code>-webkit-box-decoration-break</code>, and the prefixed property applies only to inline elements. Links are inline, so writing both declarations covers current browsers, and anywhere <code>clone</code> is ignored you simply get the <code>slice</code> behaviour, which still works.</p>
+        <p>The in-left, out-right idea carries over too. Set <code>background-position: 100% 100%</code> at rest and <code>0 100%</code> on hover, and transition only <code>background-size</code>; the position jumps while the strip has no width, just as the transform origin did.</p>
+        <p>The price is paint rather than compositing: changing <code>background-size</code> repaints the link on every frame, which is trivial for a few words but not for hundreds of elements at once. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains the difference.</p>
+
+        <h2>Animating the real underline</h2>
+        <p>The simplest modern option keeps a genuine text decoration and animates its details. Three longhands take values the browser can interpolate. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-underline-offset" rel="noopener">text-underline-offset reference</a> lists it as animatable by computed value type and widely available since November 2020; <code>text-decoration-thickness</code> animates the same way and has been widely available since March 2021, and <code>text-decoration-color</code> animates as a colour.</p>
+        <pre><code class="language-css">.ul-deco {
+  color: #67e8f9;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: rgba(103, 232, 249, 0.45);
+  transition:
+    text-decoration-thickness 0.2s ease,
+    text-underline-offset 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+.ul-deco:focus-visible {
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.15em;
+  text-decoration-color: #67e8f9;
+}
+@media (hover: hover) {
+  .ul-deco:hover {
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.15em;
+    text-decoration-color: #67e8f9;
+  }
+}</code></pre>
+        <p>Because this is a real underline, it wraps with the text, breaks around descenders where the browser skips ink, and needs no positioning or extra layers.</p>
+        <p>Two caveats. First, interpolation needs the same kind of value at both ends. <code>auto</code> and <code>from-font</code> are keywords, so a transition from <code>text-decoration-thickness: auto</code> to <code>3px</code> jumps rather than animates; use lengths throughout, and note that <code>text-underline-offset</code> in <code>em</code> scales with the font. Second, underlines are drawn on the pixel grid, so going from 1px to 3px has only a couple of visible steps. Keep the transition short and let the offset and colour carry most of the change, as the third demo does: the line moving 0.15em closer to the text while it brightens reads as smooth even though the thickness steps.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Technique</th><th>Survives line wraps</th><th>Animatable properties</th><th>Effort</th></tr></thead>
+            <tbody>
+              <tr><td><code>::after</code> + <code>scaleX()</code></td><td>No: one bar for a link split over several lines</td><td><code>transform</code> (and <code>opacity</code>); origin switched instantly</td><td>Medium: positioned link, pseudo-element, two states</td></tr>
+              <tr><td><code>background-image</code> gradient + <code>background-size</code></td><td>Yes: in reading order with <code>slice</code>, all lines at once with <code>clone</code></td><td><code>background-size</code>, <code>background-position</code></td><td>Low: one element, a few declarations</td></tr>
+              <tr><td><code>text-decoration-*</code> longhands</td><td>Yes: it is the browser’s own underline</td><td><code>text-decoration-thickness</code>, <code>text-underline-offset</code>, <code>text-decoration-color</code> (lengths and colours, not keywords)</td><td>Lowest: no extra boxes or positioning</td></tr>
+              <tr><td>Toggling <code>text-decoration-line</code></td><td>Yes</td><td>None: discrete, so the line just appears</td><td>None, but nothing to animate</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Keep the underline on links in prose</h2>
+        <p>Most hover-underline snippets begin with <code>text-decoration: none</code>, which leaves the links in a paragraph identified by colour alone until someone points at them. The W3C’s <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" rel="noopener">Understanding document for 1.4.1 Use of Color</a> lists links that are not visually evident without colour vision as a failure (F73). Its sufficient technique for colour-only links, G183, requires a contrast ratio of at least 3:1 between the link colour and the surrounding text colour, on top of the 4.5:1 that both need against the background. On a dark page with light grey body text, finding a link colour that meets all three ratios is hard, and a hover cue never reaches people on touchscreens.</p>
+        <p>So split the job. Links inside paragraphs, lists and table cells keep a visible underline at rest and use the third technique to emphasise it on hover and focus. The draw-on underlines from the first two techniques belong where position already says “this is a link”: navigation bars, footers, tab lists and card headings. Even there, mark the current page with more than a colour change. Our <a href="/accessible-website-guide">accessible website guide</a> covers the rest of that checklist.</p>
+
+        <h2>Focus, touch screens and reduced motion</h2>
+        <p><strong>Keyboard focus.</strong> Every rule that responds to <code>:hover</code> also responds to <code>:focus-visible</code>. In the demos the focus rules sit outside any media query so they always apply, and the browser’s focus outline stays, because a 2px line is a weak focus indicator on its own. <code>:focus-visible</code> rather than <code>:focus</code> means clicking a link with a mouse does not leave its underline drawn until focus moves elsewhere.</p>
+        <p><strong>Touch screens.</strong> Phones and tablets cannot hover, but their browsers apply <code>:hover</code> on tap so that hover-only menus still open, which leaves the effect stuck on afterwards. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/hover" rel="noopener">hover media feature reference</a> explains that <code>(hover: hover)</code> matches when the primary input mechanism can conveniently hover, and <code>(hover: none)</code> when it cannot or can only emulate it with a long press. Wrapping the hover rules in <code>@media (hover: hover)</code> removes the sticky state, and since the animation is decoration, nothing is lost. It is another reason prose links need their underline at rest: on a touchscreen, the rest state is all anyone sees.</p>
+        <p><strong>Reduced motion.</strong> A line growing across a word is small movement, but people who turn on their operating system’s reduce-motion setting have asked for less of it, and the information is the change of state, not the motion. Remove the transitions so the underline appears in its final form at once:</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .ul-pseudo::after,
+  .ul-grad,
+  .ul-deco { transition: none; }
+}</code></pre>
+        <p>Only the transitions go; the hover and focus states still apply, instantly.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Why does my animated underline break when a link wraps onto two lines?</summary>
+            <p class="faq-answer">An ::after bar is a single box positioned against a link that the browser has split into one fragment per line, so it cannot underline both lines. Paint the line with a background-image gradient and animate background-size instead, or animate text-decoration-thickness and text-underline-offset. Both follow the text across the wrap.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can you animate text-decoration in CSS?</summary>
+            <p class="faq-answer">Not on and off: text-decoration-line is discrete, so an underline appears or disappears in one step. Its details are animatable, though. text-decoration-thickness, text-underline-offset and text-decoration-color all transition smoothly, provided both ends use lengths or colours rather than keywords such as auto or from-font.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is it OK to remove the underline from links?</summary>
+            <p class="faq-answer">In navigation, footers and tab bars, where position already says the item is a link, yes. In body text it leaves colour as the only cue, which fails WCAG 1.4.1 Use of Color unless the link colour also has 3:1 contrast with the surrounding text. Keep the underline in prose and animate its thickness, offset or colour instead.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I stop hover underlines sticking on phones?</summary>
+            <p class="faq-answer">Touch browsers apply :hover after a tap and leave it there until the user taps elsewhere. Put the :hover rules inside @media (hover: hover), which only matches when the primary input can hover, and keep the matching :focus-visible rules outside the query so keyboard users always get the effect.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-hover-effects" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS hover effects</h3>
+            <p>Underline slides, lifts, tilts and gradient shifts, each with markup and CSS to copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-ui-feedback-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS UI feedback animations</h3>
+            <p>Tab underlines, progress fills and other small signals that confirm what the user just did.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/accessible-website-guide" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>Accessible website guide</h3>
+            <p>Link styling, focus indicators, contrast and the other checks that keep a site usable for everyone.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

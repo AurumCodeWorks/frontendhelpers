@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build a CSS flip card with perspective, preserve-3d and backface-visibility. Stack faces with grid, flip on focus or a button, respect reduced motion." />
+  <link rel="canonical" href="https://frontendhelpers.com/css-flip-card" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://frontendhelpers.com/css-flip-card" />
+  <meta property="og:site_name" content="FrontendHelpers" />
+  <meta property="og:title" content="CSS Flip Card: 3D Card Flip on Hover, Focus and Click" />
+  <meta property="og:description" content="Build a CSS flip card with perspective, preserve-3d and backface-visibility. Stack faces with grid, flip on focus or a button, respect reduced motion." />
+  <meta property="og:image" content="https://frontendhelpers.com/assets/og-css-flip-card.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSS Flip Card: 3D Card Flip on Hover, Focus and Click" />
+  <meta name="twitter:description" content="Build a CSS flip card with perspective, preserve-3d and backface-visibility. Stack faces with grid, flip on focus or a button, respect reduced motion." />
+  <meta name="twitter:image" content="https://frontendhelpers.com/assets/og-css-flip-card.png" />
+
+  <title>CSS Flip Card: 3D Card Flip on Hover, Focus and Click</title>
+  <!-- Self-hosted font preloads -->
+  <link rel="preload" href="/fonts/outfit-v1-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-v1-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Demo styles for this page only -->
+  <style>
+    /* The 3D flip: one switch (--fc-flip: 0 or 1) drives every card */
+    .fc-card {
+      --fc-flip: 0;
+      perspective: 800px;
+      width: min(100%, 13rem);
+    }
+    .fc-inner {
+      display: grid;
+      transform-style: preserve-3d;
+      transform: rotateY(calc(var(--fc-flip) * 180deg));
+      transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.3, 1);
+    }
+    .fc-face {
+      grid-area: 1 / 1;
+      display: grid;
+      align-content: center;
+      gap: 0.4rem;
+      min-height: 8rem;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      backface-visibility: hidden;
+    }
+    .fc-front {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: #fff;
+    }
+    .fc-back {
+      transform: rotateY(180deg);
+      background: #0f172a;
+      border: 1px solid #06b6d4;
+      color: #e2e8f0;
+    }
+
+    /* Demo 1: flip on hover or when anything inside has focus */
+    .fc-hover:is(:hover, :focus-within) { --fc-flip: 1; }
+
+    /* Demo 2: vertical flip around the X axis */
+    .fc-vertical .fc-inner { transform: rotateX(calc(var(--fc-flip) * 180deg)); }
+    .fc-vertical .fc-back { transform: rotateX(180deg); }
+    .fc-vertical:is(:hover, :focus-within) { --fc-flip: 1; }
+
+    /* Demo 3: flipped by a toggle button */
+    .fc-card.fc-is-flipped { --fc-flip: 1; }
+    .fc-btn {
+      padding: 0.55em 1.2em;
+      border: 1px solid #06b6d4;
+      border-radius: 8px;
+      background: transparent;
+      color: #e2e8f0;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .fc-btn[aria-pressed="true"] { background: #06b6d4; color: #04111a; }
+    .fc-btn:focus-visible { outline: 2px solid #f8fafc; outline-offset: 3px; }
+
+    /* Reduced motion: cross-fade the faces instead of turning the card */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-card .fc-inner { transform: none; transition: none; }
+      .fc-card .fc-face { transform: none; transition: opacity 0.3s ease; }
+      .fc-card .fc-front { opacity: calc(1 - var(--fc-flip)); }
+      .fc-card .fc-back { opacity: var(--fc-flip); }
+    }
+
+    /* Demo content only */
+    .fc-kicker { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; }
+    .fc-title { font-size: 1.02rem; font-weight: 600; line-height: 1.35; }
+    .fc-title code { font-size: 0.9em; color: inherit; background: none; padding: 0; }
+    .recipe-stage .fc-link { color: #67e8f9; font-size: 0.85rem; text-decoration: underline; }
+    .recipe-stage .fc-link:focus-visible { outline: 2px solid #f8fafc; outline-offset: 2px; border-radius: 3px; }
+    .fc-stack { display: grid; justify-items: center; gap: 0.9rem; width: 100%; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMYX3Y1DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const consent = localStorage.getItem('cookie-consent') === 'accepted' ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      'analytics_storage': consent,
+      'ad_storage': consent,
+      'ad_user_data': consent,
+      'ad_personalization': consent,
+      'wait_for_update': 500
+    });
+
+    gtag('js', new Date());
+    gtag('config', 'G-2TMYX3Y1DX');
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "CSS Flip Card: 3D Card Flip on Hover, Focus and Click",
+        "description": "Build a CSS flip card with perspective, preserve-3d and backface-visibility. Stack faces with grid, flip on focus or a button, respect reduced motion.",
+        "url": "https://frontendhelpers.com/css-flip-card",
+        "image": "https://frontendhelpers.com/assets/og-css-flip-card.png",
+        "datePublished": "2026-10-12",
+        "dateModified": "2026-10-12",
+        "author": { "@type": "Organization", "@id": "https://frontendhelpers.com/#aurumcodeworks", "name": "AurumCodeWorks", "url": "https://frontendhelpers.com/about" },
+        "publisher": { "@type": "Organization", "@id": "https://frontendhelpers.com/#organization", "name": "FrontendHelpers", "url": "https://frontendhelpers.com/", "logo": { "@type": "ImageObject", "url": "https://frontendhelpers.com/assets/logo-square.png" } },
+        "isPartOf": { "@id": "https://frontendhelpers.com/#website" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://frontendhelpers.com/css-flip-card" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "FrontendHelpers", "item": "https://frontendhelpers.com/" },
+          { "@type": "ListItem", "position": 2, "name": "CSS Animations", "item": "https://frontendhelpers.com/css-animations" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Flip Card", "item": "https://frontendhelpers.com/css-flip-card" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does my flip card show the front face backwards?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The faces are being flattened before the card turns. Check that transform-style: preserve-3d is on the element you rotate, not only on its parent, and that the same element has no overflow other than visible or clip, no opacity below 1 and no filter, because each of those forces the used value back to flat. Also check that both faces have backface-visibility: hidden." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I still need -webkit-backface-visibility for Safari?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not for current browsers. MDN's compatibility data lists the unprefixed property in Safari and iOS Safari from version 15.4, released in March 2022. Add the prefixed line only if you still support iOS 15.3 or earlier; it does no harm, but it is no longer the fix for a broken flip." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make a flip card work on touch screens and with a keyboard?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Do not rely on :hover. Put a real button next to the card with aria-pressed, and have it toggle a class that flips the card. If you keep a hover flip for mouse users, add :focus-within to the same rule so keyboard users flip the card when they tab to a link on it." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I stop screen readers reading the hidden side of a flip card?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Put the inert attribute on whichever face is turned away and move it when the card flips. backface-visibility only hides the face visually, so its text and links stay in the accessibility tree and the tab order. inert removes both and has been available across browsers since April 2023." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839136991567470" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="header-top">
+        <a href="/" class="logo">
+          <span class="logo-icon">&lt;/&gt;</span>
+          <span class="logo-text">Frontend<span class="accent">Helpers</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Site pages">
+          <a href="/">HTML &amp; SEO Tools</a>
+          <a href="/css-animations">CSS Animations</a>
+          <a href="/js-tips">JS Tricks &amp; Tips</a>
+          <a href="/essentials">Dev Essentials</a>
+          <a href="/frameworks">Frameworks</a>
+          <a href="/guides">Guides</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container tool-page guide-page">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="/css-animations">CSS Animations</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">CSS Flip Card</span>
+      </nav>
+
+      <section class="page-hero tool-page-hero">
+        <h1>CSS flip card: <span class="hero-highlight">3D flips on hover, focus and click</span></h1>
+        <p class="page-hero-sub">Four properties make a card turn over in 3D. Getting it to size itself, work without a mouse and keep its hidden side away from screen readers takes a little more, and all of it is below.</p>
+        <p class="guide-meta"><span>CSS recipe</span> · By <a href="/about">AurumCodeWorks</a> · 7 min read · Updated 12 October 2026</p>
+      </section>
+
+      <article class="tool-documentation">
+        <div class="recipe-demos">
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fc-card fc-hover">
+                <div class="fc-inner">
+                  <div class="fc-face fc-front">
+                    <span class="fc-kicker">Front</span>
+                    <span class="fc-title">Hover, or press Tab to reach the link</span>
+                  </div>
+                  <div class="fc-face fc-back">
+                    <span class="fc-kicker">Back</span>
+                    <span class="fc-title">Turned by <code>:focus-within</code></span>
+                    <a class="fc-link" href="/css-hover-effects">More hover effects</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Hover and focus flip</strong> — turns on the Y axis for a pointer, or when the link on its back face receives focus.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fc-card fc-vertical">
+                <div class="fc-inner">
+                  <div class="fc-face fc-front">
+                    <span class="fc-kicker">Front</span>
+                    <span class="fc-title">Tips over the X axis</span>
+                  </div>
+                  <div class="fc-face fc-back">
+                    <span class="fc-kicker">Back</span>
+                    <span class="fc-title">Pre-rotated with <code>rotateX(180deg)</code></span>
+                    <a class="fc-link" href="/css-entrance-animations#anim-flip-in-x">Flip-in entrance</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Vertical flip</strong> — the same card turned top over bottom; both rotations use the same axis.</figcaption>
+          </figure>
+          <figure class="recipe-demo">
+            <div class="recipe-stage">
+              <div class="fc-stack">
+                <button type="button" class="fc-btn" id="fc-quiz-btn" aria-controls="fc-quiz" aria-pressed="false">Flip card</button>
+                <div class="fc-card fc-toggle" id="fc-quiz">
+                  <div class="fc-inner">
+                    <div class="fc-face fc-front">
+                      <span class="fc-kicker">Question</span>
+                      <span class="fc-title">Which property hides the reverse of a face?</span>
+                    </div>
+                    <div class="fc-face fc-back" inert>
+                      <span class="fc-kicker">Answer</span>
+                      <span class="fc-title"><code>backface-visibility: hidden</code></span>
+                      <a class="fc-link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/backface-visibility" rel="noopener">MDN reference</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Button-toggled flip</strong> — <code>aria-pressed</code> on a real button, and <code>inert</code> moved to whichever face is turned away.</figcaption>
+          </figure>
+        </div>
+        <script>
+          {
+            const fcBtn = document.getElementById('fc-quiz-btn');
+            const fcCard = document.getElementById('fc-quiz');
+            const [fcFront, fcBack] = fcCard.querySelectorAll('.fc-face');
+            fcBtn.addEventListener('click', () => {
+              const flipped = fcBtn.getAttribute('aria-pressed') !== 'true';
+              fcBtn.setAttribute('aria-pressed', String(flipped));
+              fcCard.classList.toggle('fc-is-flipped', flipped);
+              fcFront.inert = flipped;
+              fcBack.inert = !flipped;
+            });
+          }
+        </script>
+
+        <h2>When a flip card is the right pattern</h2>
+        <p>A flip card puts two related pieces of content in the space of one and lets the reader swap between them. It suits a genuine reveal: the answer on a revision flashcard, the ingredients behind a recipe photo. It suits badly anything people need to compare or decide with, because they can only see one side at a time.</p>
+        <p>If the back face only adds a little emphasis, a lighter interaction is usually better. Our <a href="/css-hover-effects#anim-hover-tilt">hover tilt card</a> gives depth without hiding anything, and the <a href="/css-entrance-animations#anim-flip-in-x">flip-in entrance</a> uses one rotation to bring content into view rather than swap it. When you do need two sides, this recipe makes the card size itself, lets everyone turn it over, and keeps the hidden side silent.</p>
+
+        <h2>The four properties that make a 3D flip</h2>
+        <p>A flip card is three layers: an outer card sets up the 3D view, an inner element rotates, and two faces sit inside it back to back.</p>
+        <pre><code class="language-css">.fc-card {
+  --fc-flip: 0;
+  perspective: 800px;
+  width: min(100%, 13rem);
+}
+.fc-inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--fc-flip) * 180deg));
+  transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.fc-face {
+  grid-area: 1 / 1;
+  display: grid;
+  align-content: center;
+  gap: 0.4rem;
+  min-height: 8rem;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  backface-visibility: hidden;
+}
+.fc-back {
+  transform: rotateY(180deg);
+}</code></pre>
+        <p><strong><code>perspective</code> on the card</strong> sets how far the viewer is from the screen. It gives depth to the element’s children, not to the element itself, so it belongs on the parent of whatever rotates. Smaller values exaggerate it: 300px makes the near edge balloon towards you, while 800px feels like a card on a table.</p>
+        <p><strong><code>transform-style: preserve-3d</code> on the inner element</strong> lets its children keep their own positions in 3D space instead of being painted flat into its plane. The property is not inherited, so it must sit on the element that rotates.</p>
+        <p><strong><code>backface-visibility: hidden</code> on both faces</strong> makes each face disappear while it points away from the viewer. Without it you would see the reverse of whichever face is turned away, mirrored like writing on glass.</p>
+        <p><strong><code>rotateY(180deg)</code> on the back face</strong> turns it away before anything happens. At rest the front points at you and the back is hidden; rotate the inner element by half a turn and the two swap.</p>
+        <p>The <code>--fc-flip</code> custom property is a 0-or-1 switch multiplied into the angle, so every trigger only has to set it to 1.</p>
+
+        <h2>The perspective property or the perspective() function?</h2>
+        <p>There are two ways to add depth, and they are easy to confuse. The <code>perspective</code> property on a parent creates one shared viewpoint, centred on that parent by default and movable with <code>perspective-origin</code>, for all its 3D children. The <code>perspective()</code> function goes inside an element’s own <code>transform</code> list, as in <code>transform: perspective(800px) rotateY(180deg)</code>, and gives that one element its own viewpoint. It must come first in the list, because transform functions apply in order and a perspective added after the rotation has nothing to act on.</p>
+        <p>For a single card either works. For a row of cards, put the property on the row so every card shares one vanishing point, as real cards on a table would.</p>
+        <p>As MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/perspective" rel="noopener">perspective reference</a> notes, any value other than <code>none</code> creates a stacking context and makes the element the containing block for <code>position: fixed</code> descendants, so a fixed tooltip inside the card will be positioned against the card instead of the viewport.</p>
+
+        <h2>Stack the faces with grid, not absolute positioning</h2>
+        <p>Older tutorials give the card a fixed height and position both faces absolutely. That works until the back face has one more line than planned, then it overflows or gets cut off, and the height must be guessed again for every language and font size.</p>
+        <p>Grid solves this. The inner element becomes a grid with one implicit cell, and <code>grid-area: 1 / 1</code> puts both faces in that cell. Items in the same cell overlap and the row grows to fit the tallest, so the card is always as tall as its longer side. The <code>min-height</code> only stops short cards looking cramped.</p>
+
+        <div class="quick-table-container tool-page-table" style="overflow-x: auto;">
+          <table class="quick-table">
+            <thead><tr><th>Property</th><th>Goes on</th><th>What breaks without it</th></tr></thead>
+            <tbody>
+              <tr><td><code>perspective</code></td><td>The card: the parent of the element that rotates</td><td>No depth. The card narrows to a line and widens again, like a horizontal squash, with no near or far edge.</td></tr>
+              <tr><td><code>transform-style: preserve-3d</code></td><td>The inner element that rotates</td><td>The faces are flattened into one picture before it turns. You see the front face mirrored and the back face never appears.</td></tr>
+              <tr><td><code>backface-visibility: hidden</code></td><td>Both faces</td><td>The turned-away face shows through as mirrored text, and which face wins depends on source order rather than direction.</td></tr>
+              <tr><td><code>transform: rotateY(180deg)</code></td><td>The back face only</td><td>At rest the back face covers the front; after the flip both faces point away and the card goes blank.</td></tr>
+              <tr><td><code>display: grid</code> and <code>grid-area: 1 / 1</code></td><td>The inner element and both faces</td><td>The faces sit one above the other, so the card is twice as tall, or you fall back on absolute positioning and a fixed height that clips longer text.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Horizontal and vertical flips</h2>
+        <p>A horizontal flip turns the card around its vertical axis, like a page in a book, with <code>rotateY()</code>. A vertical flip tips it top over bottom with <code>rotateX()</code>, which suits wide, short cards such as a banner or a row in a table. The second demo only changes the axis.</p>
+        <pre><code class="language-css">.fc-vertical .fc-inner { transform: rotateX(calc(var(--fc-flip) * 180deg)); }
+.fc-vertical .fc-back { transform: rotateX(180deg); }
+.fc-vertical:is(:hover, :focus-within) { --fc-flip: 1; }</code></pre>
+        <p>The detail that catches people out is that the back face’s pre-rotation must use the same axis as the flip. Leave the back face on <code>rotateY(180deg)</code> while the inner element turns with <code>rotateX()</code>, and the two half-turns combine into a rotation within the screen plane: the back face appears upside down. Change both together.</p>
+
+        <h2>Safari, WebKit and the things that flatten a card</h2>
+        <p>Much flip-card advice still tells you to add <code>-webkit-backface-visibility</code> for Safari. MDN’s compatibility data lists the unprefixed property in Safari and iOS Safari from 15.4, released in March 2022, and the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/backface-visibility" rel="noopener">backface-visibility reference</a> marks it as widely available since then. Keep the prefixed line only if your audience includes iOS 15.3 or older; it is no longer the cure for a broken flip.</p>
+        <p>The failures you are more likely to meet today come from the specification, and they appear in every engine, not just WebKit. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform-style" rel="noopener">transform-style reference</a> lists grouping properties that force <code>preserve-3d</code> back to <code>flat</code>: <code>overflow</code> other than <code>visible</code> or <code>clip</code>, <code>opacity</code> below 1, any <code>filter</code>, <code>clip-path</code>, <code>mask-image</code>, <code>mix-blend-mode</code>, <code>isolation: isolate</code> and paint containment. Put one on the rotating element, say <code>overflow: hidden</code> to clip rounded corners, and the card goes flat. Apply them to the faces instead. Then test the turn in Safari, Chrome and Firefox, on a phone as well as a desktop.</p>
+
+        <h2>Hover alone is not enough</h2>
+        <p>The classic flip card turns on <code>:hover</code>, which leaves out two groups. Keyboard users never hover, so for them the back face does not exist. Touch screens have no hover either: mobile browsers fake it on tap and leave the card stuck flipped until the user taps elsewhere.</p>
+        <p>The first demo adds <code>:focus-within</code> to the hover rule, so the card also flips while anything inside it has focus. Because the link is on the back face, tabbing to it turns the card over and reveals it. That only helps when the back face contains something focusable, and screen reader users still hear both faces in turn, because <code>backface-visibility</code> only hides pixels. Use it only when reading both sides in order makes sense.</p>
+        <pre><code class="language-css">.fc-hover:is(:hover, :focus-within) { --fc-flip: 1; }</code></pre>
+
+        <h2>An accessible flip with a button and inert</h2>
+        <p>For a card that people actually need to turn over, give them a control. A real <code>&lt;button&gt;</code> works with a mouse, a finger, a keyboard and a switch device, and <code>aria-pressed</code> tells assistive technology whether it is on. MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-pressed" rel="noopener">aria-pressed reference</a> warns against changing the label as the state changes, so it stays “Flip card” and a screen reader adds “pressed” or “not pressed”. If you would rather swap the text between “Show answer” and “Show question”, drop <code>aria-pressed</code>; <code>aria-expanded</code> also fits when the button reveals extra detail like a disclosure.</p>
+        <pre><code class="language-html">&lt;button type="button" class="fc-btn" id="fc-quiz-btn" aria-controls="fc-quiz" aria-pressed="false"&gt;Flip card&lt;/button&gt;
+&lt;div class="fc-card fc-toggle" id="fc-quiz"&gt;
+  &lt;div class="fc-inner"&gt;
+    &lt;div class="fc-face fc-front"&gt;
+      &lt;span class="fc-kicker"&gt;Question&lt;/span&gt;
+      &lt;span class="fc-title"&gt;Which property hides the reverse of a face?&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="fc-face fc-back" inert&gt;
+      &lt;span class="fc-kicker"&gt;Answer&lt;/span&gt;
+      &lt;span class="fc-title"&gt;&lt;code&gt;backface-visibility: hidden&lt;/code&gt;&lt;/span&gt;
+      &lt;a class="fc-link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/backface-visibility" rel="noopener"&gt;MDN reference&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        <pre><code class="language-css">.fc-card.fc-is-flipped { --fc-flip: 1; }
+.fc-btn {
+  padding: 0.55em 1.2em;
+  border: 1px solid #06b6d4;
+  border-radius: 8px;
+  background: transparent;
+  color: #e2e8f0;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fc-btn[aria-pressed="true"] { background: #06b6d4; color: #04111a; }
+.fc-btn:focus-visible { outline: 2px solid #f8fafc; outline-offset: 3px; }</code></pre>
+        <pre><code class="language-js">const fcBtn = document.getElementById('fc-quiz-btn');
+const fcCard = document.getElementById('fc-quiz');
+const [fcFront, fcBack] = fcCard.querySelectorAll('.fc-face');
+fcBtn.addEventListener('click', () =&gt; {
+  const flipped = fcBtn.getAttribute('aria-pressed') !== 'true';
+  fcBtn.setAttribute('aria-pressed', String(flipped));
+  fcCard.classList.toggle('fc-is-flipped', flipped);
+  fcFront.inert = flipped;
+  fcBack.inert = !flipped;
+});</code></pre>
+        <p>The <code>inert</code> attribute does the part CSS cannot. According to MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert" rel="noopener">inert reference</a>, an inert subtree cannot be focused or clicked, is skipped by find-in-page, and is removed from the accessibility tree. It has been available across browsers since April 2023 (Chrome 102, Firefox 112, Safari 15.5). The back face starts inert, and the script moves the attribute to whichever face is turned away; nothing visual depends on it, so there is no need to wait for the transition.</p>
+        <p>The button sits before the card in the source, so after pressing it the next thing a screen reader reaches is the face that has just appeared. If you cannot use <code>inert</code>, toggle <code>visibility: hidden</code> on the turned-away face with a transition delay equal to the flip duration, so it vanishes only once it has rotated out of view; <code>visibility</code> also removes content from the tab order and the accessibility tree.</p>
+
+        <h2>Reduced motion: cross-fade instead of turning</h2>
+        <p>A large element spinning through 3D space is the kind of motion that can cause discomfort for people with vestibular disorders. The card still needs to change sides, so swap the rotation for a short cross-fade. Because every trigger sets the same <code>--fc-flip</code> switch, one block covers all three demos.</p>
+        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  .fc-card .fc-inner { transform: none; transition: none; }
+  .fc-card .fc-face { transform: none; transition: opacity 0.3s ease; }
+  .fc-card .fc-front { opacity: calc(1 - var(--fc-flip)); }
+  .fc-card .fc-back { opacity: var(--fc-flip); }
+}</code></pre>
+        <p>With both rotations removed, the two faces lie flat in the same grid cell and opacity decides which one shows. The <code>opacity</code> is on the faces, not the rotating element, so it does not flatten anything, and the flip and the fade cost about the same: only <code>transform</code> or <code>opacity</code> change, both of which the compositor handles without repainting. Our guide to <a href="/css-animation-performance">CSS animation performance</a> explains why that matters.</p>
+      </article>
+
+      <section class="faq-section tool-page-faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Why does my flip card show the front face backwards?</summary>
+            <p class="faq-answer">The faces are being flattened before the card turns. Check that transform-style: preserve-3d is on the element you rotate, not only on its parent, and that the same element has no overflow other than visible or clip, no opacity below 1 and no filter, because each of those forces the used value back to flat. Also check that both faces have backface-visibility: hidden.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do I still need -webkit-backface-visibility for Safari?</summary>
+            <p class="faq-answer">Not for current browsers. MDN's compatibility data lists the unprefixed property in Safari and iOS Safari from version 15.4, released in March 2022. Add the prefixed line only if you still support iOS 15.3 or earlier; it does no harm, but it is no longer the fix for a broken flip.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I make a flip card work on touch screens and with a keyboard?</summary>
+            <p class="faq-answer">Do not rely on :hover. Put a real button next to the card with aria-pressed, and have it toggle a class that flips the card. If you keep a hover flip for mouse users, add :focus-within to the same rule so keyboard users flip the card when they tab to a link on it.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I stop screen readers reading the hidden side of a flip card?</summary>
+            <p class="faq-answer">Put the inert attribute on whichever face is turned away and move it when the card flips. backface-visibility only hides the face visually, so its text and links stay in the accessibility tree and the tab order. inert removes both and has been available across browsers since April 2023.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="resource-section tool-page-related">
+        <h2>Keep going</h2>
+        <div class="resource-cards">
+          <a href="/css-hover-effects" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS hover effects</h3>
+            <p>Tilts, lifts, glows and underlines for cards, buttons and links, each with CSS to copy.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-entrance-animations" class="resource-card">
+            <span class="resource-kicker">Category</span>
+            <h3>CSS entrance animations</h3>
+            <p>Fades, slides, zooms and 3D flip-ins for bringing content into view.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+          <a href="/css-animation-performance" class="resource-card">
+            <span class="resource-kicker">Guide</span>
+            <h3>CSS animation performance</h3>
+            <p>Why transform and opacity stay smooth while other properties repaint every frame.</p>
+            <span class="resource-cta">Open →</span>
+          </a>
+        </div>
+        <p class="back-to-hub"><a href="/css-animations">← All CSS animations</a></p>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 FrontendHelpers — All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="/">HTML &amp; SEO Tools</a>
+        <a href="/css-animations">CSS Animations</a>
+        <a href="/js-tips">JS Tricks &amp; Tips</a>
+        <a href="/essentials">Dev Essentials</a>
+        <a href="/frameworks">Frameworks</a>
+        <a href="/guides">Guides</a>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#" id="cookie-settings-link">Cookie Settings</a>
+        <a href="mailto:hello@frontendhelpers.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>
