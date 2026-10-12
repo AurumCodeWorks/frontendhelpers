@@ -41,14 +41,14 @@ const browser = BROWSERS.find(existsSync);
 if (!browser) throw new Error('No Chrome or Edge found for headless rendering');
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-const font = w => pathToFileURL(join(ROOT, `fonts/outfit-v1-latin-${w}.woff2`)).href;
-const body = pathToFileURL(join(ROOT, 'fonts/plus-jakarta-sans-v1-latin-600.woff2')).href;
+// Both are variable fonts: one file per family covers every weight
+const font = pathToFileURL(join(ROOT, 'fonts/outfit-variable.woff2')).href;
+const body = pathToFileURL(join(ROOT, 'fonts/plus-jakarta-sans-variable.woff2')).href;
 
 function page([line1, line2, pills]) {
   return `<!doctype html><meta charset="utf-8"><style>
-  @font-face { font-family: Outfit; font-weight: 700; src: url(${font(700)}); }
-  @font-face { font-family: Outfit; font-weight: 600; src: url(${font(600)}); }
-  @font-face { font-family: Jakarta; font-weight: 600; src: url(${body}); }
+  @font-face { font-family: Outfit; font-weight: 100 900; src: url(${font}); }
+  @font-face { font-family: Jakarta; font-weight: 200 800; src: url(${body}); }
   * { margin: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {

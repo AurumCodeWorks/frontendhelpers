@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@joplin/turndown-plugin-gfm": "1.0.68",
+    "lightningcss": "1.33.0",
     "linkedom": "0.18.13",
     "turndown": "7.2.4"
   }

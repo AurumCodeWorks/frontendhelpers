@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildMarkdown } from './markdown.mjs';
+import { transform as transformCss } from 'lightningcss';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const OUT = join(ROOT, 'dist');
@@ -30,6 +31,17 @@ const sitemap = readFileSync(join(OUT, 'sitemap.xml'), 'utf8');
 const lastmod = Object.fromEntries([...sitemap.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)].map(m => [m[1], m[2]]));
 const mdCount = buildMarkdown(OUT, lastmod);
 console.log(`Wrote ${mdCount} Markdown alternates + llms-full.txt`);
+
+// Minify stylesheets (whitespace, comments, shorter values — no
+// syntax lowering, so the CSS that ships is the CSS that was written)
+let saved = 0;
+for (const f of readdirSync(OUT).filter(f => f.endsWith('.css'))) {
+  const src = readFileSync(join(OUT, f));
+  const { code } = transformCss({ filename: f, code: src, minify: true });
+  writeFileSync(join(OUT, f), code);
+  saved += src.length - code.length;
+}
+console.log(`Minified CSS, saved ${(saved / 1024).toFixed(1)} KB`);
 
 // Cache-bust CSS/JS: browsers cache them for a day, so every reference
 // gets ?v=<content hash>. A changed file gets a new URL; an unchanged

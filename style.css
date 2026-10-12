@@ -1,50 +1,21 @@
 /* ── SELF-HOSTED FONTS & FALLBACK METRIC OVERRIDES ────────── */
+/* Both families are variable fonts: one file covers every weight.
+   (They used to be listed three times each under different names,
+   so pages using several weights downloaded the same file again.) */
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/outfit-v1-latin-400.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/outfit-v1-latin-600.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/outfit-v1-latin-700.woff2') format('woff2');
+  src: url('/fonts/outfit-variable.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('/fonts/plus-jakarta-sans-v1-latin-400.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/plus-jakarta-sans-v1-latin-600.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/plus-jakarta-sans-v1-latin-700.woff2') format('woff2');
+  src: url('/fonts/plus-jakarta-sans-variable.woff2') format('woff2');
 }
 
 /* Fallback Metric Override: Match system font glyph width/ascent/descent to Outfit to prevent CLS */
